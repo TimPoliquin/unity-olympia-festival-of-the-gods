@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Azul.Controller;
 using Azul.Provider;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Azul
 {
@@ -12,7 +13,9 @@ namespace Azul
 
         private BagController bagController;
         private FactoryController factoryController;
+        private PlayerBoardController playerBoardController;
         private PlayerController playerController;
+        private StarController starController;
         private TileController tileController;
         private TileMaterialProvider tileMaterialProvider;
 
@@ -54,6 +57,24 @@ namespace Azul
                 this.playerController = this.GetComponentInChildren<PlayerController>();
             }
             return this.playerController;
+        }
+
+        public PlayerBoardController GetPlayerBoardController()
+        {
+            if (null == this.playerBoardController)
+            {
+                this.playerBoardController = this.GetComponentInChildren<PlayerBoardController>();
+            }
+            return this.playerBoardController;
+        }
+
+        public StarController GetStarController()
+        {
+            if (null == this.starController)
+            {
+                this.starController = this.GetComponentInChildren<StarController>();
+            }
+            return this.starController;
         }
 
         public TileController GetTileController()
