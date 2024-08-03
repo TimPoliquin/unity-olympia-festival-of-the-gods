@@ -8,9 +8,9 @@ namespace Azul
     {
         public class ColorOverrideController : MonoBehaviour
         {
-            [SerializeField] private Model.Color color;
+            [SerializeField] private Model.TileColor color;
 
-            public Model.Color GetColor()
+            public Model.TileColor GetColor()
             {
                 return this.color;
             }

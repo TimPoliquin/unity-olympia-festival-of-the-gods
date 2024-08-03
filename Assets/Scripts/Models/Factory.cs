@@ -9,26 +9,22 @@ namespace Azul
 
         public class Factory : MonoBehaviour
         {
+            [SerializeField] private List<GameObject> tileHolder;
             private List<Tile> tiles = new List<Tile>();
-            // Start is called before the first frame update
-            void Start()
-            {
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-
-            }
 
             public void Fill(List<Tile> tiles)
             {
-                tiles.ForEach(tile =>
+                if (tiles.Count > this.tileHolder.Count)
                 {
-                    tile.transform.SetParent(this.transform);
-                    this.tiles.Add(tile);
-                });
+                    UnityEngine.Debug.Log($"Unexpected number of tiles added to Factory: {tiles.Count}");
+                    return;
+                }
+                this.tiles.AddRange(tiles);
+                for (int idx = 0; idx < tiles.Count; idx++)
+                {
+                    tiles[idx].transform.SetParent(this.tileHolder[idx].transform);
+                    tiles[idx].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                }
             }
 
         }

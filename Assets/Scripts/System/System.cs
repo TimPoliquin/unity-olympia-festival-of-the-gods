@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller;
 using Azul.Provider;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ namespace Azul
     {
         public static System Instance { get; private set; }
 
+        private BagController bagController;
+        private FactoryController factoryController;
+        private PlayerController playerController;
+        private TileController tileController;
         private TileMaterialProvider tileMaterialProvider;
 
         void Awake()
@@ -24,6 +29,42 @@ namespace Azul
             }
         }
 
+        public BagController GetBagController()
+        {
+            if (null == this.bagController)
+            {
+                this.bagController = this.GetComponentInChildren<BagController>();
+            }
+            return this.bagController;
+        }
+
+        public FactoryController GetFactoryController()
+        {
+            if (null == this.factoryController)
+            {
+                this.factoryController = this.GetComponentInChildren<FactoryController>();
+            }
+            return this.factoryController;
+        }
+
+        public PlayerController GetPlayerController()
+        {
+            if (null == this.playerController)
+            {
+                this.playerController = this.GetComponentInChildren<PlayerController>();
+            }
+            return this.playerController;
+        }
+
+        public TileController GetTileController()
+        {
+            if (null == this.tileController)
+            {
+                this.tileController = this.GetComponentInChildren<TileController>();
+            }
+            return this.tileController;
+        }
+
         public TileMaterialProvider GetTileMaterialProvider()
         {
             if (null == this.tileMaterialProvider)
@@ -32,6 +73,5 @@ namespace Azul
             }
             return this.tileMaterialProvider;
         }
-
     }
 }

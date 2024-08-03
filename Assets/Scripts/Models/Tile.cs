@@ -8,13 +8,14 @@ namespace Azul
     {
         public class Tile : MonoBehaviour
         {
-            public Color Color;
+            public TileColor Color;
             public bool IsPlaceholder;
 
-            public static Tile Create(Color color, bool IsPlaceholder = false)
+            public static Tile Create(GameObject tilePrefab, TileColor color, bool IsPlaceholder = false)
             {
-                GameObject gameObject = new GameObject();
-                Tile tile = gameObject.AddComponent<Tile>();
+                GameObject gameObject = Instantiate(tilePrefab);
+                gameObject.name = $"Tile {color}";
+                Tile tile = gameObject.GetComponent<Tile>();
                 tile.Color = color;
                 tile.IsPlaceholder = IsPlaceholder;
                 return tile;
