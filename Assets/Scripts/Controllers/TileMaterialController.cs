@@ -25,17 +25,9 @@ namespace Azul
                 this.mesh.GetComponent<Renderer>().material = material;
             }
 
-            private Model.TileColor GetTileColor()
+            private TileColor GetTileColor()
             {
-                ColorOverrideController colorOverrideController = this.GetComponentInParent<ColorOverrideController>();
-                if (null != colorOverrideController)
-                {
-                    return colorOverrideController.GetColor();
-                }
-                else
-                {
-                    return this.GetComponent<Tile>().Color;
-                }
+                return this.GetComponent<Tile>().Color;
             }
         }
     }

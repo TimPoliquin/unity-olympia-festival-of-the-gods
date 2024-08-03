@@ -11,11 +11,13 @@ namespace Azul
     {
         public class Star : MonoBehaviour
         {
-            [SerializeField] private GameObject tilePrefab;
-            [SerializeField] private float radius = 3.0f;
             [SerializeField] private TileColor color;
             [SerializeField] private StarSpace[] spaces;
 
+            public void SetColor(TileColor color)
+            {
+                this.color = color;
+            }
             public void SetSpaces(StarSpace[] spaces)
             {
                 this.spaces = spaces;

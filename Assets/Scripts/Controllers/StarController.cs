@@ -26,6 +26,7 @@ namespace Azul
                 spaces[input.Index] = space;
                 return tile.gameObject;
             });
+            star.SetColor(color);
             star.SetSpaces(spaces);
             return star;
         }
