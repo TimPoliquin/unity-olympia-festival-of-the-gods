@@ -16,13 +16,6 @@ namespace Azul
             [SerializeField] private float radius = 15.0f;
             private GameObject root;
             private List<Factory> factories;
-            void OnDrawGizmosSelected()
-            {
-                if (this.root)
-                {
-                    DebugUtils.DrawCircle(this.root.transform.position, this.radius, 50, Color.white);
-                }
-            }
 
             public void SetupGame(int numPlayers)
             {

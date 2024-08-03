@@ -8,7 +8,7 @@ namespace Azul
     {
         public class StarSpace : MonoBehaviour
         {
-            [SerializeField] private GameObject tile;
+            [SerializeField] private TilePlaceholder tile;
             [SerializeField][Range(1, 6)] private int value;
             [SerializeField] private bool occupied;
 

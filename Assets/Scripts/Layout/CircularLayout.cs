@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using Azul.Debug;
 
 namespace Azul
 {
@@ -11,6 +12,8 @@ namespace Azul
     {
         public class CircularLayout : MonoBehaviour
         {
+
+            private float radius;
             public class CircularLayoutElementInput
             {
                 public int Index { get; init; }
@@ -20,6 +23,7 @@ namespace Azul
 
             public void CreateLayout(int numElements, float radius, Func<CircularLayoutElementInput, GameObject> CreateElement, bool rotate = true)
             {
+                this.radius = radius;
                 float arcSize = Mathf.PI * 2.0f / numElements;
                 for (int idx = 0; idx < numElements; idx++)
                 {
@@ -36,6 +40,11 @@ namespace Azul
                         element.transform.Rotate(0, Mathf.Rad2Deg * arcSize * idx, 0);
                     }
                 }
+            }
+
+            void OnDrawGizmosSelected()
+            {
+                DebugUtils.DrawCircle(this.transform.position, this.radius, 50, Color.white);
             }
         }
     }

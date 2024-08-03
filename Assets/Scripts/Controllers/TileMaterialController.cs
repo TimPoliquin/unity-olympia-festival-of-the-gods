@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller;
 using Azul.Model;
-using Azul.Provider;
 using UnityEngine;
 
 namespace Azul
@@ -9,25 +9,12 @@ namespace Azul
     namespace Controller
     {
         [RequireComponent(typeof(Tile))]
-        public class TileMaterialController : MonoBehaviour
+        public class TileMaterialController : AbstractMaterialController
         {
-            [SerializeField] private GameObject mesh;
-            void Start()
+            protected override Material GetMaterial()
             {
                 Tile tile = this.GetComponent<Tile>();
-                TileMaterialProvider materialProvider = System.Instance.GetTileMaterialProvider();
-                this.SetMaterial(materialProvider.GetMaterial(this.GetTileColor(), tile.IsPlaceholder));
-                this.enabled = false;
-            }
-
-            private void SetMaterial(Material material)
-            {
-                this.mesh.GetComponent<Renderer>().material = material;
-            }
-
-            private TileColor GetTileColor()
-            {
-                return this.GetComponent<Tile>().Color;
+                return System.Instance.GetTileMaterialProvider().GetMaterial(tile.Color, false);
             }
         }
     }
