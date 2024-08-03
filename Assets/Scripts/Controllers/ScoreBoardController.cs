@@ -15,19 +15,21 @@ namespace Azul
             [SerializeField][Range(1, 10)] private int supplySize = 10;
             [SerializeField] private GameObject scoreBoardPrefab;
             [SerializeField] private GameObject tilePrefab;
+            [SerializeField] private GameObject roundCounterPrefab;
 
-            private GameObject scoreBoard;
+            private ScoreBoard scoreBoard;
 
             private List<TilePlaceholder> placeholderTiles;
             public void SetupGame()
             {
                 this.CreateScoreBoard();
                 this.CreateSupplyStar();
+                this.PlaceRoundCounter();
             }
 
             private void CreateScoreBoard()
             {
-                this.scoreBoard = Instantiate(this.scoreBoardPrefab, this.position, Quaternion.identity);
+                this.scoreBoard = Instantiate(this.scoreBoardPrefab, this.position, Quaternion.identity).GetComponent<ScoreBoard>();
                 this.scoreBoard.transform.position = this.position;
             }
 
@@ -55,6 +57,12 @@ namespace Azul
                         placeholder.PlaceTile(bagController.Draw());
                     }
                 });
+            }
+
+            private void PlaceRoundCounter()
+            {
+                GameObject roundCounter = Instantiate(this.roundCounterPrefab);
+                this.scoreBoard.PlaceCounter(roundCounter);
             }
         }
     }

@@ -640,6 +640,8 @@ MonoBehaviour:
     type: 3}
   tilePrefab: {fileID: 357121812683179538, guid: d54a7adaee83d47269c62ea938082304,
     type: 3}
+  roundCounterPrefab: {fileID: 5254510402654930809, guid: 5f695cf4e283c4f75a0b61de7ea114cc,
+    type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
