@@ -15,14 +15,18 @@ namespace Azul
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 PlayerController playerController = System.Instance.GetPlayerController();
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
                 StarController starController = System.Instance.GetStarController();
                 TileController tileController = System.Instance.GetTileController();
                 // TODO - this should be triggered by the UI/Player Ready
                 playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
+                scoreBoardController.SetupGame();
+                factoryController.SetupGame(playerController.GetNumberOfPlayers());
                 tileController.SetupGame();
                 bagController.SetupGame(tileController.GetTiles());
-                factoryController.SetupGame(playerController.GetNumberOfPlayers());
                 factoryController.FillFactories(bagController);
+                scoreBoardController.FillSupply(bagController);
+
             }
         }
     }

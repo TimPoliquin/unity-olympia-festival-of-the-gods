@@ -17,6 +17,11 @@ namespace Azul
             this.bag.Fill(tiles);
         }
 
+        public Tile Draw()
+        {
+            return this.bag.Draw(1)[0];
+        }
+
         public List<Tile> Draw(int count)
         {
             return this.bag.Draw(count);
