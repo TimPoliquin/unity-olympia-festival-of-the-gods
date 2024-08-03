@@ -9,16 +9,15 @@ namespace Azul
         public class Bag : MonoBehaviour
         {
             private Queue<Tile> tiles = new();
-            // Start is called before the first frame update
-            void Start()
+
+            public void Fill(List<Tile> tiles)
             {
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-
+                foreach (Tile tile in tiles)
+                {
+                    tile.transform.SetParent(this.transform);
+                    tile.gameObject.SetActive(false);
+                    this.tiles.Enqueue(tile);
+                }
             }
 
             public List<Tile> Draw(int count)
@@ -26,7 +25,9 @@ namespace Azul
                 List<Tile> drawnTiles = new List<Tile>();
                 for (int idx = 0; idx < count && this.tiles.Count > 0; idx++)
                 {
-                    drawnTiles.Add(this.tiles.Dequeue());
+                    Tile tile = this.tiles.Dequeue();
+                    tile.gameObject.SetActive(true);
+                    drawnTiles.Add(tile);
                 }
                 return drawnTiles;
             }
