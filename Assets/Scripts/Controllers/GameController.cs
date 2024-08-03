@@ -13,13 +13,16 @@ namespace Azul
             {
                 BagController bagController = System.Instance.GetBagController();
                 FactoryController factoryController = System.Instance.GetFactoryController();
+                PlayerController playerController = System.Instance.GetPlayerController();
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                StarController starController = System.Instance.GetStarController();
                 TileController tileController = System.Instance.GetTileController();
                 // TODO - this should be triggered by the UI/Player Ready
+                playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
                 tileController.SetupGame();
                 bagController.SetupGame(tileController.GetTiles());
-                factoryController.SetupGame(System.Instance.GetPlayerController().GetNumberOfPlayers());
+                factoryController.SetupGame(playerController.GetNumberOfPlayers());
                 factoryController.FillFactories(bagController);
-
             }
         }
     }

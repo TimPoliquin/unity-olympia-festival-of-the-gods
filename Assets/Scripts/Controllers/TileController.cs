@@ -26,6 +26,7 @@ namespace Azul
                 tiles.Shuffle();
             }
 
+
             public List<Tile> GetTiles()
             {
                 return this.tiles;

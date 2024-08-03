@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Debug;
+using Azul.Layout;
 using Azul.Model;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -25,17 +26,14 @@ namespace Azul
 
             public void SetupGame(int numPlayers)
             {
-                this.root = new GameObject("Factories");
                 this.factories = new();
+                this.root = new GameObject("Factories");
                 int numFactories = (numPlayers * 2) + 1;
-                float arcSize = 360.0f / numFactories;
-                for (int idx = 0; idx < numFactories / 2; idx++)
+                CircularLayout layout = this.root.AddComponent<CircularLayout>();
+                layout.CreateLayout(numFactories, this.radius, (input) =>
                 {
-                    float x = this.radius * Mathf.Cos(idx * arcSize);
-                    float z = this.radius * Mathf.Sin(idx * arcSize);
-                    this.CreateFactory($"Factory {idx + 1}", x, z);
-                    this.CreateFactory($"Factory {idx + 1 + numFactories / 2}", -x, -z);
-                }
+                    return this.CreateFactory($"Factory {input.Index}", input.Position);
+                });
             }
 
             public void FillFactories(BagController bagController)
@@ -46,15 +44,13 @@ namespace Azul
                 }
             }
 
-
-
-            void CreateFactory(string name, float x, float z)
+            GameObject CreateFactory(string name, Vector3 position)
             {
-                Vector3 position = new Vector3(x, 0, z);
                 GameObject gameObject = Instantiate(this.factoryPrefab, this.root.transform);
                 gameObject.name = name;
                 gameObject.transform.position = position;
                 this.factories.Add(gameObject.GetComponent<Factory>());
+                return gameObject;
             }
         }
     }
