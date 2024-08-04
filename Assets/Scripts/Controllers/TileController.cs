@@ -11,10 +11,22 @@ namespace Azul
         {
             private static int NUM_TILES = 132;
             [SerializeField] private GameObject tilePrefab;
+            [SerializeField] private GameObject oneTilePrefab;
 
+            /// <summary>
+            /// A special tile. This tile indicates which player goest first in the next steps of the current round,
+            /// and which player goes first in the following round.
+            /// </summary>
+            private Tile oneTile;
             private List<Tile> tiles;
 
             public void SetupGame()
+            {
+                this.CreateStandardTiles();
+                this.CreateOneTile();
+            }
+
+            private void CreateStandardTiles()
             {
                 this.tiles = new();
                 TileColor[] tileColors = TileColorUtils.GetTileColors();
@@ -26,10 +38,21 @@ namespace Azul
                 tiles.Shuffle();
             }
 
+            private void CreateOneTile()
+            {
+                GameObject gameObject = Instantiate(this.oneTilePrefab);
+                this.oneTile = gameObject.GetComponent<Tile>();
+            }
+
 
             public List<Tile> GetTiles()
             {
                 return this.tiles;
+            }
+
+            public Tile GetOneTile()
+            {
+                return this.oneTile;
             }
         }
     }

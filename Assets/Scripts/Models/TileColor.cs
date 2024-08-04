@@ -15,7 +15,8 @@ namespace Azul
             GREEN,
             PURPLE,
             ORANGE,
-            WILD
+            WILD,
+            ONE
         }
 
         public sealed class TileColorUtils

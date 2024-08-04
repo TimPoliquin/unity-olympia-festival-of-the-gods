@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,42 +13,37 @@ namespace Azul
         public class PlayerBoardController : MonoBehaviour
         {
             [SerializeField] private GameObject playerBoardPrefab;
-            [SerializeField] private float radius = 55.0f;
-            [SerializeField] private float starRadius = 11.0f;
 
-            private GameObject root;
+            private List<PlayerBoard> playerBoards;
+
             public void SetupGame(int numPlayers, StarController starController)
             {
-                this.root = new GameObject("Player Boards");
-                CircularLayout layout = this.root.AddComponent<CircularLayout>();
-                layout.CreateLayout(numPlayers, this.radius, (input) =>
+                this.playerBoards = new();
+                for (int idx = 0; idx < numPlayers; idx++)
                 {
-                    GameObject board = Instantiate(this.playerBoardPrefab);
-                    board.name = $"Player Board {input.Index}";
+                    PlayerBoard board = Instantiate(this.playerBoardPrefab).GetComponent<PlayerBoard>();
+                    board.gameObject.name = $"Player Board {idx + 1}";
                     this.CreateStars(board, starController);
-                    return board;
-                }, false);
+                    this.playerBoards.Add(board);
+                }
             }
 
-            public void CreateStars(GameObject board, StarController starController)
+            public void CreateStars(PlayerBoard board, StarController starController)
             {
                 TileColor[] colors = TileColorUtils.GetTileColors();
-                GameObject stars = new GameObject("Stars");
-                stars.transform.SetParent(board.transform);
-                stars.transform.localPosition = Vector3.zero;
-                GameObject outerRing = new GameObject("Outer Ring");
-                outerRing.transform.SetParent(stars.transform);
-                outerRing.transform.localPosition = Vector3.zero;
-                outerRing.transform.Rotate(0, 30, 0);
-                CircularLayout layout = outerRing.AddComponent<CircularLayout>();
-                layout.CreateLayout(colors.Length, this.starRadius, (input) =>
+                List<Star> stars = new();
+                for (int idx = 0; idx < colors.Length; idx++)
                 {
-                    Star star = starController.CreateStar(colors[input.Index]);
-                    return star.gameObject;
-                });
+                    stars.Add(starController.CreateStar(colors[idx]));
+                }
                 Star wildStar = starController.CreateStar(TileColor.WILD);
-                wildStar.transform.SetParent(stars.transform);
-                wildStar.transform.localPosition = Vector3.zero;
+                board.AddStars(stars);
+                board.AddCenterStar(wildStar);
+            }
+
+            public List<PlayerBoard> GetPlayerBoards()
+            {
+                return this.playerBoards;
             }
         }
     }

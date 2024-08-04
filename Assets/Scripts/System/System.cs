@@ -15,8 +15,10 @@ namespace Azul
         private FactoryController factoryController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
+        private RoundController roundController;
         private ScoreBoardController scoreBoardController;
         private StarController starController;
+        private TableController tableController;
         private TileController tileController;
         private TileMaterialProvider tileMaterialProvider;
 
@@ -69,6 +71,15 @@ namespace Azul
             return this.playerBoardController;
         }
 
+        public RoundController GetRoundController()
+        {
+            if (null == this.roundController)
+            {
+                this.roundController = this.GetComponentInChildren<RoundController>();
+            }
+            return this.roundController;
+        }
+
         public ScoreBoardController GetScoreBoardController()
         {
             if (null == this.scoreBoardController)
@@ -85,6 +96,15 @@ namespace Azul
                 this.starController = this.GetComponentInChildren<StarController>();
             }
             return this.starController;
+        }
+
+        public TableController GetTableController()
+        {
+            if (null == this.tableController)
+            {
+                this.tableController = this.GetComponentInChildren<TableController>();
+            }
+            return this.tableController;
         }
 
         public TileController GetTileController()

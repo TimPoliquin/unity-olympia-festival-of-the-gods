@@ -8,7 +8,13 @@ namespace Azul
     {
         public class Tile : MonoBehaviour
         {
-            public TileColor Color { get; private set; }
+            [SerializeField] private TileColor color;
+
+            public TileColor Color
+            {
+                get => this.color;
+                private set { this.color = value; }
+            }
 
             public static Tile Create(GameObject tilePrefab, TileColor color)
             {
