@@ -26,6 +26,12 @@ namespace Azul
                 this.CreateOneTile();
             }
 
+            public void InitializeListeners()
+            {
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnRoundPhasePrepareListener(this.OnRoundStart);
+            }
+
             private void CreateStandardTiles()
             {
                 this.tiles = new();
@@ -53,6 +59,12 @@ namespace Azul
             public Tile GetOneTile()
             {
                 return this.oneTile;
+            }
+
+            private void OnRoundStart(OnRoundPhasePreparePayload payload)
+            {
+                TableController tableController = System.Instance.GetTableController();
+                tableController.MoveOneTileToCenter(this.oneTile);
             }
         }
     }

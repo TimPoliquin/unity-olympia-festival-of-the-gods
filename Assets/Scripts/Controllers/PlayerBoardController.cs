@@ -28,6 +28,12 @@ namespace Azul
                 }
             }
 
+            public void InitializeListeners()
+            {
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+            }
+
             public void CreateStars(PlayerBoard board, StarController starController)
             {
                 TileColor[] colors = TileColorUtils.GetTileColors();
@@ -45,6 +51,16 @@ namespace Azul
             {
                 return this.playerBoards;
             }
+
+            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            {
+                this.playerBoards.ForEach(playerBoard =>
+                {
+                    playerBoard.DeactivateLight();
+                });
+                this.playerBoards[payload.PlayerNumber].ActivateLight();
+            }
+
         }
     }
 }

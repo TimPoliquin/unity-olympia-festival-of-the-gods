@@ -16,8 +16,24 @@ namespace Azul
         }
         public class Player : MonoBehaviour
         {
+            [SerializeField] private int playerNumber;
             [SerializeField] private string playerName;
             [SerializeField] private PlayerColor color;
+
+            public int GetPlayerNumber()
+            {
+                return this.playerNumber;
+            }
+
+            public string GetPlayerName()
+            {
+                return this.playerName;
+            }
+
+            public PlayerColor GetPlayerColor()
+            {
+                return this.color;
+            }
         }
     }
 }

@@ -29,6 +29,12 @@ namespace Azul
                 this.PlaceRoundCounter();
             }
 
+            public void InitializeListeners()
+            {
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
+            }
+
             private void CreateScoreBoard()
             {
                 this.scoreBoard = Instantiate(this.scoreBoardPrefab, this.position, Quaternion.identity).GetComponent<ScoreBoard>();
@@ -63,14 +69,14 @@ namespace Azul
                 this.scoreBoard.PlaceCounter(roundCounter);
             }
 
-            public void StartRound(int round)
-            {
-                this.scoreBoard.StartRound(round);
-            }
-
-            internal ScoreBoard GetScoreBoard()
+            public ScoreBoard GetScoreBoard()
             {
                 return this.scoreBoard;
+            }
+
+            private void OnRoundStart(OnRoundPhaseAcquirePayload payload)
+            {
+                this.scoreBoard.StartRound(payload.RoundNumber);
             }
         }
     }

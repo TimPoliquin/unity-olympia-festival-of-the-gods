@@ -26,6 +26,12 @@ namespace Azul
                 }
             }
 
+            public void InitializeListeners()
+            {
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnRoundPhasePrepareListener(this.OnRoundStart);
+            }
+
             public void FillFactories(BagController bagController)
             {
                 foreach (Factory factory in this.factories)
@@ -45,6 +51,11 @@ namespace Azul
             public List<Factory> GetFactories()
             {
                 return this.factories;
+            }
+
+            private void OnRoundStart(OnRoundPhasePreparePayload payload)
+            {
+                this.FillFactories(System.Instance.GetBagController());
             }
         }
     }

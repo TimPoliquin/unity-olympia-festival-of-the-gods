@@ -14,7 +14,7 @@ namespace Azul
             [SerializeField] private List<GameObject> roundMarkers;
             [SerializeField] private GameObject supplyRoot;
 
-            private int currentRound = 1;
+            private int currentRound = 0;
             private GameObject roundCounter;
             private CircularLayout supplyLayout;
             private List<TilePlaceholder> supplyPlaceholders;
@@ -28,7 +28,7 @@ namespace Azul
             public void PlaceCounter(GameObject roundCounter)
             {
                 this.roundCounter = roundCounter;
-                this.roundCounter.transform.SetParent(this.GetRoundMarker(1).transform);
+                this.roundCounter.transform.SetParent(this.GetRoundMarker(this.currentRound).transform);
                 this.roundCounter.transform.localPosition = Vector3.zero;
             }
 
@@ -84,7 +84,7 @@ namespace Azul
 
             private GameObject GetRoundMarker(int round)
             {
-                return this.roundMarkers[round - 1];
+                return this.roundMarkers[round];
             }
         }
     }

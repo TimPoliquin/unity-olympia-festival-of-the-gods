@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 750940726}
   - component: {fileID: 750940727}
   m_Layer: 0
-  m_Name: TableController
+  m_Name: Table Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -963,8 +963,8 @@ Transform:
   - {fileID: 722696937}
   - {fileID: 711781640}
   - {fileID: 665030964}
-  - {fileID: 171703399}
   - {fileID: 750940726}
+  - {fileID: 171703399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1372239318

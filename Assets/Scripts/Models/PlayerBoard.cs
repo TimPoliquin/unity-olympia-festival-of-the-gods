@@ -11,6 +11,7 @@ namespace Azul
     {
         [SerializeField] private GameObject outerRing;
         [SerializeField] private GameObject center;
+        [SerializeField] private Light activePlayerLight;
         private CircularLayout layout;
 
         void Awake()
@@ -28,6 +29,16 @@ namespace Azul
         {
             star.transform.SetParent(this.center.transform);
             star.transform.localPosition = Vector3.zero;
+        }
+
+        public void ActivateLight()
+        {
+            this.activePlayerLight.gameObject.SetActive(true);
+        }
+
+        public void DeactivateLight()
+        {
+            this.activePlayerLight.gameObject.SetActive(false);
         }
     }
 }

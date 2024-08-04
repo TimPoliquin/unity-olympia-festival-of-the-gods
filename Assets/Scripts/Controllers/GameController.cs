@@ -28,12 +28,19 @@ namespace Azul
                 tileController.SetupGame();
                 bagController.SetupGame(tileController.GetTiles());
                 scoreBoardController.FillSupply(bagController);
+                roundController.SetupGame();
+                // initialize event listeners
+                factoryController.InitializeListeners();
+                playerController.InitializeListeners();
+                playerBoardController.InitializeListeners();
+                scoreBoardController.InitializeListeners();
+                tileController.InitializeListeners();
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
                 tableController.AddFactories(factoryController.GetFactories());
                 tableController.AddScoreBoard(scoreBoardController.GetScoreBoard());
                 // Start the first round!   
-                roundController.StartRound(bagController, factoryController, tableController, tileController, scoreBoardController);
+                roundController.StartRound();
             }
         }
     }
