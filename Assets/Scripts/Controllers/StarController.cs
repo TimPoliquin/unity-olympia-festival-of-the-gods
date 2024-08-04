@@ -11,23 +11,24 @@ namespace Azul
     {
         public class StarController : MonoBehaviour
         {
-            [SerializeField] private float starRadius = 3.0f;
+            [SerializeField] private int numSpaces = 6;
+            [SerializeField] private GameObject starPrefab;
             [SerializeField] private GameObject tilePrefab;
             public Star CreateStar(TileColor color)
             {
                 StarSpace[] spaces = new StarSpace[6];
-                GameObject gameObject = new GameObject($"Star: {color}");
-                Star star = gameObject.AddComponent<Star>();
-                CircularLayout layout = gameObject.AddComponent<CircularLayout>();
-                layout.CreateLayout(6, this.starRadius, (input) =>
+                Star star = Instantiate(this.starPrefab).GetComponent<Star>();
+                List<TilePlaceholder> placeholders = new();
+                for (int idx = 0; idx < this.numSpaces; idx++)
                 {
                     TilePlaceholder tile = TilePlaceholder.Create(this.tilePrefab, color);
-                    tile.gameObject.name = $"Tile {input.Index + 1}";
+                    tile.gameObject.name = $"Tile {idx + 1}";
+                    placeholders.Add(tile);
                     StarSpace space = tile.AddComponent<StarSpace>();
-                    space.SetValue(input.Index + 1);
-                    spaces[input.Index] = space;
-                    return tile.gameObject;
-                });
+                    space.SetValue(idx + 1);
+                    spaces[idx] = space;
+                }
+                star.AddTilePlaceholders(placeholders);
                 star.SetColor(color);
                 star.SetSpaces(spaces);
                 return star;

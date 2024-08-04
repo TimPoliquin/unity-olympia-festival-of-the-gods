@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Layout;
@@ -11,11 +12,12 @@ namespace Azul
     {
         public class ScoreBoardController : MonoBehaviour
         {
-            [SerializeField] private Vector3 position = new Vector3(100, 0, 0);
+            [SerializeField] private Vector3 position = new Vector3(100, 1, -55);
             [SerializeField][Range(1, 10)] private int supplySize = 10;
             [SerializeField] private GameObject scoreBoardPrefab;
             [SerializeField] private GameObject tilePrefab;
             [SerializeField] private GameObject roundCounterPrefab;
+            [SerializeField] private Vector3 center = new Vector3(0, 1, 0);
 
             private ScoreBoard scoreBoard;
 
@@ -36,16 +38,12 @@ namespace Azul
             private void CreateSupplyStar()
             {
                 this.placeholderTiles = new();
-                GameObject gameObject = new GameObject("Supply");
-                gameObject.transform.SetParent(this.scoreBoard.transform);
-                gameObject.transform.localPosition = Vector3.zero;
-                CircularLayout layout = gameObject.AddComponent<CircularLayout>();
-                layout.CreateLayout(this.supplySize, 5.0f, (input) =>
+                for (int idx = 0; idx < this.supplySize; idx++)
                 {
                     TilePlaceholder tile = TilePlaceholder.Create(this.tilePrefab, TileColor.WILD);
                     this.placeholderTiles.Add(tile);
-                    return tile.gameObject;
-                });
+                }
+                this.scoreBoard.AddSupplyPlaceholders(this.placeholderTiles);
             }
 
             public void FillSupply(BagController bagController)
@@ -63,6 +61,16 @@ namespace Azul
             {
                 GameObject roundCounter = Instantiate(this.roundCounterPrefab);
                 this.scoreBoard.PlaceCounter(roundCounter);
+            }
+
+            public void StartRound(int round)
+            {
+                this.scoreBoard.StartRound(round);
+            }
+
+            internal ScoreBoard GetScoreBoard()
+            {
+                return this.scoreBoard;
             }
         }
     }

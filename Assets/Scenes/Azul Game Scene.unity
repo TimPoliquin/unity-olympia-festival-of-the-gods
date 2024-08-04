@@ -169,6 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 357121812683179538, guid: a52c2382803b24cf5a1511683e4d1be0,
     type: 3}
+  oneTilePrefab: {fileID: 41146542106513827, guid: c508d9b6074da4ab1846f0d5ef8fd09f,
+    type: 3}
 --- !u!1 &184919606
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   factoryPrefab: {fileID: 3137074464948484334, guid: 6d9feae17de9f4cf981c2c27be5274a2,
     type: 3}
-  radius: 22
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +588,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f92f95772b426451b91b68db6c8204c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starRadius: 3
+  numSpaces: 6
+  starPrefab: {fileID: 3547100486354346244, guid: 91ee429f1a982434c906cd7c4cdc024f,
+    type: 3}
   tilePrefab: {fileID: 357121812683179538, guid: d54a7adaee83d47269c62ea938082304,
     type: 3}
 --- !u!1 &711781639
@@ -634,13 +637,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6786157fe0434b6bbeb625ab6e3c5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 100, y: 0, z: -55}
+  position: {x: 100, y: 1, z: -55}
   supplySize: 10
   scoreBoardPrefab: {fileID: 8489097964935522112, guid: d3ee027de824e4894aac478c6161b4b7,
     type: 3}
   tilePrefab: {fileID: 357121812683179538, guid: d54a7adaee83d47269c62ea938082304,
     type: 3}
   roundCounterPrefab: {fileID: 5254510402654930809, guid: 5f695cf4e283c4f75a0b61de7ea114cc,
+    type: 3}
+  center: {x: 0, y: 1, z: 0}
+--- !u!1 &722696936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722696937}
+  - component: {fileID: 722696938}
+  m_Layer: 0
+  m_Name: Round Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &722696937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722696936}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372239317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &722696938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722696936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f934726005d54cd68ff5fa3aedb9e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalRounds: 6
+--- !u!1 &750940725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 750940726}
+  - component: {fileID: 750940727}
+  m_Layer: 0
+  m_Name: TableController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &750940726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750940725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372239317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &750940727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750940725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13c6889173be410b8d2e3991365c342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePrefab: {fileID: 3012490089708659830, guid: de9edcc0bf5284fa3917a597f4655a81,
     type: 3}
 --- !u!1 &832575517
 GameObject:
@@ -783,8 +878,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBoardPrefab: {fileID: 6295110258185855427, guid: 7b7e63a950bed4307b5a4ea636929ec4,
     type: 3}
-  radius: 55
-  starRadius: 11
 --- !u!1 &1205809331
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,9 +960,11 @@ Transform:
   - {fileID: 525882712}
   - {fileID: 1125167889}
   - {fileID: 1794454473}
+  - {fileID: 722696937}
   - {fileID: 711781640}
   - {fileID: 665030964}
   - {fileID: 171703399}
+  - {fileID: 750940726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1372239318

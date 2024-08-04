@@ -10,36 +10,36 @@ namespace Azul
 {
     namespace Layout
     {
-        public class CircularLayout : MonoBehaviour
+        public class CircularLayout : MonoBehaviour, Layout
         {
+            [SerializeField] private float radius;
+            [SerializeField] private bool rotate;
 
-            private float radius;
-            public class CircularLayoutElementInput
+            public void AddChildren(List<GameObject> children)
             {
-                public int Index { get; init; }
-                public Vector3 Position { get; init; }
-                public float Angle { get; init; }
-            }
-
-            public void CreateLayout(int numElements, float radius, Func<CircularLayoutElementInput, GameObject> CreateElement, bool rotate = true)
-            {
-                this.radius = radius;
+                int numElements = children.Count;
                 float arcSize = Mathf.PI * 2.0f / numElements;
                 for (int idx = 0; idx < numElements; idx++)
                 {
                     float x = radius * Mathf.Sin(idx * arcSize);
                     float z = radius * Mathf.Cos(idx * arcSize);
-                    GameObject element = CreateElement(new CircularLayoutElementInput
-                    {
-                        Index = idx,
-                    });
+                    GameObject element = children[idx];
                     element.transform.SetParent(this.transform);
                     element.transform.localPosition = new Vector3(x, 0, z);
-                    if (rotate)
+                    if (this.rotate)
                     {
                         element.transform.Rotate(0, Mathf.Rad2Deg * arcSize * idx, 0);
                     }
                 }
+            }
+
+            public static CircularLayout CreateCircularLayout(int numElements, float radius, Func<int, GameObject> CreateElement, bool rotate = true)
+            {
+                CircularLayout layout = new GameObject("Circular Layout").AddComponent<CircularLayout>();
+                layout.radius = radius;
+                layout.rotate = rotate;
+                List<GameObject> children = new();
+                return layout;
             }
 
             void OnDrawGizmosSelected()
