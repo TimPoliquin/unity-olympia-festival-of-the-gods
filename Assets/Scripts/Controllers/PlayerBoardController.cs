@@ -52,6 +52,12 @@ namespace Azul
                 return this.playerBoards;
             }
 
+            public void AddDrawnTiles(int player, List<Tile> tiles)
+            {
+                UnityEngine.Debug.Log($"Player {player} drew {tiles.Count} tiles");
+                this.playerBoards[player].AddDrawnTiles(tiles);
+            }
+
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
             {
                 this.playerBoards.ForEach(playerBoard =>

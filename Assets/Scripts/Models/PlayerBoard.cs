@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Layout;
 using Azul.Model;
+using Azul.Utils;
 using UnityEngine;
 
 namespace Azul
@@ -11,8 +12,10 @@ namespace Azul
     {
         [SerializeField] private GameObject outerRing;
         [SerializeField] private GameObject center;
+        [SerializeField] private GameObject drawnTilesContainer;
         [SerializeField] private Light activePlayerLight;
         private CircularLayout layout;
+        private List<Tile> drawnTiles = new();
 
         void Awake()
         {
@@ -39,6 +42,16 @@ namespace Azul
         public void DeactivateLight()
         {
             this.activePlayerLight.gameObject.SetActive(false);
+        }
+
+        public void AddDrawnTiles(List<Tile> tiles)
+        {
+            this.drawnTiles.AddRange(tiles);
+            foreach (Tile tile in tiles)
+            {
+                tile.transform.SetParent(this.drawnTilesContainer.transform);
+                tile.transform.localPosition = VectorUtils.CreateRandomVector3(-5, 5);
+            }
         }
     }
 }

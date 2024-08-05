@@ -1,16 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 namespace Azul
 {
     namespace Model
     {
-
+        public class OnFactoryAddTilesPayload
+        {
+            public List<Tile> Tiles { get; init; }
+        }
+        public class OnFactoryDrawTilesPayload
+        {
+            public List<Tile> TilesDrawn { get; init; }
+            public List<Tile> TilesDiscarded { get; init; }
+        }
         public class Factory : MonoBehaviour
         {
             [SerializeField] private List<GameObject> tileHolder;
             private List<Tile> tiles = new List<Tile>();
+
+            private UnityEvent<OnFactoryAddTilesPayload> onAddTiles = new();
+            private UnityEvent<OnFactoryDrawTilesPayload> onTileDraw = new();
+
 
             public void Fill(List<Tile> tiles)
             {
@@ -25,6 +40,45 @@ namespace Azul
                     tiles[idx].transform.SetParent(this.tileHolder[idx].transform);
                     tiles[idx].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 }
+                this.onAddTiles.Invoke(new OnFactoryAddTilesPayload { Tiles = this.tiles });
+            }
+
+            public void DrawTiles(List<Tile> drawnTiles)
+            {
+                OnFactoryDrawTilesPayload payload = new()
+                {
+                    TilesDrawn = new(),
+                    TilesDiscarded = new()
+                };
+                foreach (Tile tile in this.tiles)
+                {
+                    if (drawnTiles.Contains(tile))
+                    {
+                        payload.TilesDrawn.Add(tile);
+                    }
+                    else
+                    {
+                        payload.TilesDiscarded.Add(tile);
+                    }
+                    tile.transform.SetParent(null);
+                }
+                this.tiles.Clear();
+                this.onTileDraw.Invoke(payload);
+            }
+
+            public void AddOnAddTilesListener(UnityAction<OnFactoryAddTilesPayload> listener)
+            {
+                onAddTiles.AddListener(listener);
+            }
+
+            public void AddOnTilesDrawnListener(UnityAction<OnFactoryDrawTilesPayload> listener)
+            {
+                this.onTileDraw.AddListener(listener);
+            }
+
+            public bool IsEmpty()
+            {
+                return this.tiles.Count == 0;
             }
 
         }

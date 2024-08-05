@@ -12,6 +12,7 @@ namespace Azul
         {
             private int currentRound = 0;
             [SerializeField][Range(1, 6)] private int totalRounds = 6;
+            [SerializeField] private List<TileColor> wildColors;
             [SerializeField] private List<Round> rounds;
             [SerializeField] private UnityEvent<OnRoundPhasePreparePayload> onRoundPhasePrepare;
             [SerializeField] private UnityEvent<OnRoundPhaseAcquirePayload> onRoundPhaseAcquire;
@@ -30,8 +31,10 @@ namespace Azul
             private Round CreateRound(int idx)
             {
                 GameObject gameObject = new GameObject($"Round {idx + 1}");
+                gameObject.transform.SetParent(this.transform);
                 Round round = gameObject.AddComponent<Round>();
                 round.SetRoundNumber(idx);
+                round.SetWildColor(this.wildColors[idx]);
                 round.enabled = false;
                 return round;
             }
@@ -126,6 +129,10 @@ namespace Azul
             public void AddOnRoundPhaseAcquireListener(UnityAction<OnRoundPhaseAcquirePayload> listener)
             {
                 this.onRoundPhaseAcquire.AddListener(listener);
+            }
+            public void AddOnRoundPhaseScoreListener(UnityAction<OnRoundPhaseScorePayload> listener)
+            {
+                this.onRoundPhaseScore.AddListener(listener);
             }
         }
     }

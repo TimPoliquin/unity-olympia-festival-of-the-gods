@@ -18,6 +18,12 @@ namespace Azul
                 this.table = Instantiate(this.tablePrefab, Vector3.zero, Quaternion.identity).GetComponent<Table>();
             }
 
+            public void InitializeListeners()
+            {
+                FactoryController factoryController = System.Instance.GetFactoryController();
+                factoryController.AddOnFactoryTilesDiscardedListener(this.OnTilesDiscarded);
+            }
+
             public void AddPlayerBoards(List<PlayerBoard> playerBoards)
             {
                 this.table.AddPlayerBoards(playerBoards);
@@ -36,6 +42,14 @@ namespace Azul
             public void MoveOneTileToCenter(Tile oneTile)
             {
                 this.table.AddToCenter(oneTile);
+            }
+
+            private void OnTilesDiscarded(OnFactoryTilesDiscarded payload)
+            {
+                foreach (Tile tile in payload.TilesDiscarded)
+                {
+                    this.table.AddToCenter(tile);
+                }
             }
         }
     }

@@ -39,7 +39,7 @@ namespace Azul
                 tile.transform.SetParent(this.center.transform);
                 // TODO - some kind of animation is probably warranted here.
                 // for now, we'll just drop it?
-                tile.transform.localPosition = Vector3.up * 5;
+                tile.transform.localPosition = new Vector3(Random.Range(-10f, 10f), 5f, Random.Range(-10f, 10f));
             }
         }
     }

@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5234731856542073814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2978454875877238320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8958452421285661116}
+  m_Layer: 0
+  m_Name: Drawn Tiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8958452421285661116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978454875877238320}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 30.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5234731856542073814}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4618461472505608305
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +275,7 @@ Transform:
   - {fileID: 38522812656592517}
   - {fileID: 8162120790641920421}
   - {fileID: 3036546520655425628}
+  - {fileID: 8958452421285661116}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6542341123791861406
@@ -260,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outerRing: {fileID: 4618461472505608305}
   center: {fileID: 2187565068416992923}
+  drawnTilesContainer: {fileID: 2978454875877238320}
   activePlayerLight: {fileID: 7361370295857271262}
 --- !u!1 &8822529597121872656
 GameObject:

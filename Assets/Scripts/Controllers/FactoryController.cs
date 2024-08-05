@@ -1,20 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azul.Debug;
 using Azul.Layout;
 using Azul.Model;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
     namespace Controller
     {
+        public class OnFactoryTilesDrawn
+        {
+            public List<Tile> TilesDrawn { get; init; }
+        }
+        public class OnFactoryTilesDiscarded
+        {
+            public List<Tile> TilesDiscarded { get; init; }
+        }
         public class FactoryController : MonoBehaviour
         {
             [SerializeField] private GameObject factoryPrefab;
             private List<Factory> factories;
+
+            private UnityEvent<OnFactoryTilesDrawn> onTilesDrawn = new();
+            private UnityEvent<OnFactoryTilesDiscarded> onTilesDiscarded = new();
 
             public void SetupGame(int numPlayers)
             {
@@ -36,16 +49,9 @@ namespace Azul
             {
                 foreach (Factory factory in this.factories)
                 {
-                    factory.Fill(bagController.Draw(4));
+                    List<Tile> tiles = bagController.Draw(4);
+                    factory.Fill(tiles);
                 }
-            }
-
-            GameObject CreateFactory(string name)
-            {
-                GameObject gameObject = Instantiate(this.factoryPrefab);
-                gameObject.name = name;
-                this.factories.Add(gameObject.GetComponent<Factory>());
-                return gameObject;
             }
 
             public List<Factory> GetFactories()
@@ -53,9 +59,39 @@ namespace Azul
                 return this.factories;
             }
 
+            public void AddOnFactoryTilesDrawnListener(UnityAction<OnFactoryTilesDrawn> listener)
+            {
+                this.onTilesDrawn.AddListener(listener);
+            }
+
+            public void AddOnFactoryTilesDiscardedListener(UnityAction<OnFactoryTilesDiscarded> listener)
+            {
+                this.onTilesDiscarded.AddListener(listener);
+            }
+
+            private GameObject CreateFactory(string name)
+            {
+                Factory factory = Instantiate(this.factoryPrefab).GetComponent<Factory>();
+                factory.gameObject.name = name;
+                factory.AddOnTilesDrawnListener(this.OnFactoryDrawTiles);
+                this.factories.Add(factory);
+                return gameObject;
+            }
+
             private void OnRoundStart(OnRoundPhasePreparePayload payload)
             {
                 this.FillFactories(System.Instance.GetBagController());
+            }
+
+            private void OnFactoryDrawTiles(OnFactoryDrawTilesPayload payload)
+            {
+                this.onTilesDrawn.Invoke(new OnFactoryTilesDrawn { TilesDrawn = payload.TilesDrawn });
+                this.onTilesDiscarded.Invoke(new OnFactoryTilesDiscarded { TilesDiscarded = payload.TilesDiscarded });
+                // check for empty factories
+                if (this.factories.All(factory => factory.IsEmpty()))
+                {
+                    UnityEngine.Debug.Log("All factories are empty!");
+                }
             }
         }
     }

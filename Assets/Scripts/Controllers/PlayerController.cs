@@ -23,6 +23,8 @@ namespace Azul
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
+                FactoryController factoryController = System.Instance.GetFactoryController();
+                factoryController.AddOnFactoryTilesDrawnListener(this.OnTilesDrawn);
             }
 
             public int GetNumberOfPlayers()
@@ -58,10 +60,7 @@ namespace Azul
             public void NextTurn()
             {
                 this.currentPlayer = (this.currentPlayer + 1) % this.players.Count;
-                if (this.currentPlayer == this.turnStartsWith)
-                {
-
-                }
+                this.StartTurn();
             }
 
             public void AddOnPlayerTurnStartListener(UnityAction<OnPlayerTurnStartPayload> listener)
@@ -81,6 +80,12 @@ namespace Azul
                 }
                 this.currentPlayer = this.turnStartsWith;
                 this.StartTurn();
+            }
+
+            private void OnTilesDrawn(OnFactoryTilesDrawn payload)
+            {
+                System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.TilesDrawn);
+                this.NextTurn();
             }
 
         }

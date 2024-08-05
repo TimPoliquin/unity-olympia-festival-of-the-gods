@@ -34,6 +34,7 @@ namespace Azul
                 playerController.InitializeListeners();
                 playerBoardController.InitializeListeners();
                 scoreBoardController.InitializeListeners();
+                tableController.InitializeListeners();
                 tileController.InitializeListeners();
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
