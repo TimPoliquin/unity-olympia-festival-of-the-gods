@@ -31,17 +31,20 @@ namespace Azul
         public class OnRoundPhaseAcquirePayload
         {
             public int RoundNumber { get; init; }
+            public readonly Phase Phase = Phase.ACQUIRE;
             public TileColor WildColor { get; init; }
         }
 
         public class OnRoundPhaseScorePayload
         {
             public int RoundNumber { get; init; }
+            public readonly Phase Phase = Phase.SCORE;
         }
 
         public class OnRoundPhasePreparePayload
         {
             public int RoundNumber { get; init; }
+            public readonly Phase Phase = Phase.PREPARE;
         }
 
         public class OnAllRoundsCompletePayload
@@ -78,6 +81,11 @@ namespace Azul
             public TileColor GetWildColor()
             {
                 return this.wildColor;
+            }
+
+            public void SetWildColor(TileColor wildColor)
+            {
+                this.wildColor = wildColor;
             }
 
             public void SetPhase(Phase phase)

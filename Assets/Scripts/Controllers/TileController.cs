@@ -39,7 +39,8 @@ namespace Azul
                 for (int idx = 0; idx < NUM_TILES; idx++)
                 {
                     TileColor tileColor = tileColors[idx % tileColors.Length];
-                    tiles.Add(Tile.Create(this.tilePrefab, tileColor));
+                    Tile tile = Tile.Create(this.tilePrefab, tileColor);
+                    tiles.Add(tile);
                 }
                 tiles.Shuffle();
             }

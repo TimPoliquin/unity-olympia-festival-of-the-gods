@@ -1,20 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azul.Debug;
 using Azul.Layout;
 using Azul.Model;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
     namespace Controller
     {
+        public class OnFactoryTilesDrawn
+        {
+            public List<Tile> TilesDrawn { get; init; }
+        }
+        public class OnFactoryTilesDiscarded
+        {
+            public List<Tile> TilesDiscarded { get; init; }
+        }
         public class FactoryController : MonoBehaviour
         {
             [SerializeField] private GameObject factoryPrefab;
             private List<Factory> factories;
+
+            private UnityEvent<OnFactoryTilesDrawn> onTilesDrawn = new();
+            private UnityEvent<OnFactoryTilesDiscarded> onTilesDiscarded = new();
 
             public void SetupGame(int numPlayers)
             {
@@ -37,14 +50,6 @@ namespace Azul
                 foreach (Factory factory in this.factories)
                 {
                     List<Tile> tiles = bagController.Draw(4);
-                    tiles.ForEach(tile =>
-                    {
-                        // TODO - this doesn't feel like it belongs in the FACTORY controller.
-                        TilePointerController tilePointerController = tile.GetComponent<TilePointerController>();
-                        tilePointerController.AddOnTileHoverEnterListener(this.OnTileHoverEnter);
-                        tilePointerController.AddOnTileHoverExitListener(this.OnTileHoverExit);
-                        tilePointerController.AddOnTileSelectListener(this.OnTileSelect);
-                    });
                     factory.Fill(tiles);
                 }
             }
@@ -54,11 +59,22 @@ namespace Azul
                 return this.factories;
             }
 
+            public void AddOnFactoryTilesDrawnListener(UnityAction<OnFactoryTilesDrawn> listener)
+            {
+                this.onTilesDrawn.AddListener(listener);
+            }
+
+            public void AddOnFactoryTilesDiscardedListener(UnityAction<OnFactoryTilesDiscarded> listener)
+            {
+                this.onTilesDiscarded.AddListener(listener);
+            }
+
             private GameObject CreateFactory(string name)
             {
-                GameObject gameObject = Instantiate(this.factoryPrefab);
-                gameObject.name = name;
-                this.factories.Add(gameObject.GetComponent<Factory>());
+                Factory factory = Instantiate(this.factoryPrefab).GetComponent<Factory>();
+                factory.gameObject.name = name;
+                factory.AddOnTilesDrawnListener(this.OnFactoryDrawTiles);
+                this.factories.Add(factory);
                 return gameObject;
             }
 
@@ -67,20 +83,15 @@ namespace Azul
                 this.FillFactories(System.Instance.GetBagController());
             }
 
-            private void OnTileHoverEnter(OnTileHoverEnterPayload payload)
+            private void OnFactoryDrawTiles(OnFactoryDrawTilesPayload payload)
             {
-                UnityEngine.Debug.Log("Hovering tile");
-            }
-
-            private void OnTileHoverExit(OnTileHoverExitPayload payload)
-            {
-                UnityEngine.Debug.Log("Exiting tile");
-
-            }
-
-            private void OnTileSelect(OnTileSelectPayload payload)
-            {
-                UnityEngine.Debug.Log("Selecing tile");
+                this.onTilesDrawn.Invoke(new OnFactoryTilesDrawn { TilesDrawn = payload.TilesDrawn });
+                this.onTilesDiscarded.Invoke(new OnFactoryTilesDiscarded { TilesDiscarded = payload.TilesDiscarded });
+                // check for empty factories
+                if (this.factories.All(factory => factory.IsEmpty()))
+                {
+                    UnityEngine.Debug.Log("All factories are empty!");
+                }
             }
         }
     }

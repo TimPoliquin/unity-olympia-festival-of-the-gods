@@ -65,6 +65,21 @@ namespace Azul
             {
                 this.onTileSelect.AddListener(listener);
             }
+
+            public void RemoveOnTileHoverEnterListener(UnityAction<OnTileHoverEnterPayload> listener)
+            {
+                this.onTileHoverEnter.RemoveListener(listener);
+            }
+
+            public void RemoveOnTileHoverExitListener(UnityAction<OnTileHoverExitPayload> listener)
+            {
+                this.onTileHoverExit.RemoveListener(listener);
+            }
+
+            public void RemoveOnTileSelectListener(UnityAction<OnTileSelectPayload> listener)
+            {
+                this.onTileSelect.RemoveListener(listener);
+            }
         }
     }
 }

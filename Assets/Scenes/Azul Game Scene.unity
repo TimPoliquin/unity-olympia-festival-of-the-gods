@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f123abbe6f5164d0dac608a9b5170b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 357121812683179538, guid: a52c2382803b24cf5a1511683e4d1be0,
+  tilePrefab: {fileID: 6708705830643974671, guid: cfb58a2aa0de04b379f3d89f4c86b86d,
     type: 3}
   oneTilePrefab: {fileID: 41146542106513827, guid: c508d9b6074da4ab1846f0d5ef8fd09f,
     type: 3}
@@ -708,6 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalRounds: 6
+  wildColors: 040000000300000005000000020000000100000000000000
   rounds: []
   onRoundPhasePrepare:
     m_PersistentCalls:
