@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
@@ -19,6 +20,9 @@ namespace Azul
             [SerializeField] private UnityEvent<OnRoundPhaseScorePayload> onRoundPhaseScore;
             [SerializeField] private UnityEvent<OnAllRoundsCompletePayload> onAllRoundsComplete;
 
+            private bool factoriesEmpty = false;
+            private bool tableEmpty = false;
+
             public void SetupGame()
             {
                 this.rounds = new();
@@ -26,6 +30,31 @@ namespace Azul
                 {
                     this.rounds.Add(this.CreateRound(idx));
                 }
+            }
+
+            public void InitializeListeners()
+            {
+                TableController tableController = System.Instance.GetTableController();
+                tableController.AddOnTilesAddedListener(this.OnTableTilesAdded);
+                tableController.AddOnTableEmptyListener(this.OnTableEmpty);
+                FactoryController factoryController = System.Instance.GetFactoryController();
+                factoryController.AddOnAllFactoriesEmptyListener(this.OnAllFactoriesEmpty);
+            }
+
+            private void OnTableTilesAdded(TableController.OnTableTilesAddedPayload arg0)
+            {
+                this.tableEmpty = false;
+            }
+            private void OnAllFactoriesEmpty()
+            {
+                this.factoriesEmpty = true;
+                this.CheckAcquirePhaseComplete();
+            }
+
+            private void OnTableEmpty()
+            {
+                this.tableEmpty = true;
+                this.CheckAcquirePhaseComplete();
             }
 
             private Round CreateRound(int idx)
@@ -41,6 +70,8 @@ namespace Azul
 
             public void StartRound()
             {
+                this.factoriesEmpty = false;
+                this.tableEmpty = false;
                 if (this.currentRound == 0)
                 {
                     this.onRoundPhasePrepare.Invoke(new OnRoundPhasePreparePayload
@@ -80,6 +111,7 @@ namespace Azul
                 switch (currentRound.GetCurrentPhase())
                 {
                     case Phase.ACQUIRE:
+                        UnityEngine.Debug.Log($"Round {this.currentRound + 1} Phase Acquire");
                         this.onRoundPhaseAcquire.Invoke(new OnRoundPhaseAcquirePayload
                         {
                             RoundNumber = currentRound.GetRoundNumber(),
@@ -87,12 +119,14 @@ namespace Azul
                         });
                         break;
                     case Phase.SCORE:
+                        UnityEngine.Debug.Log($"Round {this.currentRound + 1} Phase Score");
                         this.onRoundPhaseScore.Invoke(new OnRoundPhaseScorePayload
                         {
                             RoundNumber = currentRound.GetRoundNumber()
                         });
                         break;
                     case Phase.PREPARE:
+                        UnityEngine.Debug.Log($"Round {this.currentRound + 1} Phase Prepare");
                         this.onRoundPhasePrepare.Invoke(new OnRoundPhasePreparePayload
                         {
                             RoundNumber = this.currentRound
@@ -118,6 +152,14 @@ namespace Azul
                 else
                 {
                     this.onAllRoundsComplete.Invoke(new OnAllRoundsCompletePayload { });
+                }
+            }
+
+            private void CheckAcquirePhaseComplete()
+            {
+                if (this.rounds[this.currentRound].GetCurrentPhase() == Phase.ACQUIRE && this.factoriesEmpty && this.tableEmpty)
+                {
+                    this.NextPhase();
                 }
             }
 

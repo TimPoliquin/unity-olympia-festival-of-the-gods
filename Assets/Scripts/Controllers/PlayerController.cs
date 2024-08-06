@@ -24,7 +24,9 @@ namespace Azul
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
                 FactoryController factoryController = System.Instance.GetFactoryController();
-                factoryController.AddOnFactoryTilesDrawnListener(this.OnTilesDrawn);
+                factoryController.AddOnFactoryTilesDrawnListener(this.OnFactoryTilesDrawn);
+                TableController tableController = System.Instance.GetTableController();
+                tableController.AddOnTilesDrawnListener(this.OnTableTilesDrawn);
             }
 
             public int GetNumberOfPlayers()
@@ -57,7 +59,7 @@ namespace Azul
                 });
             }
 
-            public void NextTurn()
+            private void NextTurn()
             {
                 this.currentPlayer = (this.currentPlayer + 1) % this.players.Count;
                 this.StartTurn();
@@ -82,9 +84,19 @@ namespace Azul
                 this.StartTurn();
             }
 
-            private void OnTilesDrawn(OnFactoryTilesDrawn payload)
+            private void OnFactoryTilesDrawn(OnFactoryTilesDrawn payload)
             {
                 System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.TilesDrawn);
+                this.NextTurn();
+            }
+
+            private void OnTableTilesDrawn(TableController.OnTableTilesDrawnPayload payload)
+            {
+                System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.Tiles);
+                if (payload.IncludesOneTile)
+                {
+                    System.Instance.GetScoreBoardController().DeductPoints(this.currentPlayer, payload.Tiles.Count);
+                }
                 this.NextTurn();
             }
 
