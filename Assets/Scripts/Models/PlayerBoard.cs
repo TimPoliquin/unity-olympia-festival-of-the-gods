@@ -3,55 +3,98 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Layout;
 using Azul.Model;
+using Azul.PlayerBoardEvents;
 using Azul.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
-    public class PlayerBoard : MonoBehaviour
+    namespace PlayerBoardEvents
     {
-        [SerializeField] private GameObject outerRing;
-        [SerializeField] private GameObject center;
-        [SerializeField] private GameObject drawnTilesContainer;
-        [SerializeField] private Light activePlayerLight;
-        private CircularLayout layout;
-        private List<Tile> drawnTiles = new();
-
-        void Awake()
+        public class OnPlayerAcquireOneTilePayload
         {
-            this.layout = this.outerRing.GetComponent<CircularLayout>();
+            public int PlayerNumber { get; init; }
+            public List<Tile> AcquiredTiles { get; init; }
         }
-
-
-        public void AddStars(List<Star> stars)
+    }
+    namespace Model
+    {
+        public class PlayerBoard : MonoBehaviour
         {
-            this.layout.AddChildren(stars.Select(star => star.gameObject).ToList());
-        }
+            [SerializeField] private GameObject outerRing;
+            [SerializeField] private GameObject center;
+            [SerializeField] private GameObject drawnTilesContainer;
+            [SerializeField] private Light activePlayerLight;
+            private int playerNumber;
+            private CircularLayout layout;
+            private List<Tile> drawnTiles = new();
+            private bool hasOneTile;
 
-        public void AddCenterStar(Star star)
-        {
-            star.transform.SetParent(this.center.transform);
-            star.transform.localPosition = Vector3.zero;
-        }
+            private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
 
-        public void ActivateLight()
-        {
-            this.activePlayerLight.gameObject.SetActive(true);
-        }
-
-        public void DeactivateLight()
-        {
-            this.activePlayerLight.gameObject.SetActive(false);
-        }
-
-        public void AddDrawnTiles(List<Tile> tiles)
-        {
-            this.drawnTiles.AddRange(tiles);
-            foreach (Tile tile in tiles)
+            void Awake()
             {
-                tile.transform.SetParent(this.drawnTilesContainer.transform);
-                tile.transform.localPosition = VectorUtils.CreateRandomVector3(-5, 5);
+                this.layout = this.outerRing.GetComponent<CircularLayout>();
             }
+
+
+            public void AddStars(List<Star> stars)
+            {
+                this.layout.AddChildren(stars.Select(star => star.gameObject).ToList());
+            }
+
+            public void AddCenterStar(Star star)
+            {
+                star.transform.SetParent(this.center.transform);
+                star.transform.localPosition = Vector3.zero;
+            }
+
+            public void ActivateLight()
+            {
+                this.activePlayerLight.gameObject.SetActive(true);
+            }
+
+            public void DeactivateLight()
+            {
+                this.activePlayerLight.gameObject.SetActive(false);
+            }
+
+            public void AddDrawnTiles(List<Tile> tiles)
+            {
+                this.drawnTiles.AddRange(tiles);
+                foreach (Tile tile in tiles)
+                {
+                    tile.transform.SetParent(this.drawnTilesContainer.transform);
+                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(-5, 5);
+                    if (tile.IsOneTile())
+                    {
+                        this.hasOneTile = true;
+                        this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
+                    }
+                }
+            }
+
+            public int GetPlayerNumber()
+            {
+                return this.playerNumber;
+            }
+
+            public void SetPlayerNumber(int playerNumber)
+            {
+                this.playerNumber = playerNumber;
+            }
+
+            public bool HasOneTile()
+            {
+                return this.hasOneTile;
+            }
+
+            public void AddOnAcquireOneTileListener(UnityAction<OnPlayerAcquireOneTilePayload> listener)
+            {
+                this.onAcquireOneTile.AddListener(listener);
+            }
+
         }
     }
 }

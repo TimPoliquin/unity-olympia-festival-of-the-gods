@@ -32,6 +32,11 @@ namespace Azul
                 }
             }
 
+            public bool IsOneTile()
+            {
+                return this.color == TileColor.ONE;
+            }
+
             public static Tile Create(GameObject tilePrefab, TileColor color)
             {
                 GameObject gameObject = Instantiate(tilePrefab);

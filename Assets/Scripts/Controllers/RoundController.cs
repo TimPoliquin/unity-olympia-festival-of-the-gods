@@ -41,6 +41,16 @@ namespace Azul
                 factoryController.AddOnAllFactoriesEmptyListener(this.OnAllFactoriesEmpty);
             }
 
+            public Round GetCurrentRound()
+            {
+                return this.rounds[this.currentRound];
+            }
+
+            public Phase GetCurrentPhase()
+            {
+                return this.GetCurrentRound().GetCurrentPhase();
+            }
+
             private void OnTableTilesAdded(TableController.OnTableTilesAddedPayload arg0)
             {
                 this.tableEmpty = false;

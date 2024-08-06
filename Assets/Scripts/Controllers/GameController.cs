@@ -12,6 +12,7 @@ namespace Azul
             void Start()
             {
                 BagController bagController = System.Instance.GetBagController();
+                CameraController cameraController = System.Instance.GetCameraController();
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 PlayerController playerController = System.Instance.GetPlayerController();
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
@@ -21,6 +22,7 @@ namespace Azul
                 TableController tableController = System.Instance.GetTableController();
                 TileController tileController = System.Instance.GetTileController();
                 // TODO - this should be triggered by the UI/Player Ready
+                cameraController.SetupGame();
                 tableController.SetupGame();
                 playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
                 scoreBoardController.SetupGame();
@@ -30,6 +32,7 @@ namespace Azul
                 scoreBoardController.FillSupply(bagController);
                 roundController.SetupGame();
                 // initialize event listeners
+                cameraController.InitializeListeners();
                 factoryController.InitializeListeners();
                 playerController.InitializeListeners();
                 playerBoardController.InitializeListeners();
