@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -45,6 +46,10 @@ namespace Azul
 
             public void DrawTiles(List<Tile> drawnTiles)
             {
+                if (this.tiles.Count == 0)
+                {
+                    throw new Exception("Attempted to draw from an empty factory. Event listeners are probably not being removed correctly");
+                }
                 OnFactoryDrawTilesPayload payload = new()
                 {
                     TilesDrawn = new(),

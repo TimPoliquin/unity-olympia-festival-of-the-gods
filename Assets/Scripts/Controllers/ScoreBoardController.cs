@@ -17,7 +17,6 @@ namespace Azul
             [SerializeField] private GameObject scoreBoardPrefab;
             [SerializeField] private GameObject tilePrefab;
             [SerializeField] private GameObject roundCounterPrefab;
-            [SerializeField] private Vector3 center = new Vector3(0, 1, 0);
 
             private ScoreBoard scoreBoard;
 
@@ -72,6 +71,12 @@ namespace Azul
             public ScoreBoard GetScoreBoard()
             {
                 return this.scoreBoard;
+            }
+
+            public void DeductPoints(int player, int points)
+            {
+                // TODO - score tracking!
+                UnityEngine.Debug.Log($"Deducting points: {player} loses {points} points");
             }
 
             private void OnRoundStart(OnRoundPhaseAcquirePayload payload)

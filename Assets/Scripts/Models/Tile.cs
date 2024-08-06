@@ -20,8 +20,8 @@ namespace Azul
 
             public TilePointerController GetTilePointerController()
             {
-                TilePointerController tilePointerController = null;
-                if (this.TryGetComponent<TilePointerController>(out tilePointerController))
+                TilePointerController tilePointerController;
+                if (this.TryGetComponent(out tilePointerController))
                 {
                     return tilePointerController;
                 }

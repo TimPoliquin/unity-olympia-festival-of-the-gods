@@ -54,7 +54,6 @@ namespace Azul
 
             public void AddDrawnTiles(int player, List<Tile> tiles)
             {
-                UnityEngine.Debug.Log($"Player {player} drew {tiles.Count} tiles");
                 this.playerBoards[player].AddDrawnTiles(tiles);
             }
 

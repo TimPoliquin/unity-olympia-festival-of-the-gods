@@ -28,6 +28,7 @@ namespace Azul
 
             private UnityEvent<OnFactoryTilesDrawn> onTilesDrawn = new();
             private UnityEvent<OnFactoryTilesDiscarded> onTilesDiscarded = new();
+            private UnityEvent onAllFactoriesEmpty = new();
 
             public void SetupGame(int numPlayers)
             {
@@ -90,8 +91,13 @@ namespace Azul
                 // check for empty factories
                 if (this.factories.All(factory => factory.IsEmpty()))
                 {
-                    UnityEngine.Debug.Log("All factories are empty!");
+                    this.onAllFactoriesEmpty.Invoke();
                 }
+            }
+
+            public void AddOnAllFactoriesEmptyListener(UnityAction listener)
+            {
+                this.onAllFactoriesEmpty.AddListener(listener);
             }
         }
     }

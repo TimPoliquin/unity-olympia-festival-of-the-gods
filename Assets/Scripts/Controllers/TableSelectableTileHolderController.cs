@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller;
 using Azul.Model;
 using UnityEngine;
 
@@ -7,16 +9,17 @@ namespace Azul
 {
     namespace Controller
     {
-        [RequireComponent(typeof(Factory))]
-        public class FactorySelectableTileHolderController : AbstractSelectableTileHolderController
+        [RequireComponent(typeof(Table))]
+        public class TableSelectableTileHolderController : AbstractSelectableTileHolderController
         {
-            private Factory factory;
+            private Table table;
+
             protected override void Awake()
             {
                 base.Awake();
-                this.factory = this.GetComponent<Factory>();
-                this.factory.AddOnAddTilesListener(this.OnAddTiles);
-                this.factory.AddOnTilesDrawnListener(this.OnTilesDrawn);
+                this.table = this.GetComponent<Table>();
+                this.table.AddOnTilesAddedListener(this.OnTilesAdded);
+                this.table.AddOnTilesDrawnListener(this.OnTilesDrawn);
             }
 
             protected override Phase[] GetActivePhases()
@@ -26,20 +29,18 @@ namespace Azul
 
             protected override void SelectTiles(List<Tile> selectedTiles)
             {
-                this.factory.DrawTiles(selectedTiles);
+                this.table.DrawTiles(selectedTiles);
             }
 
-            private void OnAddTiles(OnFactoryAddTilesPayload payload)
+            private void OnTilesAdded(Table.OnTableAddTilesPayload payload)
             {
                 this.AddTiles(payload.Tiles);
             }
 
-            private void OnTilesDrawn(OnFactoryDrawTilesPayload payload)
+            private void OnTilesDrawn(Table.OnTableDrawTilesPayload payload)
             {
-                this.RemoveTiles(payload.TilesDiscarded);
                 this.RemoveTiles(payload.TilesDrawn);
             }
         }
-
     }
 }

@@ -12,7 +12,7 @@ namespace Azul
     {
         public abstract class AbstractSelectableTileHolderController : MonoBehaviour
         {
-            [SerializeField] private List<Tile> tiles;
+            [SerializeField] private readonly List<Tile> tiles = new();
 
             private TileColor wildColor;
             private List<Tile> hoveredTiles = null;
@@ -23,16 +23,18 @@ namespace Azul
                 this.InitializeRoundPhaseHandlers();
             }
 
-            public void SetTiles(List<Tile> tiles)
+            public void AddTiles(List<Tile> tiles)
             {
-                this.Clear();
-                this.tiles = tiles;
-                foreach (Tile tile in tiles)
+                this.tiles.AddRange(tiles);
+                this.AddTileListeners(tiles);
+            }
+
+            public void RemoveTiles(List<Tile> tilesToRemove)
+            {
+                foreach (Tile tile in tilesToRemove)
                 {
-                    TilePointerController tilePointerController = tile.GetTilePointerController();
-                    tilePointerController.AddOnTileHoverEnterListener(this.OnTileHoverEnter);
-                    tilePointerController.AddOnTileHoverExitListener(this.OnTileHoverExit);
-                    tilePointerController.AddOnTileSelectListener(this.OnTileSelect);
+                    this.tiles.Remove(tile);
+                    this.RemoveTileListeners(tile);
                 }
             }
 
@@ -70,7 +72,6 @@ namespace Azul
                     return;
                 }
                 List<Tile> selectedTiles = new(this.hoveredTiles);
-                this.RemoveTileListeners();
                 this.DeselectTiles();
                 this.SelectTiles(selectedTiles);
             }
@@ -88,6 +89,10 @@ namespace Azul
                     foreach (Tile currentTile in this.tiles)
                     {
                         if (currentTile.Color == tile.Color)
+                        {
+                            this.hoveredTiles.Add(currentTile);
+                        }
+                        else if (currentTile.Color == TileColor.ONE)
                         {
                             this.hoveredTiles.Add(currentTile);
                         }
@@ -134,24 +139,30 @@ namespace Azul
                 });
             }
 
-            protected void Clear()
-            {
-                if (null != this.tiles)
-                {
-                    this.RemoveTileListeners();
-                }
-                this.tiles = null;
-                this.hoveredTiles = null;
-            }
-
             private void RemoveTileListeners()
             {
                 foreach (Tile tile in this.tiles)
                 {
-                    TilePointerController controller = tile.GetTilePointerController();
-                    controller.RemoveOnTileHoverEnterListener(this.OnTileHoverEnter);
-                    controller.RemoveOnTileHoverExitListener(this.OnTileHoverExit);
-                    controller.RemoveOnTileSelectListener(this.OnTileSelect);
+                    this.RemoveTileListeners(tile);
+                }
+            }
+
+            private void RemoveTileListeners(Tile tile)
+            {
+                TilePointerController controller = tile.GetTilePointerController();
+                controller.RemoveOnTileHoverEnterListener(this.OnTileHoverEnter);
+                controller.RemoveOnTileHoverExitListener(this.OnTileHoverExit);
+                controller.RemoveOnTileSelectListener(this.OnTileSelect);
+            }
+
+            private void AddTileListeners(List<Tile> tiles)
+            {
+                foreach (Tile tile in tiles)
+                {
+                    TilePointerController tilePointerController = tile.GetTilePointerController();
+                    tilePointerController.AddOnTileHoverEnterListener(this.OnTileHoverEnter);
+                    tilePointerController.AddOnTileHoverExitListener(this.OnTileHoverExit);
+                    tilePointerController.AddOnTileSelectListener(this.OnTileSelect);
                 }
             }
 

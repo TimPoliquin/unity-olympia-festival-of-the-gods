@@ -33,6 +33,7 @@ namespace Azul
                 factoryController.InitializeListeners();
                 playerController.InitializeListeners();
                 playerBoardController.InitializeListeners();
+                roundController.InitializeListeners();
                 scoreBoardController.InitializeListeners();
                 tableController.InitializeListeners();
                 tileController.InitializeListeners();
