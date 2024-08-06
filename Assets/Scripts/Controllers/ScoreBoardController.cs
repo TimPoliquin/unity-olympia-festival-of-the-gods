@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Azul.Layout;
 using Azul.Model;
-using Unity.VisualScripting;
+using Azul.PlayerBoardEvents;
 using UnityEngine;
 
 namespace Azul
@@ -32,6 +31,8 @@ namespace Azul
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                playerBoardController.AddOnPlayerAcquiresOneTileListener(this.OnPlayerAcquireOneTile);
             }
 
             private void CreateScoreBoard()
@@ -77,6 +78,11 @@ namespace Azul
             {
                 // TODO - score tracking!
                 UnityEngine.Debug.Log($"Deducting points: {player} loses {points} points");
+            }
+
+            private void OnPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
+            {
+                this.DeductPoints(payload.PlayerNumber, payload.AcquiredTiles.Count);
             }
 
             private void OnRoundStart(OnRoundPhaseAcquirePayload payload)

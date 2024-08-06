@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
+using Azul.PlayerBoardEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,11 +23,14 @@ namespace Azul
             public void InitializeListeners()
             {
                 RoundController roundController = System.Instance.GetRoundController();
-                roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
+                roundController.AddOnRoundPhaseAcquireListener(this.OnRoundPhaseAcquireStart);
+                roundController.AddOnRoundPhaseScoreListener(this.OnRoundPhaseScoreStart);
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 factoryController.AddOnFactoryTilesDrawnListener(this.OnFactoryTilesDrawn);
                 TableController tableController = System.Instance.GetTableController();
                 tableController.AddOnTilesDrawnListener(this.OnTableTilesDrawn);
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                playerBoardController.AddOnPlayerAcquiresOneTileListener(this.onPlayerAcquireOneTile);
             }
 
             public int GetNumberOfPlayers()
@@ -56,6 +60,7 @@ namespace Azul
                 this.onPlayerTurnStart.Invoke(new OnPlayerTurnStartPayload
                 {
                     PlayerNumber = this.currentPlayer,
+                    Phase = System.Instance.GetRoundController().GetCurrentPhase()
                 });
             }
 
@@ -70,7 +75,7 @@ namespace Azul
                 this.onPlayerTurnStart.AddListener(listener);
             }
 
-            private void OnRoundStart(OnRoundPhaseAcquirePayload payload)
+            private void OnRoundPhaseAcquireStart(OnRoundPhaseAcquirePayload payload)
             {
                 if (this.playerWithOneTile >= 0)
                 {
@@ -84,6 +89,12 @@ namespace Azul
                 this.StartTurn();
             }
 
+            private void OnRoundPhaseScoreStart(OnRoundPhaseScorePayload payload)
+            {
+                this.currentPlayer = this.turnStartsWith;
+                this.StartTurn();
+            }
+
             private void OnFactoryTilesDrawn(OnFactoryTilesDrawn payload)
             {
                 System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.TilesDrawn);
@@ -93,11 +104,12 @@ namespace Azul
             private void OnTableTilesDrawn(TableController.OnTableTilesDrawnPayload payload)
             {
                 System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.Tiles);
-                if (payload.IncludesOneTile)
-                {
-                    System.Instance.GetScoreBoardController().DeductPoints(this.currentPlayer, payload.Tiles.Count);
-                }
                 this.NextTurn();
+            }
+
+            private void onPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
+            {
+                this.turnStartsWith = payload.PlayerNumber;
             }
 
         }

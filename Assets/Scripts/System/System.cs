@@ -12,6 +12,7 @@ namespace Azul
         public static System Instance { get; private set; }
 
         private BagController bagController;
+        private CameraController cameraController;
         private FactoryController factoryController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
@@ -42,6 +43,15 @@ namespace Azul
                 this.bagController = this.GetComponentInChildren<BagController>();
             }
             return this.bagController;
+        }
+
+        public CameraController GetCameraController()
+        {
+            if (null == this.cameraController)
+            {
+                this.cameraController = this.GetComponentInChildren<CameraController>();
+            }
+            return this.cameraController;
         }
 
         public FactoryController GetFactoryController()
