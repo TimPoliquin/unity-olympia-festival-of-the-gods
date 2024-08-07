@@ -24,7 +24,7 @@ namespace Azul
         {
             [SerializeField] private GameObject outerRing;
             [SerializeField] private GameObject center;
-            [SerializeField] private GameObject drawnTilesContainer;
+            [SerializeField] private DrawnTilesContainer drawnTilesContainer;
             [SerializeField] private Light activePlayerLight;
             private int playerNumber;
             private CircularLayout layout;
@@ -63,15 +63,13 @@ namespace Azul
             public void AddDrawnTiles(List<Tile> tiles)
             {
                 this.drawnTiles.AddRange(tiles);
-                foreach (Tile tile in tiles)
+                this.drawnTilesContainer.AddTiles(tiles);
+                Tile oneTile = tiles.Find(tile => tile.IsOneTile());
+                if (null != oneTile)
                 {
-                    tile.transform.SetParent(this.drawnTilesContainer.transform);
-                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(-5, 5);
-                    if (tile.IsOneTile())
-                    {
-                        this.hasOneTile = true;
-                        this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
-                    }
+                    this.hasOneTile = true;
+                    this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
+
                 }
             }
 
