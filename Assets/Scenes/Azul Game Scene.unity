@@ -1458,7 +1458,7 @@ MonoBehaviour:
     rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
     size: 80
   scoreSettings:
-    offset: {x: 0, y: 45, z: 0}
+    offset: {x: 0, y: 45, z: -20}
     rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
     size: 28
 --- !u!1 &1970053654
