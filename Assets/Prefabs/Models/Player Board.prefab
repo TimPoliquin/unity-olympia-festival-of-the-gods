@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2256d456e2641a6883cd5d94c7f30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outerRing: {fileID: 4618461472505608305}
+  outerRing: {fileID: 8932387556811609714}
   center: {fileID: 2187565068416992923}
   drawnTilesContainer: {fileID: 8216614471830517744}
   activePlayerLight: {fileID: 7361370295857271262}

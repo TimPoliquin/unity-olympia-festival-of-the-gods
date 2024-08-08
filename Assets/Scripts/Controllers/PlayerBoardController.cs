@@ -68,8 +68,13 @@ namespace Azul
                 this.playerBoards.ForEach(playerBoard =>
                 {
                     playerBoard.DeactivateLight();
+                    playerBoard.DisableAllHighlights();
                 });
                 this.playerBoards[payload.PlayerNumber].ActivateLight();
+                if (payload.Phase == Phase.SCORE)
+                {
+                    this.OnPlayerTurnScoringStart(payload.PlayerNumber);
+                }
             }
 
             public int GetPlayerWithOneTile()
@@ -80,6 +85,31 @@ namespace Azul
             public void AddOnPlayerAcquiresOneTileListener(UnityAction<OnPlayerAcquireOneTilePayload> listener)
             {
                 this.playerBoards.ForEach(playerBoard => playerBoard.AddOnAcquireOneTileListener(listener));
+            }
+
+            private void OnPlayerTurnScoringStart(int playerNumber)
+            {
+                Dictionary<TileColor, int> tileColorCounts = new();
+                PlayerBoard board = this.playerBoards[playerNumber];
+                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+                foreach (TileColor tileColor in TileColorUtils.GetTileColors())
+                {
+                    tileColorCounts[tileColor] = board.GetTileCount(tileColor);
+                }
+                List<TileColor> wildStarUsedColors = board.GetWildTileColors();
+                foreach (KeyValuePair<TileColor, int> kvp in tileColorCounts)
+                {
+                    if (kvp.Value > 0)
+                    {
+                        int usableCount = kvp.Value + (kvp.Key == wildColor ? 0 : tileColorCounts[wildColor]);
+                        List<StarSpace> spaces = board.GetOpenSpaces(kvp.Key).FindAll(space => usableCount >= space.GetValue());
+                        if (!wildStarUsedColors.Contains(kvp.Key))
+                        {
+                            spaces.AddRange(board.GetWildOpenSpaces().FindAll(wildSpace => usableCount >= wildSpace.GetValue()));
+                        }
+                        spaces.ForEach(space => space.ActivateHighlight());
+                    }
+                }
             }
         }
     }
