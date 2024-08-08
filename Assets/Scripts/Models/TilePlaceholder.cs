@@ -48,6 +48,18 @@ namespace Azul
             return this.color;
         }
 
+        public TileColor GetEffectiveColor()
+        {
+            if (null != this.real)
+            {
+                return this.real.Color;
+            }
+            else
+            {
+                return this.color;
+            }
+        }
+
         public static TilePlaceholder Create(GameObject placeholderPrefab, TileColor color)
         {
             GameObject gameObject = Instantiate(placeholderPrefab);
