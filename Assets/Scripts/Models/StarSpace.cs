@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Azul
@@ -18,6 +19,11 @@ namespace Azul
             {
                 this.tile = this.GetComponent<TilePlaceholder>();
                 this.outline = this.GetComponent<Outline>();
+            }
+
+            void Start()
+            {
+                System.Instance.GetUIController().GetStarUIController().CreateStarSpaceUI(this);
             }
 
             public int GetValue()

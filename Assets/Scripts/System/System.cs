@@ -22,6 +22,7 @@ namespace Azul
         private TableController tableController;
         private TileController tileController;
         private TileMaterialProvider tileMaterialProvider;
+        private UIController uiController;
 
         void Awake()
         {
@@ -133,6 +134,15 @@ namespace Azul
                 this.tileMaterialProvider = this.GetComponentInChildren<TileMaterialProvider>();
             }
             return this.tileMaterialProvider;
+        }
+
+        public UIController GetUIController()
+        {
+            if (null == this.uiController)
+            {
+                this.uiController = this.GetComponentInChildren<UIController>();
+            }
+            return this.uiController;
         }
     }
 }
