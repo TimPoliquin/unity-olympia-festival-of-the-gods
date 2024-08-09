@@ -1,6 +1,7 @@
 using Azul.Model;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Azul
@@ -12,6 +13,9 @@ namespace Azul
             [SerializeField] private Camera mainCamera;
             [SerializeField] private CameraSettings acquireSettings;
             [SerializeField] private CameraSettings scoreSettings;
+
+            private UnityEvent onFocusOnTable = new();
+            private UnityEvent onFocusOnPlayerBoard = new();
 
             public void SetupGame()
             {
@@ -44,16 +48,35 @@ namespace Azul
             {
                 // positioning is not quite right - it seems to be good for the left-player, but bad for the bottom player.
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
-                this.mainCamera.transform.position = this.scoreSettings.GetOffset() + playerBoard.transform.position;
-                this.mainCamera.transform.rotation = Quaternion.Euler(90.0f, 90.0f * (playerNumber), 0);
+                this.mainCamera.transform.rotation = Quaternion.Euler(90.0f, 90.0f * playerNumber, 0);
+                this.mainCamera.transform.position = new Vector3(playerBoard.transform.position.x, this.mainCamera.transform.position.y, playerBoard.transform.position.z);
+                this.mainCamera.transform.position += this.mainCamera.transform.right * 20.0f;
                 this.mainCamera.orthographicSize = scoreSettings.GetSize();
+                this.onFocusOnPlayerBoard.Invoke();
             }
 
             private void FocusOnTable(int playerNumber)
             {
                 this.mainCamera.transform.SetPositionAndRotation(acquireSettings.GetOffset(), acquireSettings.GetRotation());
                 this.mainCamera.orthographicSize = acquireSettings.GetSize();
+                this.onFocusOnTable.Invoke();
                 // should we rotate the camera?
+            }
+
+            public void AddOnFocusOnTableListener(UnityAction listener)
+            {
+                this.onFocusOnTable.AddListener(listener);
+            }
+
+            public void AddOnFocusOnPlayerBoardListener(UnityAction listener)
+            {
+                this.onFocusOnPlayerBoard.AddListener(listener);
+            }
+
+            public bool IsInView(GameObject gameObject)
+            {
+                Vector3 position = Camera.main.WorldToViewportPoint(gameObject.transform.position);
+                return position.x >= 0 & position.x <= 1 && position.y >= 0 && position.y <= 1 && position.z > 0;
             }
 
         }

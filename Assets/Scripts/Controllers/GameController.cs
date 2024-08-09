@@ -21,6 +21,7 @@ namespace Azul
                 StarController starController = System.Instance.GetStarController();
                 TableController tableController = System.Instance.GetTableController();
                 TileController tileController = System.Instance.GetTileController();
+                UIController uIController = System.Instance.GetUIController();
                 // TODO - this should be triggered by the UI/Player Ready
                 cameraController.SetupGame();
                 tableController.SetupGame();
@@ -40,6 +41,7 @@ namespace Azul
                 scoreBoardController.InitializeListeners();
                 tableController.InitializeListeners();
                 tileController.InitializeListeners();
+                uIController.InitializeListeners();
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
                 tableController.AddFactories(factoryController.GetFactories());
