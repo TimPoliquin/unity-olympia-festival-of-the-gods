@@ -3,18 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.PointerEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace PlayerBoardEvents
+    {
+        public class OnPlayerBoardScoreSpaceSelectionPayload
+        {
+            public int PlayerNumber { get; init; }
+            public TileColor Color { get; init; }
+            public int Value { get; init; }
+            public PlayerBoard PlayerBoard;
+        }
+    }
     namespace Controller
     {
         public class PlayerBoardController : MonoBehaviour
         {
             [SerializeField] private GameObject playerBoardPrefab;
 
+            private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
             private List<PlayerBoard> playerBoards;
+
 
             public void SetupGame(int numPlayers, StarController starController)
             {
@@ -107,9 +120,36 @@ namespace Azul
                         {
                             spaces.AddRange(board.GetWildOpenSpaces().FindAll(wildSpace => usableCount >= wildSpace.GetValue()));
                         }
-                        spaces.ForEach(space => space.ActivateHighlight());
+                        spaces.ForEach(space =>
+                        {
+                            space.ActivateHighlight();
+                            space.GetPointerEventController().AddOnPointerSelectListener(this.OnPointerSelectSpace);
+                        });
                     }
                 }
+            }
+
+            private void OnPointerSelectSpace(OnPointerSelectPayload<TilePlaceholder> payload)
+            {
+                // TODO - a lot needs to be done here to keep the rails on selection.
+                // we should confirm the space is on an active playerboard, for instance.
+                if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
+                {
+                    StarSpace space = payload.Target.GetComponent<StarSpace>();
+                    PlayerBoard playerBoard = space.GetComponentInParent<PlayerBoard>();
+                    this.onScoreSpaceSelection.Invoke(new OnPlayerBoardScoreSpaceSelectionPayload
+                    {
+                        PlayerBoard = playerBoard,
+                        PlayerNumber = playerBoard.GetPlayerNumber(),
+                        Color = space.GetEffectiveColor(),
+                        Value = space.GetValue()
+                    });
+                }
+            }
+
+            public void AddOnPlayerBoardScoreSpaceSelectionListener(UnityAction<OnPlayerBoardScoreSpaceSelectionPayload> listener)
+            {
+                this.onScoreSpaceSelection.AddListener(listener);
             }
         }
     }

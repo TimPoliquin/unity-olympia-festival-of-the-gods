@@ -18,9 +18,9 @@ namespace Azul
                 private set { this.color = value; }
             }
 
-            public TilePointerController GetTilePointerController()
+            public TilePointerEventController GetTilePointerController()
             {
-                TilePointerController tilePointerController;
+                TilePointerEventController tilePointerController;
                 if (this.TryGetComponent(out tilePointerController))
                 {
                     return tilePointerController;

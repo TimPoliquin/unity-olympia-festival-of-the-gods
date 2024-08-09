@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Azul.Controller;
 using UnityEngine;
 
 namespace Azul
@@ -54,6 +55,11 @@ namespace Azul
             public TileColor GetEffectiveColor()
             {
                 return this.tile.GetEffectiveColor();
+            }
+
+            public TilePlaceholderPointerEventController GetPointerEventController()
+            {
+                return this.tile.GetPointerEventController();
             }
         }
 

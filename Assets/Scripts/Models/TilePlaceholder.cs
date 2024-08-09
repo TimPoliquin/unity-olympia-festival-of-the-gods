@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller;
 using Azul.Model;
 using UnityEngine;
 
@@ -58,6 +59,11 @@ namespace Azul
             {
                 return this.color;
             }
+        }
+
+        public TilePlaceholderPointerEventController GetPointerEventController()
+        {
+            return this.GetComponent<TilePlaceholderPointerEventController>();
         }
 
         public static TilePlaceholder Create(GameObject placeholderPrefab, TileColor color)

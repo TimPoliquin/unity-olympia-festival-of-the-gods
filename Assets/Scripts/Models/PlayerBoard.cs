@@ -121,6 +121,11 @@ namespace Azul
                     star.DisableAllHighlights();
                 }
             }
+
+            public GameObject GetDrawnTilesContainer(TileColor tileColor)
+            {
+                return this.drawnTilesContainer.GetTileContainer(tileColor);
+            }
         }
     }
 }

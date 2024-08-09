@@ -109,5 +109,10 @@ namespace Azul
         {
             return this.drawnTiles.Find(tile => tile.IsOneTile());
         }
+
+        public GameObject GetTileContainer(TileColor tileColor)
+        {
+            return this.layoutsByColor[tileColor].gameObject;
+        }
     }
 }
