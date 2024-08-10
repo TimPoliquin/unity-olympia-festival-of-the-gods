@@ -58,7 +58,7 @@ namespace Azul
             public void AddDrawnTiles(List<Tile> tiles)
             {
                 this.drawnTilesContainer.AddTiles(tiles);
-                if (this.drawnTilesContainer.HasOneTile())
+                if (tiles.Any(tile => tile.IsOneTile()))
                 {
                     this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
                 }
@@ -104,7 +104,7 @@ namespace Azul
                 return this.GetWildStar().GetOpenSpaces();
             }
 
-            private Star GetStar(TileColor tileColor)
+            public Star GetStar(TileColor tileColor)
             {
                 return this.stars.Find(star => star.GetColor() == tileColor);
             }

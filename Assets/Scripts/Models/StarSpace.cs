@@ -52,6 +52,11 @@ namespace Azul
                 this.outline.enabled = false;
             }
 
+            public TileColor GetOriginColor()
+            {
+                return this.tile.GetColor();
+            }
+
             public TileColor GetEffectiveColor()
             {
                 return this.tile.GetEffectiveColor();

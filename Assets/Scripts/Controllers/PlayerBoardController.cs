@@ -23,6 +23,12 @@ namespace Azul
             public PlayerBoard PlayerBoard;
             public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
         }
+        public class OnPlayerBoardPlaceStarTilePayload
+        {
+            public int PlayerNumber { get; init; }
+            public int TilePlaced { get; init; }
+            public Star Star { get; init; }
+        }
     }
     namespace Controller
     {
@@ -31,6 +37,7 @@ namespace Azul
             [SerializeField] private GameObject playerBoardPrefab;
 
             private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
+            private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
             private List<PlayerBoard> playerBoards;
 
 
@@ -198,7 +205,18 @@ namespace Azul
                 tiles.Remove(tileToPlace);
                 System.Instance.GetBagController().Discard(tiles);
                 playerBoard.DisableAllHighlights();
+                this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
+                {
+                    PlayerNumber = playerBoard.GetPlayerNumber(),
+                    TilePlaced = space.GetValue(),
+                    Star = playerBoard.GetStar(space.GetOriginColor())
+                });
                 this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
+            }
+
+            public void AddOnPlaceStarTileListener(UnityAction<OnPlayerBoardPlaceStarTilePayload> listener)
+            {
+                this.onPlaceStarTile.AddListener(listener);
             }
         }
     }

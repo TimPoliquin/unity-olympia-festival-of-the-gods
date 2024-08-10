@@ -54,6 +54,11 @@ namespace Azul
                 }
             }
 
+            public int GetNumberOfSpaces()
+            {
+                return this.spaces.Length;
+            }
+
             public List<StarSpace> GetOpenSpaces()
             {
                 List<StarSpace> openSpaces = new();
@@ -67,6 +72,19 @@ namespace Azul
                 return openSpaces;
             }
 
+            public List<StarSpace> GetFilledSpaces()
+            {
+                List<StarSpace> filledSpaces = new();
+                foreach (StarSpace space in this.spaces)
+                {
+                    if (!space.IsEmpty())
+                    {
+                        filledSpaces.Add(space);
+                    }
+                }
+                return filledSpaces;
+            }
+
             public void DisableAllHighlights()
             {
                 foreach (StarSpace space in this.spaces)
@@ -74,7 +92,6 @@ namespace Azul
                     space.DisableHighlight();
                 }
             }
-
         }
     }
 }
