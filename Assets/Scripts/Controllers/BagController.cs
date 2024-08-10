@@ -14,6 +14,7 @@ namespace Azul
         public void SetupGame(List<Tile> tiles)
         {
             this.bag = new GameObject("Bag").AddComponent<Bag>();
+            this.tower = new GameObject("Tower").AddComponent<Tower>();
             this.bag.Fill(tiles);
         }
 
@@ -25,6 +26,11 @@ namespace Azul
         public List<Tile> Draw(int count)
         {
             return this.bag.Draw(count);
+        }
+
+        public void Discard(List<Tile> tiles)
+        {
+            this.tower.Add(tiles);
         }
     }
 }

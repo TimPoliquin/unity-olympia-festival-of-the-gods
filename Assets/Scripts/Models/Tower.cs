@@ -13,6 +13,11 @@ namespace Azul
             public void Add(List<Tile> tiles)
             {
                 this.tiles.AddRange(tiles);
+                foreach (Tile tile in tiles)
+                {
+                    tile.transform.SetParent(this.transform);
+                    tile.gameObject.SetActive(false);
+                }
             }
             public List<Tile> Dump()
             {

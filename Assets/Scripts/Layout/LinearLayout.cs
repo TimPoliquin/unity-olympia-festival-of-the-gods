@@ -37,6 +37,11 @@ namespace Azul
                 this.LayoutChildren(children);
             }
 
+            public void Refresh()
+            {
+                this.LayoutChildren(this.GetChildren());
+            }
+
             private List<GameObject> GetChildren()
             {
                 List<GameObject> children = new();

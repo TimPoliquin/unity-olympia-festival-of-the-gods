@@ -90,6 +90,8 @@ namespace Azul
                     this.drawnTiles.Remove(usedTile);
                     usedTile.transform.SetParent(null);
                 }
+                this.layoutsByColor[mainColor].Refresh();
+                this.layoutsByColor[wildColor].Refresh();
                 return usedTiles;
             }
         }

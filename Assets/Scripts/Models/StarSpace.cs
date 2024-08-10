@@ -61,6 +61,11 @@ namespace Azul
             {
                 return this.tile.GetPointerEventController();
             }
+
+            public void PlaceTile(Tile tile)
+            {
+                this.tile.PlaceTile(tile);
+            }
         }
 
     }

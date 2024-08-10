@@ -64,6 +64,11 @@ namespace Azul
                 }
             }
 
+            public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)
+            {
+                return this.drawnTilesContainer.UseTiles(mainColor, mainCount, wildColor, wildCount);
+            }
+
             public int GetPlayerNumber()
             {
                 return this.playerNumber;
@@ -125,6 +130,16 @@ namespace Azul
             public GameObject GetDrawnTilesContainer(TileColor tileColor)
             {
                 return this.drawnTilesContainer.GetTileContainer(tileColor);
+            }
+
+            public void ResizeForScoring()
+            {
+                this.drawnTilesContainer.transform.localScale = .66f * Vector3.one;
+            }
+
+            public void ResizeForDrawing()
+            {
+                this.drawnTilesContainer.transform.localScale = Vector3.one;
             }
         }
     }

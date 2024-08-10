@@ -11,12 +11,17 @@ namespace Azul
 {
     namespace PlayerBoardEvents
     {
+        public class OnPlayerBoardScoreTileSelectionConfirmPayload
+        {
+            public Dictionary<TileColor, int> TilesSelected { get; init; }
+        }
         public class OnPlayerBoardScoreSpaceSelectionPayload
         {
             public int PlayerNumber { get; init; }
             public TileColor Color { get; init; }
             public int Value { get; init; }
             public PlayerBoard PlayerBoard;
+            public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
         }
     }
     namespace Controller
@@ -44,6 +49,10 @@ namespace Azul
 
             public void InitializeListeners()
             {
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnRoundPhaseAcquireListener(this.OnRoundAcquire);
+                roundController.AddOnRoundPhasePrepareListener(this.OnRoundPrepare);
+                roundController.AddOnRoundPhaseScoreListener(this.OnRoundScore);
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
             }
@@ -142,7 +151,8 @@ namespace Azul
                         PlayerBoard = playerBoard,
                         PlayerNumber = playerBoard.GetPlayerNumber(),
                         Color = space.GetEffectiveColor(),
-                        Value = space.GetValue()
+                        Value = space.GetValue(),
+                        OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
                     });
                 }
             }
@@ -150,6 +160,45 @@ namespace Azul
             public void AddOnPlayerBoardScoreSpaceSelectionListener(UnityAction<OnPlayerBoardScoreSpaceSelectionPayload> listener)
             {
                 this.onScoreSpaceSelection.AddListener(listener);
+            }
+
+            private void OnRoundAcquire(OnRoundPhaseAcquirePayload payload)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForDrawing());
+            }
+
+            private void OnRoundPrepare(OnRoundPhasePreparePayload payload)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForDrawing());
+            }
+
+            private void OnRoundScore(OnRoundPhaseScorePayload payload)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForScoring());
+            }
+
+            private void OnConfirmScoreTileSelection(PlayerBoard playerBoard, StarSpace space, OnPlayerBoardScoreTileSelectionConfirmPayload payload)
+            {
+                RoundController roundController = System.Instance.GetRoundController();
+                TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
+                TileColor spaceColor = space.GetEffectiveColor();
+                int spaceCount = payload.TilesSelected[spaceColor];
+                List<Tile> tiles;
+                if (spaceColor != wildColor)
+                {
+                    int wildCount = payload.TilesSelected.ContainsKey(wildColor) ? payload.TilesSelected[wildColor] : 0;
+                    tiles = playerBoard.UseTiles(spaceColor, payload.TilesSelected[spaceColor], wildColor, wildCount);
+                }
+                else
+                {
+                    tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
+                }
+                Tile tileToPlace = tiles.Find(tile => tile.Color == spaceColor);
+                space.PlaceTile(tileToPlace);
+                tiles.Remove(tileToPlace);
+                System.Instance.GetBagController().Discard(tiles);
+                playerBoard.DisableAllHighlights();
+                this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
             }
         }
     }
