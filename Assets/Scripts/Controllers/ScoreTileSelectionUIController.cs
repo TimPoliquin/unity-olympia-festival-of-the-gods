@@ -160,7 +160,8 @@ namespace Azul
 
             private void OnEndTurn()
             {
-                // end the turn?
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.EndPlayerScoringTurn();
                 this.endTurnButton.gameObject.SetActive(false);
             }
         }

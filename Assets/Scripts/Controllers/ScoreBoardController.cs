@@ -122,9 +122,10 @@ namespace Azul
 
             private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
             {
-                int points = 0;
+                int points;
+                int numSpaces = payload.Star.GetNumberOfSpaces();
                 List<int> filledSpaces = payload.Star.GetFilledSpaces().Select(space => space.GetValue()).ToList();
-                if (filledSpaces.Count == payload.Star.GetNumberOfSpaces())
+                if (filledSpaces.Count == numSpaces)
                 {
                     // this one's easy - if you just filled up the star, you get 6 points
                     points = payload.Star.GetNumberOfSpaces();
@@ -136,28 +137,41 @@ namespace Azul
                 }
                 else
                 {
-                    for (int idx = payload.TilePlaced; idx < payload.Star.GetNumberOfSpaces(); idx++)
+                    List<int> earnedSpaces = new();
+                    for (int idx = 0; idx < numSpaces; idx++)
                     {
-                        if (filledSpaces.Contains(idx))
+                        int value = payload.TilePlaced + idx;
+                        if (value > numSpaces)
                         {
-                            points++;
+                            value = numSpaces - value;
+                        }
+                        if (filledSpaces.Contains(value))
+                        {
+                            earnedSpaces.Add(value);
                         }
                         else
                         {
                             break;
                         }
                     }
-                    for (int idx = payload.TilePlaced - 1; idx >= 0; idx--)
+                    for (int idx = 0; idx < numSpaces; idx++)
                     {
-                        if (filledSpaces.Contains(idx))
+                        int value = payload.TilePlaced - idx;
+                        if (value <= 0)
                         {
-                            points++;
+                            value = numSpaces + value;
+                        }
+                        if (filledSpaces.Contains(value))
+                        {
+                            earnedSpaces.Add(value);
                         }
                         else
                         {
                             break;
                         }
                     }
+                    points = earnedSpaces.Distinct().Count();
+
                 }
                 this.AddPoints(payload.PlayerNumber, points);
             }
