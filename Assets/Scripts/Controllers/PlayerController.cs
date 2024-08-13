@@ -15,6 +15,10 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
         }
+        public class OnAllPlayersTurnScoreFinishedPayload
+        {
+
+        }
     }
     namespace Controller
     {
@@ -28,6 +32,7 @@ namespace Azul
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnStart = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnEnd = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnScoreFinishedPayload> onPlayerTurnScoreFinished = new();
+            private UnityEvent<OnAllPlayersTurnScoreFinishedPayload> onAllPlayersTurnScoreFinished = new();
 
             public void InitializeListeners()
             {
@@ -82,6 +87,7 @@ namespace Azul
                 if (this.GetNextPlayerNumber() == this.turnStartsWith)
                 {
                     // end the round
+                    this.onAllPlayersTurnScoreFinished.Invoke(new OnAllPlayersTurnScoreFinishedPayload());
                 }
                 else
                 {
@@ -108,6 +114,11 @@ namespace Azul
             public void AddOnPlayerTurnScoreFinished(UnityAction<OnPlayerTurnScoreFinishedPayload> listener)
             {
                 this.onPlayerTurnScoreFinished.AddListener(listener);
+            }
+
+            public void AddOnAllPlayersTurnScoreFinished(UnityAction<OnAllPlayersTurnScoreFinishedPayload> listener)
+            {
+                this.onAllPlayersTurnScoreFinished.AddListener(listener);
             }
 
 
@@ -146,6 +157,7 @@ namespace Azul
             private void onPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
             {
                 this.turnStartsWith = payload.PlayerNumber;
+                this.playerWithOneTile = payload.PlayerNumber;
             }
 
         }
