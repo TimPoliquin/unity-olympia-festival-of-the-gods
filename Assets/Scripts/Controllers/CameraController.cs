@@ -46,9 +46,11 @@ namespace Azul
 
             private void FocusOnPlayerBoard(int playerNumber)
             {
-                // positioning is not quite right - it seems to be good for the left-player, but bad for the bottom player.
+                PlayerController playerController = System.Instance.GetPlayerController();
+                int numPlayers = playerController.GetNumberOfPlayers();
+                float perPlayerRotation = 360.0f / (float)numPlayers;
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
-                this.mainCamera.transform.rotation = Quaternion.Euler(90.0f, 90.0f * playerNumber, 0);
+                this.mainCamera.transform.rotation = Quaternion.Euler(90.0f, perPlayerRotation * playerNumber, 0);
                 this.mainCamera.transform.position = new Vector3(playerBoard.transform.position.x, this.mainCamera.transform.position.y, playerBoard.transform.position.z);
                 this.mainCamera.transform.position += this.mainCamera.transform.right * 20.0f;
                 this.mainCamera.orthographicSize = scoreSettings.GetSize();

@@ -161,7 +161,7 @@ namespace Azul
             {
                 this.rounds[this.currentRound].enabled = false;
                 this.currentRound++;
-                if (this.currentRound <= this.totalRounds)
+                if (this.currentRound < this.totalRounds)
                 {
                     this.rounds[this.currentRound].enabled = true;
                     this.rounds[this.currentRound].SetPhase(Phase.ACQUIRE);
