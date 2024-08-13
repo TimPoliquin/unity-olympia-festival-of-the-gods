@@ -68,7 +68,7 @@ namespace Azul
 
             private void OnTileSelect(OnPointerSelectPayload<Tile> payload)
             {
-                if (!this.canAcquire)
+                if (!this.canAcquire || this.hoveredTiles.Count == 0)
                 {
                     return;
                 }
@@ -81,12 +81,32 @@ namespace Azul
             {
                 this.hoveredTiles = new();
                 bool hasHoveredWild = tile.Color == this.wildColor;
-                if (hasHoveredWild)
+                if (tile.IsOneTile())
                 {
-                    hoveredTiles.Add(tile);
+                    // TODO - we might want to change the cursor so you can't
+                    // draw the one tile.
+                }
+                else if (hasHoveredWild)
+                {
+                    bool onlyHasWilds = this.tiles.All(tile => tile.Color == wildColor || tile.Color == TileColor.ONE);
+                    if (onlyHasWilds)
+                    {
+                        hoveredTiles.Add(tile);
+                        Tile oneTile = this.tiles.Find(tile => tile.IsOneTile());
+                        if (oneTile != null)
+                        {
+                            hoveredTiles.Add(oneTile);
+                        }
+                    }
+                    else
+                    {
+                        // TODO - we might want to change the cursor so you can't draw
+                        // just a wild if there are other tile colors present.
+                    }
                 }
                 else if (null != this.tiles)
                 {
+                    bool grabbedWild = false;
                     foreach (Tile currentTile in this.tiles)
                     {
                         if (currentTile.Color == tile.Color)
@@ -97,9 +117,9 @@ namespace Azul
                         {
                             this.hoveredTiles.Add(currentTile);
                         }
-                        else if (currentTile.Color == this.wildColor && !hasHoveredWild)
+                        else if (currentTile.Color == this.wildColor && !grabbedWild)
                         {
-                            hasHoveredWild = true;
+                            grabbedWild = true;
                             this.hoveredTiles.Add(currentTile);
                         }
                     }
