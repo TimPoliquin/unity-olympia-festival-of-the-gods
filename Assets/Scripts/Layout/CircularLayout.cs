@@ -14,6 +14,7 @@ namespace Azul
         {
             [SerializeField] private float radius;
             [SerializeField] private bool rotate;
+            [SerializeField] private float rotateAfterLayout;
 
             public void AddChildren(List<GameObject> children)
             {
@@ -31,15 +32,10 @@ namespace Azul
                         element.transform.Rotate(0, Mathf.Rad2Deg * arcSize * idx, 0);
                     }
                 }
-            }
-
-            public static CircularLayout CreateCircularLayout(int numElements, float radius, Func<int, GameObject> CreateElement, bool rotate = true)
-            {
-                CircularLayout layout = new GameObject("Circular Layout").AddComponent<CircularLayout>();
-                layout.radius = radius;
-                layout.rotate = rotate;
-                List<GameObject> children = new();
-                return layout;
+                if (rotateAfterLayout != 0)
+                {
+                    this.transform.Rotate(0, rotateAfterLayout, 0);
+                }
             }
 
             void OnDrawGizmosSelected()

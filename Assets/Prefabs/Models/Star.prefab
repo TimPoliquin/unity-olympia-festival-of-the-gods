@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   rotate: 1
+  rotateAfterLayout: 120
 --- !u!1 &3547100486354346244
 GameObject:
   m_ObjectHideFlags: 0

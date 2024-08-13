@@ -19,8 +19,6 @@ namespace Azul
 
             public void SetupGame()
             {
-                UnityEngine.Debug.Log($"{this.scoreSettings.GetRotation().eulerAngles}");
-
                 // nothing to do here yet
             }
 
