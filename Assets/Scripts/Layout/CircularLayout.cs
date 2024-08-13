@@ -32,7 +32,10 @@ namespace Azul
                         element.transform.Rotate(0, Mathf.Rad2Deg * arcSize * idx, 0);
                     }
                 }
-                this.transform.Rotate(0, rotateAfterLayout, 0);
+                if (rotateAfterLayout != 0)
+                {
+                    this.transform.Rotate(0, rotateAfterLayout, 0);
+                }
             }
 
             void OnDrawGizmosSelected()
