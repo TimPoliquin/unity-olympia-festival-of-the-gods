@@ -127,6 +127,14 @@ namespace Azul
                 }
             }
 
+            public void ClearTileEventListeners()
+            {
+                foreach (Star star in this.stars)
+                {
+                    star.ClearTileEventListeners();
+                }
+            }
+
             public GameObject GetDrawnTilesContainer(TileColor tileColor)
             {
                 return this.drawnTilesContainer.GetTileContainer(tileColor);

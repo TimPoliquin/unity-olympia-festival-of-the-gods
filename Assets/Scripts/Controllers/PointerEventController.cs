@@ -82,6 +82,11 @@ namespace Azul
             {
                 this.onPointerSelect.RemoveListener(listener);
             }
+
+            public void ClearOnPointerSelectListeners()
+            {
+                this.onPointerSelect.RemoveAllListeners();
+            }
         }
     }
 }

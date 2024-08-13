@@ -235,7 +235,7 @@ namespace Azul
                 tiles.Remove(tileToPlace);
                 System.Instance.GetBagController().Discard(tiles);
                 playerBoard.DisableAllHighlights();
-                // TODO clear tile click event handlers!
+                playerBoard.ClearTileEventListeners();
                 this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),

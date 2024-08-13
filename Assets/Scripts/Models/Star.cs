@@ -92,6 +92,14 @@ namespace Azul
                     space.DisableHighlight();
                 }
             }
+
+            public void ClearTileEventListeners()
+            {
+                foreach (StarSpace space in this.spaces)
+                {
+                    space.GetPointerEventController().ClearOnPointerSelectListeners();
+                }
+            }
         }
     }
 }
