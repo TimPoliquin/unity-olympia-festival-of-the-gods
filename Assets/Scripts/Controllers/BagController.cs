@@ -20,12 +20,18 @@ namespace Azul
 
         public Tile Draw()
         {
-            return this.bag.Draw(1)[0];
+            return this.Draw(1)[0];
         }
 
         public List<Tile> Draw(int count)
         {
-            return this.bag.Draw(count);
+            List<Tile> tiles = this.bag.Draw(count);
+            if (tiles.Count < count)
+            {
+                bag.Fill(tower.Dump());
+            }
+            tiles.AddRange(this.bag.Draw(count - tiles.Count));
+            return tiles;
         }
 
         public void Discard(List<Tile> tiles)
