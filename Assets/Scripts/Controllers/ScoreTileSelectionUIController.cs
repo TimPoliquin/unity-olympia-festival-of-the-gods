@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using System;
 using Azul.ScoreTileSelectionUIEvent;
 using UnityEngine.Events;
+using System.Linq;
+using Azul.WildColorSelectionEvents;
 
 namespace Azul
 {
@@ -20,9 +22,11 @@ namespace Azul
             [SerializeField] private Button confirmButton;
             [SerializeField] private Button cancelButton;
             [SerializeField] private Button endTurnButton;
+            [SerializeField] private WildColorSelectionUI wildColorSelectionUI;
             private List<ScoreTileSelectionUI> scoreTileSelectionUIs = new();
 
             private int countNeeded = 0;
+            private TileColor selectedColor;
             private UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm;
 
             void Awake()
@@ -40,6 +44,7 @@ namespace Azul
                 roundController.AddOnRoundPhasePrepareListener(this.OnRoundPhasePrepare);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelection);
+                playerBoardController.AddOnPlayerBoardWildScoreSpaceSelectionListener(this.OnWildScoreSpaceSelection);
             }
 
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
@@ -58,36 +63,85 @@ namespace Azul
                 this.endTurnButton.gameObject.SetActive(false);
             }
 
+            private void OnWildScoreSpaceSelection(OnPlayerBoardWildScoreSpaceSelectionPayload payload)
+            {
+                UnityEngine.Debug.Log($"Wild star {payload.Value}");
+                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+                int numWild = payload.PlayerBoard.GetTileCount(wildColor);
+                List<TileColor> usedColors = payload.PlayerBoard.GetWildTileColors();
+                List<TileColor> availableColors = TileColorUtils.GetTileColors().ToList().FindAll(color =>
+                {
+                    int numColor = payload.PlayerBoard.GetTileCount(color);
+                    int numWild = payload.PlayerBoard.GetTileCount(wildColor);
+                    if (numColor == 0 || usedColors.Contains(color))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if (color == wildColor)
+                        {
+                            return numWild >= payload.Value;
+                        }
+                        else
+                        {
+                            return numColor + numWild >= payload.Value;
+                        }
+                    }
+                });
+                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors);
+                this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
+                {
+                    this.CreateScoreTileSelectionUIs(
+                        playerBoard: payload.PlayerBoard,
+                        selectedColor: colorSelectedPayload.Color,
+                        value: payload.Value,
+                        onConfirm: payload.OnConfirm
+                    );
+                });
+            }
+
 
             private void OnScoreSpaceSelection(OnPlayerBoardScoreSpaceSelectionPayload payload)
             {
+                this.CreateScoreTileSelectionUIs(
+                    playerBoard: payload.PlayerBoard,
+                    selectedColor: payload.Color,
+                    value: payload.Value,
+                    onConfirm: payload.OnConfirm
+                );
+            }
+
+            private void CreateScoreTileSelectionUIs(PlayerBoard playerBoard, TileColor selectedColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm)
+            {
                 this.CleanupScoreSelectionUIElements();
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                this.countNeeded = payload.Value;
-                int numColor = payload.PlayerBoard.GetTileCount(payload.Color);
-                int numWild = payload.PlayerBoard.GetTileCount(wildColor);
-                int wildsNeeded = Math.Max(payload.Value - numColor, 0);
+                this.selectedColor = selectedColor;
+                this.countNeeded = value;
+                int numColor = playerBoard.GetTileCount(selectedColor);
+                int numWild = playerBoard.GetTileCount(wildColor);
+                int wildsNeeded = Math.Max(value - numColor, 0);
                 int min;
                 if (wildsNeeded > 0)
                 {
-                    min = Math.Max(1, payload.Value - numWild);
+                    min = Math.Max(1, value - numWild);
                 }
                 else
                 {
-                    min = Math.Max(1, Math.Min(payload.Value - numWild, payload.Value));
+                    min = Math.Max(1, Math.Min(value - numWild, value));
                 }
                 this.CreateScoreTileSelectionUI(
-                    payload.PlayerBoard,
-                    payload.Color,
+                    playerBoard,
+                    selectedColor,
                     min,
-                    Math.Min(payload.Value, numColor),
-                    Math.Min(numColor, payload.Value)
+                    Math.Min(value, numColor),
+                    Math.Min(numColor, value)
                 );
-                if (wildColor != payload.Color && payload.Value > 1 && numWild > 0)
+                if (wildColor != selectedColor && value > 1 && numWild > 0)
                 {
-                    this.CreateScoreTileSelectionUI(payload.PlayerBoard, wildColor, wildsNeeded, Math.Min(numWild, payload.Value - 1), wildsNeeded);
+                    this.CreateScoreTileSelectionUI(playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
                 }
-                this.onConfirm = payload.OnConfirm;
+                this.onConfirm = onConfirm;
                 this.confirmButton.gameObject.SetActive(true);
                 this.cancelButton.gameObject.SetActive(true);
                 this.endTurnButton.gameObject.SetActive(false);
@@ -115,6 +169,7 @@ namespace Azul
                 this.cancelButton.gameObject.SetActive(false);
                 this.confirmButton.gameObject.SetActive(false);
                 this.countNeeded = 0;
+                this.selectedColor = TileColor.ONE;
             }
 
             private void OnCancelSelection()
@@ -136,7 +191,8 @@ namespace Azul
                 {
                     this.onConfirm.Invoke(new OnPlayerBoardScoreTileSelectionConfirmPayload
                     {
-                        TilesSelected = selectedTiles
+                        TilesSelected = selectedTiles,
+                        Color = this.selectedColor
                     });
                 }
                 else
@@ -164,6 +220,7 @@ namespace Azul
                 playerController.EndPlayerScoringTurn();
                 this.endTurnButton.gameObject.SetActive(false);
             }
+
         }
     }
 }

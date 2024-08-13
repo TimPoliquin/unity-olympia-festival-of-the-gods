@@ -46,7 +46,7 @@ namespace Azul
             {
                 if (this.color == TileColor.WILD)
                 {
-                    return this.spaces.Select(space => space.GetEffectiveColor()).Distinct().ToList();
+                    return this.spaces.Select(space => space.IsEmpty() ? this.color : space.GetEffectiveColor()).Distinct().ToList();
                 }
                 else
                 {

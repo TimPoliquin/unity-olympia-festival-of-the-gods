@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PointerEvents;
@@ -14,12 +15,21 @@ namespace Azul
         public class OnPlayerBoardScoreTileSelectionConfirmPayload
         {
             public Dictionary<TileColor, int> TilesSelected { get; init; }
+            public TileColor Color { get; init; }
         }
         public class OnPlayerBoardScoreSpaceSelectionPayload
         {
             public int PlayerNumber { get; init; }
             public TileColor Color { get; init; }
             public int Value { get; init; }
+            public PlayerBoard PlayerBoard;
+            public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
+        }
+        public class OnPlayerBoardWildScoreSpaceSelectionPayload
+        {
+            public int PlayerNumber { get; init; }
+            public int Value { get; init; }
+            public StarSpace Space { get; init; }
             public PlayerBoard PlayerBoard;
             public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
         }
@@ -37,6 +47,7 @@ namespace Azul
             [SerializeField] private GameObject playerBoardPrefab;
 
             private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
+            private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
             private List<PlayerBoard> playerBoards;
 
@@ -136,7 +147,7 @@ namespace Azul
                         {
                             spaces.AddRange(board.GetWildOpenSpaces().FindAll(wildSpace => usableCount >= wildSpace.GetValue()));
                         }
-                        spaces.ForEach(space =>
+                        spaces.Distinct().ToList().ForEach(space =>
                         {
                             space.ActivateHighlight();
                             space.GetPointerEventController().AddOnPointerSelectListener(this.OnPointerSelectSpace);
@@ -153,20 +164,39 @@ namespace Azul
                 {
                     StarSpace space = payload.Target.GetComponent<StarSpace>();
                     PlayerBoard playerBoard = space.GetComponentInParent<PlayerBoard>();
-                    this.onScoreSpaceSelection.Invoke(new OnPlayerBoardScoreSpaceSelectionPayload
+                    if (space.GetOriginColor() != TileColor.WILD)
                     {
-                        PlayerBoard = playerBoard,
-                        PlayerNumber = playerBoard.GetPlayerNumber(),
-                        Color = space.GetEffectiveColor(),
-                        Value = space.GetValue(),
-                        OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
-                    });
+                        this.onScoreSpaceSelection.Invoke(new OnPlayerBoardScoreSpaceSelectionPayload
+                        {
+                            PlayerBoard = playerBoard,
+                            PlayerNumber = playerBoard.GetPlayerNumber(),
+                            Color = space.GetOriginColor(),
+                            Value = space.GetValue(),
+                            OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
+                        });
+                    }
+                    else
+                    {
+                        this.onWildScoreSpaceSelection.Invoke(new OnPlayerBoardWildScoreSpaceSelectionPayload
+                        {
+                            PlayerBoard = playerBoard,
+                            PlayerNumber = playerBoard.GetPlayerNumber(),
+                            Space = space,
+                            Value = space.GetValue(),
+                            OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
+                        });
+                    }
                 }
             }
 
             public void AddOnPlayerBoardScoreSpaceSelectionListener(UnityAction<OnPlayerBoardScoreSpaceSelectionPayload> listener)
             {
                 this.onScoreSpaceSelection.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardWildScoreSpaceSelectionListener(UnityAction<OnPlayerBoardWildScoreSpaceSelectionPayload> listener)
+            {
+                this.onWildScoreSpaceSelection.AddListener(listener);
             }
 
             private void OnRoundAcquire(OnRoundPhaseAcquirePayload payload)
@@ -188,7 +218,7 @@ namespace Azul
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
-                TileColor spaceColor = space.GetEffectiveColor();
+                TileColor spaceColor = payload.Color;
                 int spaceCount = payload.TilesSelected[spaceColor];
                 List<Tile> tiles;
                 if (spaceColor != wildColor)
@@ -205,6 +235,7 @@ namespace Azul
                 tiles.Remove(tileToPlace);
                 System.Instance.GetBagController().Discard(tiles);
                 playerBoard.DisableAllHighlights();
+                // TODO clear tile click event handlers!
                 this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),

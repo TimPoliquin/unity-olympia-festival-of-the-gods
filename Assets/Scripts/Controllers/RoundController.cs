@@ -154,7 +154,6 @@ namespace Azul
                     case Phase.COMPLETE:
                         this.FinishRound();
                         break;
-
                 }
             }
 
