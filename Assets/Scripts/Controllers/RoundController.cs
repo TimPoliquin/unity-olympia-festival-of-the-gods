@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
+using Azul.PlayerEvets;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,6 +40,8 @@ namespace Azul
                 tableController.AddOnTableEmptyListener(this.OnTableEmpty);
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 factoryController.AddOnAllFactoriesEmptyListener(this.OnAllFactoriesEmpty);
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.AddOnAllPlayersTurnScoreFinished(this.OnAllPlayersScoreTurnFinished);
             }
 
             public Round GetCurrentRound()
@@ -65,6 +68,11 @@ namespace Azul
             {
                 this.tableEmpty = true;
                 this.CheckAcquirePhaseComplete();
+            }
+
+            private void OnAllPlayersScoreTurnFinished(OnAllPlayersTurnScoreFinishedPayload payload)
+            {
+                this.NextPhase();
             }
 
             private Round CreateRound(int idx)
@@ -141,11 +149,11 @@ namespace Azul
                         {
                             RoundNumber = this.currentRound
                         });
+                        this.NextPhase();
                         break;
                     case Phase.COMPLETE:
                         this.FinishRound();
                         break;
-
                 }
             }
 

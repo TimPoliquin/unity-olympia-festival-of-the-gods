@@ -46,12 +46,17 @@ namespace Azul
             {
                 if (this.color == TileColor.WILD)
                 {
-                    return this.spaces.Select(space => space.GetEffectiveColor()).Distinct().ToList();
+                    return this.spaces.Select(space => space.IsEmpty() ? this.color : space.GetEffectiveColor()).Distinct().ToList();
                 }
                 else
                 {
                     return new() { this.color };
                 }
+            }
+
+            public int GetNumberOfSpaces()
+            {
+                return this.spaces.Length;
             }
 
             public List<StarSpace> GetOpenSpaces()
@@ -67,6 +72,19 @@ namespace Azul
                 return openSpaces;
             }
 
+            public List<StarSpace> GetFilledSpaces()
+            {
+                List<StarSpace> filledSpaces = new();
+                foreach (StarSpace space in this.spaces)
+                {
+                    if (!space.IsEmpty())
+                    {
+                        filledSpaces.Add(space);
+                    }
+                }
+                return filledSpaces;
+            }
+
             public void DisableAllHighlights()
             {
                 foreach (StarSpace space in this.spaces)
@@ -75,6 +93,13 @@ namespace Azul
                 }
             }
 
+            public void ClearTileEventListeners()
+            {
+                foreach (StarSpace space in this.spaces)
+                {
+                    space.GetPointerEventController().ClearOnPointerSelectListeners();
+                }
+            }
         }
     }
 }

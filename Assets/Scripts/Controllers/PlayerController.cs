@@ -3,11 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.PlayerEvets;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace PlayerEvets
+    {
+        public class OnPlayerTurnScoreFinishedPayload
+        {
+            public int PlayerNumber { get; init; }
+        }
+        public class OnAllPlayersTurnScoreFinishedPayload
+        {
+
+        }
+    }
     namespace Controller
     {
         public class PlayerController : MonoBehaviour
@@ -19,6 +31,8 @@ namespace Azul
 
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnStart = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnEnd = new UnityEvent<OnPlayerTurnStartPayload>();
+            private UnityEvent<OnPlayerTurnScoreFinishedPayload> onPlayerTurnScoreFinished = new();
+            private UnityEvent<OnAllPlayersTurnScoreFinishedPayload> onAllPlayersTurnScoreFinished = new();
 
             public void InitializeListeners()
             {
@@ -64,9 +78,31 @@ namespace Azul
                 });
             }
 
+            public void EndPlayerScoringTurn()
+            {
+                this.onPlayerTurnScoreFinished.Invoke(new OnPlayerTurnScoreFinishedPayload
+                {
+                    PlayerNumber = this.currentPlayer,
+                });
+                if (this.GetNextPlayerNumber() == this.turnStartsWith)
+                {
+                    // end the round
+                    this.onAllPlayersTurnScoreFinished.Invoke(new OnAllPlayersTurnScoreFinishedPayload());
+                }
+                else
+                {
+                    this.NextTurn();
+                }
+            }
+
+            private int GetNextPlayerNumber()
+            {
+                return (this.currentPlayer + 1) % this.players.Count;
+            }
+
             private void NextTurn()
             {
-                this.currentPlayer = (this.currentPlayer + 1) % this.players.Count;
+                this.currentPlayer = this.GetNextPlayerNumber();
                 this.StartTurn();
             }
 
@@ -74,6 +110,17 @@ namespace Azul
             {
                 this.onPlayerTurnStart.AddListener(listener);
             }
+
+            public void AddOnPlayerTurnScoreFinished(UnityAction<OnPlayerTurnScoreFinishedPayload> listener)
+            {
+                this.onPlayerTurnScoreFinished.AddListener(listener);
+            }
+
+            public void AddOnAllPlayersTurnScoreFinished(UnityAction<OnAllPlayersTurnScoreFinishedPayload> listener)
+            {
+                this.onAllPlayersTurnScoreFinished.AddListener(listener);
+            }
+
 
             private void OnRoundPhaseAcquireStart(OnRoundPhaseAcquirePayload payload)
             {
@@ -110,6 +157,7 @@ namespace Azul
             private void onPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
             {
                 this.turnStartsWith = payload.PlayerNumber;
+                this.playerWithOneTile = payload.PlayerNumber;
             }
 
         }

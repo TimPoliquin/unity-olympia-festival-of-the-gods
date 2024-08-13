@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 748874226934204444}
   - component: {fileID: 4350702480332777534}
   - component: {fileID: 1231553110087985035}
+  - component: {fileID: 3277463667150526811}
   m_Layer: 0
   m_Name: Placeholder Tile
   m_TagString: Untagged
@@ -80,6 +81,18 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &3277463667150526811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357121812683179538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9246b331254874808df0b445772d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7269291856609893022
 PrefabInstance:
   m_ObjectHideFlags: 0

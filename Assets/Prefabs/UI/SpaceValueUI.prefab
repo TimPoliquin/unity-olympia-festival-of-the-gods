@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6037832463540805351}
   - component: {fileID: 8475254308754358297}
+  - component: {fileID: -2132473576408856673}
   m_Layer: 5
   m_Name: SpaceValueUI
   m_TagString: Untagged
@@ -186,3 +187,15 @@ MonoBehaviour:
   valueText: {fileID: 6258639367296613780}
   tableScale: 0.25
   boardScale: 0.9
+--- !u!225 &-2132473576408856673
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674765567266510964}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

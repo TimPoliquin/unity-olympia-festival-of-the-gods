@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
+using Azul.PlayerBoardEvents;
 using UnityEngine;
 
 namespace Azul
@@ -44,7 +46,7 @@ namespace Azul
                     starSpaceUI.ScaleToPlayerBoardView();
                 }
             }
-        }
 
+        }
     }
 }

@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 357121812683179538, guid: 7e517c370157f44fbab570a0a32e1ce4,
         type: 3}
       propertyPath: m_Name
-      value: Real Tile 1
+      value: Real Tile
       objectReference: {fileID: 0}
     - target: {fileID: 2392906273095577283, guid: 7e517c370157f44fbab570a0a32e1ce4,
         type: 3}
@@ -63,7 +63,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -3595584418256445201, guid: 7e517c370157f44fbab570a0a32e1ce4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -71,6 +72,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4284118000048859390}
+    - targetCorrespondingSourceObject: {fileID: 357121812683179538, guid: 7e517c370157f44fbab570a0a32e1ce4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5856491519462691147}
   m_SourcePrefab: {fileID: 100100000, guid: 7e517c370157f44fbab570a0a32e1ce4, type: 3}
 --- !u!1 &3588810012433343442 stripped
 GameObject:
@@ -97,3 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 3588810012433343442}
+--- !u!114 &5856491519462691147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708705830643974671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a571ccd264cd74181909c22f4926e71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

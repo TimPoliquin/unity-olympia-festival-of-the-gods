@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
+using Azul.PointerEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -39,7 +40,7 @@ namespace Azul
             }
 
 
-            private void OnTileHoverEnter(OnTileHoverEnterPayload payload)
+            private void OnTileHoverEnter(OnPointerEnterPayload<Tile> payload)
             {
                 if (!this.canAcquire)
                 {
@@ -49,23 +50,23 @@ namespace Azul
                 {
                     this.DeselectTiles();
                 }
-                this.HoverTiles(payload.Tile);
+                this.HoverTiles(payload.Target);
 
             }
 
-            private void OnTileHoverExit(OnTileHoverExitPayload payload)
+            private void OnTileHoverExit(OnPointerExitPayload<Tile> payload)
             {
                 if (!this.canAcquire)
                 {
                     return;
                 }
-                if (null != this.hoveredTiles && this.hoveredTiles.Contains(payload.Tile))
+                if (null != this.hoveredTiles && this.hoveredTiles.Contains(payload.Target))
                 {
                     this.DeselectTiles();
                 }
             }
 
-            private void OnTileSelect(OnTileSelectPayload payload)
+            private void OnTileSelect(OnPointerSelectPayload<Tile> payload)
             {
                 if (!this.canAcquire)
                 {
@@ -149,20 +150,20 @@ namespace Azul
 
             private void RemoveTileListeners(Tile tile)
             {
-                TilePointerController controller = tile.GetTilePointerController();
-                controller.RemoveOnTileHoverEnterListener(this.OnTileHoverEnter);
-                controller.RemoveOnTileHoverExitListener(this.OnTileHoverExit);
-                controller.RemoveOnTileSelectListener(this.OnTileSelect);
+                TilePointerEventController controller = tile.GetTilePointerController();
+                controller.RemoveOnPointerEnterListener(this.OnTileHoverEnter);
+                controller.RemoveOnPointerExitListener(this.OnTileHoverExit);
+                controller.RemoveOnPointerSelectListener(this.OnTileSelect);
             }
 
             private void AddTileListeners(List<Tile> tiles)
             {
                 foreach (Tile tile in tiles)
                 {
-                    TilePointerController tilePointerController = tile.GetTilePointerController();
-                    tilePointerController.AddOnTileHoverEnterListener(this.OnTileHoverEnter);
-                    tilePointerController.AddOnTileHoverExitListener(this.OnTileHoverExit);
-                    tilePointerController.AddOnTileSelectListener(this.OnTileSelect);
+                    TilePointerEventController tilePointerController = tile.GetTilePointerController();
+                    tilePointerController.AddOnPointerEnterListener(this.OnTileHoverEnter);
+                    tilePointerController.AddOnPointerExitListener(this.OnTileHoverExit);
+                    tilePointerController.AddOnPointerSelectListener(this.OnTileSelect);
                 }
             }
 

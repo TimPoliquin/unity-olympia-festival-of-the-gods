@@ -58,10 +58,15 @@ namespace Azul
             public void AddDrawnTiles(List<Tile> tiles)
             {
                 this.drawnTilesContainer.AddTiles(tiles);
-                if (this.drawnTilesContainer.HasOneTile())
+                if (tiles.Any(tile => tile.IsOneTile()))
                 {
                     this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
                 }
+            }
+
+            public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)
+            {
+                return this.drawnTilesContainer.UseTiles(mainColor, mainCount, wildColor, wildCount);
             }
 
             public int GetPlayerNumber()
@@ -99,7 +104,7 @@ namespace Azul
                 return this.GetWildStar().GetOpenSpaces();
             }
 
-            private Star GetStar(TileColor tileColor)
+            public Star GetStar(TileColor tileColor)
             {
                 return this.stars.Find(star => star.GetColor() == tileColor);
             }
@@ -120,6 +125,29 @@ namespace Azul
                 {
                     star.DisableAllHighlights();
                 }
+            }
+
+            public void ClearTileEventListeners()
+            {
+                foreach (Star star in this.stars)
+                {
+                    star.ClearTileEventListeners();
+                }
+            }
+
+            public GameObject GetDrawnTilesContainer(TileColor tileColor)
+            {
+                return this.drawnTilesContainer.GetTileContainer(tileColor);
+            }
+
+            public void ResizeForScoring()
+            {
+                this.drawnTilesContainer.transform.localScale = .66f * Vector3.one;
+            }
+
+            public void ResizeForDrawing()
+            {
+                this.drawnTilesContainer.transform.localScale = Vector3.one;
             }
         }
     }

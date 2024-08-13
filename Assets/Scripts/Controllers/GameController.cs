@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.ScoreBoardEvents;
 using UnityEngine;
 
 namespace Azul
@@ -26,7 +27,7 @@ namespace Azul
                 cameraController.SetupGame();
                 tableController.SetupGame();
                 playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
-                scoreBoardController.SetupGame();
+                scoreBoardController.SetupGame(playerController.GetNumberOfPlayers());
                 factoryController.SetupGame(playerController.GetNumberOfPlayers());
                 tileController.SetupGame();
                 bagController.SetupGame(tileController.GetTiles());
@@ -42,12 +43,22 @@ namespace Azul
                 tableController.InitializeListeners();
                 tileController.InitializeListeners();
                 uIController.InitializeListeners();
+                scoreBoardController.AddOnScoreBoardUpdatedListener(this.OnScoreUpdate);
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
                 tableController.AddFactories(factoryController.GetFactories());
                 tableController.AddScoreBoard(scoreBoardController.GetScoreBoard());
                 // Start the first round!   
                 roundController.StartRound();
+            }
+
+            private void OnScoreUpdate(OnScoreBoardUpdatePayload payload)
+            {
+                UnityEngine.Debug.Log("Scores updated!");
+                for (int idx = 0; idx < payload.Scores.Count; idx++)
+                {
+                    UnityEngine.Debug.Log($"Player {idx + 1}: {payload.Scores[idx]}");
+                }
             }
         }
     }
