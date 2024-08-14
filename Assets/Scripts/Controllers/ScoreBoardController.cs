@@ -26,6 +26,8 @@ namespace Azul
             [SerializeField] private GameObject scoreBoardPrefab;
             [SerializeField] private GameObject tilePrefab;
             [SerializeField] private GameObject roundCounterPrefab;
+            [SerializeField] private List<StarCompletedMilestone> starCompletedMilestones;
+            [SerializeField] private List<NumberCompletedMilestone> numberCompletedMilestones;
             private UnityEvent<OnScoreBoardUpdatePayload> onScoreChange = new();
 
             private Dictionary<int, int> playerScores = new();
@@ -122,6 +124,13 @@ namespace Azul
 
             private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
             {
+                int points = this.CalculatePointsForTilePlacement(payload);
+                points += this.CalculatePointsForMilestones(payload);
+                this.AddPoints(payload.PlayerNumber, points);
+            }
+
+            private int CalculatePointsForTilePlacement(OnPlayerBoardPlaceStarTilePayload payload)
+            {
                 int points;
                 int numSpaces = payload.Star.GetNumberOfSpaces();
                 List<int> filledSpaces = payload.Star.GetFilledSpaces().Select(space => space.GetValue()).ToList();
@@ -171,9 +180,24 @@ namespace Azul
                         }
                     }
                     points = earnedSpaces.Distinct().Count();
-
                 }
-                this.AddPoints(payload.PlayerNumber, points);
+                return points;
+            }
+
+            private int CalculatePointsForMilestones(OnPlayerBoardPlaceStarTilePayload payload)
+            {
+                int points = 0;
+                StarCompletedMilestone starCompletedMilestone = this.starCompletedMilestones.Find(milestone => milestone.GetColor() == payload.Star.GetColor());
+                NumberCompletedMilestone numberCompletedMilestone = this.numberCompletedMilestones.Find(milestone => milestone.GetNumber() == payload.TilePlaced);
+                if (starCompletedMilestone.IsMilestoneComplete(payload.Star))
+                {
+                    points += starCompletedMilestone.GetPoints();
+                }
+                if (numberCompletedMilestone.IsMilestoneComplete(payload.PlayerNumber, payload.TilePlaced))
+                {
+                    points += numberCompletedMilestone.GetPoints();
+                }
+                return points;
             }
 
             private void NotifyScoreUpdate()
