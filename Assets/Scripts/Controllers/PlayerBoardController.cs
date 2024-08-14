@@ -58,9 +58,7 @@ namespace Azul
                 for (int idx = 0; idx < numPlayers; idx++)
                 {
                     PlayerBoard board = Instantiate(this.playerBoardPrefab).GetComponent<PlayerBoard>();
-                    board.gameObject.name = $"Player Board {idx + 1}";
-                    board.SetPlayerNumber(idx);
-                    this.CreateStars(board, starController);
+                    board.SetupGame(idx, starController);
                     this.playerBoards.Add(board);
                 }
             }
@@ -73,19 +71,6 @@ namespace Azul
                 roundController.AddOnRoundPhaseScoreListener(this.OnRoundScore);
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
-            }
-
-            public void CreateStars(PlayerBoard board, StarController starController)
-            {
-                TileColor[] colors = TileColorUtils.GetTileColors();
-                List<Star> stars = new();
-                for (int idx = 0; idx < colors.Length; idx++)
-                {
-                    stars.Add(starController.CreateStar(colors[idx]));
-                }
-                Star wildStar = starController.CreateStar(TileColor.WILD);
-                board.AddStars(stars);
-                board.AddCenterStar(wildStar);
             }
 
             public List<PlayerBoard> GetPlayerBoards()

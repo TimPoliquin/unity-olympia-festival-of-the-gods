@@ -5,6 +5,7 @@ using Azul.Layout;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.Utils;
+using Azul.Controller;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,11 +27,32 @@ namespace Azul
             [SerializeField] private GameObject center;
             [SerializeField] private DrawnTilesContainer drawnTilesContainer;
             [SerializeField] private Light activePlayerLight;
+            [SerializeField] private RewardController rewardController;
             private int playerNumber;
             private List<Star> stars = new();
 
             private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
 
+            public void SetupGame(int playerNumber, StarController starController)
+            {
+                this.playerNumber = playerNumber;
+                this.gameObject.name = $"Player Board {this.playerNumber + 1}";
+                this.CreateStars(starController);
+                this.rewardController.SetupGame(this.playerNumber);
+            }
+
+            private void CreateStars(StarController starController)
+            {
+                TileColor[] colors = TileColorUtils.GetTileColors();
+                List<Star> stars = new();
+                for (int idx = 0; idx < colors.Length; idx++)
+                {
+                    stars.Add(starController.CreateStar(colors[idx]));
+                }
+                Star wildStar = starController.CreateStar(TileColor.WILD);
+                this.AddStars(stars);
+                this.AddCenterStar(wildStar);
+            }
 
             public void AddStars(List<Star> stars)
             {
@@ -122,6 +144,11 @@ namespace Azul
             public bool IsTileNumberFilledOnAllStars(int tileNumber)
             {
                 return this.stars.All(star => star.IsSpaceFilled(tileNumber));
+            }
+
+            public bool IsSpaceFilled(TileColor color, int tileNumber)
+            {
+                return this.stars.Find(star => star.GetColor() == color).IsSpaceFilled(tileNumber);
             }
 
             public void DisableAllHighlights()
