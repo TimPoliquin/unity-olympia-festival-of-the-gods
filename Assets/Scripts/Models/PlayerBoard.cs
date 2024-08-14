@@ -119,6 +119,11 @@ namespace Azul
                 return this.GetWildStar().GetTileColors();
             }
 
+            public bool IsTileNumberFilledOnAllStars(int tileNumber)
+            {
+                return this.stars.All(star => star.IsSpaceFilled(tileNumber));
+            }
+
             public void DisableAllHighlights()
             {
                 foreach (Star star in this.stars)

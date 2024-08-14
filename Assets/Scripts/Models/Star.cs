@@ -85,6 +85,16 @@ namespace Azul
                 return filledSpaces;
             }
 
+            public bool IsSpaceFilled(int tileNumber)
+            {
+                return !this.spaces.ToList().Find(space => space.GetValue() == tileNumber).IsEmpty();
+            }
+
+            public bool IsFilled()
+            {
+                return this.spaces.All(space => !space.IsEmpty());
+            }
+
             public void DisableAllHighlights()
             {
                 foreach (StarSpace space in this.spaces)

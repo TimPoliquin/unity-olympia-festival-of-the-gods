@@ -1226,6 +1226,34 @@ MonoBehaviour:
     type: 3}
   roundCounterPrefab: {fileID: 5254510402654930809, guid: 5f695cf4e283c4f75a0b61de7ea114cc,
     type: 3}
+  starCompletedMilestones:
+  - Color: 6
+    Points: 12
+  - Color: 0
+    Points: 14
+  - Color: 1
+    Points: 15
+  - Color: 2
+    Points: 16
+  - Color: 5
+    Points: 17
+  - Color: 3
+    Points: 18
+  - Color: 4
+    Points: 20
+  numberCompletedMilestones:
+  - Number: 1
+    Points: 4
+  - Number: 2
+    Points: 8
+  - Number: 3
+    Points: 12
+  - Number: 4
+    Points: 16
+  - Number: 5
+    Points: 18
+  - Number: 6
+    Points: 20
 --- !u!1 &722696936
 GameObject:
   m_ObjectHideFlags: 0
