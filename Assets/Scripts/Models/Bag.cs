@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Azul
@@ -30,6 +31,19 @@ namespace Azul
                     drawnTiles.Add(tile);
                 }
                 return drawnTiles;
+            }
+
+            public Tile Draw(TileColor tileColor)
+            {
+                List<Tile> hackList = this.tiles.ToList();
+                Tile tile = hackList.Find(tile => tile.Color == tileColor);
+                if (null != tile)
+                {
+                    tile.gameObject.SetActive(true);
+                    hackList.Remove(tile);
+                    this.tiles = new Queue<Tile>(hackList);
+                }
+                return tile;
             }
         }
 

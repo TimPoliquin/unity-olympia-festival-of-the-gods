@@ -5,11 +5,21 @@ using System.Linq;
 using Azul.Layout;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.PlayerBoardRewardEvents;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace PlayerBoardRewardEvents
+    {
+        public class OnPlayerBoardEarnRewardPayload
+        {
+            public int PlayerNumber { get; init; }
+            public int NumberOfTiles { get; init; }
+        }
+    }
 
     namespace Controller
     {
@@ -42,6 +52,8 @@ namespace Azul
             private int playerNumber;
 
             private List<RewardBehavior> rewardBehaviors;
+
+            private UnityEvent<OnPlayerBoardEarnRewardPayload> onEarnReward = new();
 
 
             public void SetupGame(int playerNumber)
@@ -90,18 +102,32 @@ namespace Azul
                 List<RewardBehavior> behaviors = this.rewardBehaviors.FindAll(
                     behavior => !behavior.IsCompleted() && behavior.IsConditionParameter(payload.Star.GetColor(), payload.TilePlaced)
                 ).ToList();
-                UnityEngine.Debug.Log($"Checking for completed status... {behaviors.Count}");
+                int rewardCount = 0;
                 foreach (RewardBehavior rewardBehavior in behaviors)
                 {
+                    UnityEngine.Debug.Log($"Checking reward: {rewardBehavior.ToString()}");
                     if (rewardBehavior.IsConditionMet())
                     {
+                        UnityEngine.Debug.Log($"Reward condition met!");
                         rewardBehavior.MarkCompleted();
-                        // TODO - dispatch event to grant reward
+                        rewardCount += rewardBehavior.GetReward();
                     }
+                }
+                if (rewardCount > 0)
+                {
+                    UnityEngine.Debug.Log($"Earned reward! {rewardCount}");
+                    this.onEarnReward.Invoke(new OnPlayerBoardEarnRewardPayload
+                    {
+                        PlayerNumber = this.playerNumber,
+                        NumberOfTiles = rewardCount
+                    });
                 }
             }
 
-
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            {
+                this.onEarnReward.AddListener(listener);
+            }
         }
 
     }

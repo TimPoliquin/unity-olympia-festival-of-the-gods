@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.PlayerBoardRewardEvents;
 using Azul.PointerEvents;
 using UnityEngine;
 using UnityEngine.Events;
@@ -233,6 +234,11 @@ namespace Azul
             public void AddOnPlaceStarTileListener(UnityAction<OnPlayerBoardPlaceStarTilePayload> listener)
             {
                 this.onPlaceStarTile.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.AddOnPlayerBoardEarnRewardListener(listener));
             }
         }
     }

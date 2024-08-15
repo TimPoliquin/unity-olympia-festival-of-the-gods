@@ -16,6 +16,11 @@ namespace Azul
             [SerializeField] private bool rotate;
             [SerializeField] private float rotateAfterLayout;
 
+            public void SetRotateAfterLayout(float rotateAfterLayout)
+            {
+                this.rotateAfterLayout = rotateAfterLayout;
+            }
+
             public void AddChildren(List<GameObject> children)
             {
                 int numElements = children.Count;

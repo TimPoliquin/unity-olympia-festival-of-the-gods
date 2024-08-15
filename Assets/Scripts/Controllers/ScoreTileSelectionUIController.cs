@@ -89,7 +89,7 @@ namespace Azul
                         }
                     }
                 });
-                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors);
+                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors, true);
                 this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
                 {
                     this.CreateScoreTileSelectionUIs(

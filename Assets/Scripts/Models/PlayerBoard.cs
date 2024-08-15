@@ -8,6 +8,8 @@ using Azul.Utils;
 using Azul.Controller;
 using UnityEngine;
 using UnityEngine.Events;
+using Azul.PlayerBoardRewardEvents;
+using System;
 
 namespace Azul
 {
@@ -174,12 +176,17 @@ namespace Azul
 
             public void ResizeForScoring()
             {
-                this.drawnTilesContainer.transform.localScale = .66f * Vector3.one;
+                //this.drawnTilesContainer.transform.localScale = .66f * Vector3.one;
             }
 
             public void ResizeForDrawing()
             {
                 this.drawnTilesContainer.transform.localScale = Vector3.one;
+            }
+
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            {
+                this.rewardController.AddOnPlayerBoardEarnRewardListener(listener);
             }
         }
     }

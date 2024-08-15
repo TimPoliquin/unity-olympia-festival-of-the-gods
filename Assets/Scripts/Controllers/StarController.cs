@@ -28,8 +28,8 @@ namespace Azul
                     space.SetValue(idx + 1);
                     spaces[idx] = space;
                 }
-                star.AddTilePlaceholders(placeholders);
                 star.SetColor(color);
+                star.AddTilePlaceholders(placeholders);
                 star.SetSpaces(spaces);
                 return star;
             }

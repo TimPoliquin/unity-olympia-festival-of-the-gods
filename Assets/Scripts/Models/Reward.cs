@@ -36,6 +36,11 @@ namespace Azul
             {
                 return this.Color == color && this.TileNumber == tileNumber;
             }
+
+            public override string ToString()
+            {
+                return $"{this.Color} {this.TileNumber}";
+            }
         }
 
         [Serializable]
@@ -69,6 +74,11 @@ namespace Azul
             {
                 return this.conditions.Any(condition => condition.IsConditionParameter(color, tileNumber));
             }
+
+            public override string ToString()
+            {
+                return string.Join(" AND ", this.conditions.Select(condition => condition.ToString()).ToArray());
+            }
         }
 
         public class RewardBehavior : MonoBehaviour
@@ -96,6 +106,16 @@ namespace Azul
             public bool IsConditionMet()
             {
                 return this.RewardConfiguration.IsConditionMet(this.playerNumber);
+            }
+
+            public int GetReward()
+            {
+                return this.RewardConfiguration.GetReward().GetValue();
+            }
+
+            public override string ToString()
+            {
+                return $"{this.RewardConfiguration.ToString()}: {this.Completed}";
             }
 
             public static RewardBehavior Create(int playerNumber, RewardConfiguration rewardConfiguration, GameObject prefab)

@@ -10,11 +10,13 @@ namespace Azul
         public class UIController : MonoBehaviour
         {
             private ScoreTileSelectionUIController scoreTileSelectionUIController;
+            private SelectRewardUIController selectRewardUIController;
             private StarUIController starUIController;
 
             public void InitializeListeners()
             {
                 this.GetScoreTileSelectionUIController().InitializeListeners();
+                this.GetSelectRewardUIController().InitializeListeners();
                 this.GetStarUIController().InitializeListeners();
             }
 
@@ -25,6 +27,15 @@ namespace Azul
                     this.scoreTileSelectionUIController = this.GetComponentInChildren<ScoreTileSelectionUIController>();
                 }
                 return this.scoreTileSelectionUIController;
+            }
+
+            public SelectRewardUIController GetSelectRewardUIController()
+            {
+                if (null == this.selectRewardUIController)
+                {
+                    this.selectRewardUIController = this.GetComponentInChildren<SelectRewardUIController>();
+                }
+                return this.selectRewardUIController;
             }
 
             public StarUIController GetStarUIController()
