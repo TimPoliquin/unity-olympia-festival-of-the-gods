@@ -31,7 +31,8 @@ namespace Azul
                 factoryController.SetupGame(playerController.GetNumberOfPlayers());
                 tileController.SetupGame();
                 bagController.SetupGame(tileController.GetTiles());
-                scoreBoardController.FillSupply(bagController);
+                // DEVNOTE - we will not fill the supply for now, in favor of allowing the player to select a tile of their choosing from the bag.
+                // scoreBoardController.FillSupply(bagController);
                 roundController.SetupGame();
                 // initialize event listeners
                 cameraController.InitializeListeners();

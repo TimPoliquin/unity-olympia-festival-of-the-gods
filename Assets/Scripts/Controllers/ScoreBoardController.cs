@@ -61,6 +61,7 @@ namespace Azul
 
             private void CreateSupplyStar()
             {
+                // DEVNOTE - this is no longer called in favor of allowing manual selection
                 this.placeholderTiles = new();
                 for (int idx = 0; idx < this.supplySize; idx++)
                 {
