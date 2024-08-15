@@ -1251,9 +1251,9 @@ MonoBehaviour:
   - Number: 4
     Points: 16
   - Number: 5
-    Points: 18
+    Points: 0
   - Number: 6
-    Points: 20
+    Points: 0
 --- !u!1 &722696936
 GameObject:
   m_ObjectHideFlags: 0

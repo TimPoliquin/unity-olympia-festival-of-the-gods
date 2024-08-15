@@ -34,6 +34,17 @@ namespace Azul
             return tiles;
         }
 
+        public Tile Draw(TileColor tileColor)
+        {
+            Tile tile = this.bag.Draw(tileColor);
+            if (null == tile)
+            {
+                bag.Fill(tower.Dump());
+                tile = this.bag.Draw(tileColor);
+            }
+            return tile;
+        }
+
         public void Discard(List<Tile> tiles)
         {
             this.tower.Add(tiles);

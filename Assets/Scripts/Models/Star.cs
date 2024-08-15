@@ -39,6 +39,10 @@ namespace Azul
 
             public void AddTilePlaceholders(List<TilePlaceholder> placeholders)
             {
+                if (this.color == TileColor.WILD)
+                {
+                    this.layout.SetRotateAfterLayout(0);
+                }
                 this.layout.AddChildren(placeholders.Select(placeholder => placeholder.gameObject).ToList());
             }
 

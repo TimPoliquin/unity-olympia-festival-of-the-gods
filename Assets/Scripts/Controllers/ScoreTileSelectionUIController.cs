@@ -65,7 +65,6 @@ namespace Azul
 
             private void OnWildScoreSpaceSelection(OnPlayerBoardWildScoreSpaceSelectionPayload payload)
             {
-                UnityEngine.Debug.Log($"Wild star {payload.Value}");
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                 int numWild = payload.PlayerBoard.GetTileCount(wildColor);
                 List<TileColor> usedColors = payload.PlayerBoard.GetWildTileColors();
@@ -89,7 +88,7 @@ namespace Azul
                         }
                     }
                 });
-                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors);
+                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors, true);
                 this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
                 {
                     this.CreateScoreTileSelectionUIs(
