@@ -105,17 +105,14 @@ namespace Azul
                 int rewardCount = 0;
                 foreach (RewardBehavior rewardBehavior in behaviors)
                 {
-                    UnityEngine.Debug.Log($"Checking reward: {rewardBehavior.ToString()}");
                     if (rewardBehavior.IsConditionMet())
                     {
-                        UnityEngine.Debug.Log($"Reward condition met!");
                         rewardBehavior.MarkCompleted();
                         rewardCount += rewardBehavior.GetReward();
                     }
                 }
                 if (rewardCount > 0)
                 {
-                    UnityEngine.Debug.Log($"Earned reward! {rewardCount}");
                     this.onEarnReward.Invoke(new OnPlayerBoardEarnRewardPayload
                     {
                         PlayerNumber = this.playerNumber,

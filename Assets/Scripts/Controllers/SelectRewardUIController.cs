@@ -29,7 +29,6 @@ namespace Azul
 
             public void Activate(int playerNumber, int tileCount)
             {
-                UnityEngine.Debug.Log($"Activating select reward {tileCount}");
                 this.playerNumber = playerNumber;
                 this.currentCount = 0;
                 this.totalCount = tileCount;
