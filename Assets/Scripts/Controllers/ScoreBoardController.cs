@@ -51,6 +51,7 @@ namespace Azul
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerAcquiresOneTileListener(this.OnPlayerAcquireOneTile);
                 playerBoardController.AddOnPlaceStarTileListener(this.OnPlayerPlaceTile);
+                playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerDiscardTiles);
             }
 
             private void CreateScoreBoard()
@@ -108,6 +109,11 @@ namespace Azul
             private void OnPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
             {
                 this.DeductPoints(payload.PlayerNumber, payload.AcquiredTiles.Count);
+            }
+
+            private void OnPlayerDiscardTiles(OnPlayerBoardTilesDiscardedPayload payload)
+            {
+                this.DeductPoints(payload.PlayerNumber, payload.NumberOfTilesDiscarded);
             }
 
             private void OnRoundStart(OnRoundPhaseAcquirePayload payload)

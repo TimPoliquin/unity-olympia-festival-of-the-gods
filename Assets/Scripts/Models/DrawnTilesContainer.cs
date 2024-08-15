@@ -55,6 +55,11 @@ namespace Azul
             return this.drawnTiles.FindAll(tile => tile.Color == tileColor).Count;
         }
 
+        public int GetTileCount()
+        {
+            return this.drawnTiles.FindAll(tile => !tile.IsOneTile()).Count;
+        }
+
         public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)
         {
             List<Tile> usedTiles = new();
@@ -91,7 +96,10 @@ namespace Azul
                     usedTile.transform.SetParent(null);
                 }
                 this.layoutsByColor[mainColor].Refresh();
-                this.layoutsByColor[wildColor].Refresh();
+                if (this.layoutsByColor.ContainsKey(wildColor))
+                {
+                    this.layoutsByColor[wildColor].Refresh();
+                }
                 return usedTiles;
             }
         }

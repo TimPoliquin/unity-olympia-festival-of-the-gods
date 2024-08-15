@@ -40,18 +40,24 @@ namespace Azul
             public int TilePlaced { get; init; }
             public Star Star { get; init; }
         }
+        public class OnPlayerBoardTilesDiscardedPayload
+        {
+            public int PlayerNumber { get; init; }
+            public int NumberOfTilesDiscarded { get; init; }
+        }
     }
     namespace Controller
     {
         public class PlayerBoardController : MonoBehaviour
         {
             [SerializeField] private GameObject playerBoardPrefab;
+            [SerializeField] private int allowedOverflow = 4;
 
             private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
+            private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
             private List<PlayerBoard> playerBoards;
-
 
             public void SetupGame(int numPlayers, StarController starController)
             {
@@ -87,6 +93,34 @@ namespace Azul
             public void AddDrawnTiles(int player, List<Tile> tiles)
             {
                 this.playerBoards[player].AddDrawnTiles(tiles);
+            }
+
+            public void DiscardTiles(int playerNumber, Dictionary<TileColor, int> tilesToDiscard)
+            {
+                PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
+                List<Tile> discarded = new();
+                foreach (KeyValuePair<TileColor, int> discard in tilesToDiscard)
+                {
+                    discarded.AddRange(playerBoard.UseTiles(discard.Key, discard.Value, TileColor.WILD, 0));
+                }
+                int discardedCount = discarded.Count;
+                BagController bagController = System.Instance.GetBagController();
+                bagController.Discard(discarded);
+                this.onTilesDiscarded.Invoke(new OnPlayerBoardTilesDiscardedPayload
+                {
+                    PlayerNumber = playerNumber,
+                    NumberOfTilesDiscarded = discardedCount
+                });
+            }
+
+            public bool HasExcessiveOverflow(int playerNumber)
+            {
+                return this.GetPlayerBoard(playerNumber).GetTileCount() > this.allowedOverflow;
+            }
+
+            public int GetAllowedOverflow()
+            {
+                return this.allowedOverflow;
             }
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
@@ -239,6 +273,11 @@ namespace Azul
             public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
             {
                 this.playerBoards.ForEach(playerBoard => playerBoard.AddOnPlayerBoardEarnRewardListener(listener));
+            }
+
+            public void AddOnPlayerBoardTilesDiscardedListener(UnityAction<OnPlayerBoardTilesDiscardedPayload> listener)
+            {
+                this.onTilesDiscarded.AddListener(listener);
             }
         }
     }

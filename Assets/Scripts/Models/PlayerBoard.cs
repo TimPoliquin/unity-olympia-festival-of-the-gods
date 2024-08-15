@@ -118,6 +118,11 @@ namespace Azul
                 return this.drawnTilesContainer.GetTileCount(tileColor);
             }
 
+            public int GetTileCount()
+            {
+                return this.drawnTilesContainer.GetTileCount();
+            }
+
             public List<StarSpace> GetOpenSpaces(TileColor tileColor)
             {
                 return this.GetStar(tileColor).GetOpenSpaces();

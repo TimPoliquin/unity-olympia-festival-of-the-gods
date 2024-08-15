@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
-using Azul.PlayerEvets;
+using Azul.PlayerEvents;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -42,9 +42,13 @@ namespace Azul
                 roundController.AddOnRoundPhaseAcquireListener(this.OnRoundPhaseAcquire);
                 roundController.AddOnRoundPhaseScoreListener(this.OnRoundPhaseScore);
                 roundController.AddOnRoundPhasePrepareListener(this.OnRoundPhasePrepare);
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelection);
                 playerBoardController.AddOnPlayerBoardWildScoreSpaceSelectionListener(this.OnWildScoreSpaceSelection);
+                OverflowTileSelectionUIController overflowTileSelectionUIController = System.Instance.GetUIController().GetOverflowTileSelectionUIController();
+                overflowTileSelectionUIController.AddOnCancelListener(this.OnOverflowSelectionCancel);
             }
 
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
@@ -61,6 +65,14 @@ namespace Azul
             {
                 this.CleanupScoreSelectionUIElements();
                 this.endTurnButton.gameObject.SetActive(false);
+            }
+
+            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            {
+                if (payload.Phase == Phase.SCORE)
+                {
+                    this.endTurnButton.gameObject.SetActive(true);
+                }
             }
 
             private void OnWildScoreSpaceSelection(OnPlayerBoardWildScoreSpaceSelectionPayload payload)
@@ -215,9 +227,15 @@ namespace Azul
 
             private void OnEndTurn()
             {
+                this.endTurnButton.gameObject.SetActive(false);
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.EndPlayerScoringTurn();
-                this.endTurnButton.gameObject.SetActive(false);
+            }
+
+            private void OnOverflowSelectionCancel()
+            {
+                this.CleanupScoreSelectionUIElements();
+                this.endTurnButton.gameObject.SetActive(true);
             }
 
         }

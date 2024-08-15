@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
-using Azul.PlayerEvets;
+using Azul.PlayerEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
-    namespace PlayerEvets
+    namespace PlayerEvents
     {
         public class OnPlayerTurnScoreFinishedPayload
         {
@@ -18,6 +18,11 @@ namespace Azul
         public class OnAllPlayersTurnScoreFinishedPayload
         {
 
+        }
+
+        public class OnPlayerBoardExceedsOverflowPayload
+        {
+            public int PlayerNumber { get; init; }
         }
     }
     namespace Controller
@@ -33,6 +38,8 @@ namespace Azul
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnEnd = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnScoreFinishedPayload> onPlayerTurnScoreFinished = new();
             private UnityEvent<OnAllPlayersTurnScoreFinishedPayload> onAllPlayersTurnScoreFinished = new();
+            private UnityEvent<OnPlayerBoardExceedsOverflowPayload> onPlayerBoardExceedsOverflow = new();
+
 
             public void InitializeListeners()
             {
@@ -80,6 +87,27 @@ namespace Azul
 
             public void EndPlayerScoringTurn()
             {
+                if (this.CanPlayerEndScoreTurn())
+                {
+                    this.ResolveScoreTurn();
+                }
+                else
+                {
+                    this.onPlayerBoardExceedsOverflow.Invoke(new OnPlayerBoardExceedsOverflowPayload
+                    {
+                        PlayerNumber = this.currentPlayer
+                    });
+                }
+            }
+
+            private bool CanPlayerEndScoreTurn()
+            {
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                return !playerBoardController.HasExcessiveOverflow(this.currentPlayer);
+            }
+
+            private void ResolveScoreTurn()
+            {
                 this.onPlayerTurnScoreFinished.Invoke(new OnPlayerTurnScoreFinishedPayload
                 {
                     PlayerNumber = this.currentPlayer,
@@ -119,6 +147,11 @@ namespace Azul
             public void AddOnAllPlayersTurnScoreFinished(UnityAction<OnAllPlayersTurnScoreFinishedPayload> listener)
             {
                 this.onAllPlayersTurnScoreFinished.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardExceedsOverflowListener(UnityAction<OnPlayerBoardExceedsOverflowPayload> listener)
+            {
+                this.onPlayerBoardExceedsOverflow.AddListener(listener);
             }
 
 
