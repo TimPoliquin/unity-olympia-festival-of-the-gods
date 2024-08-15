@@ -4,6 +4,7 @@ using Azul.Model;
 using Azul.OverflowTileSelectionEvents;
 using Azul.PlayerEvents;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
@@ -17,6 +18,7 @@ namespace Azul
 
 
             private OverflowTileSelectionUI overflowTileSelectionUI;
+            private UnityEvent onCancel = new();
 
             public void InitializeListeners()
             {
@@ -54,6 +56,14 @@ namespace Azul
                 this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount() - playerBoardController.GetAllowedOverflow());
                 this.overflowTileSelectionUI.SetPlayerNumber(payload.PlayerNumber);
                 this.overflowTileSelectionUI.AddOnConfirmListener(this.OnOverflowDiscardSelection);
+                this.overflowTileSelectionUI.AddOnCancelListener(this.OnCancel);
+            }
+
+            private void OnCancel()
+            {
+                Destroy(this.overflowTileSelectionUI.gameObject);
+                this.overflowTileSelectionUI = null;
+                this.onCancel.Invoke();
             }
 
             private void OnOverflowDiscardSelection(OnOverflowTileSelectionConfirmPayload payload)
@@ -64,6 +74,11 @@ namespace Azul
                 this.overflowTileSelectionUI = null;
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.EndPlayerScoringTurn();
+            }
+
+            public void AddOnCancelListener(UnityAction listener)
+            {
+                this.onCancel.AddListener(listener);
             }
         }
 

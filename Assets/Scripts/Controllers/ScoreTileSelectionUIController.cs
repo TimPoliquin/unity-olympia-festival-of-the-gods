@@ -45,6 +45,8 @@ namespace Azul
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelection);
                 playerBoardController.AddOnPlayerBoardWildScoreSpaceSelectionListener(this.OnWildScoreSpaceSelection);
+                OverflowTileSelectionUIController overflowTileSelectionUIController = System.Instance.GetUIController().GetOverflowTileSelectionUIController();
+                overflowTileSelectionUIController.AddOnCancelListener(this.OnOverflowSelectionCancel);
             }
 
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
@@ -215,9 +217,15 @@ namespace Azul
 
             private void OnEndTurn()
             {
+                this.endTurnButton.gameObject.SetActive(false);
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.EndPlayerScoringTurn();
-                this.endTurnButton.gameObject.SetActive(false);
+            }
+
+            private void OnOverflowSelectionCancel()
+            {
+                this.CleanupScoreSelectionUIElements();
+                this.endTurnButton.gameObject.SetActive(true);
             }
 
         }

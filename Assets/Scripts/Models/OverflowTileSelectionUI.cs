@@ -25,6 +25,7 @@ namespace Azul
         {
             [SerializeField] private TextMeshProUGUI instructions;
             [SerializeField] private Button confirm;
+            [SerializeField] private Button cancel;
 
             private int playerNumber;
 
@@ -33,10 +34,12 @@ namespace Azul
             private List<ScoreTileSelectionUI> scoreTileSelectionUIs;
 
             private UnityEvent<OnOverflowTileSelectionConfirmPayload> onOverflowTileSelectionConfirm = new();
+            private UnityEvent onCancel = new();
 
             void Awake()
             {
                 this.confirm.onClick.AddListener(this.OnConfirm);
+                this.cancel.onClick.AddListener(this.OnCancel);
                 this.DisableButton();
             }
 
@@ -110,9 +113,19 @@ namespace Azul
                 );
             }
 
+            private void OnCancel()
+            {
+                this.onCancel.Invoke();
+            }
+
             public void AddOnConfirmListener(UnityAction<OnOverflowTileSelectionConfirmPayload> listener)
             {
                 this.onOverflowTileSelectionConfirm.AddListener(listener);
+            }
+
+            public void AddOnCancelListener(UnityAction listener)
+            {
+                this.onCancel.AddListener(listener);
             }
         }
 
