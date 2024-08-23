@@ -34,6 +34,12 @@ namespace Azul
             {
                 return this.color;
             }
+
+            public void Initialize(int playerNumber, string playerName)
+            {
+                this.playerName = playerName;
+                this.playerNumber = playerNumber;
+            }
         }
     }
 }

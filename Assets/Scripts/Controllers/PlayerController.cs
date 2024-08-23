@@ -54,6 +54,24 @@ namespace Azul
                 playerBoardController.AddOnPlayerAcquiresOneTileListener(this.onPlayerAcquireOneTile);
             }
 
+            public void SetPlayers(List<string> players)
+            {
+                for (int idx = 0; idx < players.Count; idx++)
+                {
+                    GameObject playerGO = new GameObject(players[idx]);
+                    Player player = playerGO.AddComponent<Player>();
+                    player.Initialize(idx, players[idx]);
+                    playerGO.transform.SetParent(this.transform);
+                    this.players.Add(player);
+                }
+            }
+
+            public void SetStartingPlayer(int player)
+            {
+                this.turnStartsWith = player;
+                this.currentPlayer = player;
+            }
+
             public int GetNumberOfPlayers()
             {
                 return this.players.Count;
@@ -160,10 +178,6 @@ namespace Azul
                 if (this.playerWithOneTile >= 0)
                 {
                     this.turnStartsWith = this.playerWithOneTile;
-                }
-                else
-                {
-                    this.turnStartsWith = 0;
                 }
                 this.currentPlayer = this.turnStartsWith;
                 this.StartTurn();
