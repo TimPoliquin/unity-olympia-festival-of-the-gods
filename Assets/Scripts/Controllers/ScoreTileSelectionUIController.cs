@@ -8,7 +8,6 @@ using System;
 using Azul.ScoreTileSelectionUIEvent;
 using UnityEngine.Events;
 using System.Linq;
-using Azul.WildColorSelectionEvents;
 
 namespace Azul
 {
