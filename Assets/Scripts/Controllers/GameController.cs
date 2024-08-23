@@ -9,8 +9,7 @@ namespace Azul
     {
         public class GameController : MonoBehaviour
         {
-            // Start is called before the first frame update
-            void Start()
+            public void StartGame()
             {
                 BagController bagController = System.Instance.GetBagController();
                 CameraController cameraController = System.Instance.GetCameraController();

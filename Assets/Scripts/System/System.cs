@@ -14,6 +14,7 @@ namespace Azul
         private BagController bagController;
         private CameraController cameraController;
         private FactoryController factoryController;
+        private GameController gameController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
         private RoundController roundController;
@@ -62,6 +63,15 @@ namespace Azul
                 this.factoryController = this.GetComponentInChildren<FactoryController>();
             }
             return this.factoryController;
+        }
+
+        public GameController GetGameController()
+        {
+            if (null == this.gameController)
+            {
+                this.gameController = this.GetComponentInChildren<GameController>();
+            }
+            return this.gameController;
         }
 
         public PlayerController GetPlayerController()
