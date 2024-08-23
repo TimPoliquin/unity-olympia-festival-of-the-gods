@@ -112,8 +112,8 @@ namespace Azul
 #if UNITY_EDITOR
                 this.playerNameInputs[0].text = "Tim";
                 this.playerNameInputs[1].text = "Alex";
-                this.playerNameInputs[2].text = "Foobag";
-                this.playerNameInputs[3].text = "Oaty";
+                this.playerNameInputs[2].text = "Oaty";
+                this.playerNameInputs[3].text = "Foobag";
 #endif
             }
         }
