@@ -117,9 +117,30 @@ namespace Azul
                 });
             }
 
+            public void DiscardAllRemainingTiles(int playerNumber)
+            {
+                PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
+                List<Tile> discarded = playerBoard.DiscardRemainingTiles();
+                BagController bagController = System.Instance.GetBagController();
+                bagController.Discard(discarded);
+                this.onTilesDiscarded.Invoke(new OnPlayerBoardTilesDiscardedPayload
+                {
+                    PlayerNumber = playerNumber,
+                    NumberOfTilesDiscarded = discarded.Count
+                });
+            }
+
             public bool HasExcessiveOverflow(int playerNumber)
             {
-                return this.GetPlayerBoard(playerNumber).GetTileCount() > this.allowedOverflow;
+                int tileCount = this.GetPlayerBoard(playerNumber).GetTileCount();
+                if (System.Instance.GetRoundController().IsLastRound())
+                {
+                    return tileCount > 0;
+                }
+                else
+                {
+                    return tileCount > this.allowedOverflow;
+                }
             }
 
             public int GetAllowedOverflow()

@@ -28,6 +28,7 @@ namespace Azul
 
             private void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
             {
+                RoundController roundController = System.Instance.GetRoundController();
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 PlayerBoard playerBoard = playerBoardController.GetPlayerBoard(payload.PlayerNumber);
                 Dictionary<TileColor, int> tileCounts = new();
@@ -48,12 +49,28 @@ namespace Azul
                     ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.overflowTileSelectionUI.transform).GetComponent<ScoreTileSelectionUI>();
                     scoreTileSelectionUI.SetColor(tileColor);
                     scoreTileSelectionUI.SetAnchor(playerBoard.GetDrawnTilesContainer(tileColor));
-                    scoreTileSelectionUI.SetCounterRange(0, count);
-                    scoreTileSelectionUI.SetDefaultValue(0);
+                    if (roundController.IsLastRound())
+                    {
+                        // all tiles must be discarded after the last round
+                        scoreTileSelectionUI.SetCounterRange(count, count);
+                        scoreTileSelectionUI.SetDefaultValue(count);
+                    }
+                    else
+                    {
+                        scoreTileSelectionUI.SetCounterRange(0, count);
+                        scoreTileSelectionUI.SetDefaultValue(0);
+                    }
                     scoreTileSelectionUIs.Add(scoreTileSelectionUI);
                 }
                 this.overflowTileSelectionUI.SetScoreTileSelectionUIs(scoreTileSelectionUIs);
-                this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount() - playerBoardController.GetAllowedOverflow());
+                if (roundController.IsLastRound())
+                {
+                    this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount());
+                }
+                else
+                {
+                    this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount() - playerBoardController.GetAllowedOverflow());
+                }
                 this.overflowTileSelectionUI.SetPlayerNumber(payload.PlayerNumber);
                 this.overflowTileSelectionUI.AddOnConfirmListener(this.OnOverflowDiscardSelection);
                 this.overflowTileSelectionUI.AddOnCancelListener(this.OnCancel);

@@ -8,6 +8,8 @@ using System;
 using Azul.ScoreTileSelectionUIEvent;
 using UnityEngine.Events;
 using System.Linq;
+using Azul.PlayerBoardRewardEvents;
+using Azul.RewardUIEvents;
 
 namespace Azul
 {
@@ -48,6 +50,9 @@ namespace Azul
                 playerBoardController.AddOnPlayerBoardWildScoreSpaceSelectionListener(this.OnWildScoreSpaceSelection);
                 OverflowTileSelectionUIController overflowTileSelectionUIController = System.Instance.GetUIController().GetOverflowTileSelectionUIController();
                 overflowTileSelectionUIController.AddOnCancelListener(this.OnOverflowSelectionCancel);
+                playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
+                SelectRewardUIController selectRewardUIController = System.Instance.GetUIController().GetSelectRewardUIController();
+                selectRewardUIController.AddOnGrantRewardListener(this.OnGrantReward);
             }
 
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
@@ -232,6 +237,18 @@ namespace Azul
             }
 
             private void OnOverflowSelectionCancel()
+            {
+                this.CleanupScoreSelectionUIElements();
+                this.endTurnButton.gameObject.SetActive(true);
+            }
+
+            private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            {
+                this.CleanupScoreSelectionUIElements();
+                this.endTurnButton.gameObject.SetActive(false);
+            }
+
+            private void OnGrantReward(OnGrantRewardPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
                 this.endTurnButton.gameObject.SetActive(true);

@@ -94,6 +94,11 @@ namespace Azul
                 return this.scoreBoard;
             }
 
+            public int GetPlayerScore(int playerNumber)
+            {
+                return this.playerScores[playerNumber];
+            }
+
             public void DeductPoints(int player, int points)
             {
                 this.playerScores[player] = Math.Max(this.playerScores[player] - points, 5);

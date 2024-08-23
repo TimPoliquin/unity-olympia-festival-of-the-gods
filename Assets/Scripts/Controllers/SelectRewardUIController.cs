@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
 using Azul.PlayerBoardRewardEvents;
+using Azul.RewardUIEvents;
 using Azul.WildColorSelectionEvents;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace RewardUIEvents
+    {
+        public class OnGrantRewardPayload
+        {
+            public int PlayerNumber { get; init; }
+            public Tile Tile { get; init; }
+        }
+    }
     namespace Controller
     {
         public class SelectRewardUIController : MonoBehaviour
@@ -20,6 +30,7 @@ namespace Azul
             private int playerNumber;
             private int currentCount;
             private int totalCount;
+            private UnityEvent<OnGrantRewardPayload> onGrantReward = new();
 
             public void InitializeListeners()
             {
@@ -68,13 +79,24 @@ namespace Azul
             private void GrantReward(TileColor color)
             {
                 BagController bagController = System.Instance.GetBagController();
+                Tile grantedTile = bagController.Draw(color);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.AddDrawnTiles(this.playerNumber, new() { bagController.Draw(color) });
+                playerBoardController.AddDrawnTiles(this.playerNumber, new() { grantedTile });
+                this.onGrantReward.Invoke(new OnGrantRewardPayload
+                {
+                    PlayerNumber = this.playerNumber,
+                    Tile = grantedTile
+                });
             }
 
             private string GetInstructions()
             {
                 return $"Reward: Choose a tile! {this.currentCount + 1} / {this.totalCount}";
+            }
+
+            public void AddOnGrantRewardListener(UnityAction<OnGrantRewardPayload> listener)
+            {
+                this.onGrantReward.AddListener(listener);
             }
         }
 

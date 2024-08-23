@@ -51,6 +51,7 @@ namespace Azul
             public void SetRequiredSelectionCount(int requiredSelectionCount)
             {
                 this.requiredSelectionCount = requiredSelectionCount;
+                this.CheckRequiredSelectionCount();
             }
 
             public void SetScoreTileSelectionUIs(List<ScoreTileSelectionUI> scoreTileSelectionUIs)

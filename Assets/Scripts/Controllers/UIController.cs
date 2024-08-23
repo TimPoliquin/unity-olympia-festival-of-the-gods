@@ -9,6 +9,8 @@ namespace Azul
     {
         public class UIController : MonoBehaviour
         {
+            private GameEndUIController gameEndUIController;
+            private GameStartUIController gameStartUIController;
             private OverflowTileSelectionUIController overflowTileSelectionUIController;
             private ScoreTileSelectionUIController scoreTileSelectionUIController;
             private SelectRewardUIController selectRewardUIController;
@@ -16,10 +18,30 @@ namespace Azul
 
             public void InitializeListeners()
             {
+                this.GetGameStartUIController().InitializeListeners();
+                this.GetGameEndUIController().InitializeListeners();
                 this.GetOverflowTileSelectionUIController().InitializeListeners();
                 this.GetScoreTileSelectionUIController().InitializeListeners();
                 this.GetSelectRewardUIController().InitializeListeners();
                 this.GetStarUIController().InitializeListeners();
+            }
+
+            public GameEndUIController GetGameEndUIController()
+            {
+                if (null == this.gameEndUIController)
+                {
+                    this.gameEndUIController = this.GetComponentInChildren<GameEndUIController>();
+                }
+                return this.gameEndUIController;
+            }
+
+            public GameStartUIController GetGameStartUIController()
+            {
+                if (null == this.gameStartUIController)
+                {
+                    this.gameStartUIController = this.GetComponentInChildren<GameStartUIController>();
+                }
+                return this.gameStartUIController;
             }
 
             public OverflowTileSelectionUIController GetOverflowTileSelectionUIController()

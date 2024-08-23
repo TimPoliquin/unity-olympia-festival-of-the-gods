@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 namespace Azul
 {
+
     namespace Controller
     {
         public class RoundController : MonoBehaviour
@@ -193,6 +194,16 @@ namespace Azul
             public void AddOnRoundPhaseScoreListener(UnityAction<OnRoundPhaseScorePayload> listener)
             {
                 this.onRoundPhaseScore.AddListener(listener);
+            }
+
+            public void AddOnAllRoundsCompleteListener(UnityAction<OnAllRoundsCompletePayload> listener)
+            {
+                this.onAllRoundsComplete.AddListener(listener);
+            }
+
+            public bool IsLastRound()
+            {
+                return this.currentRound == this.rounds.Count - 1;
             }
         }
     }
