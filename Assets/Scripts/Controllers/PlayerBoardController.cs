@@ -93,6 +93,10 @@ namespace Azul
             public void AddDrawnTiles(int player, List<Tile> tiles)
             {
                 this.playerBoards[player].AddDrawnTiles(tiles);
+                if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
+                {
+                    this.OnPlayerTurnScoringStart(player);
+                }
             }
 
             public void DiscardTiles(int playerNumber, Dictionary<TileColor, int> tilesToDiscard)
