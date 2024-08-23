@@ -29,11 +29,11 @@ namespace Azul
     {
         public class PlayerController : MonoBehaviour
         {
-            [SerializeField] private List<Player> players;
             [SerializeField][Range(0, 3)] private int currentPlayer = 0;
             [SerializeField] private int turnStartsWith = 0;
             private int playerWithOneTile = -1;
 
+            private List<Player> players;
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnStart = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnEnd = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnScoreFinishedPayload> onPlayerTurnScoreFinished = new();
@@ -54,8 +54,14 @@ namespace Azul
                 playerBoardController.AddOnPlayerAcquiresOneTileListener(this.onPlayerAcquireOneTile);
             }
 
+            public List<Player> GetPlayers()
+            {
+                return this.players;
+            }
+
             public void SetPlayers(List<string> players)
             {
+                this.players = new();
                 for (int idx = 0; idx < players.Count; idx++)
                 {
                     GameObject playerGO = new GameObject(players[idx]);

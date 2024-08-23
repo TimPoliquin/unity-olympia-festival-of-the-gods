@@ -29,6 +29,8 @@ namespace Azul
                 CameraController cameraController = System.Instance.GetCameraController();
                 cameraController.AddOnFocusOnTableListener(this.OnFocusOnTable);
                 cameraController.AddOnFocusOnPlayerBoardListener(this.OnFocusOnPlayerBoard);
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnAllRoundsCompleteListener(this.OnAllRoundsComplete);
             }
 
             private void OnFocusOnTable()
@@ -47,6 +49,10 @@ namespace Azul
                 }
             }
 
+            private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
+            {
+                this.container.SetActive(false);
+            }
         }
     }
 }

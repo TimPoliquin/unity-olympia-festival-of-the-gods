@@ -19,6 +19,11 @@ namespace Azul
                 this.gameStartUI.gameObject.SetActive(true);
             }
 
+            public void InitializeListeners()
+            {
+                // nothing to do here... yet
+            }
+
             public void OnPlayerCountSelection(OnPlayerCountSelectionPayload payload)
             {
                 this.gameStartUI.ShowPlayerNameInputs(payload.playerCount);

@@ -179,6 +179,11 @@ namespace Azul
                 return this.drawnTilesContainer.GetTileContainer(tileColor);
             }
 
+            public List<Tile> DiscardRemainingTiles()
+            {
+                return this.drawnTilesContainer.DiscardRemainingTiles();
+            }
+
             public void ResizeForScoring()
             {
                 //this.drawnTilesContainer.transform.localScale = .66f * Vector3.one;
