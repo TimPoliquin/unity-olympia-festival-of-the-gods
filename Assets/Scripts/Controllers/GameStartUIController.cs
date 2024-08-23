@@ -16,6 +16,7 @@ namespace Azul
             {
                 this.gameStartUI.AddOnPlayerCountSelectionListener(this.OnPlayerCountSelection);
                 this.gameStartUI.AddOnGameStartListener(this.OnGameStart);
+                this.gameStartUI.gameObject.SetActive(true);
             }
 
             public void OnPlayerCountSelection(OnPlayerCountSelectionPayload payload)
