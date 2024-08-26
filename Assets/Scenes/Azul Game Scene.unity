@@ -606,31 +606,44 @@ MonoBehaviour:
   tileMaterials:
   - color: 0
     material: {fileID: 2100000, guid: 645af1a65032b4284a7a7538a961ebe2, type: 2}
+    tint: {r: 1, g: 0, b: 0, a: 1}
   - color: 1
     material: {fileID: 2100000, guid: 9e5261b2542a34193aa0cacfde2dee4f, type: 2}
+    tint: {r: 0, g: 0, b: 1, a: 1}
   - color: 2
     material: {fileID: 2100000, guid: 776b2a4611f10427691062b4ee939a8f, type: 2}
+    tint: {r: 1, g: 1, b: 0, a: 1}
   - color: 3
     material: {fileID: 2100000, guid: 27f38e6a1b5bc4c0f800ad728ac1d638, type: 2}
+    tint: {r: 0, g: 1, b: 0, a: 1}
   - color: 4
     material: {fileID: 2100000, guid: fbdb2919de3c6462983bdd77d97f1db9, type: 2}
+    tint: {r: 1, g: 0, b: 1, a: 1}
   - color: 5
     material: {fileID: 2100000, guid: 794d3e9f4eb2e46389903fde9d07dedc, type: 2}
+    tint: {r: 1, g: 0.5019608, b: 0, a: 1}
   placeholderMaterials:
   - color: 0
     material: {fileID: 2100000, guid: a7cd336fb47f7486fbffd938a0c9ea57, type: 2}
+    tint: {r: 1, g: 0, b: 0, a: 0}
   - color: 1
     material: {fileID: 2100000, guid: a26baf3dce5cf420dae25686d9bb128c, type: 2}
+    tint: {r: 0, g: 0, b: 1, a: 0}
   - color: 2
     material: {fileID: 2100000, guid: b6b05861101654f73940b4ddbda80f23, type: 2}
+    tint: {r: 1, g: 1, b: 0, a: 0}
   - color: 3
     material: {fileID: 2100000, guid: bd4b6e3f69dc74ccdac946e8499ef2a3, type: 2}
+    tint: {r: 0, g: 1, b: 0, a: 0}
   - color: 4
     material: {fileID: 2100000, guid: 04d3f2d5aa7fb4827a6e68cf2cf794ff, type: 2}
+    tint: {r: 1, g: 0, b: 1, a: 0}
   - color: 5
     material: {fileID: 2100000, guid: 52f27f2993696423ba0773e92d133f18, type: 2}
+    tint: {r: 1, g: 0.5019608, b: 0, a: 0}
   - color: 6
     material: {fileID: 2100000, guid: aacaa77a8d0b1408989c655e7f4171a3, type: 2}
+    tint: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &646048642
 GameObject:
   m_ObjectHideFlags: 0

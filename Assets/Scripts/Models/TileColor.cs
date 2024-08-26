@@ -32,7 +32,6 @@ namespace Azul
                     TileColor.ORANGE
                 };
             }
-
         }
     }
 }
