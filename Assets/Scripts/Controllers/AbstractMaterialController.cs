@@ -11,9 +11,8 @@ namespace Azul
         public abstract class AbstractMaterialController : MonoBehaviour
         {
             [SerializeField] private GameObject mesh;
-            void Start()
+            protected virtual void Start()
             {
-                TileMaterialProvider materialProvider = System.Instance.GetTileMaterialProvider();
                 this.SetMaterial(this.GetMaterial());
                 this.enabled = false;
             }

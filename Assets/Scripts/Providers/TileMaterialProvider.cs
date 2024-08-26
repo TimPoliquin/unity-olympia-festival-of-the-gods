@@ -14,8 +14,9 @@ namespace Azul
             [Serializable]
             private struct TileMaterial
             {
-                public Azul.Model.TileColor color;
+                public TileColor color;
                 public Material material;
+                public Color tint;
             }
 
             [SerializeField] private List<TileMaterial> tileMaterials;
@@ -25,6 +26,12 @@ namespace Azul
             {
                 List<TileMaterial> tileMaterials = placeholder ? this.placeholderMaterials : this.tileMaterials;
                 return tileMaterials.Find(m => m.color == color).material;
+            }
+
+            public Color GetColor(TileColor color, bool placeholder = false)
+            {
+                List<TileMaterial> tileMaterials = placeholder ? this.placeholderMaterials : this.tileMaterials;
+                return tileMaterials.Find(m => m.color == color).tint;
             }
         }
     }
