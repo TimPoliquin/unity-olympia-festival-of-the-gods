@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Azul.GameStartEvents;
+using Azul.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,11 +15,11 @@ namespace Azul
     {
         public class OnPlayerCountSelectionPayload
         {
-            public int playerCount { get; init; }
+            public int PlayerCount { get; init; }
         }
         public class OnGameStartPayload
         {
-            public List<string> playerNames { get; init; }
+            public List<PlayerConfig> PlayerConfigs { get; init; }
         }
     }
     namespace Model
@@ -26,7 +27,7 @@ namespace Azul
         public class GameStartUI : MonoBehaviour
         {
             [SerializeField] private List<Button> playerCountButtons;
-            [SerializeField] private List<TMP_InputField> playerNameInputs;
+            [SerializeField] private List<PlayerConfigUI> playerConfigUIs;
             [SerializeField] private Button startButton;
 
             private UnityEvent<OnPlayerCountSelectionPayload> onPlayerCountSelection = new();
@@ -36,10 +37,10 @@ namespace Azul
             // Start is called before the first frame update
             void Awake()
             {
-                this.playerNameInputs.ForEach(input =>
+                this.playerConfigUIs.ForEach(input =>
                 {
                     input.gameObject.SetActive(false);
-                    input.onValueChanged.AddListener((playerName) =>
+                    input.AddOnPlayerConfigChangeListener((payload) =>
                     {
                         this.VerifyIfStartIsReady();
                     });
@@ -60,14 +61,15 @@ namespace Azul
 
             private void OnClickPlayerCount(int playerCount)
             {
-                this.onPlayerCountSelection.Invoke(new OnPlayerCountSelectionPayload { playerCount = playerCount });
+                this.onPlayerCountSelection.Invoke(new OnPlayerCountSelectionPayload { PlayerCount = playerCount });
             }
 
-            public void ShowPlayerNameInputs(int count)
+            public void ShowPlayerConfigs(int playerCount)
             {
-                for (int idx = 0; idx < this.playerNameInputs.Count; idx++)
+
+                for (int idx = 0; idx < this.playerConfigUIs.Count; idx++)
                 {
-                    this.playerNameInputs[idx].gameObject.SetActive(idx < count);
+                    this.playerConfigUIs[idx].gameObject.SetActive(idx < playerCount);
                 }
                 this.startButton.gameObject.SetActive(true);
                 this.VerifyIfStartIsReady();
@@ -86,11 +88,11 @@ namespace Azul
             private void VerifyIfStartIsReady()
             {
                 bool ready = true;
-                foreach (TMP_InputField input in this.playerNameInputs)
+                foreach (PlayerConfigUI input in this.playerConfigUIs)
                 {
-                    if (input.gameObject.activeInHierarchy)
+                    if (input.IsActive())
                     {
-                        ready &= input.text.Length > 0;
+                        ready &= input.IsValid();
                     }
                 }
                 this.startButton.interactable = ready;
@@ -100,9 +102,9 @@ namespace Azul
             {
                 this.onGameStart.Invoke(new OnGameStartPayload
                 {
-                    playerNames = this.playerNameInputs
+                    PlayerConfigs = this.playerConfigUIs
                         .FindAll(input => input.gameObject.activeInHierarchy)
-                        .Select(input => input.text)
+                        .Select(input => input.GetPlayerConfig())
                         .ToList()
                 });
             }
@@ -110,10 +112,10 @@ namespace Azul
             private void InitializePlayerNames()
             {
 #if UNITY_EDITOR
-                this.playerNameInputs[0].text = "Tim";
-                this.playerNameInputs[1].text = "Alex";
-                this.playerNameInputs[2].text = "Oaty";
-                this.playerNameInputs[3].text = "Foobag";
+                this.playerConfigUIs[0].SetPlayerName("Tim");
+                this.playerConfigUIs[1].SetPlayerName("Alex");
+                this.playerConfigUIs[2].SetPlayerName("Oaty");
+                this.playerConfigUIs[3].SetPlayerName("Foobag");
 #endif
             }
         }

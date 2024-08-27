@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller.TableEvents;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PlayerEvents;
@@ -59,14 +60,15 @@ namespace Azul
                 return this.players;
             }
 
-            public void SetPlayers(List<string> players)
+            public void SetPlayers(List<PlayerConfig> playerConfigs)
             {
                 this.players = new();
-                for (int idx = 0; idx < players.Count; idx++)
+                for (int idx = 0; idx < playerConfigs.Count; idx++)
                 {
-                    GameObject playerGO = new GameObject(players[idx]);
+                    PlayerConfig playerConfig = playerConfigs[idx];
+                    GameObject playerGO = new GameObject(playerConfig.Name);
                     Player player = playerGO.AddComponent<Player>();
-                    player.Initialize(idx, players[idx]);
+                    player.Initialize(idx, playerConfig.Name, playerConfig.isAI);
                     playerGO.transform.SetParent(this.transform);
                     this.players.Add(player);
                 }
@@ -105,6 +107,7 @@ namespace Azul
                 this.onPlayerTurnStart.Invoke(new OnPlayerTurnStartPayload
                 {
                     PlayerNumber = this.currentPlayer,
+                    Player = this.players[this.currentPlayer],
                     Phase = System.Instance.GetRoundController().GetCurrentPhase()
                 });
             }
@@ -201,7 +204,7 @@ namespace Azul
                 this.NextTurn();
             }
 
-            private void OnTableTilesDrawn(TableController.OnTableTilesDrawnPayload payload)
+            private void OnTableTilesDrawn(OnTableTilesDrawnPayload payload)
             {
                 System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.Tiles);
                 this.NextTurn();

@@ -6,6 +6,7 @@ using Azul.Model;
 using Azul.PointerEvents;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Azul
 {
@@ -67,6 +68,32 @@ namespace Azul
             }
 
             private void OnTileSelect(OnPointerSelectPayload<Tile> payload)
+            {
+                this.SelectHoveredTiles();
+            }
+
+            public void HoverTiles(TileColor tileColor)
+            {
+                if (!this.canAcquire)
+                {
+                    return;
+                }
+                if (null != this.hoveredTiles)
+                {
+                    this.DeselectTiles();
+                }
+                Tile tile = this.tiles.Find(tile => tile.Color == tileColor);
+                if (null != tile)
+                {
+                    this.HoverTiles(tile);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(tileColor), $"No tiles with the desired color: {tileColor}");
+                }
+            }
+
+            public void SelectHoveredTiles()
             {
                 if (!this.canAcquire || this.hoveredTiles.Count == 0)
                 {
@@ -145,16 +172,17 @@ namespace Azul
             private void InitializeRoundPhaseHandlers()
             {
                 Phase[] activePhases = this.GetActivePhases();
-                System.Instance.GetRoundController().AddOnRoundPhaseAcquireListener((payload) =>
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnRoundPhaseAcquireListener((payload) =>
                 {
                     this.canAcquire = activePhases.Contains(payload.Phase);
                     this.wildColor = payload.WildColor;
                 });
-                System.Instance.GetRoundController().AddOnRoundPhasePrepareListener((payload) =>
+                roundController.AddOnRoundPhasePrepareListener((payload) =>
                 {
                     this.canAcquire = activePhases.Contains(payload.Phase);
                 });
-                System.Instance.GetRoundController().AddOnRoundPhaseScoreListener((payload) =>
+                roundController.AddOnRoundPhaseScoreListener((payload) =>
                 {
                     this.canAcquire = activePhases.Contains(payload.Phase);
                 });

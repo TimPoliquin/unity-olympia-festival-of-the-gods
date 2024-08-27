@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Azul.Controller.TableUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -86,6 +88,32 @@ namespace Azul
                 return this.tiles.Count == 0;
             }
 
+            public int GetTileCount(TileColor desiredColor)
+            {
+                return this.tiles.FindAll(tile => tile.Color == desiredColor).Count;
+            }
+
+            public Dictionary<TileColor, int> GetTileCounts()
+            {
+                Dictionary<TileColor, int> tileCounts = new();
+                foreach (Tile tile in this.tiles)
+                {
+                    if (!tileCounts.ContainsKey(tile.Color))
+                    {
+                        tileCounts[tile.Color] = 1;
+                    }
+                    else
+                    {
+                        tileCounts[tile.Color] += 1;
+                    }
+                }
+                return tileCounts;
+            }
+
+            public bool HasTileOfColor(TileColor tileColor)
+            {
+                return this.tiles.Any(tile => tile.Color == tileColor);
+            }
         }
     }
 }

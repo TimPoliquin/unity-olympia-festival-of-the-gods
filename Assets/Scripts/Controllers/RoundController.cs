@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller.TableEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace Azul
                 return this.GetCurrentRound().GetCurrentPhase();
             }
 
-            private void OnTableTilesAdded(TableController.OnTableTilesAddedPayload arg0)
+            private void OnTableTilesAdded(OnTableTilesAddedPayload arg0)
             {
                 this.tableEmpty = false;
             }

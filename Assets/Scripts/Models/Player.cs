@@ -19,6 +19,7 @@ namespace Azul
             [SerializeField] private int playerNumber;
             [SerializeField] private string playerName;
             [SerializeField] private PlayerColor color;
+            [SerializeField] private bool isAI;
 
             public int GetPlayerNumber()
             {
@@ -35,10 +36,21 @@ namespace Azul
                 return this.color;
             }
 
-            public void Initialize(int playerNumber, string playerName)
+            public bool IsAI()
             {
-                this.playerName = playerName;
+                return this.isAI;
+            }
+
+            public bool IsHuman()
+            {
+                return !this.isAI;
+            }
+
+            public void Initialize(int playerNumber, string playerName, bool isAI)
+            {
                 this.playerNumber = playerNumber;
+                this.playerName = playerName;
+                this.isAI = isAI;
             }
         }
     }

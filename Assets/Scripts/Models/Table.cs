@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Layout;
 using Azul.Model;
+using Azul.TableEvents;
 using Azul.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace TableEvents
+    {
+        public class OnTableAddTilesPayload
+        {
+            public List<Tile> Tiles { get; init; }
+        }
+        public class OnTableDrawTilesPayload
+        {
+            public List<Tile> TilesDrawn { get; init; }
+        }
+    }
     namespace Model
     {
         public class Table : MonoBehaviour
         {
-            public class OnTableAddTilesPayload
-            {
-                public List<Tile> Tiles { get; init; }
-            }
-            public class OnTableDrawTilesPayload
-            {
-                public List<Tile> TilesDrawn { get; init; }
-            }
             [SerializeField] private GameObject playerBoards;
-            [SerializeField] private GameObject factories;
+            [SerializeField] private CircularLayout factoriesLayout;
             [SerializeField] private GameObject scoreBoard;
             [SerializeField] private GameObject center;
+            private List<Factory> factories = new();
             private List<Tile> tiles = new();
             private UnityEvent<OnTableAddTilesPayload> onAddTiles = new();
             private UnityEvent<OnTableDrawTilesPayload> onDrawTiles = new();
@@ -37,8 +42,8 @@ namespace Azul
 
             public void AddFactories(List<Factory> factories)
             {
-                Layout.Layout layout = this.factories.GetComponent<CircularLayout>();
-                layout.AddChildren(factories.Select(factory => factory.gameObject).ToList());
+                this.factories.AddRange(factories);
+                this.factoriesLayout.AddChildren(factories.Select(factory => factory.gameObject).ToList());
             }
 
             public void AddScoreBoard(ScoreBoard scoreBoard)
@@ -78,6 +83,43 @@ namespace Azul
                     tile.transform.SetParent(null);
                 }
                 this.onDrawTiles.Invoke(new OnTableDrawTilesPayload { TilesDrawn = drawnTiles }); ;
+            }
+
+            public List<Factory> GetFactories()
+            {
+                return this.factories;
+            }
+
+            public int GetTileCount(TileColor tileColor)
+            {
+                return this.tiles.FindAll(tile => tile.Color == tileColor).Count;
+            }
+
+            public bool HasTileOfColor(TileColor tileColor)
+            {
+                return this.tiles.Any(tile => tile.Color == tileColor);
+            }
+
+            public bool HasOneTile()
+            {
+                return this.tiles.Any(tile => tile.IsOneTile());
+            }
+
+            public Dictionary<TileColor, int> GetTileCounts()
+            {
+                Dictionary<TileColor, int> tileCounts = new();
+                foreach (Tile tile in this.tiles)
+                {
+                    if (!tileCounts.ContainsKey(tile.Color))
+                    {
+                        tileCounts[tile.Color] = 1;
+                    }
+                    else
+                    {
+                        tileCounts[tile.Color] += 1;
+                    }
+                }
+                return tileCounts;
             }
 
             public void AddOnTilesAddedListener(UnityAction<OnTableAddTilesPayload> listener)
