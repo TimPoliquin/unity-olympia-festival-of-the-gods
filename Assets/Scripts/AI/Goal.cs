@@ -24,6 +24,10 @@ namespace Azul
             public TileColor DesiredColor { get; init; }
             public TileColor WildColor { get; init; }
         }
+        public struct OnScoreSpaceSelectedPayload
+        {
+            public StarSpace Selection;
+        }
     }
     namespace AI
     {
@@ -43,8 +47,13 @@ namespace Azul
             COMPLETE,
         }
 
-        public enum GoalFeasability
+        public enum GoalAcquireFeasability
         {
+            /// <summary>
+            /// Goal has been acquired, either in the player's supply
+            /// or star board.
+            /// </summary>
+            ACQUIRED,
             /// <summary>
             /// Goal can be accomplished in a single available move
             /// </summary>
@@ -66,24 +75,33 @@ namespace Azul
         public interface Goal
         {
             public GoalStatus EvaluateCompletion();
-            public GoalFeasability CalculateFeasibility();
-            public void Act();
+            public GoalAcquireFeasability CalculateAcquireFeasibility();
+            public void Acquire();
+
+            public void Score();
+
+            public int GetScoreProgress();
+
+            public bool CanScore();
 
             public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener);
             public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener);
+            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener);
         }
 
         [Serializable]
         public class StarGoal : Goal
         {
+            [SerializeField] private int playerNumber;
             [SerializeField] private TileColor starColor;
             [SerializeField] private GoalStatus goalStatus;
 
 
-            internal static StarGoal Create(TileColor starColor)
+            internal static StarGoal Create(int playerNumber, TileColor starColor)
             {
                 return new StarGoal
                 {
+                    playerNumber = playerNumber,
                     starColor = starColor,
                     goalStatus = GoalStatus.NOT_STARTED
                 };
@@ -94,7 +112,7 @@ namespace Azul
                 return this.goalStatus == GoalStatus.COMPLETE;
             }
 
-            public GoalFeasability CalculateFeasibility()
+            public GoalAcquireFeasability CalculateAcquireFeasibility()
             {
                 throw new NotImplementedException();
             }
@@ -104,7 +122,7 @@ namespace Azul
                 throw new NotImplementedException();
             }
 
-            public void Act()
+            public void Acquire()
             {
                 throw new NotImplementedException();
             }
@@ -115,6 +133,26 @@ namespace Azul
             }
 
             public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Score()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int GetScoreProgress()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanScore()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
             {
                 throw new NotImplementedException();
             }
@@ -122,19 +160,21 @@ namespace Azul
 
         public class NumberGoal : Goal
         {
+            [SerializeField] private int playerNumber;
             [SerializeField] private int number;
             [SerializeField] private GoalStatus goalStatus;
 
-            internal static NumberGoal Create(int number)
+            internal static NumberGoal Create(int playerNumber, int number)
             {
                 return new NumberGoal
                 {
+                    playerNumber = playerNumber,
                     number = number,
                     goalStatus = GoalStatus.NOT_STARTED
                 };
             }
 
-            public void Act()
+            public void Acquire()
             {
                 throw new NotImplementedException();
             }
@@ -149,12 +189,27 @@ namespace Azul
                 throw new NotImplementedException();
             }
 
-            public GoalFeasability CalculateFeasibility()
+            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public GoalAcquireFeasability CalculateAcquireFeasibility()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanScore()
             {
                 throw new NotImplementedException();
             }
 
             public GoalStatus EvaluateCompletion()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int GetScoreProgress()
             {
                 throw new NotImplementedException();
             }
@@ -163,27 +218,32 @@ namespace Azul
             {
                 return this.goalStatus == GoalStatus.COMPLETE;
             }
+
+            public void Score()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public sealed class GoalUtils
         {
-            public static Goal CreateStarGoal(TileColor starColor)
+            public static Goal CreateStarGoal(int playerNumber, TileColor starColor)
             {
-                return StarGoal.Create(starColor);
+                return StarGoal.Create(playerNumber, starColor);
             }
 
-            public static Goal CreateNumberGoal(int number)
+            public static Goal CreateNumberGoal(int playerNumber, int number)
             {
-                return NumberGoal.Create(number);
+                return NumberGoal.Create(playerNumber, number);
             }
-            public static Goal CreateRandomGoal()
+            public static Goal CreateRandomGoal(int playerNumber)
             {
-                return RandomGoal.Create();
+                return RandomGoal.Create(playerNumber);
             }
 
             public static List<Goal> SortByFeasibility(List<Goal> goals)
             {
-                return goals.OrderBy(goal => goal.CalculateFeasibility()).ToList();
+                return goals.OrderBy(goal => goal.CalculateAcquireFeasibility()).ToList();
             }
 
         }

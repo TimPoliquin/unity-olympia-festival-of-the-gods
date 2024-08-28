@@ -6,6 +6,7 @@ using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PlayerBoardRewardEvents;
 using Azul.PointerEvents;
+using Azul.StarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -89,6 +90,8 @@ namespace Azul
             {
                 return this.playerBoards[playerNumber];
             }
+
+
 
             public void AddDrawnTiles(int player, List<Tile> tiles)
             {
@@ -195,19 +198,19 @@ namespace Azul
                         spaces.Distinct().ToList().ForEach(space =>
                         {
                             space.ActivateHighlight();
-                            space.GetPointerEventController().AddOnPointerSelectListener(this.OnPointerSelectSpace);
+                            space.AddOnStarSpaceSelectListener(this.OnPointerSelectSpace);
                         });
                     }
                 }
             }
 
-            private void OnPointerSelectSpace(OnPointerSelectPayload<TilePlaceholder> payload)
+            private void OnPointerSelectSpace(OnStarSpaceSelectPayload payload)
             {
                 // TODO - a lot needs to be done here to keep the rails on selection.
                 // we should confirm the space is on an active playerboard, for instance.
                 if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
                 {
-                    StarSpace space = payload.Target.GetComponent<StarSpace>();
+                    StarSpace space = payload.Target;
                     PlayerBoard playerBoard = space.GetComponentInParent<PlayerBoard>();
                     if (space.GetOriginColor() != TileColor.WILD)
                     {

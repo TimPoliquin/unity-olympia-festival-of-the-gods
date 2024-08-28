@@ -23,18 +23,23 @@ namespace Azul
         {
             [SerializeField] private List<Goal> goals = new();
 
-            public void CreateGoals()
+            public List<Goal> GetGoals()
             {
-                this.goals.Add(GoalUtils.CreateRandomGoal());
+                return this.goals;
             }
 
-            public void EvaluateGoalsForRound()
+            public void CreateGoals(int playerNumber)
+            {
+                this.goals.Add(GoalUtils.CreateRandomGoal(playerNumber));
+            }
+
+            public void EvaluateGoals()
             {
                 this.goals.RemoveAll(goal => goal.EvaluateCompletion() == GoalStatus.COMPLETE);
                 this.goals = GoalUtils.SortByFeasibility(this.goals);
             }
 
-            public void Act()
+            public void Acquire()
             {
                 Goal currentGoal = this.GetCurrentGoal();
                 currentGoal.AddOnDrawFromFactoryListener(payload =>
@@ -45,7 +50,7 @@ namespace Azul
                 {
                     this.StartCoroutine(this.DrawFromTable(payload.DesiredColor, payload.WildColor));
                 });
-                this.GetCurrentGoal().Act();
+                this.GetCurrentGoal().Acquire();
             }
 
             private Goal GetCurrentGoal()

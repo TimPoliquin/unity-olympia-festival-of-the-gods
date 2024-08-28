@@ -13,24 +13,28 @@ namespace Azul
         {
             [SerializeField] private int playerNumber;
             private AcquireStrategy acquireStrategy;
+            private ScoringStrategy scoringStrategy;
 
             void Awake()
             {
                 this.acquireStrategy = this.AddComponent<AcquireStrategy>();
-                this.acquireStrategy.CreateGoals();
+                this.scoringStrategy = this.AddComponent<ScoringStrategy>();
             }
 
             public void OnAcquireTurn()
             {
                 UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating strategy");
-                this.acquireStrategy.EvaluateGoalsForRound();
+                this.acquireStrategy.EvaluateGoals();
                 UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Acting");
-                this.acquireStrategy.Act();
+                this.acquireStrategy.Acquire();
             }
 
             public void OnScoreTurn()
             {
-
+                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
+                this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals());
+                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
+                this.scoringStrategy.Score();
             }
 
             public int GetPlayerNumber()
@@ -43,6 +47,7 @@ namespace Azul
                 GameObject aiControllerGO = new GameObject($"{player.GetPlayerName()} AI Controller");
                 AIPlayerController aiController = aiControllerGO.AddComponent<AIPlayerController>();
                 aiController.playerNumber = player.GetPlayerNumber();
+                aiController.acquireStrategy.CreateGoals(player.GetPlayerNumber());
                 return aiController;
             }
         }
