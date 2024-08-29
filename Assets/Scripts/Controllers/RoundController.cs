@@ -56,6 +56,21 @@ namespace Azul
                 return this.GetCurrentRound().GetCurrentPhase();
             }
 
+            public TileColor GetCurrentWild()
+            {
+                return this.rounds[this.currentRound].GetWildColor();
+            }
+
+            public TileColor GetNextWild()
+            {
+                if (this.IsLastRound())
+                {
+                    throw new IndexOutOfRangeException("There is no next round");
+                }
+                return this.rounds[this.currentRound + 1].GetWildColor();
+            }
+
+
             private void OnTableTilesAdded(OnTableTilesAddedPayload arg0)
             {
                 this.tableEmpty = false;

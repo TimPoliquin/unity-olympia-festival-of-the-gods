@@ -24,6 +24,7 @@ namespace Azul
         public class OnPlayerBoardExceedsOverflowPayload
         {
             public int PlayerNumber { get; init; }
+            public int TilesAllowed { get; init; }
         }
     }
     namespace Controller
@@ -125,9 +126,11 @@ namespace Azul
                 }
                 else
                 {
+                    PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                     this.onPlayerBoardExceedsOverflow.Invoke(new OnPlayerBoardExceedsOverflowPayload
                     {
-                        PlayerNumber = this.currentPlayer
+                        PlayerNumber = this.currentPlayer,
+                        TilesAllowed = playerBoardController.GetAllowedOverflow()
                     });
                 }
             }

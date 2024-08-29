@@ -28,6 +28,10 @@ namespace Azul
 
             private void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
             {
+                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsAI())
+                {
+                    return;
+                }
                 RoundController roundController = System.Instance.GetRoundController();
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 PlayerBoard playerBoard = playerBoardController.GetPlayerBoard(payload.PlayerNumber);

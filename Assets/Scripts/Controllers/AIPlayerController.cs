@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.AI;
 using Azul.AIEvents;
+using Azul.GameEvents;
 using Azul.Model;
+using Azul.PlayerBoardRewardEvents;
+using Azul.PlayerEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,6 +24,21 @@ namespace Azul
                 this.acquireStrategy = this.AddComponent<AcquireStrategy>();
                 this.scoringStrategy = this.AddComponent<ScoringStrategy>();
                 this.scoringStrategy.AddOnScoreCompleteListener(this.OnScoreComplete);
+                System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
+            }
+
+            private void OnGameSetupComplete(OnGameSetupCompletePayload payload)
+            {
+                this.InitializeListeners();
+            }
+
+            private void InitializeListeners()
+            {
+                PlayerController playerController = System.Instance.GetPlayerController();
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                playerController.AddOnPlayerBoardExceedsOverflowListener(this.OnOverflow);
+                playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
+
             }
 
             public void OnAcquireTurn()
@@ -44,6 +62,23 @@ namespace Azul
                 {
                     PlayerController playerController = System.Instance.GetPlayerController();
                     playerController.EndPlayerScoringTurn();
+                }
+            }
+
+            public void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
+            {
+                Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                playerBoardController.DiscardTiles(this.playerNumber, discard);
+            }
+
+            public void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            {
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                for (int idx = 0; idx < payload.NumberOfTiles; idx++)
+                {
+                    TileColor tileColor = this.scoringStrategy.ChooseReward();
+                    playerBoardController.GrantReward(this.playerNumber, tileColor);
                 }
             }
 

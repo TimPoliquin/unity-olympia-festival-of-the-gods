@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.AIEvents;
 using Azul.Controller;
+using Azul.Controller.TableUtilities;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using Utils;
 
 namespace Azul
 {
@@ -107,6 +110,59 @@ namespace Azul
             public void AddOnScoreCompleteListener(UnityAction<OnAIScorePayload> listener)
             {
                 this.onScoreComplete.AddListener(listener);
+            }
+
+            public TileColor ChooseReward()
+            {
+                // TODO - we really need to figure out something good here, but for now,
+                // let's just pick the wild color to make things easy.
+                return System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+            }
+
+            public Dictionary<TileColor, int> HandleOverflowDiscard(int playerNumber, int tilesAllowed)
+            {
+                RoundController roundController = System.Instance.GetRoundController();
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                PlayerBoard playerBoard = playerBoardController.GetPlayerBoard(playerNumber);
+                List<TileCount> tileCounts = playerBoard.GetTileCounts();
+                Dictionary<TileColor, int> toDiscard = new();
+                foreach (TileCount tileCount in tileCounts)
+                {
+                    toDiscard[tileCount.TileColor] = tileCount.Count;
+                }
+                if (tilesAllowed == 0 || roundController.IsLastRound())
+                {
+                    // just move 'em all over!
+                    return toDiscard;
+                }
+                else
+                {
+                    int tilesKept = 0;
+                    // see if there's anything we SHOULD keep
+                    TileColor nextWildColor = roundController.GetNextWild();
+                    if (toDiscard.ContainsKey(nextWildColor))
+                    {
+                        int numNextWild = toDiscard[nextWildColor];
+                        if (numNextWild >= tilesAllowed)
+                        {
+                            toDiscard[nextWildColor] -= tilesAllowed;
+                            tilesKept = tilesAllowed;
+                        }
+                    }
+                    while (tilesKept < tilesAllowed)
+                    {
+                        // TODO - ignore any tiles for completed colors (star and wild space)
+
+                        // pick a random tile to kep?
+                        TileColor tileColor = ListUtils.GetRandomElement(toDiscard.Keys.ToList());
+                        if (toDiscard[tileColor] > 0)
+                        {
+                            toDiscard[tileColor]--;
+                            tilesKept++;
+                        }
+                    }
+                }
+                return new();
             }
         }
     }

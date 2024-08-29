@@ -148,7 +148,14 @@ namespace Azul
 
             public int GetAllowedOverflow()
             {
-                return this.allowedOverflow;
+                if (System.Instance.GetRoundController().IsLastRound())
+                {
+                    return 0;
+                }
+                else
+                {
+                    return this.allowedOverflow;
+                }
             }
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
@@ -315,6 +322,15 @@ namespace Azul
             {
                 this.onTilesDiscarded.AddListener(listener);
             }
+
+            public Tile GrantReward(int playerNumber, TileColor tileColor)
+            {
+                BagController bagController = System.Instance.GetBagController();
+                Tile grantedTile = bagController.Draw(tileColor);
+                this.AddDrawnTiles(playerNumber, new() { grantedTile });
+                return grantedTile;
+            }
+
         }
     }
 }
