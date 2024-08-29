@@ -85,6 +85,11 @@ namespace Azul
                 return this.players.Count;
             }
 
+            public Player GetPlayer(int playerNumber)
+            {
+                return this.players[playerNumber];
+            }
+
             public Player GetCurrentPlayer()
             {
                 return this.players[this.currentPlayer];

@@ -6,6 +6,7 @@ using Azul.AIEvents;
 using Azul.Controller;
 using Azul.Controller.TableUtilities;
 using Azul.Model;
+using Azul.PlayerBoardEvents;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -18,9 +19,11 @@ namespace Azul
         {
             private int playerNumber { get; init; }
             private List<StarSpace> actionableSpaces;
+            private StarSpace chosenSpace;
             private UnityEvent<OnDrawFromFactoryPayload> onDrawFromFactory = new();
             private UnityEvent<OnDrawFromTablePayload> onDrawFromTable = new();
             private UnityEvent<OnScoreSpaceSelectedPayload> onScoreSpaceSelected = new();
+            private UnityEvent<OnGoalScoreTilesSelectedPayload> onScoreTileSelection = new();
 
             public void Acquire()
             {
@@ -44,14 +47,12 @@ namespace Azul
                     factoryTilesCount = factory.GetTileCount(tileColor);
                     factoryHasWild = factory.HasTileOfColor(wildColor);
                 }
-                factoryTilesCount += factoryHasWild ? 1 : 0;
-                tableTileCount += tableHasWild ? 1 : 0;
                 UnityEngine.Debug.Log($"Random Goal: Factory Tiles: {factoryTilesCount} / {factoryHasWild}");
                 UnityEngine.Debug.Log($"Random Goal: Table Tiles: {tableTileCount} / {tableHasWild}");
                 if (null != factory && factoryTilesCount >= tableTileCount)
                 {
                     // prefer drawing from a factory over the center of the table.
-                    UnityEngine.Debug.Log("Drawing from factory");
+                    UnityEngine.Debug.Log($"Drawing {tileColor} from factory");
                     this.DrawFromFactory(factory, tileColor, wildColor);
                 }
                 else
@@ -120,11 +121,13 @@ namespace Azul
 
             public void Score()
             {
-                StarSpace starSpace = ListUtils.GetRandomElement(this.actionableSpaces);
-                UnityEngine.Debug.Log($"Scoring: {starSpace.GetOriginColor()}* {starSpace.GetValue()}");
+                this.chosenSpace = ListUtils.GetRandomElement(this.actionableSpaces);
+                UnityEngine.Debug.Log($"Scoring: {chosenSpace.GetOriginColor()}* {chosenSpace.GetValue()}");
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                playerBoardController.AddOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelected);
                 this.onScoreSpaceSelected.Invoke(new OnScoreSpaceSelectedPayload
                 {
-                    Selection = starSpace
+                    Selection = this.chosenSpace
                 });
                 this.onScoreSpaceSelected.RemoveAllListeners();
             }
@@ -182,6 +185,32 @@ namespace Azul
             public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
             {
                 this.onScoreSpaceSelected.AddListener(listener);
+            }
+
+            private void OnScoreSpaceSelected(OnPlayerBoardScoreSpaceSelectionPayload payload)
+            {
+                System.Instance.GetPlayerBoardController().RemoveOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelected);
+                TileColor chosenColor = this.chosenSpace.GetOriginColor();
+                this.chosenSpace = null;
+                // dispatch event
+                this.onScoreTileSelection.Invoke(new OnGoalScoreTilesSelectedPayload
+                {
+                    PlayerBoard = payload.PlayerBoard,
+                    TileColor = chosenColor,
+                    Value = payload.Value,
+                    OnConfirm = payload.OnConfirm,
+                });
+                this.onScoreTileSelection.RemoveAllListeners();
+            }
+
+            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
+            {
+                this.onScoreTileSelection.AddListener(listener);
+            }
+
+            public void RemoveOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
+            {
+                this.onScoreTileSelection.RemoveListener(listener);
             }
         }
     }

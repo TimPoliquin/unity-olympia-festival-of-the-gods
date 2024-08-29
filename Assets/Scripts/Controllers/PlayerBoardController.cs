@@ -241,10 +241,18 @@ namespace Azul
             {
                 this.onScoreSpaceSelection.AddListener(listener);
             }
+            public void RemoveOnPlayerBoardScoreSpaceSelectionListener(UnityAction<OnPlayerBoardScoreSpaceSelectionPayload> listener)
+            {
+                this.onScoreSpaceSelection.RemoveListener(listener);
+            }
 
             public void AddOnPlayerBoardWildScoreSpaceSelectionListener(UnityAction<OnPlayerBoardWildScoreSpaceSelectionPayload> listener)
             {
                 this.onWildScoreSpaceSelection.AddListener(listener);
+            }
+            public void RemoveOnPlayerBoardWildScoreSpaceSelectionListener(UnityAction<OnPlayerBoardWildScoreSpaceSelectionPayload> listener)
+            {
+                this.onWildScoreSpaceSelection.RemoveListener(listener);
             }
 
             private void OnRoundAcquire(OnRoundPhaseAcquirePayload payload)

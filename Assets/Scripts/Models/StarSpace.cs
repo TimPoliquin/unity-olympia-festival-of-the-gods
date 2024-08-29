@@ -78,6 +78,11 @@ namespace Azul
                 return this.tile.GetEffectiveColor();
             }
 
+            public bool IsWild()
+            {
+                return this.tile.GetColor() == TileColor.WILD;
+            }
+
             public TilePlaceholderPointerEventController GetPointerEventController()
             {
                 return this.tile.GetPointerEventController();

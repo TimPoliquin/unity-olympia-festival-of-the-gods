@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.AI;
+using Azul.AIEvents;
 using Azul.Model;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Azul
             {
                 this.acquireStrategy = this.AddComponent<AcquireStrategy>();
                 this.scoringStrategy = this.AddComponent<ScoringStrategy>();
+                this.scoringStrategy.AddOnScoreCompleteListener(this.OnScoreComplete);
             }
 
             public void OnAcquireTurn()
@@ -33,8 +35,21 @@ namespace Azul
             {
                 UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
                 this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals());
-                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
-                this.scoringStrategy.Score();
+                if (this.scoringStrategy.CanScore())
+                {
+                    UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
+                    this.scoringStrategy.Score();
+                }
+                else
+                {
+                    PlayerController playerController = System.Instance.GetPlayerController();
+                    playerController.EndPlayerScoringTurn();
+                }
+            }
+
+            public void OnScoreComplete(OnAIScorePayload payload)
+            {
+                this.OnScoreTurn();
             }
 
             public int GetPlayerNumber()

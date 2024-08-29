@@ -5,6 +5,7 @@ using System.Linq;
 using Azul.AIEvents;
 using Azul.Controller;
 using Azul.Model;
+using Azul.PlayerBoardEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,6 +28,13 @@ namespace Azul
         public struct OnScoreSpaceSelectedPayload
         {
             public StarSpace Selection;
+        }
+        public struct OnGoalScoreTilesSelectedPayload
+        {
+            public PlayerBoard PlayerBoard;
+            public TileColor TileColor;
+            public int Value;
+            public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm;
         }
     }
     namespace AI
@@ -87,6 +95,7 @@ namespace Azul
             public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener);
             public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener);
             public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener);
+            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener);
         }
 
         [Serializable]
@@ -156,6 +165,11 @@ namespace Azul
             {
                 throw new NotImplementedException();
             }
+
+            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class NumberGoal : Goal
@@ -190,6 +204,11 @@ namespace Azul
             }
 
             public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
             {
                 throw new NotImplementedException();
             }

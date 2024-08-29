@@ -119,12 +119,16 @@ namespace Azul
 
             private void OnScoreSpaceSelection(OnPlayerBoardScoreSpaceSelectionPayload payload)
             {
-                this.CreateScoreTileSelectionUIs(
-                    playerBoard: payload.PlayerBoard,
-                    selectedColor: payload.Color,
-                    value: payload.Value,
-                    onConfirm: payload.OnConfirm
-                );
+                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
+                {
+
+                    this.CreateScoreTileSelectionUIs(
+                        playerBoard: payload.PlayerBoard,
+                        selectedColor: payload.Color,
+                        value: payload.Value,
+                        onConfirm: payload.OnConfirm
+                    );
+                }
             }
 
             private void CreateScoreTileSelectionUIs(PlayerBoard playerBoard, TileColor selectedColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm)
