@@ -73,7 +73,7 @@ namespace Azul
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
             {
-                if (payload.Phase == Phase.SCORE)
+                if (payload.Phase == Phase.SCORE && payload.Player.IsHuman())
                 {
                     this.endTurnButton.gameObject.SetActive(true);
                 }

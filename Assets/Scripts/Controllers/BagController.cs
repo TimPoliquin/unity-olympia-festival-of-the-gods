@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
@@ -41,6 +42,11 @@ namespace Azul
             {
                 bag.Fill(tower.Dump());
                 tile = this.bag.Draw(tileColor);
+            }
+            // TODO - it is possible that there are no tiles of the requested color!
+            if (null == tile)
+            {
+                throw new ArgumentOutOfRangeException(nameof(tileColor), "No tiles of the requested color in the bag!");
             }
             return tile;
         }
