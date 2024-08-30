@@ -86,7 +86,11 @@ namespace Azul
             public GoalAcquireFeasability CalculateAcquireFeasibility();
             public void Acquire();
 
+            public void PrepareForScoring();
+
             public void Score();
+
+            public void EndScoring();
 
             public int GetScoreProgress();
 
@@ -170,6 +174,16 @@ namespace Azul
             {
                 throw new NotImplementedException();
             }
+
+            public void PrepareForScoring()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void EndScoring()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class NumberGoal : Goal
@@ -223,6 +237,11 @@ namespace Azul
                 throw new NotImplementedException();
             }
 
+            public void EndScoring()
+            {
+                throw new NotImplementedException();
+            }
+
             public GoalStatus EvaluateCompletion()
             {
                 throw new NotImplementedException();
@@ -236,6 +255,11 @@ namespace Azul
             public bool IsComplete()
             {
                 return this.goalStatus == GoalStatus.COMPLETE;
+            }
+
+            public void PrepareForScoring()
+            {
+                throw new NotImplementedException();
             }
 
             public void Score()

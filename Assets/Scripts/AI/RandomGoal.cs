@@ -18,12 +18,10 @@ namespace Azul
         public class RandomGoal : Goal
         {
             private int playerNumber { get; init; }
-            private List<StarSpace> actionableSpaces;
-            private StarSpace chosenSpace;
             private UnityEvent<OnDrawFromFactoryPayload> onDrawFromFactory = new();
             private UnityEvent<OnDrawFromTablePayload> onDrawFromTable = new();
-            private UnityEvent<OnScoreSpaceSelectedPayload> onScoreSpaceSelected = new();
-            private UnityEvent<OnGoalScoreTilesSelectedPayload> onScoreTileSelection = new();
+
+            private RandomScoringSelection scoringSelection;
 
             public void Acquire()
             {
@@ -119,17 +117,19 @@ namespace Azul
                 this.onDrawFromFactory.AddListener(listener);
             }
 
+            public void PrepareForScoring()
+            {
+                if (null != this.scoringSelection)
+                {
+                    this.scoringSelection.EndScoring();
+                }
+                this.scoringSelection = new RandomScoringSelection();
+                this.scoringSelection.Evaluate(this.playerNumber);
+            }
+
             public void Score()
             {
-                this.chosenSpace = ListUtils.GetRandomElement(this.actionableSpaces);
-                UnityEngine.Debug.Log($"Scoring: {chosenSpace.GetOriginColor()}* {chosenSpace.GetValue()}");
-                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.AddOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelected);
-                this.onScoreSpaceSelected.Invoke(new OnScoreSpaceSelectedPayload
-                {
-                    Selection = this.chosenSpace
-                });
-                this.onScoreSpaceSelected.RemoveAllListeners();
+                this.scoringSelection.Score();
             }
 
             public int GetScoreProgress()
@@ -139,78 +139,29 @@ namespace Azul
 
             public bool CanScore()
             {
-                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(this.playerNumber);
-                List<TileCount> tileCounts = playerBoard.GetTileCounts();
-                this.actionableSpaces = new();
-                int wildCount = this.GetWildTileCount(tileCounts, wildColor);
-                foreach (TileCount tileCount in tileCounts)
-                {
-                    int count = tileCount.TileColor != wildColor ? tileCount.Count + wildCount : tileCount.Count;
-                    UnityEngine.Debug.Log($"Finding open spaces: {tileCount.TileColor}/{tileCount.Count}/{count}");
-                    if (tileCount.TileColor == TileColor.ONE)
-                    {
-                        continue;
-                    }
-                    List<StarSpace> openSpaces = playerBoard.GetOpenSpaces(tileCount.TileColor);
-                    foreach (StarSpace starSpace in openSpaces)
-                    {
-                        if (starSpace.GetValue() == 1 && tileCount.Count >= 1)
-                        {
-                            this.actionableSpaces.Add(starSpace);
-                            UnityEngine.Debug.Log($"Adding actionable space: {starSpace.GetOriginColor()}* {starSpace.GetValue()}");
-                        }
-                        else if (starSpace.GetValue() <= count)
-                        {
-                            UnityEngine.Debug.Log($"Adding actionable space: {starSpace.GetOriginColor()}* {starSpace.GetValue()}");
-                            this.actionableSpaces.Add(starSpace);
-                        }
-                    }
-                }
-                this.actionableSpaces.Sort((a, b) => a.GetValue().CompareTo(b.GetValue()));
-                return actionableSpaces.Count > 0;
-            }
-
-            private int GetWildTileCount(List<TileCount> tileCounts, TileColor wildColor)
-            {
-                TileCount wildTileCount = tileCounts.Where(tileCount => tileCount.TileColor == wildColor).DefaultIfEmpty(new TileCount
-                {
-                    TileColor = wildColor,
-                    Count = 0
-                }).FirstOrDefault();
-                return wildTileCount.Count;
-
+                return this.scoringSelection.CanScore();
             }
 
             public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
             {
-                this.onScoreSpaceSelected.AddListener(listener);
+                this.scoringSelection.AddOnScoreSpaceSelectedListener(listener);
             }
 
-            private void OnScoreSpaceSelected(OnPlayerBoardScoreSpaceSelectionPayload payload)
-            {
-                System.Instance.GetPlayerBoardController().RemoveOnPlayerBoardScoreSpaceSelectionListener(this.OnScoreSpaceSelected);
-                TileColor chosenColor = this.chosenSpace.GetOriginColor();
-                this.chosenSpace = null;
-                // dispatch event
-                this.onScoreTileSelection.Invoke(new OnGoalScoreTilesSelectedPayload
-                {
-                    PlayerBoard = payload.PlayerBoard,
-                    TileColor = chosenColor,
-                    Value = payload.Value,
-                    OnConfirm = payload.OnConfirm,
-                });
-                this.onScoreTileSelection.RemoveAllListeners();
-            }
 
             public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
             {
-                this.onScoreTileSelection.AddListener(listener);
+                this.scoringSelection.AddOnTileSelectedListener(listener);
             }
 
             public void RemoveOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
             {
-                this.onScoreTileSelection.RemoveListener(listener);
+                this.scoringSelection.RemoveOnTileSelectedListener(listener);
+            }
+
+            public void EndScoring()
+            {
+                this.scoringSelection.EndScoring();
+                this.scoringSelection = null;
             }
         }
     }

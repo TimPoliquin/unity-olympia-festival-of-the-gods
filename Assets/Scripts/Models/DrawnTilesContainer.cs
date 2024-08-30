@@ -67,7 +67,11 @@ namespace Azul
             Dictionary<TileColor, int> tileCountsByColor = new();
             foreach (Tile tile in this.drawnTiles)
             {
-                if (!tileCountsByColor.ContainsKey(tile.Color))
+                if (tile.IsOneTile())
+                {
+                    // Do nothing - we don't want to count the One Tile.
+                }
+                else if (!tileCountsByColor.ContainsKey(tile.Color))
                 {
                     tileCountsByColor[tile.Color] = 1;
                 }

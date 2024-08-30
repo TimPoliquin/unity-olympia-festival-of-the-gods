@@ -60,6 +60,7 @@ namespace Azul
                 }
                 else
                 {
+                    this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
                     PlayerController playerController = System.Instance.GetPlayerController();
                     playerController.EndPlayerScoringTurn();
                 }
@@ -70,6 +71,8 @@ namespace Azul
                 Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.DiscardTiles(this.playerNumber, discard);
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.EndPlayerScoringTurn();
             }
 
             public void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)

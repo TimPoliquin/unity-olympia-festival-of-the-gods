@@ -26,7 +26,7 @@ namespace Azul
     {
         public class ScoringStrategy : MonoBehaviour
         {
-            [SerializeField] private List<Goal> goals;
+            [SerializeField] private List<Goal> actionableGoals;
             private UnityEvent<OnAIScorePayload> onScoreComplete = new();
 
 
@@ -34,8 +34,9 @@ namespace Azul
             {
                 // copy the goals
                 UnityEngine.Debug.Log($"Starting Goals: {goals.Count}");
-                this.goals = goals.Where(goal =>
+                this.actionableGoals = goals.Where(goal =>
                 {
+                    goal.PrepareForScoring();
                     if (goal.EvaluateCompletion() == GoalStatus.COMPLETE)
                     {
                         UnityEngine.Debug.Log($"Removing completed goal");
@@ -43,19 +44,19 @@ namespace Azul
                     }
                     return goal.CanScore();
                 }).OrderBy(goal => goal.GetScoreProgress()).ToList();
-                UnityEngine.Debug.Log($"Goals: {this.goals.Count}");
+                UnityEngine.Debug.Log($"Goals: {this.actionableGoals.Count}");
             }
 
             public bool CanScore()
             {
-                return this.goals.Any(goal => goal.CanScore());
+                return this.actionableGoals.Any(goal => goal.CanScore());
             }
 
             public void Score()
             {
-                if (this.goals.Count > 0)
+                if (this.actionableGoals.Count > 0)
                 {
-                    Goal goal = this.goals[0];
+                    Goal goal = this.actionableGoals[0];
                     goal.AddOnScoreSpaceSelectedListener(this.OnScoreSpaceSelected);
                     goal.AddOnTileSelectedListener(this.OnGoalScoreTilesSelected);
                     goal.Score();
