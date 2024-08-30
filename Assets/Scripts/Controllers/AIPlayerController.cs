@@ -68,20 +68,26 @@ namespace Azul
 
             public void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
             {
-                Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
-                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.DiscardTiles(this.playerNumber, discard);
-                PlayerController playerController = System.Instance.GetPlayerController();
-                playerController.EndPlayerScoringTurn();
+                if (payload.PlayerNumber == this.playerNumber)
+                {
+                    Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
+                    PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                    playerBoardController.DiscardTiles(this.playerNumber, discard);
+                    PlayerController playerController = System.Instance.GetPlayerController();
+                    playerController.EndPlayerScoringTurn();
+                }
             }
 
             public void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
             {
-                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                for (int idx = 0; idx < payload.NumberOfTiles; idx++)
+                if (payload.PlayerNumber == this.playerNumber)
                 {
-                    TileColor tileColor = this.scoringStrategy.ChooseReward();
-                    playerBoardController.GrantReward(this.playerNumber, tileColor);
+                    PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                    for (int idx = 0; idx < payload.NumberOfTiles; idx++)
+                    {
+                        TileColor tileColor = this.scoringStrategy.ChooseReward();
+                        playerBoardController.GrantReward(this.playerNumber, tileColor);
+                    }
                 }
             }
 
