@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller.TableEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
 using UnityEngine;
@@ -55,7 +56,22 @@ namespace Azul
                 return this.GetCurrentRound().GetCurrentPhase();
             }
 
-            private void OnTableTilesAdded(TableController.OnTableTilesAddedPayload arg0)
+            public TileColor GetCurrentWild()
+            {
+                return this.rounds[this.currentRound].GetWildColor();
+            }
+
+            public TileColor GetNextWild()
+            {
+                if (this.IsLastRound())
+                {
+                    throw new IndexOutOfRangeException("There is no next round");
+                }
+                return this.rounds[this.currentRound + 1].GetWildColor();
+            }
+
+
+            private void OnTableTilesAdded(OnTableTilesAddedPayload arg0)
             {
                 this.tableEmpty = false;
             }

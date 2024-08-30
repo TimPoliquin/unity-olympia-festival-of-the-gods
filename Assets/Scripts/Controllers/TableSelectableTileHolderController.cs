@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
 using Azul.Model;
+using Azul.TableEvents;
 using UnityEngine;
 
 namespace Azul
@@ -32,12 +33,12 @@ namespace Azul
                 this.table.DrawTiles(selectedTiles);
             }
 
-            private void OnTilesAdded(Table.OnTableAddTilesPayload payload)
+            private void OnTilesAdded(OnTableAddTilesPayload payload)
             {
                 this.AddTiles(payload.Tiles);
             }
 
-            private void OnTilesDrawn(Table.OnTableDrawTilesPayload payload)
+            private void OnTilesDrawn(OnTableDrawTilesPayload payload)
             {
                 this.RemoveTiles(payload.TilesDrawn);
             }

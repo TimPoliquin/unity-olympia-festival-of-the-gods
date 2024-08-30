@@ -56,7 +56,10 @@ namespace Azul
 
             private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
             {
-                this.Activate(playerNumber: payload.PlayerNumber, tileCount: payload.NumberOfTiles);
+                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
+                {
+                    this.Activate(playerNumber: payload.PlayerNumber, tileCount: payload.NumberOfTiles);
+                }
             }
 
             private void OnRewardSelection(OnWildColorSelectedPayload payload)
@@ -78,10 +81,7 @@ namespace Azul
 
             private void GrantReward(TileColor color)
             {
-                BagController bagController = System.Instance.GetBagController();
-                Tile grantedTile = bagController.Draw(color);
-                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.AddDrawnTiles(this.playerNumber, new() { grantedTile });
+                Tile grantedTile = System.Instance.GetPlayerBoardController().GrantReward(this.playerNumber, color);
                 this.onGrantReward.Invoke(new OnGrantRewardPayload
                 {
                     PlayerNumber = this.playerNumber,

@@ -73,7 +73,7 @@ namespace Azul
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
             {
-                if (payload.Phase == Phase.SCORE)
+                if (payload.Phase == Phase.SCORE && payload.Player.IsHuman())
                 {
                     this.endTurnButton.gameObject.SetActive(true);
                 }
@@ -81,50 +81,57 @@ namespace Azul
 
             private void OnWildScoreSpaceSelection(OnPlayerBoardWildScoreSpaceSelectionPayload payload)
             {
-                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                int numWild = payload.PlayerBoard.GetTileCount(wildColor);
-                List<TileColor> usedColors = payload.PlayerBoard.GetWildTileColors();
-                List<TileColor> availableColors = TileColorUtils.GetTileColors().ToList().FindAll(color =>
+                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
-                    int numColor = payload.PlayerBoard.GetTileCount(color);
+                    TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                     int numWild = payload.PlayerBoard.GetTileCount(wildColor);
-                    if (numColor == 0 || usedColors.Contains(color))
+                    List<TileColor> usedColors = payload.PlayerBoard.GetWildTileColors();
+                    List<TileColor> availableColors = TileColorUtils.GetTileColors().ToList().FindAll(color =>
                     {
-                        return false;
-                    }
-                    else
-                    {
-                        if (color == wildColor)
+                        int numColor = payload.PlayerBoard.GetTileCount(color);
+                        int numWild = payload.PlayerBoard.GetTileCount(wildColor);
+                        if (numColor == 0 || usedColors.Contains(color))
                         {
-                            return numWild >= payload.Value;
+                            return false;
                         }
                         else
                         {
-                            return numColor + numWild >= payload.Value;
+                            if (color == wildColor)
+                            {
+                                return numWild >= payload.Value;
+                            }
+                            else
+                            {
+                                return numColor + numWild >= payload.Value;
+                            }
                         }
-                    }
-                });
-                this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors, true);
-                this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
-                {
-                    this.CreateScoreTileSelectionUIs(
-                        playerBoard: payload.PlayerBoard,
-                        selectedColor: colorSelectedPayload.Color,
-                        value: payload.Value,
-                        onConfirm: payload.OnConfirm
-                    );
-                });
+                    });
+                    this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors, true);
+                    this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
+                    {
+                        this.CreateScoreTileSelectionUIs(
+                            playerBoard: payload.PlayerBoard,
+                            selectedColor: colorSelectedPayload.Color,
+                            value: payload.Value,
+                            onConfirm: payload.OnConfirm
+                        );
+                    });
+                }
             }
 
 
             private void OnScoreSpaceSelection(OnPlayerBoardScoreSpaceSelectionPayload payload)
             {
-                this.CreateScoreTileSelectionUIs(
-                    playerBoard: payload.PlayerBoard,
-                    selectedColor: payload.Color,
-                    value: payload.Value,
-                    onConfirm: payload.OnConfirm
-                );
+                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
+                {
+
+                    this.CreateScoreTileSelectionUIs(
+                        playerBoard: payload.PlayerBoard,
+                        selectedColor: payload.Color,
+                        value: payload.Value,
+                        onConfirm: payload.OnConfirm
+                    );
+                }
             }
 
             private void CreateScoreTileSelectionUIs(PlayerBoard playerBoard, TileColor selectedColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm)

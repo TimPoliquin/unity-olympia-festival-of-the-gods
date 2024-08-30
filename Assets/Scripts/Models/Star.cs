@@ -111,7 +111,7 @@ namespace Azul
             {
                 foreach (StarSpace space in this.spaces)
                 {
-                    space.GetPointerEventController().ClearOnPointerSelectListeners();
+                    space.ClearStarSpaceSelectListeners();
                 }
             }
         }

@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Azul.PlayerBoardRewardEvents;
 using System;
+using Azul.Controller.TableUtilities;
 
 namespace Azul
 {
@@ -121,6 +122,11 @@ namespace Azul
             public int GetTileCount()
             {
                 return this.drawnTilesContainer.GetTileCount();
+            }
+
+            public List<TileCount> GetTileCounts()
+            {
+                return this.drawnTilesContainer.GetTileCounts();
             }
 
             public List<StarSpace> GetOpenSpaces(TileColor tileColor)

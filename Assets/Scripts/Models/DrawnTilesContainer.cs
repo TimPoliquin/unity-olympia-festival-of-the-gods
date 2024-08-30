@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller.TableUtilities;
 using Azul.Layout;
 using Azul.Model;
 using UnityEngine;
@@ -58,6 +59,36 @@ namespace Azul
         public int GetTileCount()
         {
             return this.drawnTiles.FindAll(tile => !tile.IsOneTile()).Count;
+        }
+
+        public List<TileCount> GetTileCounts()
+        {
+            List<TileCount> tileCounts = new();
+            Dictionary<TileColor, int> tileCountsByColor = new();
+            foreach (Tile tile in this.drawnTiles)
+            {
+                if (tile.IsOneTile())
+                {
+                    // Do nothing - we don't want to count the One Tile.
+                }
+                else if (!tileCountsByColor.ContainsKey(tile.Color))
+                {
+                    tileCountsByColor[tile.Color] = 1;
+                }
+                else
+                {
+                    tileCountsByColor[tile.Color] += 1;
+                }
+            }
+            foreach (KeyValuePair<TileColor, int> entry in tileCountsByColor)
+            {
+                tileCounts.Add(new TileCount
+                {
+                    TileColor = entry.Key,
+                    Count = entry.Value
+                });
+            }
+            return tileCounts;
         }
 
         public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)

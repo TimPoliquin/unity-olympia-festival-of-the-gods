@@ -11,6 +11,7 @@ namespace Azul
     {
         public static System Instance { get; private set; }
 
+        private AIController aiController;
         private BagController bagController;
         private CameraController cameraController;
         private FactoryController factoryController;
@@ -36,6 +37,15 @@ namespace Azul
             {
                 Destroy(this.gameObject);
             }
+        }
+
+        public AIController GetAIController()
+        {
+            if (null == this.aiController)
+            {
+                this.aiController = this.GetComponentInChildren<AIController>();
+            }
+            return this.aiController;
         }
 
         public BagController GetBagController()

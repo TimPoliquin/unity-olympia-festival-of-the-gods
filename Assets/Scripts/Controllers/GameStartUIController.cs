@@ -26,14 +26,14 @@ namespace Azul
 
             public void OnPlayerCountSelection(OnPlayerCountSelectionPayload payload)
             {
-                this.gameStartUI.ShowPlayerNameInputs(payload.playerCount);
+                this.gameStartUI.ShowPlayerConfigs(payload.PlayerCount);
             }
 
             public void OnGameStart(OnGameStartPayload payload)
             {
-                System.Instance.GetPlayerController().SetPlayers(payload.playerNames);
+                System.Instance.GetPlayerController().SetPlayers(payload.PlayerConfigs);
                 // TODO - add a real mechanism to decide who goes first.
-                System.Instance.GetPlayerController().SetStartingPlayer(Random.Range(0, payload.playerNames.Count));
+                System.Instance.GetPlayerController().SetStartingPlayer(Random.Range(0, payload.PlayerConfigs.Count));
                 System.Instance.GetGameController().StartGame();
                 this.gameStartUI.gameObject.SetActive(false);
             }

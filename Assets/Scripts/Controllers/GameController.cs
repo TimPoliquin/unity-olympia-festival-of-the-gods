@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.GameEvents;
 using Azul.ScoreBoardEvents;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace GameEvents
+    {
+        public struct OnGameSetupCompletePayload
+        {
+            public int NumberOfPlayers { get; init; }
+        }
+    }
     namespace Controller
     {
         public class GameController : MonoBehaviour
         {
+            [SerializeField] private UnityEvent<OnGameSetupCompletePayload> onGameSetupComplete = new();
             public void StartGame()
             {
+                AIController aiController = System.Instance.GetAIController();
                 BagController bagController = System.Instance.GetBagController();
                 CameraController cameraController = System.Instance.GetCameraController();
                 FactoryController factoryController = System.Instance.GetFactoryController();
@@ -23,6 +34,7 @@ namespace Azul
                 TileController tileController = System.Instance.GetTileController();
                 UIController uIController = System.Instance.GetUIController();
                 // TODO - this should be triggered by the UI/Player Ready
+                aiController.SetupGame(playerController.GetPlayers());
                 cameraController.SetupGame();
                 tableController.SetupGame();
                 playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
@@ -33,7 +45,13 @@ namespace Azul
                 // DEVNOTE - we will not fill the supply for now, in favor of allowing the player to select a tile of their choosing from the bag.
                 // scoreBoardController.FillSupply(bagController);
                 roundController.SetupGame();
+                // dispatch game setup complete
+                this.onGameSetupComplete.Invoke(new OnGameSetupCompletePayload
+                {
+                    NumberOfPlayers = playerController.GetNumberOfPlayers()
+                });
                 // initialize event listeners
+                aiController.InitializeListeners();
                 cameraController.InitializeListeners();
                 factoryController.InitializeListeners();
                 playerController.InitializeListeners();
@@ -60,6 +78,12 @@ namespace Azul
                     UnityEngine.Debug.Log($"Player {idx + 1}: {payload.Scores[idx]}");
                 }
             }
+
+            public void AddOnGameSetupCompleteListener(UnityAction<OnGameSetupCompletePayload> listener)
+            {
+                this.onGameSetupComplete.AddListener(listener);
+            }
+
         }
     }
 }

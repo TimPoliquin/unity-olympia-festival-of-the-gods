@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 22
   rotate: 0
+  rotateAfterLayout: 0
 --- !u!1 &620407776254951268
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBoards: {fileID: 5933051557797473536}
-  factories: {fileID: 350419591959452425}
+  factoriesLayout: {fileID: 688918350692300832}
   scoreBoard: {fileID: 8361112308366185155}
   center: {fileID: 6196003202671131085}
 --- !u!114 &3317494338426430283
@@ -246,7 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9802f956c4654be99059376f31db482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
 --- !u!1 &5933051557797473536
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 55
   rotate: 1
+  rotateAfterLayout: 0
 --- !u!1 &6196003202671131085
 GameObject:
   m_ObjectHideFlags: 0

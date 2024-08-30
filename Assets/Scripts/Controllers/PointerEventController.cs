@@ -36,23 +36,43 @@ namespace Azul
 
             private T target;
 
+            private bool allowEvents = true;
+
             void Awake()
             {
                 this.target = this.GetComponent<T>();
             }
 
+            void Start()
+            {
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.AddOnPlayerTurnStartListener((payload) =>
+                {
+                    this.allowEvents = payload.Player.IsHuman();
+                });
+            }
+
             public void OnPointerEnter(PointerEventData eventData)
             {
-                this.onPointerEnter.Invoke(new OnPointerEnterPayload<T> { Target = this.target });
+                if (this.allowEvents)
+                {
+                    this.onPointerEnter.Invoke(new OnPointerEnterPayload<T> { Target = this.target });
+                }
             }
 
             public void OnPointerExit(PointerEventData eventData)
             {
-                this.onPointerExit.Invoke(new OnPointerExitPayload<T> { Target = this.target });
+                if (this.allowEvents)
+                {
+                    this.onPointerExit.Invoke(new OnPointerExitPayload<T> { Target = this.target });
+                }
             }
             public void OnPointerDown(PointerEventData eventData)
             {
-                this.onPointerSelect.Invoke(new OnPointerSelectPayload<T> { Target = this.target });
+                if (this.allowEvents)
+                {
+                    this.onPointerSelect.Invoke(new OnPointerSelectPayload<T> { Target = this.target });
+                }
             }
 
             public void AddOnPointerEnterListener(UnityAction<OnPointerEnterPayload<T>> listener)

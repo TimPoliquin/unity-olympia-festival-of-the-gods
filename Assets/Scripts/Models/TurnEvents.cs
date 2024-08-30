@@ -9,6 +9,7 @@ namespace Azul
         public class OnPlayerTurnStartPayload
         {
             public int PlayerNumber { get; init; }
+            public Player Player { get; init; }
             public Phase Phase { get; init; }
         }
 

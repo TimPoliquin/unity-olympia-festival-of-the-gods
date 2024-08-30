@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 static class ListExtensions
 {
@@ -16,6 +17,22 @@ static class ListExtensions
             T value = list[k];
             list[k] = list[n];
             list[n] = value;
+        }
+    }
+}
+
+namespace Utils
+{
+    public sealed class ListUtils
+    {
+        public static T GetRandomElement<T>(List<T> list)
+        {
+            return list[UnityEngine.Random.Range(0, list.Count)];
+        }
+
+        public static T GetRandomElement<T>(T[] list)
+        {
+            return list[UnityEngine.Random.Range(0, list.Length)];
         }
     }
 }
