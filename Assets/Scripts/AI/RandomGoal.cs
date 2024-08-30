@@ -31,7 +31,7 @@ namespace Azul
                 List<TileCount> tileCounts = tableController.GetTileCounts();
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                 // pick a random color that's available
-                TileColor tileColor = ListUtils.GetRandomElement(tileCounts.Select(tileCount => tileCount.TileColor).Except(new TileColor[] { wildColor, TileColor.ONE }).ToArray());
+                TileColor tileColor = tileCounts.Count > 1 ? ListUtils.GetRandomElement(tileCounts.Select(tileCount => tileCount.TileColor).Except(new TileColor[] { wildColor }).ToArray()) : tileCounts[0].TileColor;
                 UnityEngine.Debug.Log($"Random Goal: ${tileColor} / ${wildColor}");
                 // find the factory that has the most tiles of that color
                 Factory factory = tableController.GetFactoryWithMostTilesOfColor(tileColor);
