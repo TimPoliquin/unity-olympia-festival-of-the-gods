@@ -18,6 +18,7 @@ namespace Azul
         private GameController gameController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
+        private PrefabFactory prefabFactory;
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
         private StarController starController;
@@ -100,6 +101,15 @@ namespace Azul
                 this.playerBoardController = this.GetComponentInChildren<PlayerBoardController>();
             }
             return this.playerBoardController;
+        }
+
+        public PrefabFactory GetPrefabFactory()
+        {
+            if (null == this.prefabFactory)
+            {
+                this.prefabFactory = this.GetComponentInChildren<PrefabFactory>();
+            }
+            return this.prefabFactory;
         }
 
         public RoundController GetRoundController()
