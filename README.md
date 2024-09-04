@@ -1,2 +1,2 @@
-# unity/azul-summer-pavillion
- An implementation of Azul: Summer Pavillion in Unity
+# unity/olympia--festival-of-the-gods
+A game based on Azul: Summer Pavilion
