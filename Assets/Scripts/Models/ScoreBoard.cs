@@ -16,13 +16,10 @@ namespace Azul
 
             private int currentRound = 0;
             private GameObject roundCounter;
-            private CircularLayout supplyLayout;
-            private List<TilePlaceholder> supplyPlaceholders;
 
             void Awake()
             {
                 this.InitializeRoundMarkerPositions();
-                this.supplyLayout = this.supplyRoot.GetComponent<CircularLayout>();
             }
 
             public void PlaceCounter(GameObject roundCounter)
@@ -55,12 +52,6 @@ namespace Azul
                 this.currentRound++;
                 roundCounter.transform.SetParent(this.GetRoundMarker(this.currentRound).transform);
                 this.StartCoroutine(this.MoveRoundMarker(currentRoundPosition, nextRoundPosition));
-            }
-
-            public void AddSupplyPlaceholders(List<TilePlaceholder> placeholders)
-            {
-                this.supplyPlaceholders = placeholders;
-                this.supplyLayout.AddChildren(placeholders.Select(placeholder => placeholder.gameObject).ToList());
             }
 
             private IEnumerator MoveRoundMarker(Vector3 currentPosition, Vector3 nextPosition)

@@ -11,7 +11,7 @@ namespace Azul
     {
         public class StarSpaceUI : MonoBehaviour
         {
-            private StarSpace starSpace;
+            private AltarSpace starSpace;
             [SerializeField] private TextMeshProUGUI valueText;
             [SerializeField] private float tableScale = .25f;
             [SerializeField] private float boardScale = 1.0f;
@@ -21,10 +21,14 @@ namespace Azul
                 if (null != this.starSpace)
                 {
                     this.UpdatePosition();
+                    if (!starSpace.IsEmpty() && this.valueText.color.a < 1)
+                    {
+                        this.valueText.color = new Color(this.valueText.color.r, this.valueText.color.g, this.valueText.color.b, 1f);
+                    }
                 }
             }
 
-            public void SetStarSpace(StarSpace starSpace)
+            public void SetStarSpace(AltarSpace starSpace)
             {
                 this.starSpace = starSpace;
                 this.valueText.text = $"{starSpace.GetValue()}";

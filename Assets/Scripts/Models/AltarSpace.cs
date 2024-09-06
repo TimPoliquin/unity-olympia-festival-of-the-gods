@@ -3,44 +3,50 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Azul.Controller;
 using Azul.Model;
-using Azul.StarSpaceEvents;
+using Azul.AltarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
-    namespace StarSpaceEvents
+    namespace AltarSpaceEvents
     {
         public struct OnStarSpaceSelectPayload
         {
-            public StarSpace Target { get; init; }
+            public AltarSpace Target { get; init; }
         }
     }
     namespace Model
     {
-        [RequireComponent(typeof(TilePlaceholder))]
         [RequireComponent(typeof(Outline))]
-        public class StarSpace : MonoBehaviour
+        public class AltarSpace : MonoBehaviour
         {
-            [SerializeField] private TilePlaceholder tile;
+            [SerializeField] private TileColor originalColor;
+            [SerializeField] private TileColor effectiveColor;
             [SerializeField][Range(1, 6)] private int value;
+            [SerializeField] private bool isFilled = false;
+            [SerializeField] private Fire fire;
 
             private Outline outline;
             private UnityEvent<OnStarSpaceSelectPayload> onStarSpaceSelect = new();
 
             void Awake()
             {
-                this.tile = this.GetComponent<TilePlaceholder>();
                 this.outline = this.GetComponent<Outline>();
-                this.GetPointerEventController().AddOnPointerSelectListener(payload =>
-                {
-                    this.Select();
-                });
             }
 
             void Start()
             {
                 System.Instance.GetUIController().GetStarUIController().CreateStarSpaceUI(this);
+                this.GetPointerEventController().AddOnPointerSelectListener(payload =>
+                {
+                    this.Select();
+                });
+                if (null != this.fire)
+                {
+                    this.fire.Disable();
+                }
+
             }
 
             public int GetValue()
@@ -53,9 +59,16 @@ namespace Azul
                 this.value = value;
             }
 
+            public void SetOriginalColor(TileColor tileColor)
+            {
+                this.originalColor = tileColor;
+                this.effectiveColor = tileColor;
+                this.fire.SetColor(this.originalColor);
+            }
+
             public bool IsEmpty()
             {
-                return this.tile.IsEmpty();
+                return !this.isFilled;
             }
 
             public void ActivateHighlight()
@@ -70,27 +83,39 @@ namespace Azul
 
             public TileColor GetOriginColor()
             {
-                return this.tile.GetColor();
+                return this.originalColor;
             }
 
             public TileColor GetEffectiveColor()
             {
-                return this.tile.GetEffectiveColor();
+                if (this.isFilled)
+                {
+                    return this.effectiveColor;
+                }
+                else
+                {
+                    return this.originalColor;
+                }
             }
 
             public bool IsWild()
             {
-                return this.tile.GetColor() == TileColor.WILD;
+                return this.originalColor == TileColor.WILD;
             }
 
             public TilePlaceholderPointerEventController GetPointerEventController()
             {
-                return this.tile.GetPointerEventController();
+                return this.GetComponent<TilePlaceholderPointerEventController>();
             }
 
             public void PlaceTile(Tile tile)
             {
-                this.tile.PlaceTile(tile);
+                this.isFilled = true;
+                this.effectiveColor = tile.Color;
+                this.fire.SetColor(tile.Color);
+                this.fire.Enable();
+                // TODO - disolve the tile???
+                Destroy(tile.gameObject);
             }
 
             public void Select()

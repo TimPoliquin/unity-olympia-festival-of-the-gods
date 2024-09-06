@@ -68,7 +68,7 @@ namespace Azul
                 StartCoroutine(this.SelectStarSpace(payload.Selection));
             }
 
-            private IEnumerator SelectStarSpace(StarSpace starSpace)
+            private IEnumerator SelectStarSpace(AltarSpace starSpace)
             {
                 UnityEngine.Debug.Log($"Trying to select space {starSpace.GetOriginColor()} * {starSpace.GetValue()}");
                 starSpace.Select();

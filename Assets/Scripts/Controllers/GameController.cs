@@ -29,7 +29,7 @@ namespace Azul
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 RoundController roundController = System.Instance.GetRoundController();
                 ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
-                StarController starController = System.Instance.GetStarController();
+                AltarFactory starController = System.Instance.GetStarController();
                 TableController tableController = System.Instance.GetTableController();
                 TileController tileController = System.Instance.GetTileController();
                 UIController uIController = System.Instance.GetUIController();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
+using Azul.Prefab;
 using UnityEngine;
 
 namespace Azul
@@ -9,10 +10,10 @@ namespace Azul
     {
         public class PrefabFactory : MonoBehaviour
         {
-            [SerializeField]
-            private List<TokenPrefab> tokenPrefabs;
+            [SerializeField] private List<TokenPrefab> tokenPrefabs;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
+            private AltarFactory altarFactory;
 
             void Awake()
             {
@@ -23,10 +24,26 @@ namespace Azul
                 }
             }
 
+            public AltarFactory GetAltarFactory()
+            {
+                if (null == this.altarFactory)
+                {
+                    this.altarFactory = this.GetComponentInChildren<AltarFactory>();
+                }
+                return this.altarFactory;
+            }
+
             public Tile CreateTile(TileColor tileColor)
             {
                 return Instantiate(this.tilePrefabsByColor[tileColor]);
             }
+
+            public Altar CreateAltar(TileColor tileColor)
+            {
+                return this.altarFactory.CreateAltar(tileColor);
+            }
+
+
         }
     }
 }

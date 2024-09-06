@@ -49,8 +49,8 @@ MonoBehaviour:
   fire: {fileID: 6974116447453097219}
   fireLight: {fileID: 5955972181283081480}
   maxInterval: 0.75
-  minIntensity: 2.5
-  maxIntensity: 5
+  minIntensity: 4
+  maxIntensity: 7
 --- !u!1 &5358382661751707576
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +235,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7719332008551984669, guid: 4aaec1e25583847e690040c5378b4f4f,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

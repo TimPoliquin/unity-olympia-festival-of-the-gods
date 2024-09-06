@@ -16,7 +16,7 @@ namespace Azul
 
             private List<StarSpaceUI> starSpaceUIs = new();
 
-            public void CreateStarSpaceUI(StarSpace starSpace)
+            public void CreateStarSpaceUI(AltarSpace starSpace)
             {
                 StarSpaceUI ui = Instantiate(this.spaceValueUIPrefab, this.container.transform).GetComponent<StarSpaceUI>();
                 ui.SetStarSpace(starSpace);

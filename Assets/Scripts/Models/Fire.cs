@@ -23,9 +23,9 @@ namespace Azul
             float interval;
             float timer;
 
-            void Start()
+            void Awake()
             {
-                this.SetColor(ListUtils.GetRandomElement(TileColorUtils.GetTileColors()));
+                //this.Disable();
             }
 
             void Update()

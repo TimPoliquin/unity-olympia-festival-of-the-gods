@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f179ae791929e4fdfb3da55bf7a74191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 4
   rotate: 1
   rotateAfterLayout: 120
 --- !u!1 &1468626977882122497
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 3711548317988533778}
   - component: {fileID: -8852781606573406788}
   m_Layer: 0
-  m_Name: Star
+  m_Name: Altar Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
