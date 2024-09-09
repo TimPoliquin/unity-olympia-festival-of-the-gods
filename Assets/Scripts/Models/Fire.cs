@@ -61,7 +61,7 @@ namespace Azul
             public void SetColor(TileColor tileColor)
             {
                 Color color = System.Instance.GetTileMaterialProvider().GetColor(tileColor);
-                this.fire.SetVector4("Color", color);
+                this.fire.SetVector4("Color", color * 5);
                 this.fireLight.color = color;
             }
         }
