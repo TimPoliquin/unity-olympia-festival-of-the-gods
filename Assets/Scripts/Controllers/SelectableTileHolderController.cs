@@ -153,7 +153,7 @@ namespace Azul
                 }
                 foreach (Tile currentTile in this.hoveredTiles)
                 {
-                    currentTile.GetComponent<Outline>().enabled = true;
+                    currentTile.GetOutline().enabled = true;
                 }
             }
 
@@ -163,7 +163,7 @@ namespace Azul
                 {
                     foreach (Tile tile in this.hoveredTiles)
                     {
-                        tile.GetComponent<Outline>().enabled = false;
+                        tile.GetOutline().enabled = false;
                     }
                     this.hoveredTiles = null;
                 }

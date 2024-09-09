@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2392906273095577283}
-  - component: {fileID: 748874226934204444}
-  - component: {fileID: 4350702480332777534}
   - component: {fileID: 1231553110087985035}
   - component: {fileID: 3277463667150526811}
+  - component: {fileID: 4425635513127797857}
   m_Layer: 0
   m_Name: Placeholder Tile
   m_TagString: Untagged
@@ -36,33 +35,6 @@ Transform:
   - {fileID: 7163836196330814837}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &748874226934204444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357121812683179538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d76519d9c1b14204bc43d3b8384df44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeholder: {fileID: 7503242977843767247}
-  color: 0
---- !u!114 &4350702480332777534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357121812683179538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ee52175f0f74e769153037aa65a370, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mesh: {fileID: 7503242977843767247}
 --- !u!114 &1231553110087985035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +65,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9246b331254874808df0b445772d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4425635513127797857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357121812683179538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd3dc0eeacac456fb21a7bdef21ea3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalColor: 0
+  effectiveColor: 0
+  value: 0
+  isFilled: 0
+  fire: {fileID: 0}
 --- !u!1001 &7269291856609893022
 PrefabInstance:
   m_ObjectHideFlags: 0

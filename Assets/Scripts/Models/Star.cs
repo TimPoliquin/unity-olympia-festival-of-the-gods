@@ -10,11 +10,12 @@ namespace Azul
 {
     namespace Model
     {
-        public class Star : MonoBehaviour
+        public class Altar : MonoBehaviour
         {
+            [SerializeField] private GameObject center;
             [SerializeField] private GameObject layoutGameObject;
             [SerializeField] private TileColor color;
-            [SerializeField] private StarSpace[] spaces;
+            [SerializeField] private AltarSpace[] spaces;
 
             private CircularLayout layout;
 
@@ -32,18 +33,21 @@ namespace Azul
             {
                 this.color = color;
             }
-            public void SetSpaces(StarSpace[] spaces)
+            public void SetSpaces(AltarSpace[] spaces)
             {
                 this.spaces = spaces;
             }
 
-            public void AddTilePlaceholders(List<TilePlaceholder> placeholders)
+            public void SetAltar(GameObject altar)
             {
-                if (this.color == TileColor.WILD)
-                {
-                    this.layout.SetRotateAfterLayout(0);
-                }
-                this.layout.AddChildren(placeholders.Select(placeholder => placeholder.gameObject).ToList());
+                altar.transform.SetParent(this.center.transform);
+                altar.transform.localPosition = Vector3.zero;
+            }
+
+            public void AddTilePlaceholders(List<AltarSpace> spaces, float rotate = 0)
+            {
+                this.layout.SetRotateAfterLayout(rotate);
+                this.layout.AddChildren(spaces.Select(placeholder => placeholder.gameObject).ToList());
             }
 
             public List<TileColor> GetTileColors()
@@ -63,10 +67,10 @@ namespace Azul
                 return this.spaces.Length;
             }
 
-            public List<StarSpace> GetOpenSpaces()
+            public List<AltarSpace> GetOpenSpaces()
             {
-                List<StarSpace> openSpaces = new();
-                foreach (StarSpace space in this.spaces)
+                List<AltarSpace> openSpaces = new();
+                foreach (AltarSpace space in this.spaces)
                 {
                     if (space.IsEmpty())
                     {
@@ -76,10 +80,10 @@ namespace Azul
                 return openSpaces;
             }
 
-            public List<StarSpace> GetFilledSpaces()
+            public List<AltarSpace> GetFilledSpaces()
             {
-                List<StarSpace> filledSpaces = new();
-                foreach (StarSpace space in this.spaces)
+                List<AltarSpace> filledSpaces = new();
+                foreach (AltarSpace space in this.spaces)
                 {
                     if (!space.IsEmpty())
                     {
@@ -101,7 +105,7 @@ namespace Azul
 
             public void DisableAllHighlights()
             {
-                foreach (StarSpace space in this.spaces)
+                foreach (AltarSpace space in this.spaces)
                 {
                     space.DisableHighlight();
                 }
@@ -109,7 +113,7 @@ namespace Azul
 
             public void ClearTileEventListeners()
             {
-                foreach (StarSpace space in this.spaces)
+                foreach (AltarSpace space in this.spaces)
                 {
                     space.ClearStarSpaceSelectListeners();
                 }

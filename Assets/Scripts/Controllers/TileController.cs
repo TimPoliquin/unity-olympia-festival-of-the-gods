@@ -10,8 +10,6 @@ namespace Azul
         public class TileController : MonoBehaviour
         {
             private static int NUM_TILES = 132;
-            [SerializeField] private GameObject tilePrefab;
-            [SerializeField] private GameObject oneTilePrefab;
 
             /// <summary>
             /// A special tile. This tile indicates which player goest first in the next steps of the current round,
@@ -34,12 +32,13 @@ namespace Azul
 
             private void CreateStandardTiles()
             {
+                PrefabFactory prefabFactory = System.Instance.GetPrefabFactory();
                 this.tiles = new();
                 TileColor[] tileColors = TileColorUtils.GetTileColors();
                 for (int idx = 0; idx < NUM_TILES; idx++)
                 {
                     TileColor tileColor = tileColors[idx % tileColors.Length];
-                    Tile tile = Tile.Create(this.tilePrefab, tileColor);
+                    Tile tile = prefabFactory.CreateTile(tileColor);
                     tiles.Add(tile);
                 }
                 tiles.Shuffle();
@@ -47,8 +46,8 @@ namespace Azul
 
             private void CreateOneTile()
             {
-                GameObject gameObject = Instantiate(this.oneTilePrefab);
-                this.oneTile = gameObject.GetComponent<Tile>();
+                PrefabFactory prefabFactory = System.Instance.GetPrefabFactory();
+                this.oneTile = prefabFactory.CreateTile(TileColor.ONE);
             }
 
 

@@ -17,8 +17,8 @@ namespace Azul
     {
         public class RandomScoringSelection
         {
-            private List<StarSpace> actionableSpaces;
-            private StarSpace chosenSpace;
+            private List<AltarSpace> actionableSpaces;
+            private AltarSpace chosenSpace;
             private List<TileCount> tileCounts;
             private int wildTileCount;
             private TileColor wildColor;
@@ -48,7 +48,7 @@ namespace Azul
                 this.wildTileCount = this.GetWildTileCount(tileCounts, wildColor);
                 this.actionableSpaces = new();
                 this.usedWildColors = playerBoard.GetWildTileColors();
-                List<StarSpace> openWildSpaces = playerBoard.GetWildOpenSpaces();
+                List<AltarSpace> openWildSpaces = playerBoard.GetWildOpenSpaces();
                 foreach (TileCount tileCount in tileCounts)
                 {
                     int count = tileCount.TileColor != wildColor ? tileCount.Count + wildTileCount : tileCount.Count;
@@ -57,12 +57,12 @@ namespace Azul
                     {
                         continue;
                     }
-                    List<StarSpace> openSpaces = playerBoard.GetOpenSpaces(tileCount.TileColor);
+                    List<AltarSpace> openSpaces = playerBoard.GetOpenSpaces(tileCount.TileColor);
                     if (!usedWildColors.Contains(tileCount.TileColor))
                     {
                         openSpaces.AddRange(openWildSpaces);
                     }
-                    foreach (StarSpace starSpace in openSpaces)
+                    foreach (AltarSpace starSpace in openSpaces)
                     {
                         if (starSpace.GetValue() == 1 && tileCount.Count >= 1)
                         {

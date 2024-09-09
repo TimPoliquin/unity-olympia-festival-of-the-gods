@@ -27,7 +27,7 @@ namespace Azul
         }
         public struct OnScoreSpaceSelectedPayload
         {
-            public StarSpace Selection;
+            public AltarSpace Selection;
         }
         public struct OnGoalScoreTilesSelectedPayload
         {

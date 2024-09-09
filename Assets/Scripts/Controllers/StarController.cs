@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azul.Layout;
 using Azul.Model;
+using Azul.Prefab;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,27 +11,26 @@ namespace Azul
 {
     namespace Controller
     {
-        public class StarController : MonoBehaviour
+        public class AltarFactory : MonoBehaviour
         {
+            [SerializeField] private Altar altarPrefab;
+            [SerializeField] private List<AltarPrefab> altarPrefabs;
             [SerializeField] private int numSpaces = 6;
-            [SerializeField] private GameObject starPrefab;
-            [SerializeField] private GameObject tilePrefab;
-            public Star CreateStar(TileColor color)
+            [SerializeField] private AltarSpace altarSpacePrefab;
+            public Altar CreateAltar(TileColor color, float rotation)
             {
-                StarSpace[] spaces = new StarSpace[6];
-                Star star = Instantiate(this.starPrefab).GetComponent<Star>();
-                List<TilePlaceholder> placeholders = new();
+                AltarSpace[] spaces = new AltarSpace[6];
+                Altar star = Instantiate(this.altarPrefab).GetComponent<Altar>();
+                star.SetAltar(Instantiate(this.altarPrefabs.Find(altarPrefab => altarPrefab.GetTileColor() == color).GetPrefab()));
                 for (int idx = 0; idx < this.numSpaces; idx++)
                 {
-                    TilePlaceholder tile = TilePlaceholder.Create(this.tilePrefab, color);
-                    tile.gameObject.name = $"Tile {idx + 1}";
-                    placeholders.Add(tile);
-                    StarSpace space = tile.AddComponent<StarSpace>();
+                    AltarSpace space = Instantiate(this.altarSpacePrefab);
                     space.SetValue(idx + 1);
+                    space.SetOriginalColor(color);
                     spaces[idx] = space;
                 }
                 star.SetColor(color);
-                star.AddTilePlaceholders(placeholders);
+                star.AddTilePlaceholders(spaces.ToList(), rotation);
                 star.SetSpaces(spaces);
                 return star;
             }

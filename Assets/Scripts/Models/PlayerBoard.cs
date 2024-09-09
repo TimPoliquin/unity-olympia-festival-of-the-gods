@@ -32,11 +32,11 @@ namespace Azul
             [SerializeField] private Light activePlayerLight;
             [SerializeField] private RewardController rewardController;
             private int playerNumber;
-            private List<Star> stars = new();
+            private List<Altar> stars = new();
 
             private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
 
-            public void SetupGame(int playerNumber, StarController starController)
+            public void SetupGame(int playerNumber, AltarFactory starController)
             {
                 this.playerNumber = playerNumber;
                 this.gameObject.name = $"Player Board {this.playerNumber + 1}";
@@ -44,26 +44,28 @@ namespace Azul
                 this.rewardController.SetupGame(this.playerNumber);
             }
 
-            private void CreateStars(StarController starController)
+            private void CreateStars(AltarFactory starController)
             {
                 TileColor[] colors = TileColorUtils.GetTileColors();
-                List<Star> stars = new();
+                List<Altar> stars = new();
+                float baseRotation = 360.0f / colors.Length;
                 for (int idx = 0; idx < colors.Length; idx++)
                 {
-                    stars.Add(starController.CreateStar(colors[idx]));
+                    float rotation = baseRotation * idx + 2 * baseRotation;
+                    stars.Add(starController.CreateAltar(colors[idx], rotation));
                 }
-                Star wildStar = starController.CreateStar(TileColor.WILD);
+                Altar wildStar = starController.CreateAltar(TileColor.WILD, 0);
                 this.AddStars(stars);
                 this.AddCenterStar(wildStar);
             }
 
-            public void AddStars(List<Star> stars)
+            public void AddStars(List<Altar> stars)
             {
                 this.outerRing.AddChildren(stars.Select(star => star.gameObject).ToList());
                 this.stars.AddRange(stars);
             }
 
-            public void AddCenterStar(Star star)
+            public void AddCenterStar(Altar star)
             {
                 star.transform.SetParent(this.center.transform);
                 star.transform.localPosition = Vector3.zero;
@@ -129,22 +131,22 @@ namespace Azul
                 return this.drawnTilesContainer.GetTileCounts();
             }
 
-            public List<StarSpace> GetOpenSpaces(TileColor tileColor)
+            public List<AltarSpace> GetOpenSpaces(TileColor tileColor)
             {
                 return this.GetStar(tileColor).GetOpenSpaces();
             }
 
-            public List<StarSpace> GetWildOpenSpaces()
+            public List<AltarSpace> GetWildOpenSpaces()
             {
                 return this.GetWildStar().GetOpenSpaces();
             }
 
-            public Star GetStar(TileColor tileColor)
+            public Altar GetStar(TileColor tileColor)
             {
                 return this.stars.Find(star => star.GetColor() == tileColor);
             }
 
-            private Star GetWildStar()
+            private Altar GetWildStar()
             {
                 return this.stars.Find(star => star.GetColor() == TileColor.WILD);
             }
@@ -166,7 +168,7 @@ namespace Azul
 
             public void DisableAllHighlights()
             {
-                foreach (Star star in this.stars)
+                foreach (Altar star in this.stars)
                 {
                     star.DisableAllHighlights();
                 }
@@ -174,7 +176,7 @@ namespace Azul
 
             public void ClearTileEventListeners()
             {
-                foreach (Star star in this.stars)
+                foreach (Altar star in this.stars)
                 {
                     star.ClearTileEventListeners();
                 }

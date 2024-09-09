@@ -22,9 +22,7 @@ namespace Azul
         public class ScoreBoardController : MonoBehaviour
         {
             [SerializeField] private Vector3 position = new Vector3(100, 1, -55);
-            [SerializeField][Range(1, 10)] private int supplySize = 10;
             [SerializeField] private GameObject scoreBoardPrefab;
-            [SerializeField] private GameObject tilePrefab;
             [SerializeField] private GameObject roundCounterPrefab;
             [SerializeField] private List<StarCompletedMilestone> starCompletedMilestones;
             [SerializeField] private List<NumberCompletedMilestone> numberCompletedMilestones;
@@ -34,12 +32,10 @@ namespace Azul
 
             private ScoreBoard scoreBoard;
 
-            private List<TilePlaceholder> placeholderTiles;
 
             public void SetupGame(int numPlayers)
             {
                 this.CreateScoreBoard();
-                this.CreateSupplyStar();
                 this.PlaceRoundCounter();
                 this.InitializeScores(numPlayers);
             }
@@ -58,29 +54,6 @@ namespace Azul
             {
                 this.scoreBoard = Instantiate(this.scoreBoardPrefab, this.position, Quaternion.identity).GetComponent<ScoreBoard>();
                 this.scoreBoard.transform.position = this.position;
-            }
-
-            private void CreateSupplyStar()
-            {
-                // DEVNOTE - this is no longer called in favor of allowing manual selection
-                this.placeholderTiles = new();
-                for (int idx = 0; idx < this.supplySize; idx++)
-                {
-                    TilePlaceholder tile = TilePlaceholder.Create(this.tilePrefab, TileColor.WILD);
-                    this.placeholderTiles.Add(tile);
-                }
-                this.scoreBoard.AddSupplyPlaceholders(this.placeholderTiles);
-            }
-
-            public void FillSupply(BagController bagController)
-            {
-                this.placeholderTiles.ForEach(placeholder =>
-                {
-                    if (placeholder.IsEmpty())
-                    {
-                        placeholder.PlaceTile(bagController.Draw());
-                    }
-                });
             }
 
             private void PlaceRoundCounter()

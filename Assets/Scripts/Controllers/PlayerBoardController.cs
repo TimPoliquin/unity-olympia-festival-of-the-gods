@@ -6,7 +6,7 @@ using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PlayerBoardRewardEvents;
 using Azul.PointerEvents;
-using Azul.StarSpaceEvents;
+using Azul.AltarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,7 +31,7 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public int Value { get; init; }
-            public StarSpace Space { get; init; }
+            public AltarSpace Space { get; init; }
             public PlayerBoard PlayerBoard;
             public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
         }
@@ -39,7 +39,7 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public int TilePlaced { get; init; }
-            public Star Star { get; init; }
+            public Altar Star { get; init; }
         }
         public class OnPlayerBoardTilesDiscardedPayload
         {
@@ -60,7 +60,7 @@ namespace Azul
             private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
             private List<PlayerBoard> playerBoards;
 
-            public void SetupGame(int numPlayers, StarController starController)
+            public void SetupGame(int numPlayers, AltarFactory starController)
             {
                 this.playerBoards = new();
                 for (int idx = 0; idx < numPlayers; idx++)
@@ -165,7 +165,10 @@ namespace Azul
                     playerBoard.DeactivateLight();
                     playerBoard.DisableAllHighlights();
                 });
-                this.playerBoards[payload.PlayerNumber].ActivateLight();
+                if (payload.Phase == Phase.ACQUIRE)
+                {
+                    this.playerBoards[payload.PlayerNumber].ActivateLight();
+                }
                 if (payload.Phase == Phase.SCORE)
                 {
                     this.OnPlayerTurnScoringStart(payload.PlayerNumber);
@@ -197,7 +200,7 @@ namespace Azul
                     if (kvp.Value > 0)
                     {
                         int usableCount = kvp.Value + (kvp.Key == wildColor ? 0 : tileColorCounts[wildColor]);
-                        List<StarSpace> spaces = board.GetOpenSpaces(kvp.Key).FindAll(space => usableCount >= space.GetValue());
+                        List<AltarSpace> spaces = board.GetOpenSpaces(kvp.Key).FindAll(space => usableCount >= space.GetValue());
                         if (!wildStarUsedColors.Contains(kvp.Key))
                         {
                             spaces.AddRange(board.GetWildOpenSpaces().FindAll(wildSpace => usableCount >= wildSpace.GetValue()));
@@ -217,7 +220,7 @@ namespace Azul
                 // we should confirm the space is on an active playerboard, for instance.
                 if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
                 {
-                    StarSpace space = payload.Target;
+                    AltarSpace space = payload.Target;
                     PlayerBoard playerBoard = space.GetComponentInParent<PlayerBoard>();
                     if (space.GetOriginColor() != TileColor.WILD)
                     {
@@ -277,12 +280,11 @@ namespace Azul
                 this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForScoring());
             }
 
-            private void OnConfirmScoreTileSelection(PlayerBoard playerBoard, StarSpace space, OnPlayerBoardScoreTileSelectionConfirmPayload payload)
+            private void OnConfirmScoreTileSelection(PlayerBoard playerBoard, AltarSpace space, OnPlayerBoardScoreTileSelectionConfirmPayload payload)
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
                 TileColor spaceColor = payload.Color;
-                int spaceCount = payload.TilesSelected[spaceColor];
                 List<Tile> tiles;
                 if (spaceColor != wildColor)
                 {
@@ -293,9 +295,7 @@ namespace Azul
                 {
                     tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
                 }
-                Tile tileToPlace = tiles.Find(tile => tile.Color == spaceColor);
-                space.PlaceTile(tileToPlace);
-                tiles.Remove(tileToPlace);
+                space.PlaceTile(spaceColor);
                 System.Instance.GetBagController().Discard(tiles);
                 playerBoard.DisableAllHighlights();
                 playerBoard.ClearTileEventListeners();

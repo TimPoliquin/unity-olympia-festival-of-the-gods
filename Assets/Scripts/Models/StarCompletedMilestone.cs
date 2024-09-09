@@ -18,7 +18,7 @@ namespace Azul
                 return this.Color;
             }
 
-            public bool IsMilestoneComplete(Star star)
+            public bool IsMilestoneComplete(Altar star)
             {
                 return star.IsFilled();
             }

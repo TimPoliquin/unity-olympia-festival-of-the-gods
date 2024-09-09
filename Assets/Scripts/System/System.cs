@@ -18,9 +18,10 @@ namespace Azul
         private GameController gameController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
+        private PrefabFactory prefabFactory;
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
-        private StarController starController;
+        private AltarFactory starController;
         private TableController tableController;
         private TileController tileController;
         private TileMaterialProvider tileMaterialProvider;
@@ -102,6 +103,15 @@ namespace Azul
             return this.playerBoardController;
         }
 
+        public PrefabFactory GetPrefabFactory()
+        {
+            if (null == this.prefabFactory)
+            {
+                this.prefabFactory = this.GetComponentInChildren<PrefabFactory>();
+            }
+            return this.prefabFactory;
+        }
+
         public RoundController GetRoundController()
         {
             if (null == this.roundController)
@@ -120,11 +130,11 @@ namespace Azul
             return this.scoreBoardController;
         }
 
-        public StarController GetStarController()
+        public AltarFactory GetStarController()
         {
             if (null == this.starController)
             {
-                this.starController = this.GetComponentInChildren<StarController>();
+                this.starController = this.GetComponentInChildren<AltarFactory>();
             }
             return this.starController;
         }

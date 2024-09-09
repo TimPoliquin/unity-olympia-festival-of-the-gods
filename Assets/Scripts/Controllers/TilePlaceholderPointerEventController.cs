@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
+using Azul.Model;
 using UnityEngine;
 
 namespace Azul
 {
     namespace Controller
     {
-        [RequireComponent(typeof(TilePlaceholder))]
-        public class TilePlaceholderPointerEventController : PointerEventController<TilePlaceholder>
+        [RequireComponent(typeof(AltarSpace))]
+        public class TilePlaceholderPointerEventController : PointerEventController<AltarSpace>
         {
         }
     }
