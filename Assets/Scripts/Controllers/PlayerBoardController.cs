@@ -285,7 +285,6 @@ namespace Azul
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
                 TileColor spaceColor = payload.Color;
-                int spaceCount = payload.TilesSelected[spaceColor];
                 List<Tile> tiles;
                 if (spaceColor != wildColor)
                 {
@@ -296,9 +295,7 @@ namespace Azul
                 {
                     tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
                 }
-                Tile tileToPlace = tiles.Find(tile => tile.Color == spaceColor);
-                space.PlaceTile(tileToPlace);
-                tiles.Remove(tileToPlace);
+                space.PlaceTile(spaceColor);
                 System.Instance.GetBagController().Discard(tiles);
                 playerBoard.DisableAllHighlights();
                 playerBoard.ClearTileEventListeners();

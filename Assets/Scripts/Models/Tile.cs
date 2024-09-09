@@ -11,6 +11,7 @@ namespace Azul
         public class Tile : MonoBehaviour
         {
             [SerializeField] private TileColor color;
+            private Outline outline;
 
             public TileColor Color
             {
@@ -30,6 +31,15 @@ namespace Azul
                     UnityEngine.Debug.Log("No tile pointer controller assigned!");
                     return null;
                 }
+            }
+
+            public Outline GetOutline()
+            {
+                if (null == this.outline)
+                {
+                    this.outline = this.GetComponentInChildren<Outline>();
+                }
+                return this.outline;
             }
 
             public bool IsOneTile()

@@ -108,14 +108,12 @@ namespace Azul
                 return this.GetComponent<TilePlaceholderPointerEventController>();
             }
 
-            public void PlaceTile(Tile tile)
+            public void PlaceTile(TileColor color)
             {
                 this.isFilled = true;
-                this.effectiveColor = tile.Color;
-                this.fire.SetColor(tile.Color);
+                this.effectiveColor = color;
+                this.fire.SetColor(color);
                 this.fire.Enable();
-                // TODO - disolve the tile???
-                Destroy(tile.gameObject);
             }
 
             public void Select()

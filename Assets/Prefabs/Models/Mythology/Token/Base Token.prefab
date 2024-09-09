@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5246786396066867908}
   - component: {fileID: 6109234711509620182}
   - component: {fileID: 6286208313216689614}
+  - component: {fileID: 7403177850066767102}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -83,6 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7403177850066767102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4493434643738201795}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 30
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7916375320518556898
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +113,6 @@ GameObject:
   - component: {fileID: 8578231552271666378}
   - component: {fileID: -2345924530002169514}
   - component: {fileID: 3077641019178284570}
-  - component: {fileID: -9183341118324831658}
   m_Layer: 0
   m_Name: Base Token
   m_TagString: Untagged
@@ -143,50 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a571ccd264cd74181909c22f4926e71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-9183341118324831658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7916375320518556898}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0, g: 0, b: 0, a: 0.7647059}
-  outlineWidth: 20
-  precomputeOutline: 1
-  bakeKeys:
-  - {fileID: -5495902117074765545, guid: fabc7c259f49e47bca9d6b1d000007cd, type: 3}
-  bakeValues:
-  - data:
-    - {x: 0.47123435, y: -0.47123778, z: -0.745569}
-    - {x: 0.6175575, y: 0.616984, z: -0.48780477}
-    - {x: 0.6175575, y: 0.616984, z: 0.48780477}
-    - {x: 0.47123435, y: -0.47123778, z: 0.745569}
-    - {x: 0.6175575, y: 0.616984, z: -0.48780477}
-    - {x: -0.4707951, y: 0.47158402, z: -0.7456275}
-    - {x: -0.4707951, y: 0.47158402, z: 0.7456275}
-    - {x: 0.6175575, y: 0.616984, z: 0.48780477}
-    - {x: -0.4707951, y: 0.47158402, z: -0.7456275}
-    - {x: -0.61744183, y: -0.6169774, z: -0.48795953}
-    - {x: -0.61744183, y: -0.6169774, z: 0.48795953}
-    - {x: -0.4707951, y: 0.47158402, z: 0.7456275}
-    - {x: -0.61744183, y: -0.6169774, z: -0.48795953}
-    - {x: 0.47123435, y: -0.47123778, z: -0.745569}
-    - {x: 0.47123435, y: -0.47123778, z: 0.745569}
-    - {x: -0.61744183, y: -0.6169774, z: 0.48795953}
-    - {x: 0.6175575, y: 0.616984, z: -0.48780477}
-    - {x: 0.47123435, y: -0.47123778, z: -0.745569}
-    - {x: -0.61744183, y: -0.6169774, z: -0.48795953}
-    - {x: -0.4707951, y: 0.47158402, z: -0.7456275}
-    - {x: -0.4707951, y: 0.47158402, z: 0.7456275}
-    - {x: -0.61744183, y: -0.6169774, z: 0.48795953}
-    - {x: 0.47123435, y: -0.47123778, z: 0.745569}
-    - {x: 0.6175575, y: 0.616984, z: 0.48780477}
 --- !u!1 &8628186601549586688
 GameObject:
   m_ObjectHideFlags: 0
