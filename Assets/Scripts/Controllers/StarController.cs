@@ -17,7 +17,7 @@ namespace Azul
             [SerializeField] private List<AltarPrefab> altarPrefabs;
             [SerializeField] private int numSpaces = 6;
             [SerializeField] private AltarSpace altarSpacePrefab;
-            public Altar CreateAltar(TileColor color)
+            public Altar CreateAltar(TileColor color, float rotation)
             {
                 AltarSpace[] spaces = new AltarSpace[6];
                 Altar star = Instantiate(this.altarPrefab).GetComponent<Altar>();
@@ -30,7 +30,7 @@ namespace Azul
                     spaces[idx] = space;
                 }
                 star.SetColor(color);
-                star.AddTilePlaceholders(spaces.ToList());
+                star.AddTilePlaceholders(spaces.ToList(), rotation);
                 star.SetSpaces(spaces);
                 return star;
             }

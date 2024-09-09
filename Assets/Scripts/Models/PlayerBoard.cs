@@ -48,11 +48,13 @@ namespace Azul
             {
                 TileColor[] colors = TileColorUtils.GetTileColors();
                 List<Altar> stars = new();
+                float baseRotation = 360.0f / colors.Length;
                 for (int idx = 0; idx < colors.Length; idx++)
                 {
-                    stars.Add(starController.CreateAltar(colors[idx]));
+                    float rotation = baseRotation * idx + 2 * baseRotation;
+                    stars.Add(starController.CreateAltar(colors[idx], rotation));
                 }
-                Altar wildStar = starController.CreateAltar(TileColor.WILD);
+                Altar wildStar = starController.CreateAltar(TileColor.WILD, 0);
                 this.AddStars(stars);
                 this.AddCenterStar(wildStar);
             }

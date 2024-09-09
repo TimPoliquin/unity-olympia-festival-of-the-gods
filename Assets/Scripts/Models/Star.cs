@@ -44,12 +44,9 @@ namespace Azul
                 altar.transform.localPosition = Vector3.zero;
             }
 
-            public void AddTilePlaceholders(List<AltarSpace> spaces)
+            public void AddTilePlaceholders(List<AltarSpace> spaces, float rotate = 0)
             {
-                if (this.color == TileColor.WILD)
-                {
-                    this.layout.SetRotateAfterLayout(0);
-                }
+                this.layout.SetRotateAfterLayout(rotate);
                 this.layout.AddChildren(spaces.Select(placeholder => placeholder.gameObject).ToList());
             }
 

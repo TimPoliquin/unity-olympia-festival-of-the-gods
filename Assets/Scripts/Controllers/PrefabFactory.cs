@@ -38,9 +38,9 @@ namespace Azul
                 return Instantiate(this.tilePrefabsByColor[tileColor]);
             }
 
-            public Altar CreateAltar(TileColor tileColor)
+            public Altar CreateAltar(TileColor tileColor, float rotation)
             {
-                return this.altarFactory.CreateAltar(tileColor);
+                return this.altarFactory.CreateAltar(tileColor, rotation);
             }
 
 
