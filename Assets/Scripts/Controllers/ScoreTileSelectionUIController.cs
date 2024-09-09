@@ -25,6 +25,7 @@ namespace Azul
             [SerializeField] private Button endTurnButton;
             [SerializeField] private WildColorSelectionUI wildColorSelectionUI;
             private List<ScoreTileSelectionUI> scoreTileSelectionUIs = new();
+            private bool isCurrentPlayerHuman = false;
 
             private int countNeeded = 0;
             private TileColor selectedColor;
@@ -63,7 +64,7 @@ namespace Azul
             private void OnRoundPhaseScore(OnRoundPhaseScorePayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(true);
+                this.endTurnButton.gameObject.SetActive(false);
             }
             private void OnRoundPhasePrepare(OnRoundPhasePreparePayload payload)
             {
@@ -73,9 +74,10 @@ namespace Azul
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
             {
-                if (payload.Phase == Phase.SCORE && payload.Player.IsHuman())
+                if (payload.Phase == Phase.SCORE)
                 {
-                    this.endTurnButton.gameObject.SetActive(true);
+                    this.isCurrentPlayerHuman = payload.Player.IsHuman();
+                    this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
                 }
             }
 
@@ -164,8 +166,8 @@ namespace Azul
                     this.CreateScoreTileSelectionUI(playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
                 }
                 this.onConfirm = onConfirm;
-                this.confirmButton.gameObject.SetActive(true);
-                this.cancelButton.gameObject.SetActive(true);
+                this.confirmButton.gameObject.SetActive(this.isCurrentPlayerHuman);
+                this.cancelButton.gameObject.SetActive(this.isCurrentPlayerHuman);
                 this.endTurnButton.gameObject.SetActive(false);
             }
 
@@ -197,7 +199,7 @@ namespace Azul
             private void OnCancelSelection()
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(true);
+                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
             }
 
             private void OnConfirmSelection()
@@ -222,7 +224,7 @@ namespace Azul
                     throw new ArgumentOutOfRangeException(nameof(this.countNeeded), "Wrong number of tiles selected!");
                 }
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(true);
+                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
             }
 
             private void OnSelectionCountChange(OnSelectionCountChangePayload payload)
@@ -246,7 +248,7 @@ namespace Azul
             private void OnOverflowSelectionCancel()
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(true);
+                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
             }
 
             private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
@@ -258,7 +260,7 @@ namespace Azul
             private void OnGrantReward(OnGrantRewardPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(true);
+                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
             }
 
         }
