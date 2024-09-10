@@ -126,10 +126,11 @@ namespace Azul
                 return this.drawnTilesContainer.GetTileCount();
             }
 
-            public List<TileCount> GetTileCounts()
+            public List<TileCount> GetTileCounts(bool includeOneTile = false)
             {
-                return this.drawnTilesContainer.GetTileCounts();
+                return this.drawnTilesContainer.GetTileCounts(includeOneTile);
             }
+
 
             public List<AltarSpace> GetOpenSpaces(TileColor tileColor)
             {
@@ -190,6 +191,11 @@ namespace Azul
             public List<Tile> DiscardRemainingTiles()
             {
                 return this.drawnTilesContainer.DiscardRemainingTiles();
+            }
+
+            public Tile DiscardOneTile()
+            {
+                return this.drawnTilesContainer.DiscardOneTile();
             }
 
             public void ResizeForScoring()

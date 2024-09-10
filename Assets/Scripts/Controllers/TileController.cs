@@ -63,8 +63,11 @@ namespace Azul
 
             private void OnRoundStart(OnRoundPhasePreparePayload payload)
             {
-                TableController tableController = System.Instance.GetTableController();
-                tableController.MoveOneTileToCenter(this.oneTile);
+                if (payload.RoundNumber == 0)
+                {
+                    TableController tableController = System.Instance.GetTableController();
+                    tableController.MoveOneTileToCenter(this.oneTile);
+                }
             }
         }
     }

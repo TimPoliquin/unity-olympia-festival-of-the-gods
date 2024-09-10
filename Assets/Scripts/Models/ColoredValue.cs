@@ -23,6 +23,16 @@ namespace Azul
             {
                 return this.value;
             }
+
+            public static ColoredValue<T> Create<T>(TileColor tileColor, T value)
+            {
+                ColoredValue<T> ret = new ColoredValue<T>
+                {
+                    tileColor = tileColor,
+                    value = value
+                };
+                return ret;
+            }
         }
 
     }

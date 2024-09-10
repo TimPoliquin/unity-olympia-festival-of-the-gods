@@ -61,19 +61,26 @@ namespace Azul
             return this.drawnTiles.FindAll(tile => !tile.IsOneTile()).Count;
         }
 
-        public List<TileCount> GetTileCounts()
+        public List<TileCount> GetTileCounts(bool includeOneTile = false)
         {
             List<TileCount> tileCounts = new();
             Dictionary<TileColor, int> tileCountsByColor = new();
+            foreach (TileColor tileColor in TileColorUtils.GetTileColors())
+            {
+                tileCountsByColor[tileColor] = 0;
+            }
+            if (includeOneTile)
+            {
+                tileCountsByColor[TileColor.ONE] = 0;
+            }
             foreach (Tile tile in this.drawnTiles)
             {
                 if (tile.IsOneTile())
                 {
-                    // Do nothing - we don't want to count the One Tile.
-                }
-                else if (!tileCountsByColor.ContainsKey(tile.Color))
-                {
-                    tileCountsByColor[tile.Color] = 1;
+                    if (includeOneTile)
+                    {
+                        tileCountsByColor[tile.Color] = 1;
+                    }
                 }
                 else
                 {
@@ -133,6 +140,16 @@ namespace Azul
                 }
                 return usedTiles;
             }
+        }
+
+        public Tile DiscardOneTile()
+        {
+            Tile oneTile = this.drawnTiles.Find(tile => tile.IsOneTile());
+            if (oneTile != null)
+            {
+                this.drawnTiles.Remove(oneTile);
+            }
+            return oneTile;
         }
 
         public List<Tile> DiscardRemainingTiles()
