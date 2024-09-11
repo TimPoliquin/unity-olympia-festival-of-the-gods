@@ -34,6 +34,10 @@ namespace Azul
             {
                 public TileColor TileColor { get; init; }
                 public int Count;
+                public ColoredValue<int> ToColoredValue()
+                {
+                    return ColoredValue<int>.Create(TileColor, Count);
+                }
             }
         }
         public class TableController : MonoBehaviour

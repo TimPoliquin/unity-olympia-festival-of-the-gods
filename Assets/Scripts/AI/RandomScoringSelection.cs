@@ -51,6 +51,10 @@ namespace Azul
                 List<AltarSpace> openWildSpaces = playerBoard.GetWildOpenSpaces();
                 foreach (TileCount tileCount in tileCounts)
                 {
+                    if (tileCount.Count == 0)
+                    {
+                        continue;
+                    }
                     int count = tileCount.TileColor != wildColor ? tileCount.Count + wildTileCount : tileCount.Count;
                     UnityEngine.Debug.Log($"Finding open spaces: {tileCount.TileColor}/{tileCount.Count}/{count}");
                     if (tileCount.TileColor == TileColor.ONE)

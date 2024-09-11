@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f179ae791929e4fdfb3da55bf7a74191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 55
+  radius: 110
   rotate: 1
   rotateAfterLayout: 0
 --- !u!1 &6196003202671131085

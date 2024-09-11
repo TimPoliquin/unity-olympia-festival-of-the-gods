@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Azul.Model;
+using Azul.GameEvents;
 
 namespace Azul
 {
@@ -22,12 +23,7 @@ namespace Azul
             {
                 this.CreateStandardTiles();
                 this.CreateOneTile();
-            }
-
-            public void InitializeListeners()
-            {
-                RoundController roundController = System.Instance.GetRoundController();
-                roundController.AddOnRoundPhasePrepareListener(this.OnRoundStart);
+                System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
             }
 
             private void CreateStandardTiles()
@@ -61,7 +57,7 @@ namespace Azul
                 return this.oneTile;
             }
 
-            private void OnRoundStart(OnRoundPhasePreparePayload payload)
+            private void OnGameSetupComplete(OnGameSetupCompletePayload payload)
             {
                 TableController tableController = System.Instance.GetTableController();
                 tableController.MoveOneTileToCenter(this.oneTile);

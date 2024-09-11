@@ -46,6 +46,16 @@ namespace Azul
             public int PlayerNumber { get; init; }
             public int NumberOfTilesDiscarded { get; init; }
         }
+        public struct OnPlayerBoardTilesCollectedPayload
+        {
+            public int PlayerNumber { get; init; }
+            public List<ColoredValue<int>> TileCounts { get; init; }
+
+        }
+        public struct OnPlayerBoardDiscardOneTilePayload
+        {
+            public int PlayerNumber { get; init; }
+        }
     }
     namespace Controller
     {
@@ -58,6 +68,8 @@ namespace Azul
             private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
             private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
+            private UnityEvent<OnPlayerBoardDiscardOneTilePayload> onDiscardOneTile = new();
+            private UnityEvent<OnPlayerBoardTilesCollectedPayload> onTilesCollected = new();
             private List<PlayerBoard> playerBoards;
 
             public void SetupGame(int numPlayers, AltarFactory starController)
@@ -91,8 +103,6 @@ namespace Azul
                 return this.playerBoards[playerNumber];
             }
 
-
-
             public void AddDrawnTiles(int player, List<Tile> tiles)
             {
                 this.playerBoards[player].AddDrawnTiles(tiles);
@@ -100,6 +110,11 @@ namespace Azul
                 {
                     this.OnPlayerTurnScoringStart(player);
                 }
+                this.onTilesCollected.Invoke(new OnPlayerBoardTilesCollectedPayload
+                {
+                    PlayerNumber = player,
+                    TileCounts = this.playerBoards[player].GetTileCounts(true).Select(tileCount => tileCount.ToColoredValue()).ToList()
+                });
             }
 
             public void DiscardTiles(int playerNumber, Dictionary<TileColor, int> tilesToDiscard)
@@ -173,11 +188,6 @@ namespace Azul
                 {
                     this.OnPlayerTurnScoringStart(payload.PlayerNumber);
                 }
-            }
-
-            public int GetPlayerWithOneTile()
-            {
-                return this.playerBoards.Find(playerBoard => playerBoard.HasOneTile()).GetPlayerNumber();
             }
 
             public void AddOnPlayerAcquiresOneTileListener(UnityAction<OnPlayerAcquireOneTilePayload> listener)
@@ -272,7 +282,19 @@ namespace Azul
 
             private void OnRoundPrepare(OnRoundPhasePreparePayload payload)
             {
-                this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForDrawing());
+                this.playerBoards.ForEach(playerBoard =>
+                {
+                    playerBoard.ResizeForDrawing();
+                    Tile oneTile = playerBoard.DiscardOneTile();
+                    if (oneTile != null)
+                    {
+                        System.Instance.GetTableController().MoveOneTileToCenter(oneTile);
+                        this.onDiscardOneTile.Invoke(new OnPlayerBoardDiscardOneTilePayload
+                        {
+                            PlayerNumber = playerBoard.GetPlayerNumber()
+                        });
+                    }
+                });
             }
 
             private void OnRoundScore(OnRoundPhaseScorePayload payload)
@@ -321,6 +343,16 @@ namespace Azul
             public void AddOnPlayerBoardTilesDiscardedListener(UnityAction<OnPlayerBoardTilesDiscardedPayload> listener)
             {
                 this.onTilesDiscarded.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardDiscardOneTileListener(UnityAction<OnPlayerBoardDiscardOneTilePayload> listener)
+            {
+                this.onDiscardOneTile.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardTilesCollectedListener(UnityAction<OnPlayerBoardTilesCollectedPayload> listener)
+            {
+                this.onTilesCollected.AddListener(listener);
             }
 
             public Tile GrantReward(int playerNumber, TileColor tileColor)

@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 24, y: 124.3}
+  m_SizeDelta: {x: 32, y: 46.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6406583125515903996
 MonoBehaviour:
@@ -80,8 +80,6 @@ MonoBehaviour:
   statusIndicator: {fileID: 1743708067174959432}
   backgroundImage: {fileID: 6936284017740846399}
   iconImage: {fileID: 3902175708867831295}
-  icon: {fileID: 0}
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2212295397494038634
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +265,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 24, y: 24}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7559685656078365582
 GameObject:

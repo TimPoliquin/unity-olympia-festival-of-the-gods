@@ -19,6 +19,7 @@ namespace Azul
         public class GameController : MonoBehaviour
         {
             [SerializeField] private UnityEvent<OnGameSetupCompletePayload> onGameSetupComplete = new();
+            private bool isGameSetupComplete;
             public void StartGame()
             {
                 AIController aiController = System.Instance.GetAIController();
@@ -46,10 +47,7 @@ namespace Azul
                 // scoreBoardController.FillSupply(bagController);
                 roundController.SetupGame();
                 // dispatch game setup complete
-                this.onGameSetupComplete.Invoke(new OnGameSetupCompletePayload
-                {
-                    NumberOfPlayers = playerController.GetNumberOfPlayers()
-                });
+                this.SetSetupComplete();
                 // initialize event listeners
                 aiController.InitializeListeners();
                 cameraController.InitializeListeners();
@@ -59,7 +57,6 @@ namespace Azul
                 roundController.InitializeListeners();
                 scoreBoardController.InitializeListeners();
                 tableController.InitializeListeners();
-                tileController.InitializeListeners();
                 uIController.InitializeListeners();
                 scoreBoardController.AddOnScoreBoardUpdatedListener(this.OnScoreUpdate);
                 // populate the table
@@ -81,9 +78,30 @@ namespace Azul
 
             public void AddOnGameSetupCompleteListener(UnityAction<OnGameSetupCompletePayload> listener)
             {
-                this.onGameSetupComplete.AddListener(listener);
+                if (this.isGameSetupComplete)
+                {
+                    listener.Invoke(this.CreatGameSetupCompletePayload());
+                }
+                else
+                {
+                    this.onGameSetupComplete.AddListener(listener);
+                }
             }
 
+            private void SetSetupComplete()
+            {
+                this.isGameSetupComplete = true;
+                this.onGameSetupComplete.Invoke(this.CreatGameSetupCompletePayload());
+                this.onGameSetupComplete.RemoveAllListeners();
+            }
+
+            private OnGameSetupCompletePayload CreatGameSetupCompletePayload()
+            {
+                return new OnGameSetupCompletePayload
+                {
+                    NumberOfPlayers = System.Instance.GetPlayerController().GetNumberOfPlayers()
+                };
+            }
         }
     }
 }

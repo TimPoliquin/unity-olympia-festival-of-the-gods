@@ -74,7 +74,7 @@ namespace Azul
 
             public void DeductPoints(int player, int points)
             {
-                this.playerScores[player] = Math.Max(this.playerScores[player] - points, 5);
+                this.playerScores[player] = Math.Max(this.playerScores[player] - points, 0);
                 this.NotifyScoreUpdate();
             }
 

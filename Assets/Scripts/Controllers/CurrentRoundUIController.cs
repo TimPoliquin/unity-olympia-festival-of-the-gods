@@ -21,12 +21,18 @@ namespace Azul
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnRoundPhaseAcquireListener(this.OnPhaseAcquire);
+                roundController.AddOnAllRoundsCompleteListener(this.OnAllRoundsCompleted);
             }
 
             private void OnPhaseAcquire(OnRoundPhaseAcquirePayload payload)
             {
                 this.currentRoundUI.gameObject.SetActive(true);
                 this.currentRoundUI.SetActiveColor(payload.WildColor);
+            }
+
+            private void OnAllRoundsCompleted(OnAllRoundsCompletePayload payload)
+            {
+                this.currentRoundUI.gameObject.SetActive(false);
             }
         }
     }

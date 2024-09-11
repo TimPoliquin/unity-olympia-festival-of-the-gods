@@ -11,6 +11,7 @@ namespace Azul
         public class PrefabFactory : MonoBehaviour
         {
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
+            [SerializeField] private PlayerUI playerUIPrefab;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
             private AltarFactory altarFactory;
@@ -41,6 +42,11 @@ namespace Azul
             public Altar CreateAltar(TileColor tileColor, float rotation)
             {
                 return this.altarFactory.CreateAltar(tileColor, rotation);
+            }
+
+            public PlayerUI CreatePlayerUI()
+            {
+                return Instantiate(this.playerUIPrefab);
             }
 
 
