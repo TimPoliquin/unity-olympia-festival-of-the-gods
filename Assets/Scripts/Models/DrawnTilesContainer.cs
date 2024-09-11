@@ -18,7 +18,7 @@ namespace Azul
         [SerializeField] private LinearLayout green;
         [SerializeField] private LinearLayout yellow;
 
-        private List<Tile> drawnTiles = new();
+        [SerializeField] private List<Tile> drawnTiles = new();
         private Dictionary<TileColor, LinearLayout> layoutsByColor;
 
         void Awake()
@@ -148,6 +148,8 @@ namespace Azul
             if (oneTile != null)
             {
                 this.drawnTiles.Remove(oneTile);
+                oneTile.transform.SetParent(null);
+                this.one.Refresh();
             }
             return oneTile;
         }

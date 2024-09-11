@@ -54,6 +54,11 @@ namespace Azul
 
             public void AddToCenter(Tile tile)
             {
+                if (this.tiles.Contains(tile))
+                {
+                    UnityEngine.Debug.Log($"Adding a tile that has already been added...");
+                    return;
+                }
                 tile.transform.SetParent(this.center.transform);
                 // TODO - some kind of animation is probably warranted here.
                 // for now, we'll just drop it?

@@ -52,6 +52,10 @@ namespace Azul
             public List<ColoredValue<int>> TileCounts { get; init; }
 
         }
+        public struct OnPlayerBoardDiscardOneTilePayload
+        {
+            public int PlayerNumber { get; init; }
+        }
     }
     namespace Controller
     {
@@ -64,6 +68,7 @@ namespace Azul
             private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
             private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
+            private UnityEvent<OnPlayerBoardDiscardOneTilePayload> onDiscardOneTile = new();
             private UnityEvent<OnPlayerBoardTilesCollectedPayload> onTilesCollected = new();
             private List<PlayerBoard> playerBoards;
 
@@ -283,12 +288,11 @@ namespace Azul
                     Tile oneTile = playerBoard.DiscardOneTile();
                     if (oneTile != null)
                     {
-                        this.onTilesDiscarded.Invoke(new OnPlayerBoardTilesDiscardedPayload
-                        {
-                            PlayerNumber = playerBoard.GetPlayerNumber(),
-                            NumberOfTilesDiscarded = 0 // Hack to prevent scoring impact
-                        });
                         System.Instance.GetTableController().MoveOneTileToCenter(oneTile);
+                        this.onDiscardOneTile.Invoke(new OnPlayerBoardDiscardOneTilePayload
+                        {
+                            PlayerNumber = playerBoard.GetPlayerNumber()
+                        });
                     }
                 });
             }
@@ -339,6 +343,11 @@ namespace Azul
             public void AddOnPlayerBoardTilesDiscardedListener(UnityAction<OnPlayerBoardTilesDiscardedPayload> listener)
             {
                 this.onTilesDiscarded.AddListener(listener);
+            }
+
+            public void AddOnPlayerBoardDiscardOneTileListener(UnityAction<OnPlayerBoardDiscardOneTilePayload> listener)
+            {
+                this.onDiscardOneTile.AddListener(listener);
             }
 
             public void AddOnPlayerBoardTilesCollectedListener(UnityAction<OnPlayerBoardTilesCollectedPayload> listener)

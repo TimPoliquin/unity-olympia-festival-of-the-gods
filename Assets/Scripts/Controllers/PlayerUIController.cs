@@ -34,6 +34,7 @@ namespace Azul
                 playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
                 playerBoardController.AddOnPlayerBoardTilesCollectedListener(this.OnPlayerTilesCollected);
                 playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerTilesDiscarded);
+                playerBoardController.AddOnPlayerBoardDiscardOneTileListener(this.OnPlayerDiscardOneTile);
                 playerBoardController.AddOnPlaceStarTileListener(this.OnPlayerPlaceTile);
                 scoreBoardController.AddOnScoreBoardUpdatedListener(this.OnPlayerScoreUpdated);
                 roundController.AddOnAllRoundsCompleteListener(this.OnAllRoundsCompleted);
@@ -72,6 +73,11 @@ namespace Azul
             }
 
             private void OnPlayerTilesDiscarded(OnPlayerBoardTilesDiscardedPayload payload)
+            {
+                this.RecalculatePlayerTileCounts(payload.PlayerNumber);
+            }
+
+            private void OnPlayerDiscardOneTile(OnPlayerBoardDiscardOneTilePayload payload)
             {
                 this.RecalculatePlayerTileCounts(payload.PlayerNumber);
             }
