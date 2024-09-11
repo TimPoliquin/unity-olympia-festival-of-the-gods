@@ -12,8 +12,11 @@ namespace Azul
             [SerializeField] private TextMeshProUGUI scoreText;
             [SerializeField] private TextMeshProUGUI playerNameText;
             [SerializeField] private List<ColoredValue<PlayerTileCountUI>> collectedTileCounts;
+            [SerializeField] private GameObject status;
 
             private Dictionary<TileColor, PlayerTileCountUI> tileCountsByColor;
+            private int playerNumber;
+
             void Start()
             {
                 this.tileCountsByColor = new();
@@ -34,12 +37,23 @@ namespace Azul
 
             public void SetPlayer(Player player)
             {
+                this.playerNumber = player.GetPlayerNumber();
                 this.playerNameText.text = player.GetPlayerName();
             }
 
             public void SetScore(int score)
             {
                 this.scoreText.text = $"{score}";
+            }
+
+            public void SetActive(bool active)
+            {
+                this.status.SetActive(active);
+            }
+
+            public int GetPlayerNumber()
+            {
+                return this.playerNumber;
             }
         }
     }

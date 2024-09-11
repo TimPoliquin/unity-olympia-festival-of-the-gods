@@ -31,6 +31,7 @@ namespace Azul
                 {
                     this.CreatePlayerUI(player);
                 }
+                playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
                 playerBoardController.AddOnPlayerBoardTilesCollectedListener(this.OnPlayerTilesCollected);
                 playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerTilesDiscarded);
                 playerBoardController.AddOnPlaceStarTileListener(this.OnPlayerPlaceTile);
@@ -46,6 +47,14 @@ namespace Azul
                 playerUI.SetPlayer(player);
                 playerUI.SetScore(scoreBoardController.GetPlayerScore(player.GetPlayerNumber()));
                 this.playerUIs.Add(playerUI);
+            }
+
+            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            {
+                foreach (PlayerUI playerUI in this.playerUIs)
+                {
+                    playerUI.SetActive(playerUI.GetPlayerNumber() == payload.PlayerNumber);
+                }
             }
 
             private void OnPlayerScoreUpdated(OnScoreBoardUpdatePayload payload)
