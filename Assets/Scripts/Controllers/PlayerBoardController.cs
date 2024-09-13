@@ -177,13 +177,8 @@ namespace Azul
             {
                 this.playerBoards.ForEach(playerBoard =>
                 {
-                    playerBoard.DeactivateLight();
                     playerBoard.DisableAllHighlights();
                 });
-                if (payload.Phase == Phase.ACQUIRE)
-                {
-                    this.playerBoards[payload.PlayerNumber].ActivateLight();
-                }
                 if (payload.Phase == Phase.SCORE)
                 {
                     this.OnPlayerTurnScoringStart(payload.PlayerNumber);

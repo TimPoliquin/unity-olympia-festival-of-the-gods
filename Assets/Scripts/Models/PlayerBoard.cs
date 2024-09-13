@@ -29,7 +29,6 @@ namespace Azul
             [SerializeField] private CircularLayout outerRing;
             [SerializeField] private GameObject center;
             [SerializeField] private DrawnTilesContainer drawnTilesContainer;
-            [SerializeField] private Light activePlayerLight;
             [SerializeField] private RewardController rewardController;
             private int playerNumber;
             private List<Altar> stars = new();
@@ -70,16 +69,6 @@ namespace Azul
                 star.transform.SetParent(this.center.transform);
                 star.transform.localPosition = Vector3.zero;
                 this.stars.Add(star);
-            }
-
-            public void ActivateLight()
-            {
-                this.activePlayerLight.gameObject.SetActive(true);
-            }
-
-            public void DeactivateLight()
-            {
-                this.activePlayerLight.gameObject.SetActive(false);
             }
 
             public void AddDrawnTiles(List<Tile> tiles)
