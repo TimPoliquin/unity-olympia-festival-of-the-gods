@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.AI;
@@ -72,6 +73,17 @@ namespace Azul
                 {
                     Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
                     PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                    UnityEngine.Debug.Log($"Player {this.playerNumber} is discarding the following tiles:");
+                    int totalDiscarded = 0;
+                    foreach (KeyValuePair<TileColor, int> discardNum in discard)
+                    {
+                        UnityEngine.Debug.Log($"- {discardNum.Key}: {discardNum.Value}");
+                        totalDiscarded += discardNum.Value;
+                    }
+                    if (totalDiscarded == 0)
+                    {
+                        throw new OverflowException("Failed to discard any tiles!");
+                    }
                     playerBoardController.DiscardTiles(this.playerNumber, discard);
                     PlayerController playerController = System.Instance.GetPlayerController();
                     playerController.EndPlayerScoringTurn();
