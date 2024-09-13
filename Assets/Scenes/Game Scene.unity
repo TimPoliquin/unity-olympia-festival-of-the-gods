@@ -3913,7 +3913,7 @@ MonoBehaviour:
     rotation: {x: 0.54829323, y: 0, z: 0, w: 0.8362862}
     size: 26.4
   scoreSettings:
-    offset: {x: 20, y: 45, z: 0}
+    offset: {x: 23.5, y: 45, z: 0}
     rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
     size: 28
   previewSettings:
