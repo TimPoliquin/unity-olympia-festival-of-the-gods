@@ -45,6 +45,7 @@ namespace Azul
                 ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
                 PlayerUI playerUI = System.Instance.GetPrefabFactory().CreatePlayerUI();
                 playerUI.transform.SetParent(this.playerUIContainer.transform);
+                playerUI.transform.localScale = Vector3.one;
                 playerUI.SetPlayer(player);
                 playerUI.SetScore(scoreBoardController.GetPlayerScore(player.GetPlayerNumber()));
                 this.playerUIs.Add(playerUI);

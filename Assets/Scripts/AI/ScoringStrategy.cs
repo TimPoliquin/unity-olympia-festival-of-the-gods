@@ -127,6 +127,7 @@ namespace Azul
                 PlayerBoard playerBoard = playerBoardController.GetPlayerBoard(playerNumber);
                 List<TileCount> tileCounts = playerBoard.GetTileCounts();
                 Dictionary<TileColor, int> toDiscard = new();
+                // add all tiles to the discard set
                 foreach (TileCount tileCount in tileCounts)
                 {
                     toDiscard[tileCount.TileColor] = tileCount.Count;
@@ -163,7 +164,7 @@ namespace Azul
                         }
                     }
                 }
-                return new();
+                return toDiscard;
             }
         }
     }
