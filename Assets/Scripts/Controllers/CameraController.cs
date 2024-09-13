@@ -11,11 +11,23 @@ namespace Azul
         public class CameraController : MonoBehaviour
         {
             [SerializeField] private Camera mainCamera;
+            [SerializeField] private Camera playerBoardCamera;
             [SerializeField] private CameraSettings acquireSettings;
             [SerializeField] private CameraSettings scoreSettings;
+            [SerializeField] private CameraSettings previewSettings;
 
             private UnityEvent onFocusOnTable = new();
             private UnityEvent onFocusOnPlayerBoard = new();
+
+            public Camera GetMainCamera()
+            {
+                return this.mainCamera;
+            }
+
+            public Camera GetPreviewCamera()
+            {
+                return this.playerBoardCamera;
+            }
 
             public void SetupGame()
             {
@@ -34,31 +46,49 @@ namespace Azul
                 UnityEngine.Debug.Log($"Player: {payload.PlayerNumber} / Phase: {payload.Phase}");
                 if (payload.Phase == Phase.SCORE)
                 {
-                    this.FocusOnPlayerBoard(payload.PlayerNumber);
+                    this.FocusOnPlayerBoard(this.mainCamera, this.scoreSettings, payload.PlayerNumber);
+                    this.playerBoardCamera.gameObject.SetActive(false);
                 }
                 else
                 {
-                    this.FocusOnTable(payload.PlayerNumber);
+                    this.playerBoardCamera.gameObject.SetActive(true);
+                    this.FocusOnTable(this.mainCamera);
+                    this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, payload.PlayerNumber);
                 }
             }
 
-            private void FocusOnPlayerBoard(int playerNumber)
+            public void FocusMainCameraOnPlayerBoard(int playerNumber)
+            {
+                this.FocusOnPlayerBoard(this.mainCamera, this.scoreSettings, playerNumber);
+            }
+
+            public void FocusPreviewCameraOnPlayerBoard(int playerNumber)
+            {
+                this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, playerNumber);
+            }
+
+            public void FocusMainCameraOnTable()
+            {
+                this.FocusOnTable(this.mainCamera);
+            }
+
+            private void FocusOnPlayerBoard(Camera camera, CameraSettings cameraSettings, int playerNumber)
             {
                 PlayerController playerController = System.Instance.GetPlayerController();
                 int numPlayers = playerController.GetNumberOfPlayers();
                 float perPlayerRotation = 360.0f / (float)numPlayers;
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
-                this.mainCamera.transform.rotation = Quaternion.Euler(90.0f, perPlayerRotation * playerNumber, 0);
-                this.mainCamera.transform.position = new Vector3(playerBoard.transform.position.x, this.mainCamera.transform.position.y, playerBoard.transform.position.z);
-                this.mainCamera.transform.position += this.mainCamera.transform.right * 20.0f;
-                this.mainCamera.orthographicSize = scoreSettings.GetSize();
+                camera.transform.rotation = Quaternion.Euler(90.0f, perPlayerRotation * playerNumber, 0);
+                camera.transform.position = new Vector3(playerBoard.transform.position.x, camera.transform.position.y, playerBoard.transform.position.z);
+                camera.transform.position += camera.transform.right * cameraSettings.GetOffset().x;
+                camera.orthographicSize = cameraSettings.GetSize();
                 this.onFocusOnPlayerBoard.Invoke();
             }
 
-            private void FocusOnTable(int playerNumber)
+            private void FocusOnTable(Camera camera)
             {
-                this.mainCamera.transform.SetPositionAndRotation(acquireSettings.GetOffset(), acquireSettings.GetRotation());
-                this.mainCamera.orthographicSize = acquireSettings.GetSize();
+                camera.transform.SetPositionAndRotation(acquireSettings.GetOffset(), acquireSettings.GetRotation());
+                camera.orthographicSize = acquireSettings.GetSize();
                 this.onFocusOnTable.Invoke();
                 // should we rotate the camera?
             }
@@ -75,7 +105,7 @@ namespace Azul
 
             public bool IsInView(GameObject gameObject)
             {
-                Vector3 position = Camera.main.WorldToViewportPoint(gameObject.transform.position);
+                Vector3 position = this.mainCamera.WorldToViewportPoint(gameObject.transform.position);
                 return position.x >= 0 & position.x <= 1 && position.y >= 0 && position.y <= 1 && position.z > 0;
             }
 
