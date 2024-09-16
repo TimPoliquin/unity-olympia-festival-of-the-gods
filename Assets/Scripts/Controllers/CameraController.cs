@@ -81,6 +81,7 @@ namespace Azul
                 camera.transform.rotation = Quaternion.Euler(90.0f, perPlayerRotation * playerNumber, 0);
                 camera.transform.position = new Vector3(playerBoard.transform.position.x, camera.transform.position.y, playerBoard.transform.position.z);
                 camera.transform.position += camera.transform.right * cameraSettings.GetOffset().x;
+                camera.transform.position += camera.transform.up * cameraSettings.GetOffset().z;
                 camera.orthographicSize = cameraSettings.GetSize();
                 this.onFocusOnPlayerBoard.Invoke();
             }
