@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65070a617a8324d92a4a91a5eb1e607e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factoryPrefab: {fileID: 3137074464948484334, guid: 6d9feae17de9f4cf981c2c27be5274a2,
+  factoryPrefab: {fileID: 3137074464948484334, guid: 2e678a77d3e62400e8c00a7f9a20bbc9,
     type: 3}
 --- !u!1 &330585543
 GameObject:
@@ -4138,9 +4138,9 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   playerBoardCamera: {fileID: 776933124}
   acquireSettings:
-    offset: {x: 12, y: 45, z: -16.9}
+    offset: {x: 21.5, y: 45, z: -10.5}
     rotation: {x: 0.54829323, y: 0, z: 0, w: 0.8362862}
-    size: 27.4
+    size: 34
   scoreSettings:
     offset: {x: 23.5, y: 45, z: 2.25}
     rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}

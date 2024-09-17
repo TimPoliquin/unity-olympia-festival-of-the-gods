@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f179ae791929e4fdfb3da55bf7a74191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 22
+  radius: 25
   rotate: 0
   rotateAfterLayout: 0
 --- !u!1 &620407776254951268
