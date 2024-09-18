@@ -26,6 +26,7 @@ namespace Azul
         {
             [SerializeField] private GameObject ivyMesh;
             [SerializeField] private List<GameObject> tileHolder;
+            [SerializeField] private Light pointLight;
             private List<Tile> tiles = new List<Tile>();
 
             private UnityEvent<OnFactoryAddTilesPayload> onAddTiles = new();
@@ -50,6 +51,7 @@ namespace Azul
                     tiles[idx].transform.SetParent(this.tileHolder[idx].transform);
                     tiles[idx].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 }
+                this.pointLight.enabled = true;
                 this.onAddTiles.Invoke(new OnFactoryAddTilesPayload { Tiles = this.tiles });
             }
 
@@ -76,6 +78,7 @@ namespace Azul
                     }
                     tile.transform.SetParent(null);
                 }
+                this.pointLight.enabled = false;
                 this.tiles.Clear();
                 this.onTileDraw.Invoke(payload);
             }
