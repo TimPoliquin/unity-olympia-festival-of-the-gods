@@ -85,7 +85,7 @@ namespace Azul
 
             public void MoveOneTileToCenter(Tile oneTile)
             {
-                this.table.AddToCenter(oneTile);
+                this.table.AddToCenter(oneTile, true);
                 this.onTilesAdded.Invoke(new OnTableTilesAddedPayload { Tiles = new() { oneTile } });
             }
 

@@ -26,9 +26,11 @@ namespace Azul
         public class Table : MonoBehaviour
         {
             [SerializeField] private GameObject playerBoards;
-            [SerializeField] private CircularLayout factoriesLayout;
+            [SerializeField] private LinearLayout factoriesLayout;
             [SerializeField] private GameObject scoreBoard;
             [SerializeField] private GameObject center;
+            [SerializeField] private float centerRadius = 10.0f;
+            [SerializeField] private float dropHeight = 5.0f;
             private List<Factory> factories = new();
             private List<Tile> tiles = new();
             private UnityEvent<OnTableAddTilesPayload> onAddTiles = new();
@@ -52,7 +54,7 @@ namespace Azul
                 scoreBoard.transform.localPosition = Vector3.zero;
             }
 
-            public void AddToCenter(Tile tile)
+            public void AddToCenter(Tile tile, bool deadCenter)
             {
                 if (this.tiles.Contains(tile))
                 {
@@ -62,7 +64,14 @@ namespace Azul
                 tile.transform.SetParent(this.center.transform);
                 // TODO - some kind of animation is probably warranted here.
                 // for now, we'll just drop it?
-                tile.transform.localPosition = VectorUtils.CreateRandomVector3(10, 5);
+                if (deadCenter)
+                {
+                    tile.transform.localPosition = Vector3.zero + Vector3.up * this.dropHeight;
+                }
+                else
+                {
+                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(this.centerRadius, this.dropHeight);
+                }
                 this.tiles.Add(tile);
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = new() { tile } });
             }
