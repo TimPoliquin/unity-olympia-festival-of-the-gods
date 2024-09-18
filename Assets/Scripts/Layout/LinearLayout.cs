@@ -18,7 +18,8 @@ namespace Azul
             public enum Direction
             {
                 POSITIVE,
-                NEGATIVE
+                NEGATIVE,
+                CENTER
             }
             [SerializeField] private Axis axis = Axis.X;
             [SerializeField] private Direction direction = Direction.POSITIVE;
@@ -69,20 +70,36 @@ namespace Azul
                     default:
                         throw new ArgumentOutOfRangeException(nameof(this.direction), $"Unexpected layout direction: {this.direction}");
                 }
-                if (direction == Direction.NEGATIVE)
+                switch (this.direction)
                 {
-                    layoutDirection *= -1;
+                    case Direction.NEGATIVE:
+                        this.PlaceChildren(children, layoutDirection * this.spacing * -1, Vector3.zero);
+                        break;
+                    case Direction.POSITIVE:
+                        this.PlaceChildren(children, layoutDirection * this.spacing, Vector3.zero);
+                        break;
+                    case Direction.CENTER:
+                        this.PlaceChildren(children, layoutDirection * spacing, (layoutDirection * this.spacing * ((float)children.Count)) / 2.0f);
+                        break;
                 }
-                layoutDirection *= this.spacing;
+            }
+
+            private void PlaceChildren(List<GameObject> children, Vector3 layoutDirection, Vector3 offset)
+            {
                 for (int idx = 0; idx < children.Count; idx++)
                 {
                     GameObject child = children[idx];
-                    child.transform.SetParent(this.transform);
-                    child.transform.localPosition = layoutDirection * idx;
-                    if (this.normalizeRotation)
-                    {
-                        child.transform.localEulerAngles = Vector3.zero;
-                    }
+                    this.PlaceChild(child, layoutDirection * idx, offset);
+                }
+            }
+
+            private void PlaceChild(GameObject child, Vector3 position, Vector3 offset)
+            {
+                child.transform.SetParent(this.transform);
+                child.transform.localPosition = position - offset;
+                if (this.normalizeRotation)
+                {
+                    child.transform.localEulerAngles = Vector3.zero;
                 }
             }
         }

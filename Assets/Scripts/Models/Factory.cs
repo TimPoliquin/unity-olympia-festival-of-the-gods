@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Controller.TableUtilities;
+using Azul.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,11 +24,17 @@ namespace Azul
         }
         public class Factory : MonoBehaviour
         {
+            [SerializeField] private GameObject ivyMesh;
             [SerializeField] private List<GameObject> tileHolder;
             private List<Tile> tiles = new List<Tile>();
 
             private UnityEvent<OnFactoryAddTilesPayload> onAddTiles = new();
             private UnityEvent<OnFactoryDrawTilesPayload> onTileDraw = new();
+
+            void Start()
+            {
+                this.ivyMesh.transform.Rotate(Vector3.forward * UnityEngine.Random.Range(135f, 225f));
+            }
 
 
             public void Fill(List<Tile> tiles)

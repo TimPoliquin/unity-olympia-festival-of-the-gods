@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65070a617a8324d92a4a91a5eb1e607e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factoryPrefab: {fileID: 3137074464948484334, guid: 6d9feae17de9f4cf981c2c27be5274a2,
+  factoryPrefab: {fileID: 3137074464948484334, guid: 2e678a77d3e62400e8c00a7f9a20bbc9,
     type: 3}
 --- !u!1 &330585543
 GameObject:
@@ -636,7 +636,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -645,7 +645,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.839
+    m_Strength: 0.2
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.1
@@ -694,13 +694,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.49572244, y: 0.113038965, z: -0.06526308, w: 0.8586165}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 15, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4138,9 +4138,9 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   playerBoardCamera: {fileID: 776933124}
   acquireSettings:
-    offset: {x: 12, y: 45, z: -16.9}
+    offset: {x: 1.5, y: 45, z: -10.5}
     rotation: {x: 0.54829323, y: 0, z: 0, w: 0.8362862}
-    size: 27.4
+    size: 38
   scoreSettings:
     offset: {x: 23.5, y: 45, z: 2.25}
     rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
