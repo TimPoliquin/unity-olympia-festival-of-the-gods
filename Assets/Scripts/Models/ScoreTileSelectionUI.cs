@@ -21,6 +21,8 @@ namespace Azul
     {
         public class ScoreTileSelectionUI : MonoBehaviour
         {
+            [SerializeField] private Image iconContainer;
+            [SerializeField] private Image icon;
             [SerializeField] private Slider counter;
             [SerializeField] private Button subtractButton;
             [SerializeField] private Button addButton;
@@ -30,9 +32,6 @@ namespace Azul
 
             private TileColor color;
             private UnityEvent<OnSelectionCountChangePayload> onValueChange = new();
-
-
-            [SerializeField] private GameObject anchor;
 
             void Awake()
             {
@@ -46,17 +45,19 @@ namespace Azul
                 return this.color;
             }
 
-            public void SetColor(TileColor color)
+            public void SetColor(TileColor color, Sprite icon, Color backgroundColor)
             {
                 this.color = color;
+                this.icon.sprite = icon;
+                this.iconContainer.color = backgroundColor;
             }
 
-            public void SetCounterRange(int min = 0, int max = 6)
+            public void SetCounterRange(int min, int max, int total)
             {
                 this.counter.minValue = min;
                 this.counter.maxValue = max;
                 this.minText.text = $"{min}";
-                this.maxText.text = $"{max}";
+                this.maxText.text = $"{total}";
             }
 
             public void SetDefaultValue(int value)
@@ -68,12 +69,6 @@ namespace Azul
             public int GetSelectedCount()
             {
                 return (int)this.counter.value;
-            }
-
-            public void SetAnchor(GameObject anchor)
-            {
-                this.anchor = anchor;
-                this.transform.position = Camera.main.WorldToScreenPoint(anchor.transform.position) + Vector3.right * 80;
             }
 
             public void AddOnSelectionCountChangeListener(UnityAction<OnSelectionCountChangePayload> listener)

@@ -17,14 +17,7 @@ namespace Azul
     {
         public class ScoreTileSelectionUIController : MonoBehaviour
         {
-
-            [SerializeField] private GameObject scoreTileSelectionUIPrefab;
-            [SerializeField] private GameObject scoreTileSelectionUIContainer;
-            [SerializeField] private Button confirmButton;
-            [SerializeField] private Button cancelButton;
-            [SerializeField] private Button endTurnButton;
-            [SerializeField] private WildColorSelectionUI wildColorSelectionUI;
-            private List<ScoreTileSelectionUI> scoreTileSelectionUIs = new();
+            [SerializeField] private EndTurnPanelUI endTurnPanelUI;
             private bool isCurrentPlayerHuman = false;
 
             private int countNeeded = 0;
@@ -33,9 +26,8 @@ namespace Azul
 
             void Awake()
             {
-                this.cancelButton.onClick.AddListener(this.OnCancelSelection);
-                this.confirmButton.onClick.AddListener(this.OnConfirmSelection);
-                this.endTurnButton.onClick.AddListener(this.OnEndTurn);
+                this.endTurnPanelUI.AddOnEndTurnListener(this.OnEndTurn);
+                this.endTurnPanelUI.Hide();
             }
 
             public void InitializeListeners()
@@ -59,17 +51,17 @@ namespace Azul
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
             }
             private void OnRoundPhaseScore(OnRoundPhaseScorePayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
             }
             private void OnRoundPhasePrepare(OnRoundPhasePreparePayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
             }
 
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
@@ -77,7 +69,10 @@ namespace Azul
                 if (payload.Phase == Phase.SCORE)
                 {
                     this.isCurrentPlayerHuman = payload.Player.IsHuman();
-                    this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
+                    if (this.isCurrentPlayerHuman)
+                    {
+                        this.endTurnPanelUI.Show();
+                    }
                 }
             }
 
@@ -108,9 +103,11 @@ namespace Azul
                             }
                         }
                     });
-                    this.wildColorSelectionUI.Activate(payload.Space.gameObject, availableColors, true);
-                    this.wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
+                    WildColorSelectionUI wildColorSelectionUI = System.Instance.GetPrefabFactory().CreateWildColorSelectionUI();
+                    wildColorSelectionUI.Activate(availableColors, true, true);
+                    wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
                     {
+                        Destroy(wildColorSelectionUI.gameObject);
                         this.CreateScoreTileSelectionUIs(
                             playerBoard: payload.PlayerBoard,
                             selectedColor: colorSelectedPayload.Color,
@@ -126,7 +123,6 @@ namespace Azul
             {
                 if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
-
                     this.CreateScoreTileSelectionUIs(
                         playerBoard: payload.PlayerBoard,
                         selectedColor: payload.Color,
@@ -138,7 +134,11 @@ namespace Azul
 
             private void CreateScoreTileSelectionUIs(PlayerBoard playerBoard, TileColor selectedColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm)
             {
-                this.CleanupScoreSelectionUIElements();
+                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
+                ScoreTileSelectionPanelUI panel = System.Instance.GetPrefabFactory().CreateScoreTileSelectionPanelUI();
+                panel.AddOnCancelListener(this.OnCancelSelection);
+                panel.AddOnConfirmListener(this.OnConfirmSelection);
+                panel.Show(value, iconUIFactory.GetIcon(selectedColor), iconUIFactory.GetBackgroundColor(selectedColor));
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                 this.selectedColor = selectedColor;
                 this.countNeeded = value;
@@ -155,6 +155,7 @@ namespace Azul
                     min = Math.Max(1, Math.Min(value - numWild, value));
                 }
                 this.CreateScoreTileSelectionUI(
+                    panel,
                     playerBoard,
                     selectedColor,
                     min,
@@ -163,54 +164,42 @@ namespace Azul
                 );
                 if (wildColor != selectedColor && value > 1 && numWild > 0)
                 {
-                    this.CreateScoreTileSelectionUI(playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
+                    this.CreateScoreTileSelectionUI(panel, playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
                 }
                 this.onConfirm = onConfirm;
-                this.confirmButton.gameObject.SetActive(this.isCurrentPlayerHuman);
-                this.cancelButton.gameObject.SetActive(this.isCurrentPlayerHuman);
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
             }
 
-            private void CreateScoreTileSelectionUI(PlayerBoard playerBoard, TileColor color, int min, int max, int defaultValue)
+            private void CreateScoreTileSelectionUI(ScoreTileSelectionPanelUI panel, PlayerBoard playerBoard, TileColor color, int min, int max, int defaultValue)
             {
-                ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.scoreTileSelectionUIContainer.transform).GetComponent<ScoreTileSelectionUI>();
-                scoreTileSelectionUI.SetAnchor(playerBoard.GetDrawnTilesContainer(color));
-                scoreTileSelectionUI.SetColor(color);
-                scoreTileSelectionUI.SetCounterRange(min, max);
+                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
+                ScoreTileSelectionUI scoreTileSelectionUI = System.Instance.GetPrefabFactory().CreateScoreTileSelectionUI(panel);
+                scoreTileSelectionUI.SetColor(color, iconUIFactory.GetIcon(color), iconUIFactory.GetBackgroundColor(color));
+                scoreTileSelectionUI.SetCounterRange(min, max, playerBoard.GetTileCount(color));
                 scoreTileSelectionUI.SetDefaultValue(defaultValue);
                 scoreTileSelectionUI.gameObject.name = $"Score Selection: {color}";
-                scoreTileSelectionUI.AddOnSelectionCountChangeListener(this.OnSelectionCountChange);
-                this.scoreTileSelectionUIs.Add(scoreTileSelectionUI);
             }
 
             private void CleanupScoreSelectionUIElements()
             {
-                foreach (ScoreTileSelectionUI ui in this.scoreTileSelectionUIs)
-                {
-                    Destroy(ui.gameObject);
-                }
-                this.scoreTileSelectionUIs.Clear();
-                this.cancelButton.gameObject.SetActive(false);
-                this.confirmButton.gameObject.SetActive(false);
                 this.countNeeded = 0;
                 this.selectedColor = TileColor.ONE;
             }
 
-            private void OnCancelSelection()
+            private void OnCancelSelection(OnScoreTileSelectionCancelPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
+                payload.Panel.Hide();
+                if (this.isCurrentPlayerHuman)
+                {
+                    this.endTurnPanelUI.Show();
+                }
             }
 
-            private void OnConfirmSelection()
+            private void OnConfirmSelection(OnScoreTileSelectionConfirmPayload payload)
             {
-                int countSelected = 0;
-                Dictionary<TileColor, int> selectedTiles = new();
-                foreach (ScoreTileSelectionUI ui in this.scoreTileSelectionUIs)
-                {
-                    selectedTiles[ui.GetColor()] = ui.GetSelectedCount();
-                    countSelected += ui.GetSelectedCount();
-                }
+                Dictionary<TileColor, int> selectedTiles = payload.SelectedCounts;
+                int countSelected = selectedTiles.Values.Aggregate((total, current) => total + current);
                 if (countSelected == this.countNeeded)
                 {
                     this.onConfirm.Invoke(new OnPlayerBoardScoreTileSelectionConfirmPayload
@@ -224,23 +213,16 @@ namespace Azul
                     throw new ArgumentOutOfRangeException(nameof(this.countNeeded), "Wrong number of tiles selected!");
                 }
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
-            }
-
-            private void OnSelectionCountChange(OnSelectionCountChangePayload payload)
-            {
-                foreach (ScoreTileSelectionUI ui in this.scoreTileSelectionUIs)
+                payload.Panel.Hide();
+                if (this.isCurrentPlayerHuman)
                 {
-                    if (payload.Color != ui.GetColor())
-                    {
-                        ui.SetDefaultValue(this.countNeeded - payload.Count);
-                    }
+                    this.endTurnPanelUI.Show();
                 }
             }
 
             private void OnEndTurn()
             {
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.EndPlayerScoringTurn();
             }
@@ -248,19 +230,25 @@ namespace Azul
             private void OnOverflowSelectionCancel()
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
+                if (this.isCurrentPlayerHuman)
+                {
+                    this.endTurnPanelUI.Show();
+                }
             }
 
             private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(false);
+                this.endTurnPanelUI.Hide();
             }
 
             private void OnGrantReward(OnGrantRewardPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnButton.gameObject.SetActive(this.isCurrentPlayerHuman);
+                if (this.isCurrentPlayerHuman)
+                {
+                    this.endTurnPanelUI.Show();
+                }
             }
 
         }

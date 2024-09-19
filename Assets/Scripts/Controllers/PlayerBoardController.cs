@@ -195,28 +195,31 @@ namespace Azul
                 Dictionary<TileColor, int> tileColorCounts = new();
                 PlayerBoard board = this.playerBoards[playerNumber];
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+                board.DisableAllHighlights();
+                board.ClearTileEventListeners();
                 foreach (TileColor tileColor in TileColorUtils.GetTileColors())
                 {
                     tileColorCounts[tileColor] = board.GetTileCount(tileColor);
                 }
                 List<TileColor> wildStarUsedColors = board.GetWildTileColors();
+                List<AltarSpace> spaces = new();
                 foreach (KeyValuePair<TileColor, int> kvp in tileColorCounts)
                 {
                     if (kvp.Value > 0)
                     {
                         int usableCount = kvp.Value + (kvp.Key == wildColor ? 0 : tileColorCounts[wildColor]);
-                        List<AltarSpace> spaces = board.GetOpenSpaces(kvp.Key).FindAll(space => usableCount >= space.GetValue());
+                        spaces.AddRange(board.GetOpenSpaces(kvp.Key).FindAll(space => usableCount >= space.GetValue()));
                         if (!wildStarUsedColors.Contains(kvp.Key))
                         {
                             spaces.AddRange(board.GetWildOpenSpaces().FindAll(wildSpace => usableCount >= wildSpace.GetValue()));
                         }
-                        spaces.Distinct().ToList().ForEach(space =>
-                        {
-                            space.ActivateHighlight();
-                            space.AddOnStarSpaceSelectListener(this.OnPointerSelectSpace);
-                        });
                     }
                 }
+                spaces.Distinct().ToList().ForEach(space =>
+                {
+                    space.ActivateHighlight();
+                    space.AddOnStarSpaceSelectListener(this.OnPointerSelectSpace);
+                });
             }
 
             private void OnPointerSelectSpace(OnStarSpaceSelectPayload payload)
@@ -314,8 +317,6 @@ namespace Azul
                 }
                 space.PlaceTile(spaceColor);
                 System.Instance.GetBagController().Discard(tiles);
-                playerBoard.DisableAllHighlights();
-                playerBoard.ClearTileEventListeners();
                 this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),

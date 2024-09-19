@@ -10,8 +10,12 @@ namespace Azul
     {
         public class PrefabFactory : MonoBehaviour
         {
+            [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
             [SerializeField] private PlayerUI playerUIPrefab;
+            [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
+            [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
+            [SerializeField] private WildColorSelectionUI wildColorSelectionUIPrefab;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
             private AltarFactory altarFactory;
@@ -49,6 +53,23 @@ namespace Azul
                 return Instantiate(this.playerUIPrefab);
             }
 
+            public ScoreTileSelectionPanelUI CreateScoreTileSelectionPanelUI()
+            {
+                return Instantiate(this.scoreTileSelectionPanelUIPrefab, this.canvas.transform);
+            }
+
+            public ScoreTileSelectionUI CreateScoreTileSelectionUI(ScoreTileSelectionPanelUI panel)
+            {
+                ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.canvas.transform);
+                panel.AddScoreTileSelectionUI(scoreTileSelectionUI);
+                return scoreTileSelectionUI;
+
+            }
+
+            public WildColorSelectionUI CreateWildColorSelectionUI(Transform parent = null)
+            {
+                return Instantiate(this.wildColorSelectionUIPrefab, parent ? parent : this.canvas.transform);
+            }
 
         }
     }

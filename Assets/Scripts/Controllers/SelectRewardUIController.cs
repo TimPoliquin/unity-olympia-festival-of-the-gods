@@ -43,7 +43,7 @@ namespace Azul
                 this.playerNumber = playerNumber;
                 this.currentCount = 0;
                 this.totalCount = tileCount;
-                this.selectionUI = Instantiate(this.prefab, this.rewardUI.transform).GetComponent<WildColorSelectionUI>();
+                this.selectionUI = System.Instance.GetPrefabFactory().CreateWildColorSelectionUI(this.rewardUI.transform);
                 this.ActivateUI();
             }
 
@@ -51,7 +51,7 @@ namespace Azul
             {
                 this.selectionUI.SetInstructions(this.GetInstructions());
                 this.selectionUI.AddOnColorSelectionListener(this.OnRewardSelection);
-                this.selectionUI.Activate(this.rewardUI, TileColorUtils.GetTileColors().ToList(), false);
+                this.selectionUI.Activate(TileColorUtils.GetTileColors().ToList(), false, false);
             }
 
             private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)

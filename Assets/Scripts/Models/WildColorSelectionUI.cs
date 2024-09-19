@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Azul.Model;
 using Azul.WildColorSelectionEvents;
 using TMPro;
@@ -27,7 +28,7 @@ namespace Azul
             [SerializeField] private Button purple;
             [SerializeField] private Button orange;
             [SerializeField] private TextMeshProUGUI instructions;
-            [SerializeField] private Vector3 anchorOffset = new Vector3(0, 50, 0);
+            [SerializeField] private Button cancelButton;
             private bool deactivateOnSelection;
 
             private Dictionary<TileColor, Button> buttonsByColor = new();
@@ -35,18 +36,30 @@ namespace Azul
 
             void Awake()
             {
-                this.buttonsByColor.Add(TileColor.RED, this.red);
-                this.buttonsByColor.Add(TileColor.BLUE, this.blue);
-                this.buttonsByColor.Add(TileColor.YELLOW, this.yellow);
-                this.buttonsByColor.Add(TileColor.GREEN, this.green);
-                this.buttonsByColor.Add(TileColor.PURPLE, this.purple);
-                this.buttonsByColor.Add(TileColor.ORANGE, this.orange);
-                foreach (KeyValuePair<TileColor, Button> buttonByColor in this.buttonsByColor)
+                this.cancelButton.onClick.AddListener(() =>
                 {
-                    buttonByColor.Value.onClick.AddListener(() => this.OnButtonPress(buttonByColor.Key));
-                }
+                    Destroy(this.gameObject);
+                });
+                this.Initialize();
                 // should start the game disabled
                 this.Deactivate();
+            }
+
+            void Initialize()
+            {
+                if (this.buttonsByColor.Count == 0)
+                {
+                    this.buttonsByColor.Add(TileColor.RED, this.red);
+                    this.buttonsByColor.Add(TileColor.BLUE, this.blue);
+                    this.buttonsByColor.Add(TileColor.YELLOW, this.yellow);
+                    this.buttonsByColor.Add(TileColor.GREEN, this.green);
+                    this.buttonsByColor.Add(TileColor.PURPLE, this.purple);
+                    this.buttonsByColor.Add(TileColor.ORANGE, this.orange);
+                    foreach (KeyValuePair<TileColor, Button> buttonByColor in this.buttonsByColor)
+                    {
+                        buttonByColor.Value.onClick.AddListener(() => this.OnButtonPress(buttonByColor.Key));
+                    }
+                }
             }
 
             public void OnButtonPress(TileColor color)
@@ -68,11 +81,18 @@ namespace Azul
                 this.gameObject.SetActive(false);
             }
 
-            public void Activate(GameObject anchor, List<TileColor> tileColors, bool deactivateOnSelection)
+            public void Hide()
             {
+                Destroy(this.gameObject);
+            }
+
+            public void Activate(List<TileColor> tileColors, bool deactivateOnSelection, bool allowCancel)
+            {
+                this.Initialize();
                 this.DeactivateAllButtons();
                 this.gameObject.SetActive(true);
                 this.deactivateOnSelection = deactivateOnSelection;
+                this.cancelButton.gameObject.SetActive(allowCancel);
                 foreach (TileColor color in tileColors)
                 {
                     this.buttonsByColor[color].gameObject.SetActive(true);
@@ -88,6 +108,11 @@ namespace Azul
             public void AddOnColorSelectionListener(UnityAction<OnWildColorSelectedPayload> listener)
             {
                 this.onColorSelected.AddListener(listener);
+            }
+
+            public void AddOnCancel(UnityAction onCancel)
+            {
+                this.cancelButton.onClick.AddListener(onCancel);
             }
 
             private void DeactivateAllButtons()

@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 2978454875877238320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 0, z: 18}
+  m_LocalPosition: {x: 34.17, y: 0, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -202,6 +202,7 @@ MonoBehaviour:
   purple: {fileID: 5955532672617973257}
   green: {fileID: 8159924248656528451}
   yellow: {fileID: 8635281806610729832}
+  drawnTiles: []
 --- !u!1 &4076293424659256708
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +580,6 @@ MonoBehaviour:
   outerRing: {fileID: 8932387556811609714}
   center: {fileID: 2187565068416992923}
   drawnTilesContainer: {fileID: 8216614471830517744}
-  activePlayerLight: {fileID: 7361370295857271262}
   rewardController: {fileID: 6609700284065729275}
 --- !u!1 &6304947866937657658
 GameObject:
