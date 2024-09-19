@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968230f71b9344e55b4a56eb1b5f4534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inactiveColor: {r: 1, g: 1, b: 1, a: 0.039215688}
-  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  inactiveColor: {r: 0.43529412, g: 0.14509805, b: 0.03137255, a: 0.50980395}
+  activeColor: {r: 0.7529412, g: 0.34901962, b: 0.09019608, a: 1}
   currentBackground: {fileID: 1713486246917353951}
   currentIcon: {fileID: 5171971277340667111}
   honoringIcons:

@@ -11,6 +11,7 @@ namespace Azul
         {
             private GameEndUIController gameEndUIController;
             private GameStartUIController gameStartUIController;
+            private IconUIFactory iconUIFactory;
             private OverflowTileSelectionUIController overflowTileSelectionUIController;
             private ScoreTileSelectionUIController scoreTileSelectionUIController;
             private SelectRewardUIController selectRewardUIController;
@@ -42,6 +43,15 @@ namespace Azul
                     this.gameStartUIController = this.GetComponentInChildren<GameStartUIController>();
                 }
                 return this.gameStartUIController;
+            }
+
+            public IconUIFactory GetIconUIFactory()
+            {
+                if (null == this.iconUIFactory)
+                {
+                    this.iconUIFactory = this.GetComponentInChildren<IconUIFactory>();
+                }
+                return this.iconUIFactory;
             }
 
             public OverflowTileSelectionUIController GetOverflowTileSelectionUIController()

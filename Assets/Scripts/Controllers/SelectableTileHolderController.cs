@@ -69,6 +69,10 @@ namespace Azul
 
             private void OnTileSelect(OnPointerSelectPayload<Tile> payload)
             {
+                if (null == this.hoveredTiles || this.hoveredTiles.Count == 0)
+                {
+                    this.HoverTiles(payload.Target);
+                }
                 this.SelectHoveredTiles();
             }
 
@@ -95,7 +99,7 @@ namespace Azul
 
             public void SelectHoveredTiles()
             {
-                if (!this.canAcquire || this.hoveredTiles.Count == 0)
+                if (!this.canAcquire || null == this.hoveredTiles || this.hoveredTiles.Count == 0)
                 {
                     return;
                 }

@@ -23,7 +23,10 @@ namespace Azul
     {
         public class OverflowTileSelectionUI : MonoBehaviour
         {
+            [SerializeField] private TextMeshProUGUI tilesSelectedText;
+            [SerializeField] private TextMeshProUGUI tilesNeededText;
             [SerializeField] private TextMeshProUGUI instructions;
+            [SerializeField] private GameObject tileContainer;
             [SerializeField] private Button confirm;
             [SerializeField] private Button cancel;
 
@@ -51,6 +54,7 @@ namespace Azul
             public void SetRequiredSelectionCount(int requiredSelectionCount)
             {
                 this.requiredSelectionCount = requiredSelectionCount;
+                this.tilesNeededText.text = $"{requiredSelectionCount}";
                 this.CheckRequiredSelectionCount();
             }
 
@@ -59,6 +63,7 @@ namespace Azul
                 this.scoreTileSelectionUIs = scoreTileSelectionUIs;
                 foreach (ScoreTileSelectionUI scoreTileSelectionUI in this.scoreTileSelectionUIs)
                 {
+                    scoreTileSelectionUI.transform.SetParent(this.tileContainer.transform);
                     scoreTileSelectionUI.AddOnSelectionCountChangeListener(this.OnSelectionCountChange);
                 }
             }
@@ -83,6 +88,7 @@ namespace Azul
                 {
                     this.DisableButton();
                 }
+                this.tilesSelectedText.text = $"{numSelected}";
             }
 
             private void EnableButton()

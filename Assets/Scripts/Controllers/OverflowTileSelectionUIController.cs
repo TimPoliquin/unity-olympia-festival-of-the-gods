@@ -46,22 +46,22 @@ namespace Azul
                 }
                 this.overflowTileSelectionUI = Instantiate(this.prefab, this.container.transform).GetComponent<OverflowTileSelectionUI>();
                 List<ScoreTileSelectionUI> scoreTileSelectionUIs = new();
+                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
                 foreach (KeyValuePair<TileColor, int> tileCount in tileCounts)
                 {
                     TileColor tileColor = tileCount.Key;
                     int count = tileCount.Value;
                     ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.overflowTileSelectionUI.transform).GetComponent<ScoreTileSelectionUI>();
-                    scoreTileSelectionUI.SetColor(tileColor);
-                    scoreTileSelectionUI.SetAnchor(playerBoard.GetDrawnTilesContainer(tileColor));
+                    scoreTileSelectionUI.SetColor(tileColor, iconUIFactory.GetIcon(tileColor), iconUIFactory.GetBackgroundColor(tileColor));
                     if (roundController.IsLastRound())
                     {
                         // all tiles must be discarded after the last round
-                        scoreTileSelectionUI.SetCounterRange(count, count);
+                        scoreTileSelectionUI.SetCounterRange(count, count, count);
                         scoreTileSelectionUI.SetDefaultValue(count);
                     }
                     else
                     {
-                        scoreTileSelectionUI.SetCounterRange(0, count);
+                        scoreTileSelectionUI.SetCounterRange(0, count, count);
                         scoreTileSelectionUI.SetDefaultValue(0);
                     }
                     scoreTileSelectionUIs.Add(scoreTileSelectionUI);
