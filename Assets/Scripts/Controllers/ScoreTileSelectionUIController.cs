@@ -56,7 +56,6 @@ namespace Azul
             private void OnRoundPhaseScore(OnRoundPhaseScorePayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                this.endTurnPanelUI.Hide();
             }
             private void OnRoundPhasePrepare(OnRoundPhasePreparePayload payload)
             {
@@ -80,6 +79,7 @@ namespace Azul
             {
                 if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
+                    this.endTurnPanelUI.Hide();
                     TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                     int numWild = payload.PlayerBoard.GetTileCount(wildColor);
                     List<TileColor> usedColors = payload.PlayerBoard.GetWildTileColors();
@@ -114,6 +114,15 @@ namespace Azul
                             value: payload.Value,
                             onConfirm: payload.OnConfirm
                         );
+                    });
+                    wildColorSelectionUI.AddOnCancel(() =>
+                    {
+                        this.CleanupScoreSelectionUIElements();
+                        wildColorSelectionUI.Hide();
+                        if (this.isCurrentPlayerHuman)
+                        {
+                            this.endTurnPanelUI.Show();
+                        }
                     });
                 }
             }
@@ -202,6 +211,10 @@ namespace Azul
                 int countSelected = selectedTiles.Values.Aggregate((total, current) => total + current);
                 if (countSelected == this.countNeeded)
                 {
+                    if (this.isCurrentPlayerHuman)
+                    {
+                        this.endTurnPanelUI.Show();
+                    }
                     this.onConfirm.Invoke(new OnPlayerBoardScoreTileSelectionConfirmPayload
                     {
                         TilesSelected = selectedTiles,
@@ -214,10 +227,6 @@ namespace Azul
                 }
                 this.CleanupScoreSelectionUIElements();
                 payload.Panel.Hide();
-                if (this.isCurrentPlayerHuman)
-                {
-                    this.endTurnPanelUI.Show();
-                }
             }
 
             private void OnEndTurn()

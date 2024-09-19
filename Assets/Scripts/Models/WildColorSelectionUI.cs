@@ -36,10 +36,6 @@ namespace Azul
 
             void Awake()
             {
-                this.cancelButton.onClick.AddListener(() =>
-                {
-                    Destroy(this.gameObject);
-                });
                 this.Initialize();
                 // should start the game disabled
                 this.Deactivate();
