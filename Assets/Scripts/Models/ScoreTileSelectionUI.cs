@@ -71,6 +71,21 @@ namespace Azul
                 return (int)this.counter.value;
             }
 
+            public int GetMaxCount()
+            {
+                return (int)this.counter.maxValue;
+            }
+
+            public void DisableAddButton()
+            {
+                this.addButton.interactable = false;
+            }
+
+            public void EnableAddButton()
+            {
+                this.addButton.interactable = this.counter.value < this.counter.maxValue;
+            }
+
             public void AddOnSelectionCountChangeListener(UnityAction<OnSelectionCountChangePayload> listener)
             {
                 this.onValueChange.AddListener(listener);

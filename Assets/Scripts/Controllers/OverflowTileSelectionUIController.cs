@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Controller.TableUtilities;
 using Azul.Model;
 using Azul.OverflowTileSelectionEvents;
 using Azul.PlayerEvents;
@@ -53,30 +54,14 @@ namespace Azul
                     int count = tileCount.Value;
                     ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.overflowTileSelectionUI.transform).GetComponent<ScoreTileSelectionUI>();
                     scoreTileSelectionUI.SetColor(tileColor, iconUIFactory.GetIcon(tileColor), iconUIFactory.GetBackgroundColor(tileColor));
-                    if (roundController.IsLastRound())
-                    {
-                        // all tiles must be discarded after the last round
-                        scoreTileSelectionUI.SetCounterRange(count, count, count);
-                        scoreTileSelectionUI.SetDefaultValue(count);
-                    }
-                    else
-                    {
-                        scoreTileSelectionUI.SetCounterRange(0, count, count);
-                        scoreTileSelectionUI.SetDefaultValue(0);
-                    }
+                    scoreTileSelectionUI.SetCounterRange(0, count, count);
+                    scoreTileSelectionUI.SetDefaultValue(0);
                     scoreTileSelectionUIs.Add(scoreTileSelectionUI);
                 }
                 this.overflowTileSelectionUI.SetScoreTileSelectionUIs(scoreTileSelectionUIs);
-                if (roundController.IsLastRound())
-                {
-                    this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount());
-                }
-                else
-                {
-                    this.overflowTileSelectionUI.SetRequiredSelectionCount(playerBoard.GetTileCount() - playerBoardController.GetAllowedOverflow());
-                }
+                this.overflowTileSelectionUI.SetMaxSelectionCount(playerBoardController.GetAllowedOverflow());
                 this.overflowTileSelectionUI.SetPlayerNumber(payload.PlayerNumber);
-                this.overflowTileSelectionUI.AddOnConfirmListener(this.OnOverflowDiscardSelection);
+                this.overflowTileSelectionUI.AddOnConfirmListener(this.OnOverflowKeepSelection);
                 this.overflowTileSelectionUI.AddOnCancelListener(this.OnCancel);
             }
 
@@ -87,10 +72,23 @@ namespace Azul
                 this.onCancel.Invoke();
             }
 
-            private void OnOverflowDiscardSelection(OnOverflowTileSelectionConfirmPayload payload)
+            private void OnOverflowKeepSelection(OnOverflowTileSelectionConfirmPayload payload)
             {
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.DiscardTiles(payload.PlayerNumber, payload.TileSelections);
+                PlayerBoard playerBoard = playerBoardController.GetPlayerBoard(payload.PlayerNumber);
+                Dictionary<TileColor, int> tilesToDiscard = new();
+                foreach (TileCount tileCount in playerBoard.GetTileCounts())
+                {
+                    if (payload.TileSelections.ContainsKey(tileCount.TileColor))
+                    {
+                        tilesToDiscard[tileCount.TileColor] = tileCount.Count - payload.TileSelections[tileCount.TileColor];
+                    }
+                    else
+                    {
+                        tilesToDiscard[tileCount.TileColor] = tileCount.Count;
+                    }
+                }
+                playerBoardController.DiscardTiles(payload.PlayerNumber, tilesToDiscard);
                 Destroy(this.overflowTileSelectionUI.gameObject);
                 this.overflowTileSelectionUI = null;
                 PlayerController playerController = System.Instance.GetPlayerController();

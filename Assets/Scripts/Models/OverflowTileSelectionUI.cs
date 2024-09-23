@@ -25,14 +25,14 @@ namespace Azul
         {
             [SerializeField] private TextMeshProUGUI tilesSelectedText;
             [SerializeField] private TextMeshProUGUI tilesNeededText;
-            [SerializeField] private TextMeshProUGUI instructions;
+            [SerializeField] private TextMeshProUGUI pointsLostText;
             [SerializeField] private GameObject tileContainer;
             [SerializeField] private Button confirm;
             [SerializeField] private Button cancel;
 
             private int playerNumber;
 
-            private int requiredSelectionCount;
+            private int maxSelectionCount;
 
             private List<ScoreTileSelectionUI> scoreTileSelectionUIs;
 
@@ -43,7 +43,6 @@ namespace Azul
             {
                 this.confirm.onClick.AddListener(this.OnConfirm);
                 this.cancel.onClick.AddListener(this.OnCancel);
-                this.DisableButton();
             }
 
             public void SetPlayerNumber(int playerNumber)
@@ -51,11 +50,11 @@ namespace Azul
                 this.playerNumber = playerNumber;
             }
 
-            public void SetRequiredSelectionCount(int requiredSelectionCount)
+            public void SetMaxSelectionCount(int requiredSelectionCount)
             {
-                this.requiredSelectionCount = requiredSelectionCount;
+                this.maxSelectionCount = requiredSelectionCount;
                 this.tilesNeededText.text = $"{requiredSelectionCount}";
-                this.CheckRequiredSelectionCount();
+                this.CheckSelectionCount();
             }
 
             public void SetScoreTileSelectionUIs(List<ScoreTileSelectionUI> scoreTileSelectionUIs)
@@ -70,35 +69,44 @@ namespace Azul
 
             private void OnSelectionCountChange(OnSelectionCountChangePayload payload)
             {
-                this.CheckRequiredSelectionCount();
+                this.CheckSelectionCount();
             }
 
-            private void CheckRequiredSelectionCount()
+            private void CheckSelectionCount()
             {
                 int numSelected = 0;
+                int numNotSelected = 0;
                 foreach (ScoreTileSelectionUI scoreTileSelectionUI in this.scoreTileSelectionUIs)
                 {
                     numSelected += scoreTileSelectionUI.GetSelectedCount();
+                    numNotSelected += (scoreTileSelectionUI.GetMaxCount() - scoreTileSelectionUI.GetSelectedCount());
                 }
-                if (numSelected >= this.requiredSelectionCount)
+                if (numSelected >= this.maxSelectionCount)
                 {
-                    this.EnableButton();
+                    this.DisableAddButtons();
                 }
                 else
                 {
-                    this.DisableButton();
+                    this.EnableAddButtons();
                 }
                 this.tilesSelectedText.text = $"{numSelected}";
+                this.pointsLostText.text = $"{numNotSelected}";
             }
 
-            private void EnableButton()
+            private void EnableAddButtons()
             {
-                this.confirm.interactable = true;
+                foreach (ScoreTileSelectionUI scoreTileSelectionUI in this.scoreTileSelectionUIs)
+                {
+                    scoreTileSelectionUI.EnableAddButton();
+                }
             }
 
-            private void DisableButton()
+            private void DisableAddButtons()
             {
-                this.confirm.interactable = false;
+                foreach (ScoreTileSelectionUI scoreTileSelectionUI in this.scoreTileSelectionUIs)
+                {
+                    scoreTileSelectionUI.DisableAddButton();
+                }
             }
 
             private void OnConfirm()
