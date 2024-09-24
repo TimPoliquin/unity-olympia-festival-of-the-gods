@@ -12,6 +12,7 @@ namespace Azul
         {
             [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
+            [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
@@ -48,6 +49,11 @@ namespace Azul
                 return this.altarFactory.CreateAltar(tileColor, rotation);
             }
 
+            public GrantRewardTilesUI CreateGrantRewardTilesUI()
+            {
+                return Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
+            }
+
             public PlayerUI CreatePlayerUI()
             {
                 return Instantiate(this.playerUIPrefab);
@@ -58,7 +64,7 @@ namespace Azul
                 return Instantiate(this.scoreTileSelectionPanelUIPrefab, this.canvas.transform);
             }
 
-            public ScoreTileSelectionUI CreateScoreTileSelectionUI(ScoreTileSelectionPanelUI panel)
+            public ScoreTileSelectionUI CreateScoreTileSelectionUI(ScoreTileSelectionUIContainer panel)
             {
                 ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.canvas.transform);
                 panel.AddScoreTileSelectionUI(scoreTileSelectionUI);

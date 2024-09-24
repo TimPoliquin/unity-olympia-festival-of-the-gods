@@ -25,7 +25,7 @@ namespace Azul
     }
     namespace Model
     {
-        public class ScoreTileSelectionPanelUI : MonoBehaviour
+        public class ScoreTileSelectionPanelUI : MonoBehaviour, ScoreTileSelectionUIContainer
         {
             [SerializeField] private PanelUI panel;
             [SerializeField] private Image backgroundColorContainer;
