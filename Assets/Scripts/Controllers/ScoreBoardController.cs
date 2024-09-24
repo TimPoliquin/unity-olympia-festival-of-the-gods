@@ -21,50 +21,24 @@ namespace Azul
     {
         public class ScoreBoardController : MonoBehaviour
         {
-            [SerializeField] private Vector3 position = new Vector3(100, 1, -55);
-            [SerializeField] private GameObject scoreBoardPrefab;
-            [SerializeField] private GameObject roundCounterPrefab;
             [SerializeField] private List<StarCompletedMilestone> starCompletedMilestones;
             [SerializeField] private List<NumberCompletedMilestone> numberCompletedMilestones;
             private UnityEvent<OnScoreBoardUpdatePayload> onScoreChange = new();
 
             private Dictionary<int, int> playerScores = new();
 
-            private ScoreBoard scoreBoard;
-
 
             public void SetupGame(int numPlayers)
             {
-                this.CreateScoreBoard();
-                this.PlaceRoundCounter();
                 this.InitializeScores(numPlayers);
             }
 
             public void InitializeListeners()
             {
-                RoundController roundController = System.Instance.GetRoundController();
-                roundController.AddOnRoundPhaseAcquireListener(this.OnRoundStart);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerAcquiresOneTileListener(this.OnPlayerAcquireOneTile);
                 playerBoardController.AddOnPlaceStarTileListener(this.OnPlayerPlaceTile);
                 playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerDiscardTiles);
-            }
-
-            private void CreateScoreBoard()
-            {
-                this.scoreBoard = Instantiate(this.scoreBoardPrefab, this.position, Quaternion.identity).GetComponent<ScoreBoard>();
-                this.scoreBoard.transform.position = this.position;
-            }
-
-            private void PlaceRoundCounter()
-            {
-                GameObject roundCounter = Instantiate(this.roundCounterPrefab);
-                this.scoreBoard.PlaceCounter(roundCounter);
-            }
-
-            public ScoreBoard GetScoreBoard()
-            {
-                return this.scoreBoard;
             }
 
             public int GetPlayerScore(int playerNumber)
@@ -92,11 +66,6 @@ namespace Azul
             private void OnPlayerDiscardTiles(OnPlayerBoardTilesDiscardedPayload payload)
             {
                 this.DeductPoints(payload.PlayerNumber, payload.NumberOfTilesDiscarded);
-            }
-
-            private void OnRoundStart(OnRoundPhaseAcquirePayload payload)
-            {
-                this.scoreBoard.StartRound(payload.RoundNumber);
             }
 
             private void InitializeScores(int numPlayers)

@@ -78,11 +78,6 @@ namespace Azul
                 this.table.AddFactories(factories);
             }
 
-            public void AddScoreBoard(ScoreBoard scoreBoard)
-            {
-                this.table.AddScoreBoard(scoreBoard);
-            }
-
             public void MoveOneTileToCenter(Tile oneTile)
             {
                 this.table.AddToCenter(oneTile, true);

@@ -48,12 +48,6 @@ namespace Azul
                 this.factoriesLayout.AddChildren(factories.Select(factory => factory.gameObject).ToList());
             }
 
-            public void AddScoreBoard(ScoreBoard scoreBoard)
-            {
-                scoreBoard.transform.SetParent(this.scoreBoard.transform);
-                scoreBoard.transform.localPosition = Vector3.zero;
-            }
-
             public void AddToCenter(Tile tile, bool deadCenter)
             {
                 if (this.tiles.Contains(tile))

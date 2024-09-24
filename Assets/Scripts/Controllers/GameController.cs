@@ -62,7 +62,6 @@ namespace Azul
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
                 tableController.AddFactories(factoryController.GetFactories());
-                tableController.AddScoreBoard(scoreBoardController.GetScoreBoard());
                 // Start the first round!   
                 roundController.StartRound();
             }
