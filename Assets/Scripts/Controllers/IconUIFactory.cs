@@ -26,6 +26,7 @@ namespace Azul
         }
         public class IconUIFactory : MonoBehaviour
         {
+            [SerializeField] private IconUI iconUIPrefab;
             [SerializeField] private List<ColoredValue<IconConfig>> icons;
 
             private Dictionary<TileColor, Sprite> iconsByColor;
@@ -55,6 +56,14 @@ namespace Azul
             public Color GetBackgroundColor(TileColor color)
             {
                 return this.backgroundsByColor[color];
+            }
+
+            public IconUI Create(TileColor color, Transform parent)
+            {
+                IconUI iconUI = Instantiate(this.iconUIPrefab, parent);
+                iconUI.SetBackgroundColor(this.GetBackgroundColor(color));
+                iconUI.SetIcon(this.GetIcon(color));
+                return iconUI;
             }
         }
 

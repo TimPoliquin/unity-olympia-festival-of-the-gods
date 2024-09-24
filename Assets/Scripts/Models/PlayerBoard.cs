@@ -45,7 +45,7 @@ namespace Azul
 
             private void CreateStars(AltarFactory starController)
             {
-                TileColor[] colors = TileColorUtils.GetTileColors();
+                TileColor[] colors = TileColorUtils.GetAltarColors();
                 List<Altar> stars = new();
                 float baseRotation = 360.0f / colors.Length;
                 for (int idx = 0; idx < colors.Length; idx++)

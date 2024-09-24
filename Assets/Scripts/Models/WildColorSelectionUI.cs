@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Azul.Controller;
 using Azul.Model;
 using Azul.WildColorSelectionEvents;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -21,14 +23,10 @@ namespace Azul
     {
         public class WildColorSelectionUI : MonoBehaviour
         {
-            [SerializeField] private Button red;
-            [SerializeField] private Button blue;
-            [SerializeField] private Button yellow;
-            [SerializeField] private Button green;
-            [SerializeField] private Button purple;
-            [SerializeField] private Button orange;
+            [SerializeField] private GameObject buttonContainer;
             [SerializeField] private TextMeshProUGUI instructions;
             [SerializeField] private Button cancelButton;
+            [SerializeField] private float buttonSize = 50.0f;
             private bool deactivateOnSelection;
 
             private Dictionary<TileColor, Button> buttonsByColor = new();
@@ -36,25 +34,22 @@ namespace Azul
 
             void Awake()
             {
-                this.Initialize();
+                this.CreateButtons();
                 // should start the game disabled
                 this.Deactivate();
             }
 
-            void Initialize()
+            private void CreateButtons()
             {
-                if (this.buttonsByColor.Count == 0)
+                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
+                foreach (TileColor color in TileColorUtils.GetTileColors())
                 {
-                    this.buttonsByColor.Add(TileColor.RED, this.red);
-                    this.buttonsByColor.Add(TileColor.BLUE, this.blue);
-                    this.buttonsByColor.Add(TileColor.YELLOW, this.yellow);
-                    this.buttonsByColor.Add(TileColor.GREEN, this.green);
-                    this.buttonsByColor.Add(TileColor.PURPLE, this.purple);
-                    this.buttonsByColor.Add(TileColor.ORANGE, this.orange);
-                    foreach (KeyValuePair<TileColor, Button> buttonByColor in this.buttonsByColor)
-                    {
-                        buttonByColor.Value.onClick.AddListener(() => this.OnButtonPress(buttonByColor.Key));
-                    }
+                    IconUI iconUI = iconUIFactory.Create(color, this.buttonContainer.transform);
+                    iconUI.GetComponent<RectTransform>().sizeDelta = Vector2.one * this.buttonSize;
+                    Button colorButton = iconUI.AddComponent<Button>();
+                    colorButton.targetGraphic = iconUI.GetBackgroundImage();
+                    colorButton.onClick.AddListener(() => this.OnButtonPress(color));
+                    this.buttonsByColor.Add(color, colorButton);
                 }
             }
 
@@ -84,7 +79,6 @@ namespace Azul
 
             public void Activate(List<TileColor> tileColors, bool deactivateOnSelection, bool allowCancel)
             {
-                this.Initialize();
                 this.DeactivateAllButtons();
                 this.gameObject.SetActive(true);
                 this.deactivateOnSelection = deactivateOnSelection;
@@ -93,7 +87,6 @@ namespace Azul
                 {
                     this.buttonsByColor[color].gameObject.SetActive(true);
                 }
-                // TODO - do something to tie the overlay back to the original tile
             }
 
             public void SetInstructions(string instructions)
