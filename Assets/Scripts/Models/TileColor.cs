@@ -21,15 +21,27 @@ namespace Azul
 
         public sealed class TileColorUtils
         {
-            public static TileColor[] GetTileColors()
+            public static TileColor[] GetAltarColors()
             {
-                return new TileColor[]{
+                return new TileColor[] {
                     TileColor.RED,
                     TileColor.BLUE,
                     TileColor.YELLOW,
                     TileColor.GREEN,
                     TileColor.PURPLE,
                     TileColor.ORANGE
+                };
+            }
+
+            public static TileColor[] GetTileColors()
+            {
+                return new TileColor[]{
+                    TileColor.PURPLE,
+                    TileColor.GREEN,
+                    TileColor.ORANGE,
+                    TileColor.YELLOW,
+                    TileColor.BLUE,
+                    TileColor.RED,
                 };
             }
         }

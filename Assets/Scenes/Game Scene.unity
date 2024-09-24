@@ -516,6 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0731e97313bf54d1c81673a39e236457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconUIPrefab: {fileID: 186133767885211343, guid: f362a3aaa4944408c925d03aba914536,
+    type: 3}
   icons:
   - tileColor: 0
     value:
