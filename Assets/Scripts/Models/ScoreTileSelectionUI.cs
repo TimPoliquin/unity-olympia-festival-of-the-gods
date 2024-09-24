@@ -19,6 +19,10 @@ namespace Azul
     }
     namespace Model
     {
+        public interface ScoreTileSelectionUIContainer
+        {
+            public void AddScoreTileSelectionUI(ScoreTileSelectionUI ui);
+        }
         public class ScoreTileSelectionUI : MonoBehaviour
         {
             [SerializeField] private Image iconContainer;

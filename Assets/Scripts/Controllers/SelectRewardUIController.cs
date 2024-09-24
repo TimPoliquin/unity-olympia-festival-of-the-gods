@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.GrantRewardEvents;
 using Azul.Model;
 using Azul.PlayerBoardRewardEvents;
 using Azul.RewardUIEvents;
@@ -23,13 +24,7 @@ namespace Azul
     {
         public class SelectRewardUIController : MonoBehaviour
         {
-            [SerializeField] private GameObject rewardUI;
-            [SerializeField] private GameObject prefab;
-
-            private WildColorSelectionUI selectionUI;
-            private int playerNumber;
-            private int currentCount;
-            private int totalCount;
+            private GrantRewardTilesUI selectionUI;
             private UnityEvent<OnGrantRewardPayload> onGrantReward = new();
 
             public void InitializeListeners()
@@ -38,60 +33,61 @@ namespace Azul
                 playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
             }
 
-            public void Activate(int playerNumber, int tileCount)
+            public void Show(int playerNumber, int tileCount)
             {
-                this.playerNumber = playerNumber;
-                this.currentCount = 0;
-                this.totalCount = tileCount;
-                this.selectionUI = System.Instance.GetPrefabFactory().CreateWildColorSelectionUI(this.rewardUI.transform);
-                this.ActivateUI();
+                this.selectionUI = System.Instance.GetPrefabFactory().CreateGrantRewardTilesUI();
+                this.selectionUI.SetScoreTileSelectionUIs(this.CreateTileSelectionUIs(tileCount));
+                this.selectionUI.SetPlayerNumber(playerNumber);
+                this.selectionUI.SetMaxSelectionCount(tileCount);
+                this.selectionUI.AddOnConfirmListener(this.OnConfirm);
             }
 
-            private void ActivateUI()
+            private List<ScoreTileSelectionUI> CreateTileSelectionUIs(int count)
             {
-                this.selectionUI.SetInstructions(this.GetInstructions());
-                this.selectionUI.AddOnColorSelectionListener(this.OnRewardSelection);
-                this.selectionUI.Activate(TileColorUtils.GetTileColors().ToList(), false, false);
+                PrefabFactory prefabFactory = System.Instance.GetPrefabFactory();
+                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
+                return TileColorUtils.GetTileColors().Select(tileColor =>
+                {
+                    ScoreTileSelectionUI scoreTileSelectionUI = prefabFactory.CreateScoreTileSelectionUI(this.selectionUI);
+                    scoreTileSelectionUI.SetColor(tileColor, iconUIFactory.GetIcon(tileColor), iconUIFactory.GetBackgroundColor(tileColor));
+                    scoreTileSelectionUI.SetCounterRange(0, count, count);
+                    scoreTileSelectionUI.SetDefaultValue(0);
+                    return scoreTileSelectionUI;
+                }).ToList();
             }
+
+            private void Hide()
+            {
+                Destroy(this.selectionUI.gameObject);
+                this.selectionUI = null;
+            }
+
 
             private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
             {
                 if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
-                    this.Activate(playerNumber: payload.PlayerNumber, tileCount: payload.NumberOfTiles);
+                    this.Show(playerNumber: payload.PlayerNumber, tileCount: payload.NumberOfTiles);
                 }
             }
 
-            private void OnRewardSelection(OnWildColorSelectedPayload payload)
+            private void OnConfirm(OnGrantTileSelectionConfirmPayload payload)
             {
-                this.currentCount++;
-                this.GrantReward(payload.Color);
-                if (this.currentCount < this.totalCount)
+                foreach (TileColor rewardColor in payload.Selections)
                 {
-                    this.selectionUI.SetInstructions(this.GetInstructions());
+                    this.GrantReward(payload.PlayerNumber, rewardColor);
                 }
-                else
-                {
-                    this.currentCount = 0;
-                    this.totalCount = 0;
-                    Destroy(this.selectionUI.gameObject);
-                    this.selectionUI = null;
-                }
+                this.Hide();
             }
 
-            private void GrantReward(TileColor color)
+            private void GrantReward(int playerNumber, TileColor color)
             {
-                Tile grantedTile = System.Instance.GetPlayerBoardController().GrantReward(this.playerNumber, color);
+                Tile grantedTile = System.Instance.GetPlayerBoardController().GrantReward(playerNumber, color);
                 this.onGrantReward.Invoke(new OnGrantRewardPayload
                 {
-                    PlayerNumber = this.playerNumber,
+                    PlayerNumber = playerNumber,
                     Tile = grantedTile
                 });
-            }
-
-            private string GetInstructions()
-            {
-                return $"Reward: Choose a tile! {this.currentCount + 1} / {this.totalCount}";
             }
 
             public void AddOnGrantRewardListener(UnityAction<OnGrantRewardPayload> listener)
