@@ -899,7 +899,7 @@ MonoBehaviour:
     tint: {r: 1, g: 0, b: 1, a: 1}
   - color: 5
     material: {fileID: 2100000, guid: 794d3e9f4eb2e46389903fde9d07dedc, type: 2}
-    tint: {r: 1, g: 0.5019608, b: 0, a: 1}
+    tint: {r: 0.48235294, g: 0.23921569, b: 0, a: 1}
   placeholderMaterials:
   - color: 0
     material: {fileID: 2100000, guid: a7cd336fb47f7486fbffd938a0c9ea57, type: 2}
@@ -1037,11 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6786157fe0434b6bbeb625ab6e3c5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 100, y: 1, z: -55}
-  scoreBoardPrefab: {fileID: 8489097964935522112, guid: d3ee027de824e4894aac478c6161b4b7,
-    type: 3}
-  roundCounterPrefab: {fileID: 5254510402654930809, guid: 5f695cf4e283c4f75a0b61de7ea114cc,
-    type: 3}
   starCompletedMilestones:
   - Color: 6
     Points: 12
