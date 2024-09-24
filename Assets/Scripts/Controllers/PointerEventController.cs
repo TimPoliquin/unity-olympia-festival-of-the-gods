@@ -36,15 +36,11 @@ namespace Azul
 
             private T target;
 
-            private bool allowEvents = true;
+            private bool allowEvents = false;
 
             void Awake()
             {
                 this.target = this.GetComponent<T>();
-            }
-
-            void Start()
-            {
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.AddOnPlayerTurnStartListener((payload) =>
                 {
