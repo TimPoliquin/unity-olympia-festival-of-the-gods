@@ -58,11 +58,16 @@ namespace Azul
                 return this.backgroundsByColor[color];
             }
 
+            public void SetIconValues(IconUI iconUI, TileColor color)
+            {
+                iconUI.SetBackgroundColor(this.GetBackgroundColor(color));
+                iconUI.SetIcon(this.GetIcon(color));
+            }
+
             public IconUI Create(TileColor color, Transform parent)
             {
                 IconUI iconUI = Instantiate(this.iconUIPrefab, parent);
-                iconUI.SetBackgroundColor(this.GetBackgroundColor(color));
-                iconUI.SetIcon(this.GetIcon(color));
+                this.SetIconValues(iconUI, color);
                 return iconUI;
             }
         }

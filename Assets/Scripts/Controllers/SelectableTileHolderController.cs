@@ -4,12 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
 using Azul.PointerEvents;
+using Azul.TileHolderEvents;
+using Azul.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Azul
 {
+    namespace TileHolderEvents
+    {
+        public struct OnTileHoverEnterPayload
+        {
+            public Tile Tile { get; init; }
+            public List<ColoredValue<int>> TilesHovered { get; init; }
+        }
+        public struct OnTileHoverExitPayload
+        {
+
+        }
+        public struct OnTileSelectPayload
+        {
+            public List<ColoredValue<int>> TilesSelected { get; init; }
+        }
+    }
     namespace Controller
     {
         public abstract class AbstractSelectableTileHolderController : MonoBehaviour
@@ -19,6 +38,10 @@ namespace Azul
             private TileColor wildColor;
             private List<Tile> hoveredTiles = null;
             private bool canAcquire = false;
+
+            private UnityEvent<OnTileHoverEnterPayload> onTilesHoverStart = new();
+            private UnityEvent<OnTileHoverExitPayload> onTilesHoverEnd = new();
+            private UnityEvent<OnTileSelectPayload> onTileSelect = new();
 
             protected virtual void Awake()
             {
@@ -52,7 +75,6 @@ namespace Azul
                     this.DeselectTiles();
                 }
                 this.HoverTiles(payload.Target);
-
             }
 
             private void OnTileHoverExit(OnPointerExitPayload<Tile> payload)
@@ -106,6 +128,10 @@ namespace Azul
                 List<Tile> selectedTiles = new(this.hoveredTiles);
                 this.DeselectTiles();
                 this.SelectTiles(selectedTiles);
+                this.onTileSelect.Invoke(new OnTileSelectPayload
+                {
+                    TilesSelected = TileUtils.GetTileCounts(selectedTiles)
+                });
             }
 
             private void HoverTiles(Tile tile)
@@ -159,6 +185,14 @@ namespace Azul
                 {
                     currentTile.GetOutline().enabled = true;
                 }
+                if (this.hoveredTiles.Count > 0)
+                {
+                    this.onTilesHoverStart.Invoke(new OnTileHoverEnterPayload
+                    {
+                        Tile = tile,
+                        TilesHovered = TileUtils.GetTileCounts(this.hoveredTiles)
+                    });
+                }
             }
 
             private void DeselectTiles()
@@ -171,6 +205,7 @@ namespace Azul
                     }
                     this.hoveredTiles = null;
                 }
+                this.onTilesHoverEnd.Invoke(new OnTileHoverExitPayload());
             }
 
             private void InitializeRoundPhaseHandlers()
@@ -222,6 +257,21 @@ namespace Azul
             protected abstract void SelectTiles(List<Tile> selectedTiles);
 
             protected abstract Phase[] GetActivePhases();
+
+            public void AddOnTileHoverEnterListener(UnityAction<OnTileHoverEnterPayload> listener)
+            {
+                this.onTilesHoverStart.AddListener(listener);
+            }
+
+            public void AddOnTileHoverExitListener(UnityAction<OnTileHoverExitPayload> listener)
+            {
+                this.onTilesHoverEnd.AddListener(listener);
+            }
+
+            public void AddOnTileSelectListener(UnityAction<OnTileSelectPayload> listener)
+            {
+                this.onTileSelect.AddListener(listener);
+            }
         }
 
     }

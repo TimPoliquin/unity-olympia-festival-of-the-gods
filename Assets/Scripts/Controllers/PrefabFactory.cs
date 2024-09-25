@@ -12,10 +12,12 @@ namespace Azul
         {
             [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
+            [SerializeField] private AcquireTilesPanelUI acquireTilesPanelUIPrefab;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
+            [SerializeField] private PlayerTileCountUI tileCountUIPrefab;
             [SerializeField] private WildColorSelectionUI wildColorSelectionUIPrefab;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
@@ -49,6 +51,11 @@ namespace Azul
                 return this.altarFactory.CreateAltar(tileColor, rotation);
             }
 
+            public AcquireTilesPanelUI CreateAcquireTilesPanelUI()
+            {
+                return Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
+            }
+
             public GrantRewardTilesUI CreateGrantRewardTilesUI()
             {
                 return Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
@@ -69,7 +76,13 @@ namespace Azul
                 ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.canvas.transform);
                 panel.AddScoreTileSelectionUI(scoreTileSelectionUI);
                 return scoreTileSelectionUI;
+            }
 
+            public PlayerTileCountUI CreatePlayerTileCountUI(TileColor tileColor, Transform parent)
+            {
+                PlayerTileCountUI playerTileCountUI = Instantiate(this.tileCountUIPrefab, parent ? parent : this.canvas.transform);
+                playerTileCountUI.SetTileColor(tileColor);
+                return playerTileCountUI;
             }
 
             public WildColorSelectionUI CreateWildColorSelectionUI(Transform parent = null)

@@ -62,6 +62,8 @@ namespace Azul
                 TableController tableController = System.Instance.GetTableController();
                 tableController.MoveOneTileToCenter(this.oneTile);
             }
+
+
         }
     }
 }

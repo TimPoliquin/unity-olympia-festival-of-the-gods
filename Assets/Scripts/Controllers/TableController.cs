@@ -6,6 +6,7 @@ using Azul.Controller.TableEvents;
 using Azul.Controller.TableUtilities;
 using Azul.Model;
 using Azul.TableEvents;
+using Azul.TileHolderEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -46,6 +47,9 @@ namespace Azul
 
             private UnityEvent<OnTableTilesAddedPayload> onTilesAdded = new();
             private UnityEvent<OnTableTilesDrawnPayload> onTilesDrawn = new();
+            private UnityEvent<OnTileHoverEnterPayload> onTilesHoverEnter = new();
+            private UnityEvent<OnTileHoverExitPayload> onTilesHoverExit = new();
+            private UnityEvent<OnTileSelectPayload> onTilesSelect = new();
             private UnityEvent onTableEmpty = new();
 
             private Table table;
@@ -60,6 +64,10 @@ namespace Azul
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 factoryController.AddOnFactoryTilesDiscardedListener(this.OnTilesDiscarded);
                 this.table.AddOnTilesDrawnListener(this.OnTilesDrawn);
+                TableSelectableTileHolderController tableSelectableTileHolderController = this.GetTableSelectableTileHolderController();
+                tableSelectableTileHolderController.AddOnTileHoverEnterListener(this.OnTilesHoverEnter);
+                tableSelectableTileHolderController.AddOnTileHoverExitListener(this.OnTilesHoverExit);
+                tableSelectableTileHolderController.AddOnTileSelectListener(this.OnTilesSelect);
             }
 
             public TableSelectableTileHolderController GetTableSelectableTileHolderController()
@@ -76,6 +84,12 @@ namespace Azul
             public void AddFactories(List<Factory> factories)
             {
                 this.table.AddFactories(factories);
+                foreach (Factory factory in factories)
+                {
+                    factory.GetSelectableTileHolderController().AddOnTileHoverEnterListener(this.OnTilesHoverEnter);
+                    factory.GetSelectableTileHolderController().AddOnTileHoverExitListener(this.OnTilesHoverExit);
+                    factory.GetSelectableTileHolderController().AddOnTileSelectListener(this.OnTilesSelect);
+                }
             }
 
             public void MoveOneTileToCenter(Tile oneTile)
@@ -197,6 +211,36 @@ namespace Azul
                 {
                     this.onTableEmpty.Invoke();
                 }
+            }
+
+            public void AddOnTilesHoverEnterListener(UnityAction<OnTileHoverEnterPayload> listener)
+            {
+                this.onTilesHoverEnter.AddListener(listener);
+            }
+
+            public void AddOnTilesHoverExitListener(UnityAction<OnTileHoverExitPayload> listener)
+            {
+                this.onTilesHoverExit.AddListener(listener);
+            }
+
+            public void AddOnTileSelectListener(UnityAction<OnTileSelectPayload> listener)
+            {
+                this.onTilesSelect.AddListener(listener);
+            }
+
+            private void OnTilesHoverEnter(OnTileHoverEnterPayload payload)
+            {
+                this.onTilesHoverEnter.Invoke(payload);
+            }
+
+            private void OnTilesHoverExit(OnTileHoverExitPayload payload)
+            {
+                this.onTilesHoverExit.Invoke(payload);
+            }
+
+            private void OnTilesSelect(OnTileSelectPayload payload)
+            {
+                this.onTilesSelect.Invoke(payload);
             }
 
         }
