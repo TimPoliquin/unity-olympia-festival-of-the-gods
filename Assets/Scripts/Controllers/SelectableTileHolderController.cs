@@ -163,23 +163,12 @@ namespace Azul
                 }
                 else if (null != this.tiles)
                 {
-                    bool grabbedWild = false;
-                    foreach (Tile currentTile in this.tiles)
-                    {
-                        if (currentTile.Color == tile.Color)
-                        {
-                            this.hoveredTiles.Add(currentTile);
-                        }
-                        else if (currentTile.Color == TileColor.ONE)
-                        {
-                            this.hoveredTiles.Add(currentTile);
-                        }
-                        else if (currentTile.Color == this.wildColor && !grabbedWild)
-                        {
-                            grabbedWild = true;
-                            this.hoveredTiles.Add(currentTile);
-                        }
-                    }
+                    List<Tile> hoveredTiles = new();
+                    hoveredTiles.AddRange(this.tiles.FindAll(itr => itr.Color == tile.Color));
+                    hoveredTiles.Add(this.tiles.Find(tile => tile.Color == this.wildColor));
+                    hoveredTiles.Add(this.tiles.Find(tile => tile.IsOneTile()));
+                    hoveredTiles.RemoveAll(tile => tile == null);
+                    this.hoveredTiles.AddRange(hoveredTiles);
                 }
                 foreach (Tile currentTile in this.hoveredTiles)
                 {
