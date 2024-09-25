@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Controller;
 using Azul.Layout;
 using Azul.Model;
 using Azul.TableEvents;
+using Azul.TileHolderEvents;
 using Azul.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,7 +33,7 @@ namespace Azul
             [SerializeField] private GameObject center;
             [SerializeField] private float centerRadius = 10.0f;
             [SerializeField] private float dropHeight = 5.0f;
-            private List<Factory> factories = new();
+            private List<Factory> factories;
             private List<Tile> tiles = new();
             private UnityEvent<OnTableAddTilesPayload> onAddTiles = new();
             private UnityEvent<OnTableDrawTilesPayload> onDrawTiles = new();
@@ -44,7 +46,7 @@ namespace Azul
 
             public void AddFactories(List<Factory> factories)
             {
-                this.factories.AddRange(factories);
+                this.factories = factories;
                 this.factoriesLayout.AddChildren(factories.Select(factory => factory.gameObject).ToList());
             }
 
@@ -148,6 +150,7 @@ namespace Azul
             {
                 return this.tiles.Count == 0;
             }
+
         }
     }
 }

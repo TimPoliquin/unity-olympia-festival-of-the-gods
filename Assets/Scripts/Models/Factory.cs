@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Controller;
 using Azul.Controller.TableUtilities;
 using Azul.Utils;
 using Unity.VisualScripting;
@@ -85,7 +86,7 @@ namespace Azul
 
             public void AddOnAddTilesListener(UnityAction<OnFactoryAddTilesPayload> listener)
             {
-                onAddTiles.AddListener(listener);
+                this.onAddTiles.AddListener(listener);
             }
 
             public void AddOnTilesDrawnListener(UnityAction<OnFactoryDrawTilesPayload> listener)
@@ -123,6 +124,11 @@ namespace Azul
             public bool HasTileOfColor(TileColor tileColor)
             {
                 return this.tiles.Any(tile => tile.Color == tileColor);
+            }
+
+            public FactorySelectableTileHolderController GetSelectableTileHolderController()
+            {
+                return this.GetComponent<FactorySelectableTileHolderController>();
             }
         }
     }

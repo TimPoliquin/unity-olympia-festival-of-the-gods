@@ -38,7 +38,15 @@ namespace Azul
                 return this.backgroundImage;
             }
 
+            public void SetTileColor(TileColor tileColor)
+            {
+                System.Instance.GetUIController().GetIconUIFactory().SetIconValues(this, tileColor);
+            }
 
+            public void SetSize(float size)
+            {
+                this.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+            }
         }
     }
 }
