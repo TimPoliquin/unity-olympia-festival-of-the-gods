@@ -362,8 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a65533b3eed54ddcbbf93868096b0a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acquireTilesPanel: {fileID: 1904257490}
-  offset: {x: 10, y: 0, z: 0}
+  offset: {x: 25, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,6 +3316,8 @@ MonoBehaviour:
   - Color: 7
     Prefab: {fileID: 4994233739302111860, guid: ad5629696e6bc49fe8b1c2c1d796f93e,
       type: 3}
+  acquireTilesPanelUIPrefab: {fileID: 2664732521135428229, guid: 3f9e9a5b4fb01436ca77f21a3c501d2a,
+    type: 3}
   grantRewardTilesUIPrefab: {fileID: 8425940288351448959, guid: cd39908ab718a424fb20935ebf78ce36,
     type: 3}
   playerUIPrefab: {fileID: 5210913683160451395, guid: f5cd10e549ba84ef980a102fae715f59,
@@ -3690,18 +3691,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 914889784}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1904257490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2664732521135428229, guid: 3f9e9a5b4fb01436ca77f21a3c501d2a,
-    type: 3}
-  m_PrefabInstance: {fileID: 914889784}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9861d5224cfa1448fb15ccdac9a77c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1920026097
 GameObject:
   m_ObjectHideFlags: 0
