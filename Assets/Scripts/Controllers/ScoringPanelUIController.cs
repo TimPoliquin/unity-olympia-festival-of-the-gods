@@ -21,6 +21,7 @@ namespace Azul
                 this.scoringPanelUI.gameObject.SetActive(false);
                 this.scoringButton.onClick.AddListener(this.ToggleScoringPanel);
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameStart);
+                System.Instance.GetRoundController().AddOnAllRoundsCompleteListener(this.OnAllRoundsComplete);
             }
 
             private void OnGameStart(OnGameSetupCompletePayload payload)
@@ -57,6 +58,11 @@ namespace Azul
                 RitualScoreUI ritualScoreUI = System.Instance.GetPrefabFactory().CreateRitualScoreUI();
                 ritualScoreUI.Setup(numberCompletedMilestone.GetNumber(), numberCompletedMilestone.GetPoints());
                 return ritualScoreUI;
+            }
+
+            private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
+            {
+                this.scoringPanelUI.Hide();
             }
 
         }

@@ -49,13 +49,19 @@ namespace Azul
 
             public void Show()
             {
-                this.gameObject.SetActive(true);
-                this.StartCoroutine(this.SlideIn());
+                if (!this.showing)
+                {
+                    this.gameObject.SetActive(true);
+                    this.StartCoroutine(this.SlideIn());
+                }
             }
 
             public void Hide()
             {
-                this.StartCoroutine(this.SlideOut(() => this.gameObject.SetActive(false)));
+                if (showing)
+                {
+                    this.StartCoroutine(this.SlideOut(() => this.gameObject.SetActive(false)));
+                }
             }
 
             private IEnumerator SlideIn()
