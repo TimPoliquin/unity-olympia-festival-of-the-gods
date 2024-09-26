@@ -171,6 +171,16 @@ namespace Azul
             {
                 this.onScoreChange.AddListener(listener);
             }
+
+            public List<StarCompletedMilestone> GetStarCompletedMilestones()
+            {
+                return this.starCompletedMilestones;
+            }
+
+            public List<NumberCompletedMilestone> GetNumberCompletedMilestones()
+            {
+                return this.numberCompletedMilestones;
+            }
         }
     }
 }

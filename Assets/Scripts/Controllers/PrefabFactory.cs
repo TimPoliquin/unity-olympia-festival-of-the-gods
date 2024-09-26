@@ -13,8 +13,10 @@ namespace Azul
             [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
             [SerializeField] private AcquireTilesPanelUI acquireTilesPanelUIPrefab;
+            [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
+            [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
             [SerializeField] private PlayerTileCountUI tileCountUIPrefab;
@@ -56,6 +58,11 @@ namespace Azul
                 return Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
             }
 
+            public GodScoreUI CreateGodScoreUI()
+            {
+                return Instantiate(this.godScoreUI, this.canvas.transform);
+            }
+
             public GrantRewardTilesUI CreateGrantRewardTilesUI()
             {
                 return Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
@@ -64,6 +71,11 @@ namespace Azul
             public PlayerUI CreatePlayerUI()
             {
                 return Instantiate(this.playerUIPrefab);
+            }
+
+            public RitualScoreUI CreateRitualScoreUI()
+            {
+                return Instantiate(this.ritualScoreUIPrefab, this.canvas.transform);
             }
 
             public ScoreTileSelectionPanelUI CreateScoreTileSelectionPanelUI()
