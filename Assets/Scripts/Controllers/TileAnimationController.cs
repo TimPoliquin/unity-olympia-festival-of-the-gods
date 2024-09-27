@@ -9,28 +9,25 @@ namespace Azul
 {
     namespace TileAnimation
     {
-        public class TileMoveConfig
+        public struct TilesMoveConfig
         {
             public Vector3 Position { get; init; }
             public float Time { get; init; }
-            public Action OnComplete { get; init; }
-        }
-
-        public class TilesMoveConfig : TileMoveConfig
-        {
             public float Delay { get; init; }
             public Action<Tile> AfterEach { get; init; }
+            public Action AfterAll { get; init; }
         }
     }
     namespace Controller
     {
         public class TileAnimationController : MonoBehaviour
         {
-            public void MoveTile(Tile tile, TileMoveConfig config)
-            {
-                this.StartCoroutine(this.MoveCoroutine(tile, config));
-            }
+            private bool isAnimating = false;
 
+            public bool IsAnimating()
+            {
+                return this.isAnimating;
+            }
             public void MoveTiles(List<Tile> tiles, TilesMoveConfig config)
             {
                 this.StartCoroutine(this.MoveMultipleCoroutine(tiles, config));
@@ -38,21 +35,20 @@ namespace Azul
 
             private IEnumerator MoveMultipleCoroutine(List<Tile> tiles, TilesMoveConfig config)
             {
+                this.isAnimating = true;
                 foreach (Tile tile in tiles)
                 {
-                    yield return this.MoveCoroutine(tile, new TileMoveConfig
-                    {
-                        Position = config.Position,
-                        Time = config.Time,
-                        OnComplete = () => config.AfterEach(tile)
-                    });
+                    yield return this.MoveCoroutine(tile, config);
+                    this.isAnimating = true;
                     yield return new WaitForSeconds(config.Delay);
                 }
-                config.OnComplete.Invoke();
+                this.isAnimating = false;
+                config.AfterAll.Invoke();
             }
 
-            private IEnumerator MoveCoroutine(Tile tile, TileMoveConfig tileMoveConfig)
+            private IEnumerator MoveCoroutine(Tile tile, TilesMoveConfig tileMoveConfig)
             {
+                this.isAnimating = true;
                 tile.GetComponentInChildren<Collider>().enabled = false;
                 tile.GetComponentInChildren<Rigidbody>().useGravity = false;
                 Vector3 startingPosition = tile.transform.position;
@@ -66,7 +62,8 @@ namespace Azul
                 }
                 tile.GetComponentInChildren<Collider>().enabled = true;
                 tile.GetComponentInChildren<Rigidbody>().useGravity = true;
-                tileMoveConfig.OnComplete.Invoke();
+                this.isAnimating = false;
+                tileMoveConfig.AfterEach.Invoke(tile);
             }
         }
     }

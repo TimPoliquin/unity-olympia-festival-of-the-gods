@@ -326,7 +326,7 @@ namespace Azul
                         explosionEffect.Play(tile.Color);
                         tile.gameObject.SetActive(false);
                     },
-                    OnComplete = () =>
+                    AfterAll = () =>
                     {
                         space.PlaceTile(spaceColor);
                         System.Instance.GetBagController().Discard(tiles);
