@@ -42,7 +42,7 @@ namespace Azul
                 return this.outline;
             }
 
-            public bool IsOneTile()
+            public bool IsHadesToken()
             {
                 return this.color == TileColor.ONE;
             }

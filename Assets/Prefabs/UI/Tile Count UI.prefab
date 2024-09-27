@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 6253066161740064805}
   - component: {fileID: 4532902485550771721}
   m_Layer: 5
-  m_Name: Player Tile Count UI
+  m_Name: Tile Count UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

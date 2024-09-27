@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
@@ -19,6 +20,7 @@ namespace Azul
             [SerializeField] private float fadeInTime = .5f;
             [SerializeField] private float fadeOutTime = .5f;
             [SerializeField] private CanvasGroup canvasGroup;
+            [SerializeField] private string hadesTaxTemplate = "Hades' Tax: Lose {0} points";
 
             private bool hidden = true;
 
@@ -39,7 +41,7 @@ namespace Azul
                         this.hadesTokenInfo.SetActive(true);
                     }
                 }
-                this.totalText.text = $"{total}";
+                this.totalText.text = string.Format(this.hadesTaxTemplate, total);
                 this.hidden = false;
                 this.StartCoroutine(this.FadeIn());
             }

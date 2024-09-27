@@ -74,7 +74,7 @@ namespace Azul
             public void AddDrawnTiles(List<Tile> tiles)
             {
                 this.drawnTilesContainer.AddTiles(tiles);
-                if (tiles.Any(tile => tile.IsOneTile()))
+                if (tiles.Any(tile => tile.IsHadesToken()))
                 {
                     this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
                 }

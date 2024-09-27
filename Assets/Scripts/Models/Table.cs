@@ -112,7 +112,7 @@ namespace Azul
 
             public bool HasOneTile()
             {
-                return this.tiles.Any(tile => tile.IsOneTile());
+                return this.tiles.Any(tile => tile.IsHadesToken());
             }
 
             public Dictionary<TileColor, int> GetTileCounts()
@@ -120,7 +120,7 @@ namespace Azul
                 Dictionary<TileColor, int> tileCounts = new();
                 foreach (Tile tile in this.tiles)
                 {
-                    if (tile.IsOneTile())
+                    if (tile.IsHadesToken())
                     {
                         continue;
                     }

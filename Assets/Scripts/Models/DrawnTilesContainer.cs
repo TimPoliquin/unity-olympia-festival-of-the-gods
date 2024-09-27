@@ -58,7 +58,7 @@ namespace Azul
 
         public int GetTileCount()
         {
-            return this.drawnTiles.FindAll(tile => !tile.IsOneTile()).Count;
+            return this.drawnTiles.FindAll(tile => !tile.IsHadesToken()).Count;
         }
 
         public List<TileCount> GetTileCounts(bool includeOneTile = false)
@@ -75,7 +75,7 @@ namespace Azul
             }
             foreach (Tile tile in this.drawnTiles)
             {
-                if (tile.IsOneTile())
+                if (tile.IsHadesToken())
                 {
                     if (includeOneTile)
                     {
@@ -144,7 +144,7 @@ namespace Azul
 
         public Tile DiscardOneTile()
         {
-            Tile oneTile = this.drawnTiles.Find(tile => tile.IsOneTile());
+            Tile oneTile = this.drawnTiles.Find(tile => tile.IsHadesToken());
             if (oneTile != null)
             {
                 this.drawnTiles.Remove(oneTile);
@@ -167,7 +167,7 @@ namespace Azul
 
         public bool HasOneTile()
         {
-            return this.drawnTiles.Find(tile => tile.IsOneTile());
+            return this.drawnTiles.Find(tile => tile.IsHadesToken());
         }
 
         public GameObject GetTileContainer(TileColor tileColor)
