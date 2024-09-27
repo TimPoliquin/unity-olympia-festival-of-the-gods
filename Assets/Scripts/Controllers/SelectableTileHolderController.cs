@@ -19,6 +19,7 @@ namespace Azul
         {
             public Tile Tile { get; init; }
             public List<ColoredValue<int>> TilesHovered { get; init; }
+            public bool IncludesHadesToken { get; init; }
         }
         public struct OnTileHoverExitPayload
         {
@@ -138,7 +139,7 @@ namespace Azul
             {
                 this.hoveredTiles = new();
                 bool hasHoveredWild = tile.Color == this.wildColor;
-                if (tile.IsOneTile())
+                if (tile.IsHadesToken())
                 {
                     // TODO - we might want to change the cursor so you can't
                     // draw the one tile.
@@ -149,7 +150,7 @@ namespace Azul
                     if (onlyHasWilds)
                     {
                         hoveredTiles.Add(tile);
-                        Tile oneTile = this.tiles.Find(tile => tile.IsOneTile());
+                        Tile oneTile = this.tiles.Find(tile => tile.IsHadesToken());
                         if (oneTile != null)
                         {
                             hoveredTiles.Add(oneTile);
@@ -166,7 +167,7 @@ namespace Azul
                     List<Tile> hoveredTiles = new();
                     hoveredTiles.AddRange(this.tiles.FindAll(itr => itr.Color == tile.Color));
                     hoveredTiles.Add(this.tiles.Find(tile => tile.Color == this.wildColor));
-                    hoveredTiles.Add(this.tiles.Find(tile => tile.IsOneTile()));
+                    hoveredTiles.Add(this.tiles.Find(tile => tile.IsHadesToken()));
                     hoveredTiles.RemoveAll(tile => tile == null);
                     this.hoveredTiles.AddRange(hoveredTiles);
                 }
@@ -178,6 +179,7 @@ namespace Azul
                 {
                     this.onTilesHoverStart.Invoke(new OnTileHoverEnterPayload
                     {
+                        IncludesHadesToken = null != this.hoveredTiles.Find(tile => tile.IsHadesToken()),
                         Tile = tile,
                         TilesHovered = TileUtils.GetTileCounts(this.hoveredTiles)
                     });

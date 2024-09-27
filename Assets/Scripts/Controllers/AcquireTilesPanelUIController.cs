@@ -32,10 +32,13 @@ namespace Azul
                 this.Hide();
                 if (System.Instance.GetPlayerController().GetCurrentPlayer().IsHuman())
                 {
-                    this.acquireTilesPanel = System.Instance.GetPrefabFactory().CreateAcquireTilesPanelUI();
-                    Camera camera = System.Instance.GetCameraController().GetMainCamera();
-                    this.acquireTilesPanel.transform.position = camera.WorldToScreenPoint(payload.Tile.transform.position) + this.offset;
-                    this.acquireTilesPanel.Show(payload.TilesHovered);
+                    if (payload.IncludesHadesToken)
+                    {
+                        this.acquireTilesPanel = System.Instance.GetPrefabFactory().CreateAcquireTilesPanelUI();
+                        Camera camera = System.Instance.GetCameraController().GetMainCamera();
+                        this.acquireTilesPanel.transform.position = camera.WorldToScreenPoint(payload.Tile.transform.position) + this.offset;
+                        this.acquireTilesPanel.Show(payload.TilesHovered);
+                    }
                 }
             }
 
