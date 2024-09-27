@@ -24,6 +24,9 @@ namespace Azul
             private TileColor selectedColor;
             private UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm;
 
+            private ScoreTileSelectionPanelUI currentPanel;
+            private WildColorSelectionUI currentWildSelectionPanel;
+
             void Awake()
             {
                 this.endTurnPanelUI.AddOnEndTurnListener(this.OnEndTurn);
@@ -77,6 +80,11 @@ namespace Azul
 
             private void OnWildScoreSpaceSelection(OnPlayerBoardWildScoreSpaceSelectionPayload payload)
             {
+                if (System.Instance.GetTileAnimationController().IsAnimating())
+                {
+                    return;
+                }
+                this.HideCurrentPanel();
                 if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
                     this.endTurnPanelUI.Hide();
@@ -103,11 +111,10 @@ namespace Azul
                             }
                         }
                     });
-                    WildColorSelectionUI wildColorSelectionUI = System.Instance.GetPrefabFactory().CreateWildColorSelectionUI();
-                    wildColorSelectionUI.Activate(availableColors, true, true);
-                    wildColorSelectionUI.AddOnColorSelectionListener((colorSelectedPayload) =>
+                    this.currentWildSelectionPanel = System.Instance.GetPrefabFactory().CreateWildColorSelectionUI();
+                    this.currentWildSelectionPanel.Activate(availableColors, true, true);
+                    this.currentWildSelectionPanel.AddOnColorSelectionListener((colorSelectedPayload) =>
                     {
-                        Destroy(wildColorSelectionUI.gameObject);
                         this.CreateScoreTileSelectionUIs(
                             playerBoard: payload.PlayerBoard,
                             selectedColor: colorSelectedPayload.Color,
@@ -115,10 +122,10 @@ namespace Azul
                             onConfirm: payload.OnConfirm
                         );
                     });
-                    wildColorSelectionUI.AddOnCancel(() =>
+                    this.currentWildSelectionPanel.AddOnCancel(() =>
                     {
                         this.CleanupScoreSelectionUIElements();
-                        wildColorSelectionUI.Hide();
+                        this.HideCurrentPanel();
                         if (this.isCurrentPlayerHuman)
                         {
                             this.endTurnPanelUI.Show();
@@ -130,6 +137,10 @@ namespace Azul
 
             private void OnScoreSpaceSelection(OnPlayerBoardScoreSpaceSelectionPayload payload)
             {
+                if (System.Instance.GetTileAnimationController().IsAnimating())
+                {
+                    return;
+                }
                 if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
                 {
                     this.CreateScoreTileSelectionUIs(
@@ -143,11 +154,12 @@ namespace Azul
 
             private void CreateScoreTileSelectionUIs(PlayerBoard playerBoard, TileColor selectedColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> onConfirm)
             {
+                this.HideCurrentPanel();
                 IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
-                ScoreTileSelectionPanelUI panel = System.Instance.GetPrefabFactory().CreateScoreTileSelectionPanelUI();
-                panel.AddOnCancelListener(this.OnCancelSelection);
-                panel.AddOnConfirmListener(this.OnConfirmSelection);
-                panel.Show(value, iconUIFactory.GetIcon(selectedColor), iconUIFactory.GetBackgroundColor(selectedColor));
+                this.currentPanel = System.Instance.GetPrefabFactory().CreateScoreTileSelectionPanelUI();
+                this.currentPanel.AddOnCancelListener(this.OnCancelSelection);
+                this.currentPanel.AddOnConfirmListener(this.OnConfirmSelection);
+                this.currentPanel.Show(value, iconUIFactory.GetIcon(selectedColor), iconUIFactory.GetBackgroundColor(selectedColor));
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                 this.selectedColor = selectedColor;
                 this.countNeeded = value;
@@ -164,7 +176,7 @@ namespace Azul
                     min = Math.Max(1, Math.Min(value - numWild, value));
                 }
                 this.CreateScoreTileSelectionUI(
-                    panel,
+                    currentPanel,
                     playerBoard,
                     selectedColor,
                     min,
@@ -173,7 +185,7 @@ namespace Azul
                 );
                 if (wildColor != selectedColor && value > 1 && numWild > 0)
                 {
-                    this.CreateScoreTileSelectionUI(panel, playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
+                    this.CreateScoreTileSelectionUI(currentPanel, playerBoard, wildColor, wildsNeeded, Math.Min(numWild, value - 1), wildsNeeded);
                 }
                 this.onConfirm = onConfirm;
                 this.endTurnPanelUI.Hide();
@@ -198,7 +210,7 @@ namespace Azul
             private void OnCancelSelection(OnScoreTileSelectionCancelPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
-                payload.Panel.Hide();
+                this.HideCurrentPanel();
                 if (this.isCurrentPlayerHuman)
                 {
                     this.endTurnPanelUI.Show();
@@ -226,7 +238,7 @@ namespace Azul
                     throw new ArgumentOutOfRangeException(nameof(this.countNeeded), "Wrong number of tiles selected!");
                 }
                 this.CleanupScoreSelectionUIElements();
-                payload.Panel.Hide();
+                this.HideCurrentPanel();
             }
 
             private void OnEndTurn()
@@ -257,6 +269,20 @@ namespace Azul
                 if (this.isCurrentPlayerHuman)
                 {
                     this.endTurnPanelUI.Show();
+                }
+            }
+
+            private void HideCurrentPanel()
+            {
+                if (null != this.currentPanel)
+                {
+                    this.currentPanel.Hide();
+                    this.currentPanel = null;
+                }
+                if (null != this.currentWildSelectionPanel)
+                {
+                    this.currentWildSelectionPanel.Hide();
+                    this.currentWildSelectionPanel = null;
                 }
             }
 

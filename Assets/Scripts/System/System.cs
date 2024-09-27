@@ -24,6 +24,7 @@ namespace Azul
         private AltarFactory starController;
         private TableController tableController;
         private TileController tileController;
+        private TileAnimationController tileAnimationController;
         private TileMaterialProvider tileMaterialProvider;
         private UIController uiController;
 
@@ -155,6 +156,15 @@ namespace Azul
                 this.tileController = this.GetComponentInChildren<TileController>();
             }
             return this.tileController;
+        }
+
+        public TileAnimationController GetTileAnimationController()
+        {
+            if (null == this.tileAnimationController)
+            {
+                this.tileAnimationController = this.GetComponentInChildren<TileAnimationController>();
+            }
+            return this.tileAnimationController;
         }
 
         public TileMaterialProvider GetTileMaterialProvider()
