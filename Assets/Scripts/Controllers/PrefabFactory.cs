@@ -13,6 +13,7 @@ namespace Azul
             [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
             [SerializeField] private AcquireTilesPanelUI acquireTilesPanelUIPrefab;
+            [SerializeField] private ExplosionEffect explosionEffectPrefab;
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
@@ -56,6 +57,11 @@ namespace Azul
             public AcquireTilesPanelUI CreateAcquireTilesPanelUI()
             {
                 return Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
+            }
+
+            public ExplosionEffect CreateExplosionEffect(Transform parent = null)
+            {
+                return Instantiate(this.explosionEffectPrefab, parent);
             }
 
             public GodScoreUI CreateGodScoreUI()

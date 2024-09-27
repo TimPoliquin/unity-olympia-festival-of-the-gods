@@ -9,6 +9,7 @@ using Azul.PointerEvents;
 using Azul.AltarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
+using Azul.TileAnimation;
 
 namespace Azul
 {
@@ -315,15 +316,29 @@ namespace Azul
                 {
                     tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
                 }
-                space.PlaceTile(spaceColor);
-                System.Instance.GetBagController().Discard(tiles);
-                this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
+                System.Instance.GetTileAnimationController().MoveTiles(tiles, new TilesMoveConfig
                 {
-                    PlayerNumber = playerBoard.GetPlayerNumber(),
-                    TilePlaced = space.GetValue(),
-                    Star = playerBoard.GetStar(space.GetOriginColor())
+                    Position = space.transform.position,
+                    Time = .25f,
+                    AfterEach = (tile) =>
+                    {
+                        ExplosionEffect explosionEffect = System.Instance.GetPrefabFactory().CreateExplosionEffect(space.transform);
+                        explosionEffect.Play(tile.Color);
+                        tile.gameObject.SetActive(false);
+                    },
+                    OnComplete = () =>
+                    {
+                        space.PlaceTile(spaceColor);
+                        System.Instance.GetBagController().Discard(tiles);
+                        this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
+                        {
+                            PlayerNumber = playerBoard.GetPlayerNumber(),
+                            TilePlaced = space.GetValue(),
+                            Star = playerBoard.GetStar(space.GetOriginColor())
+                        });
+                        this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
+                    }
                 });
-                this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
             }
 
             public void AddOnPlaceStarTileListener(UnityAction<OnPlayerBoardPlaceStarTilePayload> listener)
