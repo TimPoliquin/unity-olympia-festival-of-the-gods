@@ -105,6 +105,8 @@ namespace Azul
                     TilesSelected = selectedTiles,
                     Color = tileColor
                 });
+                yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
+                yield return null;
                 this.onScoreComplete.Invoke(new OnAIScorePayload());
             }
 

@@ -67,7 +67,7 @@ namespace Azul
                 }
             }
 
-            public void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
+            private void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
             {
                 if (payload.PlayerNumber == this.playerNumber)
                 {
@@ -90,7 +90,7 @@ namespace Azul
                 }
             }
 
-            public void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
             {
                 if (payload.PlayerNumber == this.playerNumber)
                 {
@@ -103,9 +103,15 @@ namespace Azul
                 }
             }
 
-            public void OnScoreComplete(OnAIScorePayload payload)
+            private void OnScoreComplete(OnAIScorePayload payload)
             {
-                this.OnScoreTurn();
+                this.StartCoroutine(this.Wait(.5f, () => this.OnScoreTurn()));
+            }
+
+            private IEnumerator Wait(float time, Action callback)
+            {
+                yield return new WaitForSeconds(time);
+                callback.Invoke();
             }
 
             public int GetPlayerNumber()
