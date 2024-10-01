@@ -20,7 +20,7 @@ namespace Azul
         public bool IsMilestoneComplete(int playerNumber, int tileNumber)
         {
             PlayerBoard board = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
-            return board.IsTileNumberFilledOnAllStars(tileNumber);
+            return board.IsTileNumberFilledOnAllAltars(tileNumber);
         }
 
         public int GetPoints()

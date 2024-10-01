@@ -93,6 +93,11 @@ namespace Azul
                 return filledSpaces;
             }
 
+            public List<AltarSpace> GetSpaces()
+            {
+                return this.spaces.ToList();
+            }
+
             public bool IsSpaceFilled(int tileNumber)
             {
                 return !this.spaces.ToList().Find(space => space.GetValue() == tileNumber).IsEmpty();

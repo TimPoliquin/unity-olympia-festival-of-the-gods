@@ -223,7 +223,7 @@ namespace Azul
                 });
             }
 
-            private void OnPointerSelectSpace(OnStarSpaceSelectPayload payload)
+            private void OnPointerSelectSpace(OnAltarSpaceSelectPayload payload)
             {
                 // TODO - a lot needs to be done here to keep the rails on selection.
                 // we should confirm the space is on an active playerboard, for instance.
@@ -334,7 +334,7 @@ namespace Azul
                         {
                             PlayerNumber = playerBoard.GetPlayerNumber(),
                             TilePlaced = space.GetValue(),
-                            Star = playerBoard.GetStar(space.GetOriginColor())
+                            Star = playerBoard.GetAltar(space.GetOriginColor())
                         });
                         this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
                     }

@@ -79,6 +79,16 @@ namespace Azul
             {
                 return string.Join(" AND ", this.conditions.Select(condition => condition.ToString()).ToArray());
             }
+
+            public int GetNumberOfConditions()
+            {
+                return this.conditions.Count;
+            }
+
+            public int GetNumberOfCompletedConditions(int playerNumber)
+            {
+                return this.conditions.FindAll(condition => condition.IsConditionMet(playerNumber)).Count;
+            }
         }
 
         public class RewardBehavior : MonoBehaviour
@@ -111,6 +121,16 @@ namespace Azul
             public int GetReward()
             {
                 return this.RewardConfiguration.GetReward().GetValue();
+            }
+
+            public int GetNumberOfConditions()
+            {
+                return this.RewardConfiguration.GetNumberOfConditions();
+            }
+
+            public int GetNumberOfCompletedConditions()
+            {
+                return this.RewardConfiguration.GetNumberOfCompletedConditions(playerNumber);
             }
 
             public override string ToString()

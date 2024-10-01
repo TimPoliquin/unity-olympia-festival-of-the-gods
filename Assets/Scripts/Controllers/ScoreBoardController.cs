@@ -78,37 +78,32 @@ namespace Azul
 
             private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
             {
-                int points = this.CalculatePointsForTilePlacement(payload);
+                int points = this.CalculatePointsForTilePlacement(payload.Star, payload.TilePlaced);
                 points += this.CalculatePointsForMilestones(payload);
                 this.AddPoints(payload.PlayerNumber, points);
             }
 
-            private int CalculatePointsForTilePlacement(OnPlayerBoardPlaceStarTilePayload payload)
+            public int CalculatePointsForTilePlacement(Altar star, int tilePlaced)
             {
                 int points;
-                int numSpaces = payload.Star.GetNumberOfSpaces();
-                List<int> filledSpaces = payload.Star.GetFilledSpaces().Select(space => space.GetValue()).ToList();
+                int numSpaces = star.GetNumberOfSpaces();
+                List<int> filledSpaces = star.GetFilledSpaces().Select(space => space.GetValue()).ToList();
                 if (filledSpaces.Count == numSpaces)
                 {
                     // this one's easy - if you just filled up the star, you get 6 points
-                    points = payload.Star.GetNumberOfSpaces();
-                }
-                else if (filledSpaces.Count == 1)
-                {
-                    // also easy - if this is your first space, you get 1 point
-                    points = 1;
+                    points = star.GetNumberOfSpaces();
                 }
                 else
                 {
                     List<int> earnedSpaces = new();
                     for (int idx = 0; idx < numSpaces; idx++)
                     {
-                        int value = payload.TilePlaced + idx;
+                        int value = tilePlaced + idx;
                         if (value > numSpaces)
                         {
                             value = numSpaces - value;
                         }
-                        if (filledSpaces.Contains(value))
+                        if (filledSpaces.Contains(value) || value == tilePlaced)
                         {
                             earnedSpaces.Add(value);
                         }
@@ -119,12 +114,12 @@ namespace Azul
                     }
                     for (int idx = 0; idx < numSpaces; idx++)
                     {
-                        int value = payload.TilePlaced - idx;
+                        int value = tilePlaced - idx;
                         if (value <= 0)
                         {
                             value = numSpaces + value;
                         }
-                        if (filledSpaces.Contains(value))
+                        if (filledSpaces.Contains(value) || value == tilePlaced)
                         {
                             earnedSpaces.Add(value);
                         }
