@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.GameEvents;
 using Azul.Model;
+using Azul.RoundEvents;
 using UnityEngine;
 
 namespace Azul
@@ -21,11 +22,11 @@ namespace Azul
             void InitializeListeners()
             {
                 RoundController roundController = System.Instance.GetRoundController();
-                roundController.AddOnRoundPhaseAcquireListener(this.OnPhaseAcquire);
+                roundController.AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
                 roundController.AddOnAllRoundsCompleteListener(this.OnAllRoundsCompleted);
             }
 
-            private void OnPhaseAcquire(OnRoundPhaseAcquirePayload payload)
+            private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
                 this.currentRoundContainer.gameObject.SetActive(true);
                 this.currentRoundUI.SetActiveColor(payload.WildColor);

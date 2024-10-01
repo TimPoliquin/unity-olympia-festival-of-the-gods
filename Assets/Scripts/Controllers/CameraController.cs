@@ -1,4 +1,5 @@
 using Azul.Model;
+using Azul.RoundEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -38,6 +39,13 @@ namespace Azul
             {
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+                RoundController roundController = System.Instance.GetRoundController();
+                roundController.AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
+            }
+
+            private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
+            {
+                this.FocusOnTable(this.mainCamera);
             }
 
 

@@ -58,7 +58,7 @@ namespace Azul
                     this.panel.SetColorProgress(payload.Target.GetOriginColor(), altar.GetFilledSpaces().Count, altar.GetNumberOfSpaces());
                     if (payload.Target.GetValue() < 5)
                     {
-                        this.panel.SetValueProgress(payload.Target.GetValue(), this.GetValueProgress(playerBoard, payload.Target.GetValue()), altar.GetNumberOfSpaces());
+                        this.panel.SetValueProgress(payload.Target.GetValue(), this.GetValueProgress(playerBoard, payload.Target.GetValue()), playerBoard.GetAltars().Count);
                     }
                     this.GetRewardProgress(playerBoard, payload.Target).ForEach(rewardProgressUI =>
                     {
