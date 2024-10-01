@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using Azul.Controller.TableEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
+using Azul.RoundEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Azul
 {
+    namespace RoundEvents
+    {
+        public struct OnBeforeRoundStartPayload
+        {
+            public int RoundNumber { get; init; }
+            public TileColor WildColor { get; init; }
+            public Action Next { get; init; }
+        }
+    }
 
     namespace Controller
     {
@@ -18,6 +28,7 @@ namespace Azul
             [SerializeField][Range(1, 6)] private int totalRounds = 6;
             [SerializeField] private List<TileColor> wildColors;
             [SerializeField] private List<Round> rounds;
+            [SerializeField] private UnityEvent<OnBeforeRoundStartPayload> onBeforeRoundStart = new();
             [SerializeField] private UnityEvent<OnRoundPhasePreparePayload> onRoundPhasePrepare;
             [SerializeField] private UnityEvent<OnRoundPhaseAcquirePayload> onRoundPhaseAcquire;
             [SerializeField] private UnityEvent<OnRoundPhaseScorePayload> onRoundPhaseScore;
@@ -114,7 +125,15 @@ namespace Azul
                         RoundNumber = this.currentRound
                     });
                 }
-                this.StartPhase();
+                this.onBeforeRoundStart.Invoke(new OnBeforeRoundStartPayload
+                {
+                    RoundNumber = this.currentRound,
+                    WildColor = this.GetCurrentWild(),
+                    Next = () =>
+                    {
+                        this.StartPhase();
+                    }
+                });
 
             }
 
@@ -196,6 +215,11 @@ namespace Azul
                 {
                     this.NextPhase();
                 }
+            }
+
+            public void AddOnBeforeRoundStartListener(UnityAction<OnBeforeRoundStartPayload> listener)
+            {
+                this.onBeforeRoundStart.AddListener(listener);
             }
 
             public void AddOnRoundPhasePrepareListener(UnityAction<OnRoundPhasePreparePayload> listener)

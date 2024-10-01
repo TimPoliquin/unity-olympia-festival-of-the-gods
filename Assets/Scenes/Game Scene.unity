@@ -2986,6 +2986,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf9d7d6bfdca40e08a401a5cbb59181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1440354191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1440354192}
+  - component: {fileID: 1440354193}
+  m_Layer: 0
+  m_Name: Round Start UI Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1440354192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440354191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110538240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1440354193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440354191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56af158cf8c2c4812b2cf9c4c9d537b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  godNames:
+  - tileColor: 0
+    value: Ares
+  - tileColor: 1
+    value: Poseidon
+  - tileColor: 2
+    value: Zeus
+  - tileColor: 3
+    value: Artemis
+  - tileColor: 4
+    value: Aphrodite
+  - tileColor: 5
+    value: Demeter
 --- !u!1001 &1539786180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3725,6 +3782,8 @@ MonoBehaviour:
   playerUIPrefab: {fileID: 5210913683160451395, guid: f5cd10e549ba84ef980a102fae715f59,
     type: 3}
   rewardProgressFieldUIPrefab: {fileID: 9116167912701787650, guid: 9126e4a1d44ae4747ac68ba5afa94e44,
+    type: 3}
+  roundStartUIPrefab: {fileID: 7686113926522304365, guid: f0eec51bdace646be9b696f73bcf9ac4,
     type: 3}
   ritualScoreUIPrefab: {fileID: 5345362284180292537, guid: 67c0fc6add6cd4ae69d48281a9a39a74,
     type: 3}
@@ -4588,6 +4647,7 @@ Transform:
   - {fileID: 1920026098}
   - {fileID: 1017123625}
   - {fileID: 1695303666}
+  - {fileID: 1440354192}
   - {fileID: 1168090781}
   - {fileID: 1257572493}
   - {fileID: 47535149}
