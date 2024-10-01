@@ -123,30 +123,35 @@ namespace Azul
 
             public List<AltarSpace> GetOpenSpaces(TileColor tileColor)
             {
-                return this.GetStar(tileColor).GetOpenSpaces();
+                return this.GetAltar(tileColor).GetOpenSpaces();
             }
 
             public List<AltarSpace> GetWildOpenSpaces()
             {
-                return this.GetWildStar().GetOpenSpaces();
+                return this.GetWildAltar().GetOpenSpaces();
             }
 
-            public Altar GetStar(TileColor tileColor)
+            public Altar GetAltar(TileColor tileColor)
             {
                 return this.stars.Find(star => star.GetColor() == tileColor);
             }
 
-            private Altar GetWildStar()
+            private Altar GetWildAltar()
             {
                 return this.stars.Find(star => star.GetColor() == TileColor.WILD);
             }
 
-            public List<TileColor> GetWildTileColors()
+            public List<Altar> GetAltars()
             {
-                return this.GetWildStar().GetTileColors();
+                return this.stars;
             }
 
-            public bool IsTileNumberFilledOnAllStars(int tileNumber)
+            public List<TileColor> GetWildTileColors()
+            {
+                return this.GetWildAltar().GetTileColors();
+            }
+
+            public bool IsTileNumberFilledOnAllAltars(int tileNumber)
             {
                 return this.stars.All(star => star.IsSpaceFilled(tileNumber));
             }
@@ -200,6 +205,11 @@ namespace Azul
             public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
             {
                 this.rewardController.AddOnPlayerBoardEarnRewardListener(listener);
+            }
+
+            public RewardController GetRewardController()
+            {
+                return this.rewardController;
             }
         }
     }

@@ -17,9 +17,11 @@ namespace Azul
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
+            [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
+            [SerializeField] private ScoreTilesPreviewPanelUI scoreTilesPreviewPanelUIPrefab;
             [SerializeField] private PlayerTileCountUI tileCountUIPrefab;
             [SerializeField] private WildColorSelectionUI wildColorSelectionUIPrefab;
 
@@ -79,9 +81,19 @@ namespace Azul
                 return Instantiate(this.playerUIPrefab);
             }
 
+            public RewardProgressFieldUI CreateRewardProgressFieldUI()
+            {
+                return Instantiate(this.rewardProgressFieldUIPrefab, this.canvas.transform);
+            }
+
             public RitualScoreUI CreateRitualScoreUI()
             {
                 return Instantiate(this.ritualScoreUIPrefab, this.canvas.transform);
+            }
+
+            public ScoreTilesPreviewPanelUI CreateScoreTilesPreviewPanelUI()
+            {
+                return Instantiate(this.scoreTilesPreviewPanelUIPrefab, this.canvas.transform);
             }
 
             public ScoreTileSelectionPanelUI CreateScoreTileSelectionPanelUI()
@@ -107,7 +119,6 @@ namespace Azul
             {
                 return Instantiate(this.wildColorSelectionUIPrefab, parent ? parent : this.canvas.transform);
             }
-
         }
     }
 }

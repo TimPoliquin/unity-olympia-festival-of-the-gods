@@ -75,6 +75,11 @@ namespace Azul
                 });
             }
 
+            public List<RewardBehavior> GetRewardBehaviors(TileColor tileColor, int value)
+            {
+                return this.rewardBehaviors.FindAll(behavior => behavior.IsConditionParameter(tileColor, value));
+            }
+
             private void CreateRewardSpaces()
             {
                 this.rewardBehaviors = new();

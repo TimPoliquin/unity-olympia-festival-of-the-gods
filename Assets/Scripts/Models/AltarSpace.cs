@@ -11,10 +11,21 @@ namespace Azul
 {
     namespace AltarSpaceEvents
     {
-        public struct OnStarSpaceSelectPayload
+        public struct OnAltarSpaceSelectPayload
         {
             public AltarSpace Target { get; init; }
         }
+
+        public struct OnAltarSpaceHoverEnterPayload
+        {
+            public AltarSpace Target { get; init; }
+        }
+
+        public struct OnAltarSpaceHoverExitPayload
+        {
+            public AltarSpace Target { get; init; }
+        }
+
     }
     namespace Model
     {
@@ -28,7 +39,9 @@ namespace Azul
             [SerializeField] private Fire fire;
 
             private Outline outline;
-            private UnityEvent<OnStarSpaceSelectPayload> onStarSpaceSelect = new();
+            private UnityEvent<OnAltarSpaceHoverEnterPayload> onAltarSpaceHoverEnter = new();
+            private UnityEvent<OnAltarSpaceHoverExitPayload> onAltarSpaceHoverExit = new();
+            private UnityEvent<OnAltarSpaceSelectPayload> onAltarSpaceSelect = new();
 
             void Awake()
             {
@@ -41,6 +54,14 @@ namespace Azul
                 this.GetPointerEventController().AddOnPointerSelectListener(payload =>
                 {
                     this.Select();
+                });
+                this.GetPointerEventController().AddOnPointerEnterListener(payload =>
+                {
+                    this.HoverEnter();
+                });
+                this.GetPointerEventController().AddOnPointerExitListener(payload =>
+                {
+                    this.HoverExit();
                 });
                 if (null != this.fire)
                 {
@@ -118,22 +139,47 @@ namespace Azul
 
             public void Select()
             {
-                this.onStarSpaceSelect.Invoke(new OnStarSpaceSelectPayload { Target = this });
+                this.onAltarSpaceSelect.Invoke(new OnAltarSpaceSelectPayload { Target = this });
             }
 
-            public void AddOnStarSpaceSelectListener(UnityAction<OnStarSpaceSelectPayload> listener)
+            private void HoverEnter()
             {
-                this.onStarSpaceSelect.AddListener(listener);
+                this.onAltarSpaceHoverEnter.Invoke(new OnAltarSpaceHoverEnterPayload
+                {
+                    Target = this
+                });
             }
 
-            public void RemoveOnStarSpaceSelectListener(UnityAction<OnStarSpaceSelectPayload> listener)
+            private void HoverExit()
             {
-                this.onStarSpaceSelect.RemoveListener(listener);
+                this.onAltarSpaceHoverExit.Invoke(new OnAltarSpaceHoverExitPayload
+                {
+                    Target = this
+                });
+            }
+
+            public void AddOnStarSpaceHoverEnterListener(UnityAction<OnAltarSpaceHoverEnterPayload> listener)
+            {
+                this.onAltarSpaceHoverEnter.AddListener(listener);
+            }
+            public void AddOnStarSpaceHoverExitListener(UnityAction<OnAltarSpaceHoverExitPayload> listener)
+            {
+                this.onAltarSpaceHoverExit.AddListener(listener);
+            }
+
+            public void AddOnStarSpaceSelectListener(UnityAction<OnAltarSpaceSelectPayload> listener)
+            {
+                this.onAltarSpaceSelect.AddListener(listener);
+            }
+
+            public void RemoveOnStarSpaceSelectListener(UnityAction<OnAltarSpaceSelectPayload> listener)
+            {
+                this.onAltarSpaceSelect.RemoveListener(listener);
             }
 
             public void ClearStarSpaceSelectListeners()
             {
-                this.onStarSpaceSelect.RemoveAllListeners();
+                this.onAltarSpaceSelect.RemoveAllListeners();
             }
         }
 

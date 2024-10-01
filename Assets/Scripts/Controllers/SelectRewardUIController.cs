@@ -33,6 +33,11 @@ namespace Azul
                 playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
             }
 
+            public bool IsRewardPanelOpen()
+            {
+                return this.selectionUI != null;
+            }
+
             public void Show(int playerNumber, int tileCount)
             {
                 this.selectionUI = System.Instance.GetPrefabFactory().CreateGrantRewardTilesUI();

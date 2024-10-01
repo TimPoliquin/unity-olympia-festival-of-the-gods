@@ -12,6 +12,7 @@ namespace Azul
         public static System Instance { get; private set; }
 
         private AIController aiController;
+        private AltarFactory starController;
         private BagController bagController;
         private CameraController cameraController;
         private FactoryController factoryController;
@@ -21,7 +22,7 @@ namespace Azul
         private PrefabFactory prefabFactory;
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
-        private AltarFactory starController;
+
         private TableController tableController;
         private TileController tileController;
         private TileAnimationController tileAnimationController;

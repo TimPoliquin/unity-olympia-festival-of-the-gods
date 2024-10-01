@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.AIEvents;
 using Azul.Model;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Azul
             private IconUIFactory iconUIFactory;
             private OverflowTileSelectionUIController overflowTileSelectionUIController;
             private ScoreTileSelectionUIController scoreTileSelectionUIController;
+            private ScoreTilesPreviewPanelUIController scoreTilesPreviewPanelUIController;
             private SelectRewardUIController selectRewardUIController;
             private StarUIController starUIController;
 
@@ -71,6 +73,15 @@ namespace Azul
                     this.scoreTileSelectionUIController = this.GetComponentInChildren<ScoreTileSelectionUIController>();
                 }
                 return this.scoreTileSelectionUIController;
+            }
+
+            public ScoreTilesPreviewPanelUIController GetScoreTilesPreviewPanelUIController()
+            {
+                if (null == this.scoreTilesPreviewPanelUIController)
+                {
+                    this.scoreTilesPreviewPanelUIController = this.GetComponentInChildren<ScoreTilesPreviewPanelUIController>();
+                }
+                return this.scoreTilesPreviewPanelUIController;
             }
 
             public SelectRewardUIController GetSelectRewardUIController()

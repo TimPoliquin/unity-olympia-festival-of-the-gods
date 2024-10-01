@@ -1608,6 +1608,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &825219573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825219574}
+  - component: {fileID: 825219575}
+  m_Layer: 0
+  m_Name: Score Tiles Preview Panel UI Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825219574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825219573}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110538240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &825219575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825219573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97818d1d6293e433dba2872ad0d7eaf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,7 +1892,7 @@ PrefabInstance:
     - target: {fileID: 8437851077415418116, guid: 17e28eff137ca4798bdda7ba6c55d0dc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50.15
+      value: -50.149902
       objectReference: {fileID: 0}
     - target: {fileID: 9088310713462954326, guid: 17e28eff137ca4798bdda7ba6c55d0dc,
         type: 3}
@@ -3680,11 +3724,15 @@ MonoBehaviour:
     type: 3}
   playerUIPrefab: {fileID: 5210913683160451395, guid: f5cd10e549ba84ef980a102fae715f59,
     type: 3}
+  rewardProgressFieldUIPrefab: {fileID: 9116167912701787650, guid: 9126e4a1d44ae4747ac68ba5afa94e44,
+    type: 3}
   ritualScoreUIPrefab: {fileID: 5345362284180292537, guid: 67c0fc6add6cd4ae69d48281a9a39a74,
     type: 3}
   scoreTileSelectionPanelUIPrefab: {fileID: 3741744990853243757, guid: b42097cab83b04197a396f841918ab95,
     type: 3}
   scoreTileSelectionUIPrefab: {fileID: 8318375118132352395, guid: f4d97a516ac8d4e73b2544c8398c40ee,
+    type: 3}
+  scoreTilesPreviewPanelUIPrefab: {fileID: 626295238030696778, guid: 76dee75a9097e4646b7850ad76b504ba,
     type: 3}
   tileCountUIPrefab: {fileID: 4532902485550771721, guid: 8fae7a60db424443cab3ac0b793992b7,
     type: 3}
@@ -4543,6 +4591,7 @@ Transform:
   - {fileID: 1168090781}
   - {fileID: 1257572493}
   - {fileID: 47535149}
+  - {fileID: 825219574}
   m_Father: {fileID: 1372239317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110538241

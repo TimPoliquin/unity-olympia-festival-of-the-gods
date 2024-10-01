@@ -10,6 +10,7 @@ using UnityEngine.Events;
 using System.Linq;
 using Azul.PlayerBoardRewardEvents;
 using Azul.RewardUIEvents;
+using Unity.VisualScripting;
 
 namespace Azul
 {
@@ -26,6 +27,7 @@ namespace Azul
 
             private ScoreTileSelectionPanelUI currentPanel;
             private WildColorSelectionUI currentWildSelectionPanel;
+
 
             void Awake()
             {
@@ -49,6 +51,11 @@ namespace Azul
                 playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
                 SelectRewardUIController selectRewardUIController = System.Instance.GetUIController().GetSelectRewardUIController();
                 selectRewardUIController.AddOnGrantRewardListener(this.OnGrantReward);
+            }
+
+            public bool IsPanelOpen()
+            {
+                return this.currentPanel != null || this.currentWildSelectionPanel != null;
             }
 
             private void OnRoundPhaseAcquire(OnRoundPhaseAcquirePayload payload)
