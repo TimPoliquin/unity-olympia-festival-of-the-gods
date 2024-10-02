@@ -29,17 +29,18 @@ namespace Azul
             void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
                 TileColor wild = payload.WildColor;
+                string godName = this.godNames.Find(value => value.GetTileColor() == wild).GetValue();
                 RoundStartUI roundStartUI = System.Instance.GetPrefabFactory().CreateRoundStartUI();
-                roundStartUI.Show(this.godNames.Find(value => value.GetTileColor() == wild).GetValue(), wild);
-                this.StartCoroutine(this.HideAfter(roundStartUI, this.hideAfterSeconds, payload.Next));
+                this.StartCoroutine(this.ShowBannerForTime(roundStartUI, godName, wild, this.hideAfterSeconds, payload.Next));
             }
-
-            IEnumerator HideAfter(RoundStartUI roundStartUI, float hideAfterSeconds, Action callback)
+            private IEnumerator ShowBannerForTime(RoundStartUI banner, string godName, TileColor wildColor, float time, Action callback)
             {
-                yield return new WaitForSeconds(hideAfterSeconds);
-                roundStartUI.Hide(callback);
+                yield return banner.Show(godName, wildColor);
+                yield return new WaitForSeconds(time);
+                yield return banner.Hide();
+                Destroy(banner.gameObject);
+                callback.Invoke();
             }
-
         }
     }
 }

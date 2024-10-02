@@ -4,6 +4,7 @@ using System.Linq;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.PlayerEvents;
 using Azul.ScoreBoardEvents;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace Azul
                 {
                     this.CreatePlayerUI(player);
                 }
-                playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+                playerController.AddOnBeforePlayerTurnStartListener(this.OnPlayerTurnStart);
                 playerBoardController.AddOnPlayerBoardTilesCollectedListener(this.OnPlayerTilesCollected);
                 playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerTilesDiscarded);
                 playerBoardController.AddOnPlayerBoardDiscardOneTileListener(this.OnPlayerDiscardOneTile);
@@ -51,11 +52,11 @@ namespace Azul
                 this.playerUIs.Add(playerUI);
             }
 
-            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            private void OnPlayerTurnStart(OnBeforePlayerTurnStartPayload payload)
             {
                 foreach (PlayerUI playerUI in this.playerUIs)
                 {
-                    playerUI.SetActive(playerUI.GetPlayerNumber() == payload.PlayerNumber);
+                    playerUI.SetActive(playerUI.GetPlayerNumber() == payload.Player.GetPlayerNumber());
                 }
             }
 

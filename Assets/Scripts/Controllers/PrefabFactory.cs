@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.Prefab;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Azul
@@ -17,6 +18,7 @@ namespace Azul
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
+            [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
             [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
             [SerializeField] private RoundStartUI roundStartUIPrefab;
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
@@ -80,6 +82,11 @@ namespace Azul
             public PlayerUI CreatePlayerUI()
             {
                 return Instantiate(this.playerUIPrefab);
+            }
+
+            public PlayerTurnBannerUI CreatePlayerTurnBannerUI()
+            {
+                return Instantiate(this.playerTurnBannerUIPrefab, this.canvas.transform);
             }
 
             public RewardProgressFieldUI CreateRewardProgressFieldUI()

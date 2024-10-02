@@ -12,6 +12,12 @@ namespace Azul
 {
     namespace PlayerEvents
     {
+        public struct OnBeforePlayerTurnStartPayload
+        {
+            public Player Player { get; init; }
+            public Phase Phase { get; init; }
+            public Action Done { get; init; }
+        }
         public class OnPlayerTurnScoreFinishedPayload
         {
             public int PlayerNumber { get; init; }
@@ -36,6 +42,7 @@ namespace Azul
             private int playerWithOneTile = -1;
 
             private List<Player> players;
+            private UnityEvent<OnBeforePlayerTurnStartPayload> onBeforePlayerTurnStart = new();
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnStart = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnStartPayload> onPlayerTurnEnd = new UnityEvent<OnPlayerTurnStartPayload>();
             private UnityEvent<OnPlayerTurnScoreFinishedPayload> onPlayerTurnScoreFinished = new();
@@ -110,11 +117,24 @@ namespace Azul
 
             public void StartTurn()
             {
-                this.onPlayerTurnStart.Invoke(new OnPlayerTurnStartPayload
+                RoundController roundController = System.Instance.GetRoundController();
+                if (roundController.IsAfterLastRound())
                 {
-                    PlayerNumber = this.currentPlayer,
+                    return;
+                }
+                this.onBeforePlayerTurnStart.Invoke(new OnBeforePlayerTurnStartPayload
+                {
                     Player = this.players[this.currentPlayer],
-                    Phase = System.Instance.GetRoundController().GetCurrentPhase()
+                    Phase = roundController.GetCurrentPhase(),
+                    Done = () =>
+                    {
+                        this.onPlayerTurnStart.Invoke(new OnPlayerTurnStartPayload
+                        {
+                            PlayerNumber = this.currentPlayer,
+                            Player = this.players[this.currentPlayer],
+                            Phase = System.Instance.GetRoundController().GetCurrentPhase()
+                        });
+                    }
                 });
             }
 
@@ -167,6 +187,11 @@ namespace Azul
             {
                 this.currentPlayer = this.GetNextPlayerNumber();
                 this.StartTurn();
+            }
+
+            public void AddOnBeforePlayerTurnStartListener(UnityAction<OnBeforePlayerTurnStartPayload> listener)
+            {
+                this.onBeforePlayerTurnStart.AddListener(listener);
             }
 
             public void AddOnPlayerTurnStartListener(UnityAction<OnPlayerTurnStartPayload> listener)

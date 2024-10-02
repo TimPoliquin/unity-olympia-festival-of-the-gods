@@ -1,4 +1,5 @@
 using Azul.Model;
+using Azul.PlayerEvents;
 using Azul.RoundEvents;
 using TMPro;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace Azul
             public void InitializeListeners()
             {
                 PlayerController playerController = System.Instance.GetPlayerController();
-                playerController.AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+                playerController.AddOnBeforePlayerTurnStartListener(this.OnPlayerTurnStart);
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
             }
@@ -49,19 +50,18 @@ namespace Azul
             }
 
 
-            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            private void OnPlayerTurnStart(OnBeforePlayerTurnStartPayload payload)
             {
-                UnityEngine.Debug.Log($"Player: {payload.PlayerNumber} / Phase: {payload.Phase}");
                 if (payload.Phase == Phase.SCORE)
                 {
-                    this.FocusOnPlayerBoard(this.mainCamera, this.scoreSettings, payload.PlayerNumber);
+                    this.FocusOnPlayerBoard(this.mainCamera, this.scoreSettings, payload.Player.GetPlayerNumber());
                     this.playerBoardCamera.gameObject.SetActive(false);
                 }
                 else
                 {
                     this.playerBoardCamera.gameObject.SetActive(true);
                     this.FocusOnTable(this.mainCamera);
-                    this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, payload.PlayerNumber);
+                    this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, payload.Player.GetPlayerNumber());
                 }
             }
 

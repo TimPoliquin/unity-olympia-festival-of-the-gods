@@ -20,23 +20,19 @@ namespace Azul
 
             private Fade transition;
 
-            public void Show(string god, TileColor tileColor)
+            public IEnumerator Show(string god, TileColor tileColor)
             {
                 this.transition = this.GetComponent<Fade>();
                 this.transition.StartHidden();
                 this.icon.SetTileColor(tileColor);
                 this.titleText.text = string.Format(this.titleTemplate, god);
                 this.subtitleText.text = string.Format(this.subtitleTemplate, god);
-                this.transition.Show();
+                return this.transition.Show();
             }
 
-            public void Hide(Action callback)
+            public IEnumerator Hide()
             {
-                this.transition.Hide(() =>
-                {
-                    callback.Invoke();
-                    Destroy(this.gameObject);
-                });
+                return this.transition.Hide();
             }
         }
     }
