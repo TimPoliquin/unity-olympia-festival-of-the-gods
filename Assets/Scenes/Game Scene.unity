@@ -1096,6 +1096,52 @@ MonoBehaviour:
   - color: 6
     material: {fileID: 2100000, guid: aacaa77a8d0b1408989c655e7f4171a3, type: 2}
     tint: {r: 0, g: 0, b: 0, a: 0}
+--- !u!1 &629341929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 629341930}
+  - component: {fileID: 629341931}
+  m_Layer: 0
+  m_Name: Player Turn Banner UI Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &629341930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629341929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110538240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629341931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629341929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89abf87b15548438fa7bb03310c9be98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideAfterSeconds: 4
+  repeatHideAfterSeconds: 0.75
 --- !u!1 &665030963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,6 +3906,8 @@ MonoBehaviour:
     type: 3}
   playerUIPrefab: {fileID: 5210913683160451395, guid: f5cd10e549ba84ef980a102fae715f59,
     type: 3}
+  playerTurnBannerUIPrefab: {fileID: 4437863261401782270, guid: 164e186a83c224f2baefaf4951ea1f73,
+    type: 3}
   rewardProgressFieldUIPrefab: {fileID: 9116167912701787650, guid: 9126e4a1d44ae4747ac68ba5afa94e44,
     type: 3}
   roundStartUIPrefab: {fileID: 7686113926522304365, guid: f0eec51bdace646be9b696f73bcf9ac4,
@@ -4838,6 +4886,7 @@ Transform:
   - {fileID: 1734180387}
   - {fileID: 1920026098}
   - {fileID: 1017123625}
+  - {fileID: 629341930}
   - {fileID: 1695303666}
   - {fileID: 1440354192}
   - {fileID: 1168090781}

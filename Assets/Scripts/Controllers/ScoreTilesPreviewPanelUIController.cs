@@ -50,6 +50,10 @@ namespace Azul
                 {
                     return;
                 }
+                else if (System.Instance.GetTileAnimationController().IsAnimating())
+                {
+                    return;
+                }
                 else if (payload.Target.IsEmpty())
                 {
                     this.panel = System.Instance.GetPrefabFactory().CreateScoreTilesPreviewPanelUI();

@@ -245,6 +245,12 @@ namespace Azul
             {
                 return this.currentRound == this.rounds.Count - 1;
             }
+
+            public bool IsAfterLastRound()
+            {
+                return this.currentRound >= this.rounds.Count;
+            }
+
         }
     }
 }

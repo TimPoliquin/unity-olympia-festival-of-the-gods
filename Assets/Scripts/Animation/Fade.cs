@@ -26,26 +26,21 @@ namespace Azul
                 this.canvasGroup.alpha = 0;
             }
 
-            public void Show()
+            public IEnumerator Show()
             {
                 bool startedHidden = this.canvasGroup.alpha == 0;
                 this.gameObject.SetActive(true);
                 this.hidden = false;
-                this.StartCoroutine(this.Transition(startedHidden ? this.delay : 0, this.time, 1, null));
-
+                return this.Transition(startedHidden ? this.delay : 0, this.time, 1, null);
             }
 
-            public void Hide(Action callback)
+            public IEnumerator Hide()
             {
                 this.hidden = true;
-                this.StartCoroutine(this.Transition(0, this.time, 0, () =>
+                return this.Transition(0, this.time, 0, () =>
                 {
                     this.gameObject.SetActive(false);
-                    if (callback != null)
-                    {
-                        callback.Invoke();
-                    }
-                }));
+                });
             }
 
             private IEnumerator Transition(float delay, float time, float alpha, Action callback)
