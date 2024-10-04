@@ -49,6 +49,16 @@ namespace Azul
                 }
             }
 
+            public void Hide()
+            {
+                this.container.SetActive(false);
+            }
+
+            public void Show()
+            {
+                this.container.SetActive(true);
+            }
+
             private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
             {
                 this.container.SetActive(false);

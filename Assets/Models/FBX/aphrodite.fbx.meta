@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Heart
-    second: {fileID: 2100000, guid: 01f489869dc3b44ba84d6c8965030178, type: 2}
+    second: {fileID: 2100000, guid: 71cf0d36dbf98428e8736a90f1414ecb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

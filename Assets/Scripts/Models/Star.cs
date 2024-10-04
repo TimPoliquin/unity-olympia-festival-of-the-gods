@@ -8,6 +8,7 @@ using Azul.Util;
 using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 namespace Azul
 {
@@ -20,6 +21,8 @@ namespace Azul
             [SerializeField] private TileColor color;
             [SerializeField] private AltarSpace[] spaces;
 
+
+            private readonly int alphaVar = Shader.PropertyToID("_Alpha");
             private CircularLayout layout;
 
             void Awake()
@@ -143,7 +146,8 @@ namespace Azul
                 {
                     foreach (Material material in materials)
                     {
-                        material.color = Color.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                        Color color = Color.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                        material.SetFloat(this.alphaVar, color.a);
                     }
                 }, time);
             }

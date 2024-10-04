@@ -11,20 +11,12 @@ namespace Azul
 {
     namespace Controller
     {
-        [RequireComponent(typeof(TimeBasedCoroutine))]
         public class MilestoneCompletionController : MonoBehaviour
         {
-            private struct Transition<T>
-            {
-                public T Original { get; init; }
-                public T Target { get; init; }
-            }
             [SerializeField] private float cameraRotationSeconds = 1.0f;
-            private TimeBasedCoroutine timeBasedCoroutine;
             void Start()
             {
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
-                this.timeBasedCoroutine = this.GetComponent<TimeBasedCoroutine>();
             }
 
             void OnGameSetupComplete(OnGameSetupCompletePayload payload)
@@ -40,6 +32,7 @@ namespace Azul
             void ShowMilestoneCompleteUI(int playerNumber)
             {
                 System.Instance.GetPlayerBoardController().HideScoringUI(playerNumber);
+                System.Instance.GetUIController().GetStarUIController().Hide();
                 // TODO
             }
 
