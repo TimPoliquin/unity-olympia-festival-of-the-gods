@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Controller;
 using Azul.Layout;
+using Azul.Util;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Azul
 {
     namespace Model
     {
-        public class Altar : MonoBehaviour
+        public class Altar : TimeBasedCoroutine
         {
             [SerializeField] private GameObject center;
             [SerializeField] private GameObject layoutGameObject;
@@ -122,6 +125,27 @@ namespace Azul
                 {
                     space.ClearStarSpaceSelectListeners();
                 }
+            }
+
+            public CoroutineResult FadeOut(float time)
+            {
+                Material[] materials = this.GetComponentsInChildren<MeshRenderer>().Select(renderer => renderer.material).ToArray();
+                Dictionary<Material, Transition<Color>> materialColors = new();
+                foreach (Material material in materials)
+                {
+                    materialColors[material] = new()
+                    {
+                        Original = material.color,
+                        Target = new Color(material.color.r, material.color.g, material.color.b, 0.0f),
+                    };
+                }
+                return this.Execute(t =>
+                {
+                    foreach (Material material in materials)
+                    {
+                        material.color = Color.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                    }
+                }, time);
             }
         }
     }

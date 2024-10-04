@@ -10,6 +10,7 @@ using Azul.AltarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
 using Azul.TileAnimation;
+using Azul.MilestoneEvents;
 
 namespace Azul
 {
@@ -223,6 +224,13 @@ namespace Azul
                 });
             }
 
+            public void HideScoringUI(int playerNumber)
+            {
+                PlayerBoard playerBoard = this.playerBoards[playerNumber];
+                playerBoard.DisableAllHighlights();
+                playerBoard.ClearTileEventListeners();
+            }
+
             private void OnPointerSelectSpace(OnAltarSpaceSelectPayload payload)
             {
                 // TODO - a lot needs to be done here to keep the rails on selection.
@@ -366,6 +374,14 @@ namespace Azul
                 this.onTilesCollected.AddListener(listener);
             }
 
+            public void AddOnMilestoneCompleteListener(UnityAction<OnMilestoneCompletePayload> listener)
+            {
+                foreach (PlayerBoard playerBoard in this.playerBoards)
+                {
+                    playerBoard.GetMilestoneController().AddOnMilestoneCompleteListener(listener);
+                }
+            }
+
             public Tile GrantReward(int playerNumber, TileColor tileColor)
             {
                 BagController bagController = System.Instance.GetBagController();
@@ -373,7 +389,6 @@ namespace Azul
                 this.AddDrawnTiles(playerNumber, new() { grantedTile });
                 return grantedTile;
             }
-
         }
     }
 }

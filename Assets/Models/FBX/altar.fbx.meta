@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Altar Stone
+    second: {fileID: 2100000, guid: f480b2832aafb4747943e171fdbc82fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material.001
     second: {fileID: -6478536213147159724, guid: 8f0d4885dde3c41ab8b4da10174b0f43,
       type: 3}

@@ -62,6 +62,10 @@ namespace Azul
                             }
                             PlayerTurnBannerUI playerTurnBannerUI = System.Instance.GetPrefabFactory().CreatePlayerTurnBannerUI();
                             this.StartCoroutine(this.ShowBannerForTime(playerTurnBannerUI, payload.Player, payload.Phase, hideDelay, showInstructions, callback));
+                            playerTurnBannerUI.AddOnCloseListener(() =>
+                            {
+                                this.StartCoroutine(this.HideBanner(playerTurnBannerUI, callback));
+                            });
                             if (!showInstructions)
                             {
                                 payload.Done.Invoke();
@@ -80,11 +84,19 @@ namespace Azul
             {
                 yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions);
                 yield return new WaitForSeconds(time);
-                yield return playerTurnBannerUI.Hide();
-                Destroy(playerTurnBannerUI.gameObject);
-                if (null != callback)
+                yield return this.HideBanner(playerTurnBannerUI, callback);
+            }
+
+            private IEnumerator HideBanner(PlayerTurnBannerUI playerTurnBannerUI, Action callback)
+            {
+                if (!playerTurnBannerUI.IsHidden())
                 {
-                    callback.Invoke();
+                    yield return playerTurnBannerUI.Hide();
+                    Destroy(playerTurnBannerUI.gameObject);
+                    if (null != callback)
+                    {
+                        callback.Invoke();
+                    }
                 }
             }
         }

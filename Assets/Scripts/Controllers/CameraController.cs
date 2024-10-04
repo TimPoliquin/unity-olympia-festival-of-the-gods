@@ -1,6 +1,8 @@
+using System.Collections;
 using Azul.Model;
 using Azul.PlayerEvents;
 using Azul.RoundEvents;
+using Azul.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,13 +12,14 @@ namespace Azul
 {
     namespace Controller
     {
-        public class CameraController : MonoBehaviour
+        public class CameraController : TimeBasedCoroutine
         {
             [SerializeField] private Camera mainCamera;
             [SerializeField] private Camera playerBoardCamera;
             [SerializeField] private CameraSettings acquireSettings;
             [SerializeField] private CameraSettings scoreSettings;
             [SerializeField] private CameraSettings previewSettings;
+            [SerializeField] private CameraSettings altarSettings;
 
             private UnityEvent onFocusOnTable = new();
             private UnityEvent onFocusOnPlayerBoard = new();
@@ -116,6 +119,28 @@ namespace Azul
             {
                 Vector3 position = this.mainCamera.WorldToViewportPoint(gameObject.transform.position);
                 return position.x >= 0 & position.x <= 1 && position.y >= 0 && position.y <= 1 && position.z > 0;
+            }
+
+            public CoroutineResult FocusMainCameraOnAltar(Altar altar, float rotationTime)
+            {
+                Camera camera = this.mainCamera;
+                CameraSettings cameraSettings = this.altarSettings;
+                Vector3 position = altar.transform.position;
+                Vector3 originalPosition = camera.transform.position;
+                Quaternion originalRotation = camera.transform.rotation;
+                float originalSize = camera.orthographicSize;
+                Vector3 rotationDirection = cameraSettings.GetRotation().eulerAngles;
+                rotationDirection.y = camera.transform.rotation.eulerAngles.y;
+                Vector3 targetPosition = position + (altar.transform.forward * cameraSettings.GetOffset().z) + Vector3.up * cameraSettings.GetOffset().y;
+                CoroutineResult result = this.Execute((t) =>
+                {
+                    UnityEngine.Debug.Log($"Camera Move: {t}/{rotationTime}");
+                    camera.transform.rotation = Quaternion.Lerp(originalRotation, Quaternion.Euler(rotationDirection), t / rotationTime);
+                    camera.transform.position = Vector3.Lerp(originalPosition, targetPosition, t / rotationTime);
+                    camera.orthographicSize = Mathf.Lerp(originalSize, cameraSettings.GetSize(), t / rotationTime);
+
+                }, rotationTime);
+                return result;
             }
 
         }

@@ -3,7 +3,12 @@ guid: 5d12747de85af4bb9a5886594e35590d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lightning
+    second: {fileID: 2100000, guid: 68c07eb3f25284eada7a193197a4ee10, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -24,6 +24,7 @@ namespace Azul
     }
     namespace Model
     {
+        [RequireComponent(typeof(MilestoneController))]
         public class PlayerBoard : MonoBehaviour
         {
             [SerializeField] private CircularLayout outerRing;
@@ -210,6 +211,11 @@ namespace Azul
             public RewardController GetRewardController()
             {
                 return this.rewardController;
+            }
+
+            public MilestoneController GetMilestoneController()
+            {
+                return this.GetComponent<MilestoneController>();
             }
         }
     }
