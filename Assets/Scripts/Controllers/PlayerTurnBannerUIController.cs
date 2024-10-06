@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
+using Azul.Util;
 using UnityEngine;
 
 namespace Azul
@@ -62,6 +64,10 @@ namespace Azul
                             }
                             PlayerTurnBannerUI playerTurnBannerUI = System.Instance.GetPrefabFactory().CreatePlayerTurnBannerUI();
                             this.StartCoroutine(this.ShowBannerForTime(playerTurnBannerUI, payload.Player, payload.Phase, hideDelay, showInstructions, callback));
+                            playerTurnBannerUI.AddOnCloseListener(() =>
+                            {
+                                this.StartCoroutine(this.HideBanner(playerTurnBannerUI, callback));
+                            });
                             if (!showInstructions)
                             {
                                 payload.Done.Invoke();
@@ -78,13 +84,21 @@ namespace Azul
 
             private IEnumerator ShowBannerForTime(PlayerTurnBannerUI playerTurnBannerUI, Player player, Phase phase, float time, bool showInstructions, Action callback)
             {
-                yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions);
+                yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions).WaitUntilCompleted();
                 yield return new WaitForSeconds(time);
-                yield return playerTurnBannerUI.Hide();
-                Destroy(playerTurnBannerUI.gameObject);
-                if (null != callback)
+                yield return this.HideBanner(playerTurnBannerUI, callback);
+            }
+
+            private IEnumerator HideBanner(PlayerTurnBannerUI playerTurnBannerUI, Action callback)
+            {
+                if (!playerTurnBannerUI.IsHidden())
                 {
-                    callback.Invoke();
+                    yield return playerTurnBannerUI.Hide().WaitUntilCompleted();
+                    Destroy(playerTurnBannerUI.gameObject);
+                    if (null != callback)
+                    {
+                        callback.Invoke();
+                    }
                 }
             }
         }

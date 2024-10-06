@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.RoundEvents;
+using Azul.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,9 +36,9 @@ namespace Azul
             }
             private IEnumerator ShowBannerForTime(RoundStartUI banner, string godName, TileColor wildColor, float time, Action callback)
             {
-                yield return banner.Show(godName, wildColor);
+                yield return banner.Show(godName, wildColor).WaitUntilCompleted();
                 yield return new WaitForSeconds(time);
-                yield return banner.Hide();
+                yield return banner.Hide().WaitUntilCompleted();
                 Destroy(banner.gameObject);
                 callback.Invoke();
             }

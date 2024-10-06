@@ -1,6 +1,8 @@
+using System.Collections;
 using Azul.Model;
 using Azul.PlayerEvents;
 using Azul.RoundEvents;
+using Azul.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,13 +12,14 @@ namespace Azul
 {
     namespace Controller
     {
-        public class CameraController : MonoBehaviour
+        public class CameraController : TimeBasedCoroutine
         {
             [SerializeField] private Camera mainCamera;
             [SerializeField] private Camera playerBoardCamera;
             [SerializeField] private CameraSettings acquireSettings;
             [SerializeField] private CameraSettings scoreSettings;
             [SerializeField] private CameraSettings previewSettings;
+            [SerializeField] private CameraSettings altarSettings;
 
             private UnityEvent onFocusOnTable = new();
             private UnityEvent onFocusOnPlayerBoard = new();
@@ -116,6 +119,42 @@ namespace Azul
             {
                 Vector3 position = this.mainCamera.WorldToViewportPoint(gameObject.transform.position);
                 return position.x >= 0 & position.x <= 1 && position.y >= 0 && position.y <= 1 && position.z > 0;
+            }
+
+            public CoroutineResult FocusMainCameraOnAltar(Altar altar, float rotationTime)
+            {
+                Vector3 targetRotation = this.altarSettings.GetRotation().eulerAngles;
+                targetRotation.y = this.mainCamera.transform.rotation.eulerAngles.y;
+                Vector3 targetPosition = altar.transform.position + (altar.transform.forward * this.altarSettings.GetOffset().z) + Vector3.up * this.altarSettings.GetOffset().y;
+                return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.altarSettings.GetSize(), rotationTime);
+            }
+
+            public CoroutineResult AnimateFocusMainCameraOnPlayerBoard(int playerNumber, float time)
+            {
+                PlayerController playerController = System.Instance.GetPlayerController();
+                PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
+                int numPlayers = playerController.GetNumberOfPlayers();
+                float perPlayerRotation = 360.0f / (float)numPlayers;
+                Vector3 targetRotation = new Vector3(90.0f, perPlayerRotation * playerBoard.GetPlayerNumber(), 0);
+                Vector3 targetPosition = new Vector3(playerBoard.transform.position.x, this.scoreSettings.GetOffset().y, playerBoard.transform.position.z);
+                targetPosition += playerBoard.transform.right * this.scoreSettings.GetOffset().x;
+                targetPosition += playerBoard.transform.forward * this.scoreSettings.GetOffset().z;
+                return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.scoreSettings.GetSize(), time);
+            }
+
+            public CoroutineResult RefocusCameraAnimated(Camera camera, Vector3 targetPosition, Vector3 targetRotation, float targetSize, float time)
+            {
+                Vector3 originalPosition = camera.transform.position;
+                Quaternion originalRotation = camera.transform.rotation;
+                float originalSize = camera.orthographicSize;
+                CoroutineResult result = this.Execute((t) =>
+                {
+                    camera.transform.rotation = Quaternion.Lerp(originalRotation, Quaternion.Euler(targetRotation), t / time);
+                    camera.transform.position = Vector3.Lerp(originalPosition, targetPosition, t / time);
+                    camera.orthographicSize = Mathf.Lerp(originalSize, targetSize, t / time);
+
+                }, time);
+                return result;
             }
 
         }

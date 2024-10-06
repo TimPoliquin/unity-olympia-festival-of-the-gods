@@ -537,6 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5234731856542073814}
   - component: {fileID: 6542341123791861406}
+  - component: {fileID: 7432725883245220164}
   m_Layer: 0
   m_Name: Player Board
   m_TagString: Untagged
@@ -581,6 +582,19 @@ MonoBehaviour:
   center: {fileID: 2187565068416992923}
   drawnTilesContainer: {fileID: 8216614471830517744}
   rewardController: {fileID: 6609700284065729275}
+--- !u!114 &7432725883245220164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295110258185855427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35f14b2486014f27ab4c71b9b778f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 1
 --- !u!1 &6304947866937657658
 GameObject:
   m_ObjectHideFlags: 0

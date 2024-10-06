@@ -138,6 +138,16 @@ namespace Azul
                 });
             }
 
+            public void ContinueTurn()
+            {
+                this.onPlayerTurnStart.Invoke(new OnPlayerTurnStartPayload
+                {
+                    PlayerNumber = this.currentPlayer,
+                    Player = this.players[this.currentPlayer],
+                    Phase = System.Instance.GetRoundController().GetCurrentPhase()
+                });
+            }
+
             public void EndPlayerScoringTurn()
             {
                 if (this.CanPlayerEndScoreTurn())

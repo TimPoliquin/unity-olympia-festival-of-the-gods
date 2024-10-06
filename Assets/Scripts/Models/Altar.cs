@@ -1,22 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Controller;
 using Azul.Layout;
+using Azul.Util;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 namespace Azul
 {
     namespace Model
     {
-        public class Altar : MonoBehaviour
+        public class Altar : TimeBasedCoroutine
         {
             [SerializeField] private GameObject center;
             [SerializeField] private GameObject layoutGameObject;
             [SerializeField] private TileColor color;
             [SerializeField] private AltarSpace[] spaces;
+            [SerializeField] private Light milestoneCompletionLight;
 
+
+            private readonly int alphaVar = Shader.PropertyToID("_Alpha");
             private CircularLayout layout;
 
             void Awake()
@@ -122,6 +129,38 @@ namespace Azul
                 {
                     space.ClearStarSpaceSelectListeners();
                 }
+            }
+
+            public CoroutineResult Fade(float time, float target)
+            {
+                Material[] materials = this.GetComponentsInChildren<MeshRenderer>().Select(renderer => renderer.material).ToArray();
+                Dictionary<Material, Transition<float>> materialColors = new();
+                foreach (Material material in materials)
+                {
+                    materialColors[material] = new()
+                    {
+                        Original = material.GetFloat(this.alphaVar),
+                        Target = target,
+                    };
+                }
+                return this.Execute(t =>
+                {
+                    foreach (Material material in materials)
+                    {
+                        float alpha = Mathf.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                        material.SetFloat(this.alphaVar, alpha);
+                    }
+                }, time);
+            }
+
+            public CoroutineResult TurnOnMilestoneCompletionLight(Color color, float intensity, float time)
+            {
+                this.milestoneCompletionLight.gameObject.SetActive(true);
+                this.milestoneCompletionLight.color = color;
+                return this.Execute(t =>
+                {
+                    this.milestoneCompletionLight.intensity = Mathf.Lerp(0, intensity, t / time);
+                }, time);
             }
         }
     }

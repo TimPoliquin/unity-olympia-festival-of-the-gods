@@ -176,6 +176,11 @@ namespace Azul
             {
                 return this.numberCompletedMilestones;
             }
+
+            public int GetCompletionPoints(TileColor tileColor)
+            {
+                return this.starCompletedMilestones.Find(milestone => milestone.GetColor() == tileColor).GetPoints();
+            }
         }
     }
 }
