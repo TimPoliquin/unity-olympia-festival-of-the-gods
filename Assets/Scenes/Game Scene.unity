@@ -1137,7 +1137,10 @@ MonoBehaviour:
     tint: {r: 1, g: 0, b: 1, a: 1}
   - color: 5
     material: {fileID: 2100000, guid: 794d3e9f4eb2e46389903fde9d07dedc, type: 2}
-    tint: {r: 0.48235294, g: 0.23921569, b: 0, a: 1}
+    tint: {r: 1, g: 0.49593496, b: 0, a: 1}
+  - color: 6
+    material: {fileID: 2100000, guid: aacaa77a8d0b1408989c655e7f4171a3, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
   placeholderMaterials:
   - color: 0
     material: {fileID: 2100000, guid: a7cd336fb47f7486fbffd938a0c9ea57, type: 2}

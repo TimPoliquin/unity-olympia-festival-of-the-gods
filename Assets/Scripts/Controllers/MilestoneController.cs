@@ -24,7 +24,6 @@ namespace Azul
         {
             private PlayerBoard playerBoard;
             private UnityEvent<OnMilestoneCompletePayload> onMilestoneComplete = new();
-            [SerializeField] private bool force = true;
 
             void Start()
             {
@@ -43,7 +42,7 @@ namespace Azul
                 {
                     return;
                 }
-                if (this.force || payload.Star.GetFilledSpaces().Count == payload.Star.GetNumberOfSpaces())
+                if (payload.Star.GetFilledSpaces().Count == payload.Star.GetNumberOfSpaces())
                 {
                     this.onMilestoneComplete.Invoke(new OnMilestoneCompletePayload
                     {
