@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
+using Azul.Util;
 using UnityEngine;
 
 namespace Azul
@@ -11,7 +12,7 @@ namespace Azul
         {
             private MilestoneCompletedPanelUI currentPanel;
 
-            public void Show(TileColor tileColor)
+            public CoroutineResult Show(TileColor tileColor)
             {
                 if (null != this.currentPanel)
                 {
@@ -19,18 +20,32 @@ namespace Azul
                 }
                 TileColorMappingController tileColorMappingController = System.Instance.GetTileColorMappingController();
                 this.currentPanel = System.Instance.GetPrefabFactory().CreateMilestoneCompletedPanelUI();
-                this.currentPanel.Show(tileColorMappingController.GetGodName(tileColor), tileColor, tileColorMappingController.GetGodPoints(tileColor));
+                return this.currentPanel.Show(tileColorMappingController.GetGodName(tileColor), tileColor, tileColorMappingController.GetGodPoints(tileColor));
             }
 
-            public void Hide()
+            public CoroutineResult Hide()
             {
-                if (null != this.currentPanel)
+                CoroutineResult result = CoroutineResult.Single();
+                if (null != this.currentPanel && this.currentPanel.gameObject.activeInHierarchy)
                 {
-                    this.currentPanel.Hide();
-                    Destroy(this.currentPanel.gameObject);
+                    this.StartCoroutine(this.HideCoroutine(this.currentPanel, result));
                     this.currentPanel = null;
                 }
+                else
+                {
+                    result.Finish();
+                }
+                return result;
             }
+
+            private IEnumerator HideCoroutine(MilestoneCompletedPanelUI panel, CoroutineResult result)
+            {
+                result.Start();
+                yield return panel.Hide().WaitUntilCompleted();
+                Destroy(panel.gameObject);
+                result.Finish();
+            }
+
         }
     }
 }

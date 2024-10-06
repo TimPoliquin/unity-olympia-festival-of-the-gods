@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Animation;
+using Azul.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,18 +23,19 @@ namespace Azul
             {
                 this.fade = this.GetComponent<Fade>();
             }
-            public void Show(string godName, TileColor color, int points)
+
+            public CoroutineResult Show(string godName, TileColor color, int points)
             {
                 this.subtitleText.text = string.Format(this.subtitleTextTemplate, godName);
                 this.icon.SetTileColor(color);
                 this.scoreText.text = $"{points}";
                 this.fade.StartHidden();
-                this.StartCoroutine(this.fade.Show());
+                return this.fade.Show();
             }
 
-            public void Hide()
+            public CoroutineResult Hide()
             {
-                this.StartCoroutine(this.fade.Hide());
+                return this.fade.Hide();
             }
         }
     }

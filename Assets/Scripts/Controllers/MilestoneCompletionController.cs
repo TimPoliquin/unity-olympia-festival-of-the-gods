@@ -48,22 +48,18 @@ namespace Azul
                 this.isShowingMilestoneCompletion = true;
                 yield return null;
                 this.HideScoringUI(payload.PlayerNumber);
-                List<CoroutineResult> results = new()
-                {
-                    this.MoveCameraToAltar(payload.CompletedMilestone)
-                };
-                results.AddRange(this.FadeOutAltars(payload.PlayerNumber, payload.CompletedMilestone));
-                results.Add(this.BloomAltarLight(payload.CompletedMilestone));
-                results.Add(this.ShowCompletionParticles(payload.CompletedMilestone));
-                yield return new WaitUntil(() => results.All(result => result.IsCompleted()));
-                results.Clear();
-                results.Add(this.ShowCompletionUI(payload.PlayerNumber, payload.CompletedMilestone));
-                yield return new WaitUntil(() => results.All(result => result.IsCompleted()));
+                yield return CoroutineResult.Multi(
+                    this.MoveCameraToAltar(payload.CompletedMilestone),
+                    this.FadeOutAltars(payload.PlayerNumber, payload.CompletedMilestone),
+                    this.BloomAltarLight(payload.CompletedMilestone),
+                    this.ShowCompletionParticles(payload.CompletedMilestone)
+                ).WaitUntilCompleted();
+                yield return this.ShowCompletionUI(payload.PlayerNumber, payload.CompletedMilestone).WaitUntilCompleted();
                 // restore everything to the way it was!
-                results.Clear();
-                results.Add(this.MoveCameraToPlayerBoard(payload.PlayerNumber));
-                results.AddRange(this.FadeInAltars(payload.PlayerNumber, payload.CompletedMilestone));
-                yield return new WaitUntil(() => results.All(result => result.IsCompleted()));
+                yield return CoroutineResult.Multi(
+                    this.MoveCameraToPlayerBoard(payload.PlayerNumber),
+                    this.FadeInAltars(payload.PlayerNumber, payload.CompletedMilestone)
+                ).WaitUntilCompleted();
                 this.isShowingMilestoneCompletion = false;
             }
 
@@ -77,27 +73,25 @@ namespace Azul
                 return System.Instance.GetCameraController().AnimateFocusMainCameraOnPlayerBoard(playerNumber, this.cameraRotationSeconds);
             }
 
-            List<CoroutineResult> FadeOutAltars(int playerNumber, Altar altarToKeep)
+            CoroutineResult FadeAltars(int playerNumber, Altar altarToKeep, float alpha)
             {
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
                 List<Altar> altarsToFade = playerBoard.GetAltars().FindAll(altar => !ReferenceEquals(altar, altarToKeep));
                 List<CoroutineResult> results = new();
                 foreach (Altar altar in altarsToFade)
                 {
-                    results.Add(altar.Fade(this.cameraRotationSeconds, 0.0f));
+                    results.Add(altar.Fade(this.cameraRotationSeconds, alpha));
                 }
-                return results;
+                return CoroutineResult.Multi(results);
             }
-            List<CoroutineResult> FadeInAltars(int playerNumber, Altar altarToKeep)
+
+            CoroutineResult FadeOutAltars(int playerNumber, Altar altarToKeep)
             {
-                PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
-                List<Altar> altarsToFade = playerBoard.GetAltars().FindAll(altar => !ReferenceEquals(altar, altarToKeep));
-                List<CoroutineResult> results = new();
-                foreach (Altar altar in altarsToFade)
-                {
-                    results.Add(altar.Fade(this.cameraRotationSeconds, 1.0f));
-                }
-                return results;
+                return this.FadeAltars(playerNumber, altarToKeep, 0.0f);
+            }
+            CoroutineResult FadeInAltars(int playerNumber, Altar altarToKeep)
+            {
+                return this.FadeAltars(playerNumber, altarToKeep, 1.0f);
             }
 
             CoroutineResult BloomAltarLight(Altar altar)
@@ -108,7 +102,7 @@ namespace Azul
             CoroutineResult ShowCompletionParticles(Altar altar)
             {
                 GameObject prefab = this.milestoneParticles.Find(particle => particle.GetTileColor() == altar.GetColor()).GetValue();
-                CoroutineResult result = new();
+                CoroutineResult result = CoroutineResult.Single();
                 this.StartCoroutine(this.CompletionParticlesCoroutine(prefab, altar.transform, result));
                 return result;
 
@@ -116,7 +110,7 @@ namespace Azul
 
             CoroutineResult ShowCompletionUI(int playerNumber, Altar altar)
             {
-                CoroutineResult result = new();
+                CoroutineResult result = CoroutineResult.Single();
                 this.StartCoroutine(this.ShowCompletionUICoroutine(altar.GetColor(), this.bannerHoldTime, result));
                 return result;
             }

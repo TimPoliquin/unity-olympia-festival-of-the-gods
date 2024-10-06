@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Animation;
+using Azul.Util;
 using TMPro;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Azul
 
             private Fade transition;
 
-            public IEnumerator Show(string god, TileColor tileColor)
+            public CoroutineResult Show(string god, TileColor tileColor)
             {
                 this.transition = this.GetComponent<Fade>();
                 this.transition.StartHidden();
@@ -30,7 +31,7 @@ namespace Azul
                 return this.transition.Show();
             }
 
-            public IEnumerator Hide()
+            public CoroutineResult Hide()
             {
                 return this.transition.Hide();
             }

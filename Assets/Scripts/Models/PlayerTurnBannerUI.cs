@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Animation;
+using Azul.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,7 +37,7 @@ namespace Azul
                 });
             }
 
-            public IEnumerator Show(string playerName, Phase phase, bool showInstructions = true)
+            public CoroutineResult Show(string playerName, Phase phase, bool showInstructions = true)
             {
                 bool show;
                 this.titleText.text = string.Format(titleTemplate, playerName);
@@ -79,7 +80,7 @@ namespace Azul
                 }
             }
 
-            public IEnumerator Hide()
+            public CoroutineResult Hide()
             {
                 if (!this.hidden)
                 {

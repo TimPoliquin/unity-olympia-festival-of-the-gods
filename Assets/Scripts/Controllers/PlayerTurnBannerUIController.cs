@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
+using Azul.Util;
 using UnityEngine;
 
 namespace Azul
@@ -82,7 +84,7 @@ namespace Azul
 
             private IEnumerator ShowBannerForTime(PlayerTurnBannerUI playerTurnBannerUI, Player player, Phase phase, float time, bool showInstructions, Action callback)
             {
-                yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions);
+                yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions).WaitUntilCompleted();
                 yield return new WaitForSeconds(time);
                 yield return this.HideBanner(playerTurnBannerUI, callback);
             }
@@ -91,7 +93,7 @@ namespace Azul
             {
                 if (!playerTurnBannerUI.IsHidden())
                 {
-                    yield return playerTurnBannerUI.Hide();
+                    yield return playerTurnBannerUI.Hide().WaitUntilCompleted();
                     Destroy(playerTurnBannerUI.gameObject);
                     if (null != callback)
                     {
