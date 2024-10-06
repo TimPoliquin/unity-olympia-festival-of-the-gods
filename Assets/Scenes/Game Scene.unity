@@ -648,7 +648,6 @@ GameObject:
   m_Component:
   - component: {fileID: 387665068}
   - component: {fileID: 387665069}
-  - component: {fileID: 387665070}
   m_Layer: 0
   m_Name: Milestone Completion Controller
   m_TagString: Untagged
@@ -684,18 +683,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRotationSeconds: 1
---- !u!114 &387665070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387665067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a151961a38643e8b87861c58f73bad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  lightBloomTime: 1
+  lightBloomIntensity: 700
+  particleStartDelay: 0.75
+  milestoneParticles:
+  - tileColor: 4
+    value: {fileID: 8401494759858963228, guid: a165bb3282cb44c00ade04b1d16a13de, type: 3}
+  - tileColor: 0
+    value: {fileID: 8401494759858963228, guid: 4ca4b8ee6ef2d4c119568efd04078de2, type: 3}
+  - tileColor: 1
+    value: {fileID: 8401494759858963228, guid: f13c76f5c6e9948a382ebb372d59f9a4, type: 3}
+  - tileColor: 2
+    value: {fileID: 8401494759858963228, guid: f9cca53a8462f44068e70ab400597a0d, type: 3}
+  - tileColor: 3
+    value: {fileID: 8401494759858963228, guid: 10437ccc3bab443f69da3303d1414f1c, type: 3}
+  - tileColor: 5
+    value: {fileID: 8401494759858963228, guid: 06982d25a896842de879a39106a163a8, type: 3}
+  - tileColor: 6
+    value: {fileID: 8401494759858963228, guid: fa8929a45ea2a4fe2aed736001bcb591, type: 3}
 --- !u!1 &400448139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1410,67 @@ MonoBehaviour:
   onAllRoundsComplete:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &746202547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746202548}
+  - component: {fileID: 746202549}
+  m_Layer: 0
+  m_Name: Tile Color Mapping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746202548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746202547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372239317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &746202549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746202547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8fa859e3d0b4e7d9c426f25e8030fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  godNames:
+  - tileColor: 0
+    value: Ares
+  - tileColor: 1
+    value: Poseidon
+  - tileColor: 2
+    value: Zeus
+  - tileColor: 3
+    value: Artemis
+  - tileColor: 4
+    value: Aphrodite
+  - tileColor: 5
+    value: Demeter
+  - tileColor: 6
+    value: Olympus
+  - tileColor: 7
+    value: Hades
 --- !u!1 &750940725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,6 +1746,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783220839}
   m_CullTransparentMesh: 1
+--- !u!1 &806338452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806338453}
+  - component: {fileID: 806338454}
+  m_Layer: 0
+  m_Name: Milestone Completed UI Panel Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806338453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806338452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110538240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806338454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806338452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbdaf46a224284d7da135a375f7c098a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &817813549
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,6 +3255,7 @@ Transform:
   - {fileID: 1922603251}
   - {fileID: 1124264410}
   - {fileID: 525882712}
+  - {fileID: 387665068}
   - {fileID: 1125167889}
   - {fileID: 1794454473}
   - {fileID: 1634339214}
@@ -3152,9 +3263,9 @@ Transform:
   - {fileID: 711781640}
   - {fileID: 750940726}
   - {fileID: 171703399}
+  - {fileID: 746202548}
   - {fileID: 1959283777}
   - {fileID: 2110538240}
-  - {fileID: 387665068}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1372239318
@@ -3962,6 +4073,8 @@ MonoBehaviour:
   godScoreUI: {fileID: 1390614604482433175, guid: 9dbc361c9fc914ba8a3c5a3f4d33d73d,
     type: 3}
   grantRewardTilesUIPrefab: {fileID: 8425940288351448959, guid: cd39908ab718a424fb20935ebf78ce36,
+    type: 3}
+  milestoneCompletedPanelUIPrefab: {fileID: 7710930417791194408, guid: f88242f6f9a974a2a980083a7079152c,
     type: 3}
   playerUIPrefab: {fileID: 5210913683160451395, guid: f5cd10e549ba84ef980a102fae715f59,
     type: 3}
@@ -4946,6 +5059,7 @@ Transform:
   - {fileID: 1094760811}
   - {fileID: 1743880145}
   - {fileID: 400448140}
+  - {fileID: 806338453}
   - {fileID: 1734180387}
   - {fileID: 1920026098}
   - {fileID: 1017123625}

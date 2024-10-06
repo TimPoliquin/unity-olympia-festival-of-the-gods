@@ -20,6 +20,7 @@ namespace Azul
             [SerializeField] private GameObject layoutGameObject;
             [SerializeField] private TileColor color;
             [SerializeField] private AltarSpace[] spaces;
+            [SerializeField] private Light milestoneCompletionLight;
 
 
             private readonly int alphaVar = Shader.PropertyToID("_Alpha");
@@ -130,25 +131,35 @@ namespace Azul
                 }
             }
 
-            public CoroutineResult FadeOut(float time)
+            public CoroutineResult Fade(float time, float target)
             {
                 Material[] materials = this.GetComponentsInChildren<MeshRenderer>().Select(renderer => renderer.material).ToArray();
-                Dictionary<Material, Transition<Color>> materialColors = new();
+                Dictionary<Material, Transition<float>> materialColors = new();
                 foreach (Material material in materials)
                 {
                     materialColors[material] = new()
                     {
-                        Original = material.color,
-                        Target = new Color(material.color.r, material.color.g, material.color.b, 0.0f),
+                        Original = material.GetFloat(this.alphaVar),
+                        Target = target,
                     };
                 }
                 return this.Execute(t =>
                 {
                     foreach (Material material in materials)
                     {
-                        Color color = Color.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
-                        material.SetFloat(this.alphaVar, color.a);
+                        float alpha = Mathf.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                        material.SetFloat(this.alphaVar, alpha);
                     }
+                }, time);
+            }
+
+            public CoroutineResult TurnOnMilestoneCompletionLight(Color color, float intensity, float time)
+            {
+                this.milestoneCompletionLight.gameObject.SetActive(true);
+                this.milestoneCompletionLight.color = color;
+                return this.Execute(t =>
+                {
+                    this.milestoneCompletionLight.intensity = Mathf.Lerp(0, intensity, t / time);
                 }, time);
             }
         }

@@ -123,23 +123,37 @@ namespace Azul
 
             public CoroutineResult FocusMainCameraOnAltar(Altar altar, float rotationTime)
             {
-                Camera camera = this.mainCamera;
-                CameraSettings cameraSettings = this.altarSettings;
-                Vector3 position = altar.transform.position;
+                Vector3 targetRotation = this.altarSettings.GetRotation().eulerAngles;
+                targetRotation.y = this.mainCamera.transform.rotation.eulerAngles.y;
+                Vector3 targetPosition = altar.transform.position + (altar.transform.forward * this.altarSettings.GetOffset().z) + Vector3.up * this.altarSettings.GetOffset().y;
+                return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.altarSettings.GetSize(), rotationTime);
+            }
+
+            public CoroutineResult AnimateFocusMainCameraOnPlayerBoard(int playerNumber, float time)
+            {
+                PlayerController playerController = System.Instance.GetPlayerController();
+                PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
+                int numPlayers = playerController.GetNumberOfPlayers();
+                float perPlayerRotation = 360.0f / (float)numPlayers;
+                Vector3 targetRotation = new Vector3(90.0f, perPlayerRotation * playerBoard.GetPlayerNumber(), 0);
+                Vector3 targetPosition = new Vector3(playerBoard.transform.position.x, this.scoreSettings.GetOffset().y, playerBoard.transform.position.z);
+                targetPosition += playerBoard.transform.right * this.scoreSettings.GetOffset().x;
+                targetPosition += playerBoard.transform.forward * this.scoreSettings.GetOffset().z;
+                return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.scoreSettings.GetSize(), time);
+            }
+
+            public CoroutineResult RefocusCameraAnimated(Camera camera, Vector3 targetPosition, Vector3 targetRotation, float targetSize, float time)
+            {
                 Vector3 originalPosition = camera.transform.position;
                 Quaternion originalRotation = camera.transform.rotation;
                 float originalSize = camera.orthographicSize;
-                Vector3 rotationDirection = cameraSettings.GetRotation().eulerAngles;
-                rotationDirection.y = camera.transform.rotation.eulerAngles.y;
-                Vector3 targetPosition = position + (altar.transform.forward * cameraSettings.GetOffset().z) + Vector3.up * cameraSettings.GetOffset().y;
                 CoroutineResult result = this.Execute((t) =>
                 {
-                    UnityEngine.Debug.Log($"Camera Move: {t}/{rotationTime}");
-                    camera.transform.rotation = Quaternion.Lerp(originalRotation, Quaternion.Euler(rotationDirection), t / rotationTime);
-                    camera.transform.position = Vector3.Lerp(originalPosition, targetPosition, t / rotationTime);
-                    camera.orthographicSize = Mathf.Lerp(originalSize, cameraSettings.GetSize(), t / rotationTime);
+                    camera.transform.rotation = Quaternion.Lerp(originalRotation, Quaternion.Euler(targetRotation), t / time);
+                    camera.transform.position = Vector3.Lerp(originalPosition, targetPosition, t / time);
+                    camera.orthographicSize = Mathf.Lerp(originalSize, targetSize, t / time);
 
-                }, rotationTime);
+                }, time);
                 return result;
             }
 

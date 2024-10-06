@@ -56,6 +56,7 @@ namespace Azul
                     action(t);
                     yield return 0;
                 }
+                action(time);
                 result.Finish();
             }
         }

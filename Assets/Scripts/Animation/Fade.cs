@@ -14,7 +14,7 @@ namespace Azul
             private bool hidden;
 
             [SerializeField] private float delay;
-            [SerializeField] private float time;
+            [SerializeField] private float time = .25f;
 
             void Awake()
             {

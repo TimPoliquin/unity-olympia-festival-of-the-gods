@@ -54,6 +54,10 @@ namespace Azul
                 {
                     return;
                 }
+                else if (System.Instance.GetMilestoneCompletionController().IsShowingMilestoneCompletion())
+                {
+                    return;
+                }
                 else if (payload.Target.IsEmpty())
                 {
                     this.panel = System.Instance.GetPrefabFactory().CreateScoreTilesPreviewPanelUI();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
+using Azul.Model;
 using Azul.Provider;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -17,6 +18,7 @@ namespace Azul
         private CameraController cameraController;
         private FactoryController factoryController;
         private GameController gameController;
+        private MilestoneCompletionController milestoneCompletionController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
         private PrefabFactory prefabFactory;
@@ -25,6 +27,7 @@ namespace Azul
 
         private TableController tableController;
         private TileController tileController;
+        private TileColorMappingController tileColorMappingController;
         private TileAnimationController tileAnimationController;
         private TileMaterialProvider tileMaterialProvider;
         private UIController uiController;
@@ -85,6 +88,15 @@ namespace Azul
                 this.gameController = this.GetComponentInChildren<GameController>();
             }
             return this.gameController;
+        }
+
+        public MilestoneCompletionController GetMilestoneCompletionController()
+        {
+            if (null == this.milestoneCompletionController)
+            {
+                this.milestoneCompletionController = this.GetComponentInChildren<MilestoneCompletionController>();
+            }
+            return this.milestoneCompletionController;
         }
 
         public PlayerController GetPlayerController()
@@ -166,6 +178,15 @@ namespace Azul
                 this.tileAnimationController = this.GetComponentInChildren<TileAnimationController>();
             }
             return this.tileAnimationController;
+        }
+
+        public TileColorMappingController GetTileColorMappingController()
+        {
+            if (null == this.tileColorMappingController)
+            {
+                this.tileColorMappingController = this.GetComponentInChildren<TileColorMappingController>();
+            }
+            return this.tileColorMappingController;
         }
 
         public TileMaterialProvider GetTileMaterialProvider()
