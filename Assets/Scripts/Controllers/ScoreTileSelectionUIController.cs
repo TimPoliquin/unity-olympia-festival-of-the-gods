@@ -293,6 +293,16 @@ namespace Azul
                 }
             }
 
+            public void HideEndTurnPanel()
+            {
+                this.endTurnPanelUI.Hide();
+            }
+
+            public void ShowEndTurnPanel()
+            {
+                this.endTurnPanelUI.Show();
+            }
+
         }
     }
 }

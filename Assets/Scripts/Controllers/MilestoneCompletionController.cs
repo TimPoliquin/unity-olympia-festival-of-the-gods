@@ -40,7 +40,14 @@ namespace Azul
             void HideScoringUI(int playerNumber)
             {
                 System.Instance.GetPlayerBoardController().HideScoringUI(playerNumber);
+                System.Instance.GetUIController().GetScoreTileSelectionUIController().HideEndTurnPanel();
                 System.Instance.GetUIController().GetStarUIController().Hide();
+            }
+            void RestoreScoringUI()
+            {
+                System.Instance.GetPlayerController().ContinueTurn();
+                System.Instance.GetUIController().GetStarUIController().Show();
+                System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
             }
 
             IEnumerator PlayMilestoneCompletionEvent(OnMilestoneCompletePayload payload)
@@ -60,6 +67,7 @@ namespace Azul
                     this.MoveCameraToPlayerBoard(payload.PlayerNumber),
                     this.FadeInAltars(payload.PlayerNumber, payload.CompletedMilestone)
                 ).WaitUntilCompleted();
+                this.RestoreScoringUI();
                 this.isShowingMilestoneCompletion = false;
             }
 

@@ -685,7 +685,8 @@ MonoBehaviour:
   cameraRotationSeconds: 1
   lightBloomTime: 1
   lightBloomIntensity: 700
-  particleStartDelay: 0.75
+  particleStartDelay: 0.85
+  bannerHoldTime: 5
   milestoneParticles:
   - tileColor: 4
     value: {fileID: 8401494759858963228, guid: a165bb3282cb44c00ade04b1d16a13de, type: 3}
