@@ -19,6 +19,7 @@ namespace Azul
             [SerializeField] private float lightBloomIntensity = 250.0f;
             [SerializeField] private float particleStartDelay = .75f;
             [SerializeField] private float bannerHoldTime = 5.0f;
+            [SerializeField] private float scoreAnimateTime = 1.5f;
             [SerializeField] private List<ColoredValue<GameObject>> milestoneParticles;
 
             private bool isShowingMilestoneCompletion = false;
@@ -29,12 +30,18 @@ namespace Azul
 
             void OnGameSetupComplete(OnGameSetupCompletePayload payload)
             {
-                System.Instance.GetPlayerBoardController().AddOnMilestoneCompleteListener(this.OnMilestoneComplete);
+                System.Instance.GetPlayerBoardController().AddOnAltarMilestoneCompleteListener(this.OnAltarMilestoneComplete);
+                System.Instance.GetPlayerBoardController().AddOnNumberMilestoneCompleteListener(this.OnNumberMilestoneComplete);
             }
 
-            void OnMilestoneComplete(OnMilestoneCompletePayload payload)
+            void OnAltarMilestoneComplete(OnAltarMilestoneCompletedPayload payload)
             {
-                this.StartCoroutine(this.PlayMilestoneCompletionEvent(payload));
+                this.StartCoroutine(this.PlayAltarMilestoneCompletionEvent(payload));
+            }
+
+            void OnNumberMilestoneComplete(OnNumberMilestoneCompletedPayload payload)
+            {
+                this.StartCoroutine(this.PlayNumberMilestoneCompletionEvent(payload));
             }
 
             void HideScoringUI(int playerNumber)
@@ -50,10 +57,9 @@ namespace Azul
                 System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
             }
 
-            IEnumerator PlayMilestoneCompletionEvent(OnMilestoneCompletePayload payload)
+            IEnumerator PlayAltarMilestoneCompletionEvent(OnAltarMilestoneCompletedPayload payload)
             {
                 this.isShowingMilestoneCompletion = true;
-                yield return null;
                 this.HideScoringUI(payload.PlayerNumber);
                 yield return CoroutineResult.Multi(
                     this.MoveCameraToAltar(payload.CompletedMilestone),
@@ -61,12 +67,24 @@ namespace Azul
                     this.BloomAltarLight(payload.CompletedMilestone),
                     this.ShowCompletionParticles(payload.CompletedMilestone)
                 ).WaitUntilCompleted();
-                yield return this.ShowCompletionUI(payload.PlayerNumber, payload.CompletedMilestone).WaitUntilCompleted();
+                yield return this.ShowAltarCompletionUI(payload.PlayerNumber, payload.CompletedMilestone).WaitUntilCompleted();
                 // restore everything to the way it was!
                 yield return CoroutineResult.Multi(
                     this.MoveCameraToPlayerBoard(payload.PlayerNumber),
                     this.FadeInAltars(payload.PlayerNumber, payload.CompletedMilestone)
                 ).WaitUntilCompleted();
+                this.RestoreScoringUI();
+                this.isShowingMilestoneCompletion = false;
+                payload.Done();
+            }
+
+            IEnumerator PlayNumberMilestoneCompletionEvent(OnNumberMilestoneCompletedPayload payload)
+            {
+                this.isShowingMilestoneCompletion = true;
+                yield return null;
+                this.HideScoringUI(payload.PlayerNumber);
+                // TODO just show a banner?
+                yield return this.ShowNumberCompletionUI(payload.PlayerNumber, payload.Value).WaitUntilCompleted();
                 this.RestoreScoringUI();
                 this.isShowingMilestoneCompletion = false;
                 payload.Done();
@@ -114,13 +132,19 @@ namespace Azul
                 CoroutineResult result = CoroutineResult.Single();
                 this.StartCoroutine(this.CompletionParticlesCoroutine(prefab, altar.transform, result));
                 return result;
-
             }
 
-            CoroutineResult ShowCompletionUI(int playerNumber, Altar altar)
+            CoroutineResult ShowAltarCompletionUI(int playerNumber, Altar altar)
             {
                 CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.ShowCompletionUICoroutine(altar.GetColor(), this.bannerHoldTime, result));
+                this.StartCoroutine(this.ShowCompletionUICoroutine(playerNumber, altar.GetColor(), this.bannerHoldTime, result));
+                return result;
+            }
+
+            CoroutineResult ShowNumberCompletionUI(int playerNumber, int ritualNumber)
+            {
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.ShowNumberCompletionUICoroutine(playerNumber, ritualNumber, this.bannerHoldTime, result));
                 return result;
             }
 
@@ -132,12 +156,24 @@ namespace Azul
                 result.Finish();
             }
 
-            IEnumerator ShowCompletionUICoroutine(TileColor color, float time, CoroutineResult result)
+            IEnumerator ShowCompletionUICoroutine(int playerNumber, TileColor color, float time, CoroutineResult result)
             {
                 result.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
                 controller.Show(color);
                 yield return new WaitForSeconds(time);
+                yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
+                controller.Hide();
+                result.Finish();
+            }
+
+            IEnumerator ShowNumberCompletionUICoroutine(int playerNumber, int ritualNumber, float time, CoroutineResult result)
+            {
+                result.Start();
+                MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
+                controller.Show(ritualNumber);
+                yield return new WaitForSeconds(time);
+                yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
                 controller.Hide();
                 result.Finish();
             }

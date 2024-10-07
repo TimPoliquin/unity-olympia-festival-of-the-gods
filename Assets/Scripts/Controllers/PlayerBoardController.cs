@@ -73,6 +73,8 @@ namespace Azul
             private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
             private UnityEvent<OnPlayerBoardDiscardOneTilePayload> onDiscardOneTile = new();
             private UnityEvent<OnPlayerBoardTilesCollectedPayload> onTilesCollected = new();
+            private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
+
             private List<PlayerBoard> playerBoards;
 
             public void SetupGame(int numPlayers, AltarFactory starController)
@@ -141,6 +143,10 @@ namespace Azul
                         PlayerNumber = playerBoard.GetPlayerNumber(),
                         TileCounts = playerBoard.GetTileCounts(true).Select(tileCount => tileCount.ToColoredValue()).ToList()
                     });
+                }
+                if (tiles.Any(tile => tile.IsHadesToken()))
+                {
+                    this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = playerBoard.GetPlayerNumber(), AcquiredTiles = tiles });
                 }
                 if (roundController.GetCurrentPhase() == Phase.SCORE && playerController.GetCurrentPlayer().GetPlayerNumber() == playerBoard.GetPlayerNumber())
                 {
@@ -219,7 +225,7 @@ namespace Azul
 
             public void AddOnPlayerAcquiresOneTileListener(UnityAction<OnPlayerAcquireOneTilePayload> listener)
             {
-                this.playerBoards.ForEach(playerBoard => playerBoard.AddOnAcquireOneTileListener(listener));
+                this.onAcquireOneTile.AddListener(listener);
             }
 
             private void OnPlayerTurnScoringStart(int playerNumber)
@@ -372,7 +378,7 @@ namespace Azul
                 }).WaitUntilCompleted();
                 space.PlaceTile(effectiveColor);
                 System.Instance.GetBagController().Discard(tiles);
-                yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard.GetAltar(space.GetOriginColor())).WaitUntilCompleted();
+                yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard, playerBoard.GetAltar(space.GetOriginColor()), space).WaitUntilCompleted();
                 this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),
@@ -407,11 +413,18 @@ namespace Azul
                 this.onTilesCollected.AddListener(listener);
             }
 
-            public void AddOnMilestoneCompleteListener(UnityAction<OnMilestoneCompletePayload> listener)
+            public void AddOnAltarMilestoneCompleteListener(UnityAction<OnAltarMilestoneCompletedPayload> listener)
             {
                 foreach (PlayerBoard playerBoard in this.playerBoards)
                 {
-                    playerBoard.GetMilestoneController().AddOnMilestoneCompleteListener(listener);
+                    playerBoard.GetMilestoneController().AddOnAltarMilestoneCompleteListener(listener);
+                }
+            }
+            public void AddOnNumberMilestoneCompleteListener(UnityAction<OnNumberMilestoneCompletedPayload> listener)
+            {
+                foreach (PlayerBoard playerBoard in this.playerBoards)
+                {
+                    playerBoard.GetMilestoneController().AddOnNumberMilestoneCompleteListener(listener);
                 }
             }
 
