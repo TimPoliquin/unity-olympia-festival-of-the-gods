@@ -103,11 +103,11 @@ namespace Azul
                 float width = (Math.Abs(minX) + Math.Abs(maxX)) / 2.0f;
                 float scale = width > this.centerWidth ? this.centerWidth / width : width / this.centerWidth;
                 TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
-                foreach (Tile tile in tiles)
+                yield return CoroutineResult.Multi(tiles.Select(tile =>
                 {
                     float x = tile.transform.position.x * scale;
                     float z = this.center.transform.position.z + UnityEngine.Random.Range(-this.centerDepth, this.centerDepth);
-                    yield return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
+                    return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
                     {
                         Position = new Vector3(x, this.dropHeight, z),
                         Time = .25f,
@@ -116,8 +116,8 @@ namespace Azul
                         {
                             tile.transform.SetParent(this.center.transform);
                         }
-                    }).WaitUntilCompleted();
-                }
+                    });
+                }).ToArray()).WaitUntilCompleted();
                 this.tiles.AddRange(tiles);
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = tiles });
                 result.Finish();

@@ -57,7 +57,6 @@ namespace Azul
                 string newScore = $"{score}";
                 if (this.scoreText.text != newScore)
                 {
-                    UnityEngine.Debug.Log($"Old score: {this.scoreText.text} / New Score: {score}");
                     this.scoreText.text = $"{score}";
                     return this.scalePulse.Animate(this.scoreText.gameObject, 1.5f, time);
                 }
