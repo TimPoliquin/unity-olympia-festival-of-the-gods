@@ -13,6 +13,11 @@ namespace Azul
             {
                 return new Vector3(Random.Range(-radius, radius), height, Random.Range(-radius, radius));
             }
+
+            public static Vector3 CreateRandomVector3(float width, float height, float depth)
+            {
+                return new Vector3(Random.Range(-width, width), height, Random.Range(-depth, depth));
+            }
         }
     }
 }

@@ -55,6 +55,12 @@ namespace Azul
             {
                 return this.playerNumber;
             }
+
+            public Vector3 GetTileCountPosition(TileColor tileColor)
+            {
+                PlayerTileCountUI playerTileCountUI = this.tileCountsByColor[tileColor];
+                return System.Instance.GetCameraController().GetMainCamera().ScreenToWorldPoint(playerTileCountUI.transform.position);
+            }
         }
     }
 }

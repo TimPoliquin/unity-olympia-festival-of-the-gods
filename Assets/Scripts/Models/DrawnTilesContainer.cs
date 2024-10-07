@@ -39,6 +39,7 @@ namespace Azul
             Dictionary<TileColor, List<GameObject>> tilesByColor = new();
             foreach (Tile tile in tiles)
             {
+                tile.gameObject.SetActive(true);
                 if (!tilesByColor.ContainsKey(tile.Color))
                 {
                     tilesByColor.Add(tile.Color, new());
