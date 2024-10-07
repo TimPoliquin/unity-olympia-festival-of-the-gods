@@ -102,6 +102,12 @@ namespace Azul
             {
                 this.playerUIContainer.SetActive(false);
             }
+
+            public Vector3 GetTileCountPosition(int playerNumber, TileColor tileColor)
+            {
+                PlayerUI playerUI = this.playerUIs[playerNumber];
+                return playerUI.GetTileCountPosition(tileColor);
+            }
         }
     }
 }

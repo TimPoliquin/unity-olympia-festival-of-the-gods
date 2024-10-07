@@ -106,18 +106,47 @@ namespace Azul
                 return this.playerBoards[playerNumber];
             }
 
-            public void AddDrawnTiles(int player, List<Tile> tiles)
+            public CoroutineResult AddDrawnTiles(int player, List<Tile> tiles)
             {
-                this.playerBoards[player].AddDrawnTiles(tiles);
-                if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.AddDrawnTilesCoroutine(this.playerBoards[player], tiles, result));
+                return result;
+            }
+
+            private IEnumerator AddDrawnTilesCoroutine(PlayerBoard playerBoard, List<Tile> tiles, CoroutineResult result)
+            {
+                result.Start();
+                PlayerController playerController = System.Instance.GetPlayerController();
+                RoundController roundController = System.Instance.GetRoundController();
+                TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
+                PlayerUIController playerUIController = System.Instance.GetUIController().GetPlayerUIController();
+                foreach (Tile tile in tiles)
                 {
-                    this.OnPlayerTurnScoringStart(player);
+                    if (roundController.GetCurrentPhase() == Phase.ACQUIRE)
+                    {
+                        yield return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
+                        {
+                            Position = playerUIController.GetTileCountPosition(playerBoard.GetPlayerNumber(), tile.Color),
+                            Time = .25f,
+                            Delay = 0f,
+                            AfterEach = (tile) =>
+                            {
+                                tile.gameObject.SetActive(false);
+                            }
+                        }).WaitUntilCompleted();
+                    }
+                    playerBoard.AddDrawnTiles(new() { tile });
+                    this.onTilesCollected.Invoke(new OnPlayerBoardTilesCollectedPayload
+                    {
+                        PlayerNumber = playerBoard.GetPlayerNumber(),
+                        TileCounts = playerBoard.GetTileCounts(true).Select(tileCount => tileCount.ToColoredValue()).ToList()
+                    });
                 }
-                this.onTilesCollected.Invoke(new OnPlayerBoardTilesCollectedPayload
+                if (roundController.GetCurrentPhase() == Phase.SCORE && playerController.GetCurrentPlayer().GetPlayerNumber() == playerBoard.GetPlayerNumber())
                 {
-                    PlayerNumber = player,
-                    TileCounts = this.playerBoards[player].GetTileCounts(true).Select(tileCount => tileCount.ToColoredValue()).ToList()
-                });
+                    this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
+                }
+                result.Finish();
             }
 
             public void DiscardTiles(int playerNumber, Dictionary<TileColor, int> tilesToDiscard)

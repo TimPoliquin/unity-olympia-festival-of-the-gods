@@ -66,7 +66,10 @@ namespace Azul
                 tile.GetComponentInChildren<Collider>().enabled = true;
                 tile.GetComponentInChildren<Rigidbody>().useGravity = true;
                 this.isAnimating = false;
-                tileMoveConfig.AfterEach.Invoke(tile);
+                if (tileMoveConfig.AfterEach != null)
+                {
+                    tileMoveConfig.AfterEach.Invoke(tile);
+                }
             }
         }
     }

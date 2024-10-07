@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller.TableEvents;
+using Azul.Event;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PlayerEvents;
+using Azul.Util;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -241,16 +244,21 @@ namespace Azul
                 this.StartTurn();
             }
 
-            private void OnFactoryTilesDrawn(OnFactoryTilesDrawn payload)
+            private void OnFactoryTilesDrawn(EventTracker<OnFactoryTilesDrawn> payload)
             {
-                System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.TilesDrawn);
-                this.NextTurn();
+                this.StartCoroutine(this.OnTilesDrawn(this.currentPlayer, payload.Payload.TilesDrawn, payload.Done));
             }
 
-            private void OnTableTilesDrawn(OnTableTilesDrawnPayload payload)
+            private void OnTableTilesDrawn(EventTracker<OnTableTilesDrawnPayload> payload)
             {
-                System.Instance.GetPlayerBoardController().AddDrawnTiles(this.currentPlayer, payload.Tiles);
+                this.StartCoroutine(this.OnTilesDrawn(this.currentPlayer, payload.Payload.Tiles, payload.Done));
+            }
+
+            private IEnumerator OnTilesDrawn(int playerNumber, List<Tile> tiles, Action Done)
+            {
+                yield return System.Instance.GetPlayerBoardController().AddDrawnTiles(playerNumber, tiles).WaitUntilCompleted();
                 this.NextTurn();
+                Done.Invoke();
             }
 
             private void onPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)

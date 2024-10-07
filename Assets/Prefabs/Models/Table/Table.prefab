@@ -236,7 +236,8 @@ MonoBehaviour:
   factoriesLayout: {fileID: 3089737495418234027}
   scoreBoard: {fileID: 8361112308366185155}
   center: {fileID: 6196003202671131085}
-  centerRadius: 10
+  centerWidth: 25
+  centerDepth: 15
   dropHeight: 5
 --- !u!114 &3317494338426430283
 MonoBehaviour:

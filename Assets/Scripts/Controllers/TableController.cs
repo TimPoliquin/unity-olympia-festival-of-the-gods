@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.Controller.TableEvents;
 using Azul.Controller.TableUtilities;
+using Azul.Event;
 using Azul.Model;
 using Azul.TableEvents;
 using Azul.TileHolderEvents;
@@ -46,7 +47,7 @@ namespace Azul
             [SerializeField] private GameObject tablePrefab;
 
             private UnityEvent<OnTableTilesAddedPayload> onTilesAdded = new();
-            private UnityEvent<OnTableTilesDrawnPayload> onTilesDrawn = new();
+            private AzulEvent<OnTableTilesDrawnPayload> onTilesDrawn = new();
             private UnityEvent<OnTileHoverEnterPayload> onTilesHoverEnter = new();
             private UnityEvent<OnTileHoverExitPayload> onTilesHoverExit = new();
             private UnityEvent<OnTileSelectPayload> onTilesSelect = new();
@@ -103,7 +104,7 @@ namespace Azul
                 this.onTilesAdded.AddListener(listener);
             }
 
-            public void AddOnTilesDrawnListener(UnityAction<OnTableTilesDrawnPayload> listener)
+            public void AddOnTilesDrawnListener(UnityAction<EventTracker<OnTableTilesDrawnPayload>> listener)
             {
                 this.onTilesDrawn.AddListener(listener);
             }
@@ -194,19 +195,30 @@ namespace Azul
                 return this.table.HasOneTile();
             }
 
-            private void OnTilesDiscarded(OnFactoryTilesDiscarded payload)
+            private void OnTilesDiscarded(EventTracker<OnFactoryTilesDiscarded> payload)
             {
-                this.table.AddToCenter(payload.TilesDiscarded);
-                this.onTilesAdded.Invoke(new OnTableTilesAddedPayload { Tiles = payload.TilesDiscarded });
+                this.StartCoroutine(this.OnTilesDiscardedCoroutine(payload.Payload.TilesDiscarded, payload.Done));
+            }
+
+            private IEnumerator OnTilesDiscardedCoroutine(List<Tile> tiles, Action Done)
+            {
+                yield return this.table.AddToCenter(tiles).WaitUntilCompleted();
+                this.onTilesAdded.Invoke(new OnTableTilesAddedPayload { Tiles = tiles });
+                Done.Invoke();
             }
 
             private void OnTilesDrawn(OnTableDrawTilesPayload payload)
             {
-                this.onTilesDrawn.Invoke(new OnTableTilesDrawnPayload
+                this.StartCoroutine(this.OnTilesDrawnCoroutine(payload.TilesDrawn));
+            }
+
+            private IEnumerator OnTilesDrawnCoroutine(List<Tile> tilesDrawn)
+            {
+                yield return this.onTilesDrawn.Invoke(new OnTableTilesDrawnPayload
                 {
-                    Tiles = payload.TilesDrawn,
-                    IncludesOneTile = payload.TilesDrawn.Find(tile => tile.Color == TileColor.ONE) != null
-                });
+                    Tiles = tilesDrawn,
+                    IncludesOneTile = tilesDrawn.Find(tile => tile.Color == TileColor.ONE) != null
+                }).WaitUntilCompleted();
                 if (this.table.IsEmpty())
                 {
                     this.onTableEmpty.Invoke();

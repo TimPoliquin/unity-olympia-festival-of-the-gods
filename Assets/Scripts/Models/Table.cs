@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,9 @@ using Azul.Controller;
 using Azul.Layout;
 using Azul.Model;
 using Azul.TableEvents;
+using Azul.TileAnimation;
 using Azul.TileHolderEvents;
+using Azul.Util;
 using Azul.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,7 +34,8 @@ namespace Azul
             [SerializeField] private LinearLayout factoriesLayout;
             [SerializeField] private GameObject scoreBoard;
             [SerializeField] private GameObject center;
-            [SerializeField] private float centerRadius = 10.0f;
+            [SerializeField] private float centerWidth = 30.0f;
+            [SerializeField] private float centerDepth = 10.0f;
             [SerializeField] private float dropHeight = 5.0f;
             private List<Factory> factories;
             private List<Tile> tiles = new();
@@ -66,23 +70,57 @@ namespace Azul
                 }
                 else
                 {
-                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(this.centerRadius, this.dropHeight);
+                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(this.centerWidth, this.dropHeight, this.centerDepth);
                 }
                 this.tiles.Add(tile);
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = new() { tile } });
             }
 
-            public void AddToCenter(List<Tile> tiles)
+            public CoroutineResult AddToCenter(List<Tile> tiles)
             {
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.MoveToCenterCoroutine(tiles, result));
+                return result;
+            }
+
+            private IEnumerator MoveToCenterCoroutine(List<Tile> tiles, CoroutineResult result)
+            {
+                result.Start();
+                FactoryController factoryController = System.Instance.GetFactoryController();
+                float minX = this.center.transform.position.x;
+                float maxX = this.center.transform.position.x;
+                foreach (Factory factory in factoryController.GetFactories())
+                {
+                    if (factory.transform.position.x < minX)
+                    {
+                        minX = factory.transform.position.x;
+                    }
+                    if (factory.transform.position.x > maxX)
+                    {
+                        maxX = factory.transform.position.x;
+                    }
+                }
+                float width = (Math.Abs(minX) + Math.Abs(maxX)) / 2.0f;
+                float scale = width > this.centerWidth ? this.centerWidth / width : width / this.centerWidth;
+                TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
                 foreach (Tile tile in tiles)
                 {
-                    tile.transform.SetParent(this.center.transform);
-                    // TODO - some kind of animation is probably warranted here.
-                    // for now, we'll just drop it?
-                    tile.transform.localPosition = VectorUtils.CreateRandomVector3(10, 5);
+                    float x = tile.transform.position.x * scale;
+                    float z = this.center.transform.position.z + UnityEngine.Random.Range(-this.centerDepth, this.centerDepth);
+                    yield return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
+                    {
+                        Position = new Vector3(x, this.dropHeight, z),
+                        Time = .25f,
+                        Delay = 0,
+                        AfterEach = (tile) =>
+                        {
+                            tile.transform.SetParent(this.center.transform);
+                        }
+                    }).WaitUntilCompleted();
                 }
                 this.tiles.AddRange(tiles);
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = tiles });
+                result.Finish();
             }
 
             public void DrawTiles(List<Tile> drawnTiles)
