@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.GameEvents;
 using Azul.MilestoneEvents;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +17,7 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public Altar CompletedMilestone { get; init; }
+            public Action Done { get; init; }
         }
     }
     namespace Controller
@@ -28,29 +31,28 @@ namespace Azul
             void Start()
             {
                 this.playerBoard = this.GetComponent<PlayerBoard>();
-                System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
             }
 
-            void OnGameSetupComplete(OnGameSetupCompletePayload payload)
-            {
-                System.Instance.GetPlayerBoardController().AddOnPlaceStarTileListener(this.OnStarTilePlaced);
-            }
 
-            void OnStarTilePlaced(OnPlayerBoardPlaceStarTilePayload payload)
+            public CoroutineResult OnStarTilePlaced(Altar altar)
             {
-                if (payload.PlayerNumber != this.playerBoard.GetPlayerNumber())
-                {
-                    return;
-                }
-                if (payload.Star.GetFilledSpaces().Count == payload.Star.GetNumberOfSpaces())
+                CoroutineResult result = CoroutineResult.Single();
+                result.Start();
+                if (altar.GetFilledSpaces().Count == altar.GetNumberOfSpaces())
                 {
                     this.onMilestoneComplete.Invoke(new OnMilestoneCompletePayload
                     {
-                        PlayerNumber = payload.PlayerNumber,
-                        CompletedMilestone = payload.Star
+                        PlayerNumber = this.playerBoard.GetPlayerNumber(),
+                        CompletedMilestone = altar,
+                        Done = () => result.Finish(),
                     }
                     );
                 }
+                else
+                {
+                    result.Finish();
+                }
+                return result;
             }
 
             public void AddOnMilestoneCompleteListener(UnityAction<OnMilestoneCompletePayload> listener)

@@ -69,6 +69,7 @@ namespace Azul
                 ).WaitUntilCompleted();
                 this.RestoreScoringUI();
                 this.isShowingMilestoneCompletion = false;
+                payload.Done();
             }
 
             CoroutineResult MoveCameraToAltar(Altar completedAltar)
