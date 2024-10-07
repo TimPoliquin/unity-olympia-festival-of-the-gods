@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Azul.TileAnimation;
 using Azul.MilestoneEvents;
+using Azul.Util;
 
 namespace Azul
 {
@@ -324,7 +325,12 @@ namespace Azul
                 {
                     tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
                 }
-                System.Instance.GetTileAnimationController().MoveTiles(tiles, new TilesMoveConfig
+                this.StartCoroutine(this.TilePlacementCoroutine(playerBoard, tiles, space, spaceColor));
+            }
+
+            private IEnumerator TilePlacementCoroutine(PlayerBoard playerBoard, List<Tile> tiles, AltarSpace space, TileColor effectiveColor)
+            {
+                yield return System.Instance.GetTileAnimationController().MoveTiles(tiles, new TilesMoveConfig
                 {
                     Position = space.transform.position,
                     Time = .25f,
@@ -334,19 +340,17 @@ namespace Azul
                         explosionEffect.Play(tile.Color);
                         tile.gameObject.SetActive(false);
                     },
-                    AfterAll = () =>
-                    {
-                        space.PlaceTile(spaceColor);
-                        System.Instance.GetBagController().Discard(tiles);
-                        this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
-                        {
-                            PlayerNumber = playerBoard.GetPlayerNumber(),
-                            TilePlaced = space.GetValue(),
-                            Star = playerBoard.GetAltar(space.GetOriginColor())
-                        });
-                        this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
-                    }
+                }).WaitUntilCompleted();
+                space.PlaceTile(effectiveColor);
+                System.Instance.GetBagController().Discard(tiles);
+                yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard.GetAltar(space.GetOriginColor())).WaitUntilCompleted();
+                this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
+                {
+                    PlayerNumber = playerBoard.GetPlayerNumber(),
+                    TilePlaced = space.GetValue(),
+                    Star = playerBoard.GetAltar(space.GetOriginColor())
                 });
+                this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
             }
 
             public void AddOnPlaceStarTileListener(UnityAction<OnPlayerBoardPlaceStarTilePayload> listener)

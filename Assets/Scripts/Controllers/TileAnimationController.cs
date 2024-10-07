@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.TileAnimation;
+using Azul.Util;
 using UnityEngine;
 
 namespace Azul
@@ -15,7 +16,6 @@ namespace Azul
             public float Time { get; init; }
             public float Delay { get; init; }
             public Action<Tile> AfterEach { get; init; }
-            public Action AfterAll { get; init; }
         }
     }
     namespace Controller
@@ -28,13 +28,16 @@ namespace Azul
             {
                 return this.isAnimating;
             }
-            public void MoveTiles(List<Tile> tiles, TilesMoveConfig config)
+            public CoroutineResult MoveTiles(List<Tile> tiles, TilesMoveConfig config)
             {
-                this.StartCoroutine(this.MoveMultipleCoroutine(tiles, config));
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.MoveMultipleCoroutine(tiles, config, result));
+                return result;
             }
 
-            private IEnumerator MoveMultipleCoroutine(List<Tile> tiles, TilesMoveConfig config)
+            private IEnumerator MoveMultipleCoroutine(List<Tile> tiles, TilesMoveConfig config, CoroutineResult result)
             {
+                result.Start();
                 this.isAnimating = true;
                 foreach (Tile tile in tiles)
                 {
@@ -43,7 +46,7 @@ namespace Azul
                     yield return new WaitForSeconds(config.Delay);
                 }
                 this.isAnimating = false;
-                config.AfterAll.Invoke();
+                result.Finish();
             }
 
             private IEnumerator MoveCoroutine(Tile tile, TilesMoveConfig tileMoveConfig)
