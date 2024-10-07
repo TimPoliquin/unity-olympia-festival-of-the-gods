@@ -12,20 +12,21 @@ namespace Azul
     {
         public class ScoringPanelUIController : MonoBehaviour
         {
-            [SerializeField] private Button scoringButton;
+            [SerializeField] private ScoringButtonUI scoringButton;
             [SerializeField] private ScoringPanelUI scoringPanelUI;
 
 
             void Start()
             {
                 this.scoringPanelUI.gameObject.SetActive(false);
-                this.scoringButton.onClick.AddListener(this.ToggleScoringPanel);
+                this.scoringButton.AddOnClickListener(this.ToggleScoringPanel);
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameStart);
                 System.Instance.GetRoundController().AddOnAllRoundsCompleteListener(this.OnAllRoundsComplete);
             }
 
             private void OnGameStart(OnGameSetupCompletePayload payload)
             {
+                this.scoringButton.ShowFocus();
                 ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
                 foreach (StarCompletedMilestone starCompletedMilestone in scoreBoardController.GetStarCompletedMilestones())
                 {
@@ -43,6 +44,7 @@ namespace Azul
 
             private void ToggleScoringPanel()
             {
+                this.scoringButton.HideFocus();
                 this.scoringPanelUI.Toggle();
             }
 
