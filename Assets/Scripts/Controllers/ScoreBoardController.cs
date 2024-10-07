@@ -14,6 +14,8 @@ namespace Azul
     {
         public class OnScoreBoardUpdatePayload
         {
+            public int PlayerNumber { get; init; }
+
             public List<int> Scores { get; init; }
         }
     }
@@ -49,13 +51,13 @@ namespace Azul
             public void DeductPoints(int player, int points)
             {
                 this.playerScores[player] = Math.Max(this.playerScores[player] - points, 0);
-                this.NotifyScoreUpdate();
+                this.NotifyScoreUpdate(player);
             }
 
             public void AddPoints(int player, int points)
             {
                 this.playerScores[player] += points;
-                this.NotifyScoreUpdate();
+                this.NotifyScoreUpdate(player);
             }
 
             private void OnPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
@@ -149,7 +151,7 @@ namespace Azul
                 return points;
             }
 
-            private void NotifyScoreUpdate()
+            private void NotifyScoreUpdate(int playerNumber)
             {
                 int[] playerScores = new int[this.playerScores.Count];
                 foreach (KeyValuePair<int, int> playerScore in this.playerScores)
@@ -158,6 +160,7 @@ namespace Azul
                 }
                 this.onScoreChange.Invoke(new OnScoreBoardUpdatePayload
                 {
+                    PlayerNumber = playerNumber,
                     Scores = playerScores.ToList()
                 });
             }
@@ -180,6 +183,11 @@ namespace Azul
             public int GetCompletionPoints(TileColor tileColor)
             {
                 return this.starCompletedMilestones.Find(milestone => milestone.GetColor() == tileColor).GetPoints();
+            }
+
+            public int GetCompletionPoints(int ritualNumber)
+            {
+                return this.numberCompletedMilestones.Find(milestone => milestone.GetNumber() == ritualNumber).GetPoints();
             }
         }
     }

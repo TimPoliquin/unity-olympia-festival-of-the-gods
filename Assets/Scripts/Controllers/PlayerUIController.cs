@@ -62,10 +62,7 @@ namespace Azul
 
             private void OnPlayerScoreUpdated(OnScoreBoardUpdatePayload payload)
             {
-                for (int idx = 0; idx < payload.Scores.Count && idx < this.playerUIs.Count; idx++)
-                {
-                    this.playerUIs[idx].SetScore(payload.Scores[idx]);
-                }
+                this.playerUIs[payload.PlayerNumber].UpdateScore(payload.Scores[payload.PlayerNumber], .5f);
             }
 
             private void OnPlayerTilesCollected(OnPlayerBoardTilesCollectedPayload payload)
@@ -107,6 +104,15 @@ namespace Azul
             {
                 PlayerUI playerUI = this.playerUIs[playerNumber];
                 return playerUI.GetTileCountPosition(tileColor);
+            }
+
+            public Vector3 GetScoreWorldPosition(int playerNumber)
+            {
+                return this.playerUIs[playerNumber].GetScoreWorldPosition();
+            }
+            public Vector3 GetScoreScreenPosition(int playerNumber)
+            {
+                return this.playerUIs[playerNumber].GetScoreScreenPosition();
             }
         }
     }

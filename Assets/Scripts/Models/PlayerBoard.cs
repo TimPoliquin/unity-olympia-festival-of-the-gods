@@ -34,8 +34,6 @@ namespace Azul
             private int playerNumber;
             private List<Altar> stars = new();
 
-            private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
-
             public void SetupGame(int playerNumber, AltarFactory starController)
             {
                 this.playerNumber = playerNumber;
@@ -75,10 +73,6 @@ namespace Azul
             public void AddDrawnTiles(List<Tile> tiles)
             {
                 this.drawnTilesContainer.AddTiles(tiles);
-                if (tiles.Any(tile => tile.IsHadesToken()))
-                {
-                    this.onAcquireOneTile.Invoke(new OnPlayerAcquireOneTilePayload { PlayerNumber = this.playerNumber, AcquiredTiles = tiles });
-                }
             }
 
             public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)
@@ -99,11 +93,6 @@ namespace Azul
             public bool HasOneTile()
             {
                 return this.drawnTilesContainer.HasOneTile();
-            }
-
-            public void AddOnAcquireOneTileListener(UnityAction<OnPlayerAcquireOneTilePayload> listener)
-            {
-                this.onAcquireOneTile.AddListener(listener);
             }
 
             public int GetTileCount(TileColor tileColor)

@@ -23,6 +23,26 @@ namespace Azul
                 return this.currentPanel.Show(tileColorMappingController.GetGodName(tileColor), tileColor, tileColorMappingController.GetGodPoints(tileColor));
             }
 
+            public CoroutineResult Show(int ritualNumber)
+            {
+                if (null != this.currentPanel)
+                {
+                    this.Hide();
+                }
+                this.currentPanel = System.Instance.GetPrefabFactory().CreateMilestoneCompletedPanelUI();
+                return this.currentPanel.Show(ritualNumber, System.Instance.GetScoreBoardController().GetCompletionPoints(ritualNumber));
+
+            }
+
+            public CoroutineResult AnimateScore(int playerNumber, float time)
+            {
+                return this.currentPanel.AnimateScoreToPoint(
+                    System.Instance.GetUIController().GetPlayerUIController().GetScoreScreenPosition(playerNumber),
+                    .25f,
+                    time
+                );
+            }
+
             public CoroutineResult Hide()
             {
                 CoroutineResult result = CoroutineResult.Single();
