@@ -774,7 +774,7 @@ MonoBehaviour:
     value: {fileID: 8401494759858963228, guid: 06982d25a896842de879a39106a163a8, type: 3}
   - tileColor: 6
     value: {fileID: 8401494759858963228, guid: fa8929a45ea2a4fe2aed736001bcb591, type: 3}
-  completionSFX: {fileID: 0}
+  completionSFX: {fileID: 387665070}
 --- !u!82 &387665070
 AudioSource:
   m_ObjectHideFlags: 0
@@ -787,7 +787,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1643471200036367053, guid: 603e1012adcc3448da4252048632f267,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 79baac4f6eefa406b8b5034953e9a14a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

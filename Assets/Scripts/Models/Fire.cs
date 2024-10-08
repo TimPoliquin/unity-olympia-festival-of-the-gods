@@ -47,11 +47,14 @@ namespace Azul
                 }
             }
 
-            public void Enable()
+            public void Enable(bool playSound = true)
             {
                 this.fire.gameObject.SetActive(true);
                 this.fireLight.gameObject.SetActive(true);
-                this.fireSFX.Play();
+                if (playSound)
+                {
+                    this.fireSFX.Play();
+                }
             }
 
             public void Disable()

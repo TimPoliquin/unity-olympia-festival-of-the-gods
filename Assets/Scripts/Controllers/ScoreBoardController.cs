@@ -38,7 +38,6 @@ namespace Azul
             public void InitializeListeners()
             {
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                playerBoardController.AddOnPlayerAcquiresOneTileListener(this.OnPlayerAcquireOneTile);
                 playerBoardController.AddOnPlaceStarTileListener(this.OnPlayerPlaceTile);
                 playerBoardController.AddOnPlayerBoardTilesDiscardedListener(this.OnPlayerDiscardTiles);
             }
@@ -60,11 +59,6 @@ namespace Azul
                 this.NotifyScoreUpdate(player);
             }
 
-            private void OnPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
-            {
-                this.DeductPoints(payload.PlayerNumber, payload.AcquiredTiles.Count);
-            }
-
             private void OnPlayerDiscardTiles(OnPlayerBoardTilesDiscardedPayload payload)
             {
                 this.DeductPoints(payload.PlayerNumber, payload.NumberOfTilesDiscarded);
@@ -81,7 +75,6 @@ namespace Azul
             private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
             {
                 int points = this.CalculatePointsForTilePlacement(payload.Star, payload.TilePlaced);
-                points += this.CalculatePointsForMilestones(payload);
                 this.AddPoints(payload.PlayerNumber, points);
             }
 

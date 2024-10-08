@@ -161,10 +161,12 @@ namespace Azul
             {
                 result.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
+                int points = System.Instance.GetScoreBoardController().GetCompletionPoints(color);
                 this.completionSFX.Play();
                 yield return controller.Show(color);
                 yield return new WaitForSeconds(time);
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
+                System.Instance.GetScoreBoardController().AddPoints(playerNumber, points);
                 controller.Hide();
                 result.Finish();
             }
@@ -173,10 +175,12 @@ namespace Azul
             {
                 result.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
+                int points = System.Instance.GetScoreBoardController().GetCompletionPoints(ritualNumber);
                 this.completionSFX.Play();
                 yield return controller.Show(ritualNumber);
                 yield return new WaitForSeconds(time);
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
+                System.Instance.GetScoreBoardController().AddPoints(playerNumber, points);
                 controller.Hide();
                 result.Finish();
             }

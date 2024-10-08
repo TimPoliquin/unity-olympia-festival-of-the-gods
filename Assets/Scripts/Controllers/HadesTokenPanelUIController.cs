@@ -28,6 +28,7 @@ namespace Azul
                 yield return panel.Show(tileCount).WaitUntilCompleted();
                 yield return new WaitForSeconds(this.displaySeconds);
                 yield return panel.AnimateScoreToPoint(System.Instance.GetUIController().GetPlayerUIController().GetScoreScreenPosition(playerNumber), .5f, this.scoreMoveTime).WaitUntilCompleted();
+                System.Instance.GetScoreBoardController().DeductPoints(playerNumber, tileCount);
                 yield return panel.Hide().WaitUntilCompleted();
                 Destroy(panel.gameObject);
                 result.Finish();
