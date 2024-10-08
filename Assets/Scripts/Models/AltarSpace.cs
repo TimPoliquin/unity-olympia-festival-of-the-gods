@@ -137,6 +137,22 @@ namespace Azul
                 this.fire.Enable();
             }
 
+            public void EnableFire()
+            {
+                if (this.isFilled)
+                {
+                    this.fire.Enable();
+                }
+            }
+
+            public void DisableFire()
+            {
+                if (this.isFilled)
+                {
+                    this.fire.Disable();
+                }
+            }
+
             public void Select()
             {
                 this.onAltarSpaceSelect.Invoke(new OnAltarSpaceSelectPayload { Target = this });

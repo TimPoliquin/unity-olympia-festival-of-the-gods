@@ -135,6 +135,20 @@ namespace Azul
             {
                 Material[] materials = this.GetComponentsInChildren<MeshRenderer>().Select(renderer => renderer.material).ToArray();
                 Dictionary<Material, Transition<float>> materialColors = new();
+                if (target == 0)
+                {
+                    foreach (AltarSpace space in this.spaces)
+                    {
+                        space.DisableFire();
+                    }
+                }
+                else
+                {
+                    foreach (AltarSpace space in this.spaces)
+                    {
+                        space.EnableFire();
+                    }
+                }
                 foreach (Material material in materials)
                 {
                     materialColors[material] = new()

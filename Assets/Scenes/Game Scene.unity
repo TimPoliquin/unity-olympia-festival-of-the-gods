@@ -4451,7 +4451,7 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   playerBoardCamera: {fileID: 776933124}
   acquireSettings:
-    offset: {x: 1.5, y: 45, z: -10.5}
+    offset: {x: 1.5, y: 45, z: -7}
     rotation: {x: 0.54829323, y: 0, z: 0, w: 0.8362862}
     size: 38
   scoreSettings:
@@ -5578,6 +5578,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5630350071611593751, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630350071611593751, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630350071611593751, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630350071611593751, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5909221118996276407, guid: cba83999931a74f05877b6628e3b7cb8,
         type: 3}
       propertyPath: m_Name
@@ -5689,6 +5709,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8704265760435470230, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118980062273093412, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118980062273093412, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118980062273093412, guid: cba83999931a74f05877b6628e3b7cb8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118980062273093412, guid: cba83999931a74f05877b6628e3b7cb8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0

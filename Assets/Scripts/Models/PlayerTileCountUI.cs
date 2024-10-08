@@ -26,12 +26,6 @@ namespace Azul
                 this.gameObject.SetActive(count > 0);
             }
 
-            public void SetTileCount(string count)
-            {
-                this.countText.text = count;
-                this.gameObject.SetActive(true);
-            }
-
             public void SetTileColor(TileColor tileColor)
             {
                 this.tileColor = tileColor;
