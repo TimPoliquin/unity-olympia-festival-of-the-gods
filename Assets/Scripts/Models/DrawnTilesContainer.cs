@@ -50,6 +50,7 @@ namespace Azul
             {
                 this.layoutsByColor[pair.Key].AddChildren(pair.Value);
             }
+            tiles.ForEach(tile => tile.DisableSound());
         }
 
         public int GetTileCount(TileColor tileColor)
@@ -133,6 +134,7 @@ namespace Azul
                 {
                     this.drawnTiles.Remove(usedTile);
                     usedTile.transform.SetParent(null);
+                    usedTile.EnableSound();
                 }
                 this.layoutsByColor[mainColor].Refresh();
                 if (this.layoutsByColor.ContainsKey(wildColor))
@@ -150,6 +152,7 @@ namespace Azul
             {
                 this.drawnTiles.Remove(oneTile);
                 oneTile.transform.SetParent(null);
+                oneTile.EnableSound();
                 this.one.Refresh();
             }
             return oneTile;
@@ -161,6 +164,7 @@ namespace Azul
             foreach (Tile tile in this.drawnTiles)
             {
                 tile.transform.SetParent(null);
+                tile.EnableSound();
             }
             this.drawnTiles = new();
             return discard;

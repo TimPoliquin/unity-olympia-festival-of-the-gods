@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 1142087845991092878}
   - component: {fileID: 8193929336256090281}
   - component: {fileID: 5210913683160451395}
+  - component: {fileID: 6248139123531092485}
   m_Layer: 5
   m_Name: Player UI
   m_TagString: Untagged
@@ -456,6 +457,18 @@ MonoBehaviour:
   - tileColor: 0
     value: {fileID: 4810302630054159969}
   status: {fileID: 3416578019164318256}
+--- !u!114 &6248139123531092485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215282888890790567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc1ea50bc5b84d7abde73109e01eab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5370804696939153903
 GameObject:
   m_ObjectHideFlags: 0
