@@ -11,6 +11,8 @@ namespace Azul
         public class Tile : MonoBehaviour
         {
             [SerializeField] private TileColor color;
+            [SerializeField] private AudioSource tableCollisionSFX;
+
             private Outline outline;
 
             public TileColor Color
@@ -54,6 +56,27 @@ namespace Azul
                 Tile tile = gameObject.GetComponent<Tile>();
                 tile.Color = color;
                 return tile;
+            }
+
+            void OnCollisionEnter(Collision collision)
+            {
+                if (collision.gameObject.CompareTag("Table"))
+                {
+                    if (System.Instance.GetCameraController().IsInView(this.gameObject))
+                    {
+                        this.tableCollisionSFX.Play();
+                    }
+                }
+            }
+
+            public void DisableSound()
+            {
+                this.tableCollisionSFX.enabled = false;
+            }
+
+            public void EnableSound()
+            {
+                this.tableCollisionSFX.enabled = true;
             }
         }
 

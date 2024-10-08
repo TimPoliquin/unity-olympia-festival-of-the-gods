@@ -17,6 +17,7 @@ namespace Azul
             [SerializeField] private ExplosionEffect explosionEffectPrefab;
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
+            [SerializeField] private HadesTokenPanelUI hadesTokenPanelUIPrefab;
             [SerializeField] private MilestoneCompletedPanelUI milestoneCompletedPanelUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
@@ -78,6 +79,11 @@ namespace Azul
             public GrantRewardTilesUI CreateGrantRewardTilesUI()
             {
                 return Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
+            }
+
+            public HadesTokenPanelUI CreateHadesTokenPanelUI()
+            {
+                return Instantiate(this.hadesTokenPanelUIPrefab, this.canvas.transform);
             }
 
             public MilestoneCompletedPanelUI CreateMilestoneCompletedPanelUI()

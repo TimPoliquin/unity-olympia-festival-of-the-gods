@@ -209,15 +209,20 @@ namespace Azul
 
             private void OnTilesDrawn(OnTableDrawTilesPayload payload)
             {
-                this.StartCoroutine(this.OnTilesDrawnCoroutine(payload.TilesDrawn));
+                this.StartCoroutine(this.OnTilesDrawnCoroutine(payload.PlayerNumber, payload.TilesDrawn));
             }
 
-            private IEnumerator OnTilesDrawnCoroutine(List<Tile> tilesDrawn)
+            private IEnumerator OnTilesDrawnCoroutine(int playerNumber, List<Tile> tilesDrawn)
             {
+                bool includesHades = tilesDrawn.Find(tile => tile.Color == TileColor.ONE) != null;
+                if (includesHades)
+                {
+                    yield return System.Instance.GetUIController().GetHadesTokenPanelUIController().Show(playerNumber, tilesDrawn.Count).WaitUntilCompleted();
+                }
                 yield return this.onTilesDrawn.Invoke(new OnTableTilesDrawnPayload
                 {
                     Tiles = tilesDrawn,
-                    IncludesOneTile = tilesDrawn.Find(tile => tile.Color == TileColor.ONE) != null
+                    IncludesOneTile = includesHades
                 }).WaitUntilCompleted();
                 if (this.table.IsEmpty())
                 {

@@ -15,6 +15,8 @@ namespace Azul
         public class PlayerUIController : MonoBehaviour
         {
             [SerializeField] private GameObject playerUIContainer;
+            [SerializeField] private AudioSource scoreIncreaseSFX;
+            [SerializeField] private AudioSource scoreDecreaseSFX;
             private List<PlayerUI> playerUIs = new();
             // Start is called before the first frame update
             void Start()
@@ -62,7 +64,16 @@ namespace Azul
 
             private void OnPlayerScoreUpdated(OnScoreBoardUpdatePayload payload)
             {
-                this.playerUIs[payload.PlayerNumber].UpdateScore(payload.Scores[payload.PlayerNumber], .5f);
+                PlayerUI playerUI = this.playerUIs[payload.PlayerNumber];
+                int newScore = payload.Scores[payload.PlayerNumber];
+                if (playerUI.GetScore() != newScore)
+                {
+                    if (newScore < playerUI.GetScore())
+                    {
+                        this.scoreDecreaseSFX.Play();
+                    }
+                    this.playerUIs[payload.PlayerNumber].UpdateScore(payload.Scores[payload.PlayerNumber], .5f);
+                }
             }
 
             private void OnPlayerTilesCollected(OnPlayerBoardTilesCollectedPayload payload)

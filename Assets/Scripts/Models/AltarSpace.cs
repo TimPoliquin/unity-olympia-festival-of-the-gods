@@ -141,7 +141,7 @@ namespace Azul
             {
                 if (this.isFilled)
                 {
-                    this.fire.Enable();
+                    this.fire.Enable(false);
                 }
             }
 

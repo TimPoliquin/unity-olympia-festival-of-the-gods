@@ -17,6 +17,8 @@ namespace Azul
             [SerializeField] private List<ColoredValue<PlayerTileCountUI>> collectedTileCounts;
             [SerializeField] private GameObject status;
 
+            private int score;
+
             private ScalePulse scalePulse;
 
             private Dictionary<TileColor, PlayerTileCountUI> tileCountsByColor;
@@ -47,16 +49,22 @@ namespace Azul
                 this.playerNameText.text = player.GetPlayerName();
             }
 
+            public int GetScore()
+            {
+                return this.score;
+            }
+
             public void SetScore(int score)
             {
+                this.score = score;
                 this.scoreText.text = $"{score}";
             }
 
             public CoroutineResult UpdateScore(int score, float time)
             {
-                string newScore = $"{score}";
-                if (this.scoreText.text != newScore)
+                if (this.score != score)
                 {
+                    this.score = score;
                     this.scoreText.text = $"{score}";
                     return this.scalePulse.Animate(this.scoreText.gameObject, 1.5f, time);
                 }

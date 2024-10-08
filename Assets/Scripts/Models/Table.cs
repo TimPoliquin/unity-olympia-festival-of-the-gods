@@ -23,6 +23,7 @@ namespace Azul
         }
         public class OnTableDrawTilesPayload
         {
+            public int PlayerNumber { get; init; }
             public List<Tile> TilesDrawn { get; init; }
         }
     }
@@ -112,7 +113,7 @@ namespace Azul
                         Position = new Vector3(x, this.dropHeight, z),
                         Time = .25f,
                         Delay = 0,
-                        AfterEach = (tile) =>
+                        AfterEach = (tile, idx) =>
                         {
                             tile.transform.SetParent(this.center.transform);
                         }
@@ -130,7 +131,11 @@ namespace Azul
                     this.tiles.Remove(tile);
                     tile.transform.SetParent(null);
                 }
-                this.onDrawTiles.Invoke(new OnTableDrawTilesPayload { TilesDrawn = drawnTiles }); ;
+                this.onDrawTiles.Invoke(new OnTableDrawTilesPayload
+                {
+                    PlayerNumber = System.Instance.GetPlayerController().GetCurrentPlayer().GetPlayerNumber(),
+                    TilesDrawn = drawnTiles
+                }); ;
             }
 
             public List<Factory> GetFactories()

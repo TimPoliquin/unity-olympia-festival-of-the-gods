@@ -40,6 +40,7 @@ namespace Azul
 
             public void Refresh()
             {
+
                 this.LayoutChildren(this.GetChildren());
             }
 
