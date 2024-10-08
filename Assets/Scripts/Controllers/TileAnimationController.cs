@@ -15,13 +15,14 @@ namespace Azul
             public Vector3 Position { get; init; }
             public float Time { get; init; }
             public float Delay { get; init; }
-            public Action<Tile> AfterEach { get; init; }
+            public Action<Tile, int> AfterEach { get; init; }
         }
     }
     namespace Controller
     {
         public class TileAnimationController : MonoBehaviour
         {
+            [SerializeField] private AudioSource tileMoveSFX;
             private bool isAnimating = false;
 
             public bool IsAnimating()
@@ -39,9 +40,11 @@ namespace Azul
             {
                 result.Start();
                 this.isAnimating = true;
-                foreach (Tile tile in tiles)
+                for (int idx = 0; idx < tiles.Count; idx++)
                 {
-                    yield return this.MoveCoroutine(tile, config);
+                    Tile tile = tiles[idx];
+                    this.tileMoveSFX.Play();
+                    yield return this.MoveCoroutine(tile, idx, config);
                     this.isAnimating = true;
                     yield return new WaitForSeconds(config.Delay);
                 }
@@ -49,7 +52,7 @@ namespace Azul
                 result.Finish();
             }
 
-            private IEnumerator MoveCoroutine(Tile tile, TilesMoveConfig tileMoveConfig)
+            private IEnumerator MoveCoroutine(Tile tile, int idx, TilesMoveConfig tileMoveConfig)
             {
                 this.isAnimating = true;
                 tile.GetComponentInChildren<Collider>().enabled = false;
@@ -68,7 +71,7 @@ namespace Azul
                 this.isAnimating = false;
                 if (tileMoveConfig.AfterEach != null)
                 {
-                    tileMoveConfig.AfterEach.Invoke(tile);
+                    tileMoveConfig.AfterEach.Invoke(tile, idx);
                 }
             }
         }

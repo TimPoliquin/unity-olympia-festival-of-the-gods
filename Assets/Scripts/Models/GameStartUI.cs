@@ -29,6 +29,7 @@ namespace Azul
             [SerializeField] private List<Button> playerCountButtons;
             [SerializeField] private List<PlayerConfigUI> playerConfigUIs;
             [SerializeField] private Button startButton;
+            [SerializeField] private List<ColoredValue<IconUI>> icons;
 
             private UnityEvent<OnPlayerCountSelectionPayload> onPlayerCountSelection = new();
             private UnityEvent<OnGameStartPayload> onGameStart = new();
@@ -56,6 +57,11 @@ namespace Azul
                 this.startButton.onClick.AddListener(this.OnClickStart);
                 this.startButton.gameObject.SetActive(false);
                 this.InitializePlayerNames();
+            }
+
+            void Start()
+            {
+                this.icons.ForEach(icon => icon.GetValue().SetTileColor(icon.GetTileColor()));
             }
 
 

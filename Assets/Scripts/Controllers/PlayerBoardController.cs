@@ -66,6 +66,7 @@ namespace Azul
         {
             [SerializeField] private GameObject playerBoardPrefab;
             [SerializeField] private int allowedOverflow = 4;
+            [SerializeField] private List<AudioSource> tilePlacementSFX;
 
             private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
@@ -131,7 +132,7 @@ namespace Azul
                             Position = playerUIController.GetTileCountPosition(playerBoard.GetPlayerNumber(), tile.Color),
                             Time = .25f,
                             Delay = 0f,
-                            AfterEach = (tile) =>
+                            AfterEach = (tile, idx) =>
                             {
                                 tile.gameObject.SetActive(false);
                             }
@@ -369,8 +370,9 @@ namespace Azul
                 {
                     Position = space.transform.position,
                     Time = .25f,
-                    AfterEach = (tile) =>
+                    AfterEach = (tile, idx) =>
                     {
+                        this.tilePlacementSFX[idx].Play();
                         ExplosionEffect explosionEffect = System.Instance.GetPrefabFactory().CreateExplosionEffect(space.transform);
                         explosionEffect.Play(tile.Color);
                         tile.gameObject.SetActive(false);

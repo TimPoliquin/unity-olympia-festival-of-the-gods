@@ -238,7 +238,7 @@ MonoBehaviour:
   center: {fileID: 6196003202671131085}
   centerWidth: 25
   centerDepth: 15
-  dropHeight: 0.5
+  dropHeight: 0.1
 --- !u!114 &3317494338426430283
 MonoBehaviour:
   m_ObjectHideFlags: 0

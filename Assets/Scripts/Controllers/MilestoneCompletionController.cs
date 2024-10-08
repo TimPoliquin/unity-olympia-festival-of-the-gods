@@ -21,6 +21,7 @@ namespace Azul
             [SerializeField] private float bannerHoldTime = 5.0f;
             [SerializeField] private float scoreAnimateTime = 1.5f;
             [SerializeField] private List<ColoredValue<GameObject>> milestoneParticles;
+            [SerializeField] private AudioSource completionSFX;
 
             private bool isShowingMilestoneCompletion = false;
             void Start()
@@ -160,6 +161,7 @@ namespace Azul
             {
                 result.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
+                this.completionSFX.Play();
                 yield return controller.Show(color);
                 yield return new WaitForSeconds(time);
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
@@ -171,6 +173,7 @@ namespace Azul
             {
                 result.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
+                this.completionSFX.Play();
                 yield return controller.Show(ritualNumber);
                 yield return new WaitForSeconds(time);
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();

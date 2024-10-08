@@ -68,11 +68,7 @@ namespace Azul
                 int newScore = payload.Scores[payload.PlayerNumber];
                 if (playerUI.GetScore() != newScore)
                 {
-                    if (newScore > playerUI.GetScore())
-                    {
-                        this.scoreIncreaseSFX.Play();
-                    }
-                    else
+                    if (newScore < playerUI.GetScore())
                     {
                         this.scoreDecreaseSFX.Play();
                     }

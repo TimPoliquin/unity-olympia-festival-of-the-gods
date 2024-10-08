@@ -16,6 +16,7 @@ namespace Azul
             [SerializeField] float maxInterval = 1f;
             [SerializeField] float minIntensity = 1f;
             [SerializeField] float maxIntensity = 5f;
+            [SerializeField] AudioSource fireSFX;
 
 
             float targetIntensity;
@@ -50,6 +51,7 @@ namespace Azul
             {
                 this.fire.gameObject.SetActive(true);
                 this.fireLight.gameObject.SetActive(true);
+                this.fireSFX.Play();
             }
 
             public void Disable()

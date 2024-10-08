@@ -152,6 +152,7 @@ namespace Azul
             {
                 this.drawnTiles.Remove(oneTile);
                 oneTile.transform.SetParent(null);
+                oneTile.transform.rotation = Quaternion.Euler(0, 0, 0);
                 oneTile.EnableSound();
                 this.one.Refresh();
             }
