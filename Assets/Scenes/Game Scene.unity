@@ -918,6 +918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconUIPrefab: {fileID: 186133767885211343, guid: f362a3aaa4944408c925d03aba914536,
     type: 3}
+  iconButtonUIPrefab: {fileID: 3695228408781264, guid: c061a16781ea947b9abb621655a7fd80,
+    type: 3}
   icons:
   - tileColor: 0
     value:

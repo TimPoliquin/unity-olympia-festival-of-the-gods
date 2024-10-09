@@ -173,7 +173,7 @@ namespace Azul
                 }
                 foreach (Tile currentTile in this.hoveredTiles)
                 {
-                    currentTile.GetOutline().enabled = true;
+                    currentTile.MakeSelectable();
                 }
                 if (this.hoveredTiles.Count > 0)
                 {
@@ -192,7 +192,7 @@ namespace Azul
                 {
                     foreach (Tile tile in this.hoveredTiles)
                     {
-                        tile.GetOutline().enabled = false;
+                        tile.MakeUnselectable();
                     }
                     this.hoveredTiles = null;
                 }

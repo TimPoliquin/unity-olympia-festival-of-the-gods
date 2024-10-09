@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Azul.Model;
 using Azul.PointerEvents;
+using Azul.Cursor;
 using UnityEngine.Events;
 using UnityEditor;
 
@@ -28,6 +29,7 @@ namespace Azul
     }
     namespace Controller
     {
+        [RequireComponent(typeof(CursorChange))]
         public abstract class PointerEventController<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
         {
             private UnityEvent<OnPointerEnterPayload<T>> onPointerEnter = new();
