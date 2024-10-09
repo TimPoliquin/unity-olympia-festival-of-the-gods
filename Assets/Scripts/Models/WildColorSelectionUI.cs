@@ -29,7 +29,7 @@ namespace Azul
             [SerializeField] private float buttonSize = 50.0f;
             private bool deactivateOnSelection;
 
-            private Dictionary<TileColor, Button> buttonsByColor = new();
+            private Dictionary<TileColor, IconButtonUI> buttonsByColor = new();
             private UnityEvent<OnWildColorSelectedPayload> onColorSelected = new();
 
             void Awake()
@@ -44,12 +44,10 @@ namespace Azul
                 IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
                 foreach (TileColor color in TileColorUtils.GetTileColors())
                 {
-                    IconUI iconUI = iconUIFactory.Create(color, this.buttonContainer.transform);
+                    IconButtonUI iconUI = iconUIFactory.CreateIconButtonUI(color, this.buttonContainer.transform);
                     iconUI.GetComponent<RectTransform>().sizeDelta = Vector2.one * this.buttonSize;
-                    Button colorButton = iconUI.AddComponent<Button>();
-                    colorButton.targetGraphic = iconUI.GetBackgroundImage();
-                    colorButton.onClick.AddListener(() => this.OnButtonPress(color));
-                    this.buttonsByColor.Add(color, colorButton);
+                    iconUI.AddOnClickListener(() => this.OnButtonPress(color));
+                    this.buttonsByColor.Add(color, iconUI);
                 }
             }
 
@@ -106,7 +104,7 @@ namespace Azul
 
             private void DeactivateAllButtons()
             {
-                foreach (Button button in this.buttonsByColor.Values)
+                foreach (IconButtonUI button in this.buttonsByColor.Values)
                 {
                     button.gameObject.SetActive(false);
                 }

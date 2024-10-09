@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
+using Azul.Cursor;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
@@ -14,6 +15,7 @@ namespace Azul
             [SerializeField] private AudioSource tableCollisionSFX;
 
             private Outline outline;
+            private CursorChange cursorChange;
 
             public TileColor Color
             {
@@ -42,6 +44,35 @@ namespace Azul
                     this.outline = this.GetComponentInChildren<Outline>();
                 }
                 return this.outline;
+            }
+
+            public CursorChange GetCursorChange()
+            {
+                if (null == this.cursorChange)
+                {
+                    this.cursorChange = this.GetComponentInChildren<CursorChange>();
+                }
+                return this.cursorChange;
+            }
+
+            public void MakeSelectable()
+            {
+                this.GetOutline().enabled = true;
+                if (System.Instance.GetPlayerController().GetCurrentPlayer().IsHuman())
+                {
+                    this.GetCursorChange().enabled = true;
+                    this.GetCursorChange().OnHoverEnter();
+                }
+            }
+
+            public void MakeUnselectable()
+            {
+                this.GetOutline().enabled = false;
+                if (System.Instance.GetPlayerController().GetCurrentPlayer().IsHuman())
+                {
+                    this.GetCursorChange().enabled = false;
+                    this.GetCursorChange().OnHoverExit();
+                }
             }
 
             public bool IsHadesToken()

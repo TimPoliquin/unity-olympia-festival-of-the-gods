@@ -88,6 +88,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5311763120112216607}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a7494a7b33e7e45b699520093de5dc0e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2261871821635795955}
   m_SourcePrefab: {fileID: 100100000, guid: a7494a7b33e7e45b699520093de5dc0e, type: 3}
 --- !u!4 &4898919642510134490 stripped
 Transform:
@@ -15908,6 +15912,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9246b331254874808df0b445772d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2261871821635795955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5239839043057899104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d8c884286aa40129a445b1366e4874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverTexture: {fileID: 2800000, guid: 15ec72fcdb7494f94bb968a09e6a78c1, type: 3}
+  offset: {x: 6, y: 6}
 --- !u!1001 &5418949885585632239
 PrefabInstance:
   m_ObjectHideFlags: 0

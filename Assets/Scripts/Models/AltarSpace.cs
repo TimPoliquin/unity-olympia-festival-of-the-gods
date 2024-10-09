@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Azul.Controller;
 using Azul.Model;
+using Azul.Cursor;
 using Azul.AltarSpaceEvents;
 using UnityEngine;
 using UnityEngine.Events;
@@ -39,6 +40,7 @@ namespace Azul
             [SerializeField] private Fire fire;
 
             private Outline outline;
+            private CursorChange changeCursor;
             private UnityEvent<OnAltarSpaceHoverEnterPayload> onAltarSpaceHoverEnter = new();
             private UnityEvent<OnAltarSpaceHoverExitPayload> onAltarSpaceHoverExit = new();
             private UnityEvent<OnAltarSpaceSelectPayload> onAltarSpaceSelect = new();
@@ -46,6 +48,7 @@ namespace Azul
             void Awake()
             {
                 this.outline = this.GetComponent<Outline>();
+                this.changeCursor = this.GetComponent<CursorChange>();
             }
 
             void Start()
@@ -95,10 +98,12 @@ namespace Azul
             public void ActivateHighlight()
             {
                 this.outline.enabled = true;
+                this.changeCursor.enabled = true;
             }
 
             public void DisableHighlight()
             {
+                this.changeCursor.enabled = false;
                 this.outline.enabled = false;
             }
 
@@ -155,11 +160,13 @@ namespace Azul
 
             public void Select()
             {
+                this.changeCursor.OnHoverExit();
                 this.onAltarSpaceSelect.Invoke(new OnAltarSpaceSelectPayload { Target = this });
             }
 
             private void HoverEnter()
             {
+                this.changeCursor.OnHoverEnter();
                 this.onAltarSpaceHoverEnter.Invoke(new OnAltarSpaceHoverEnterPayload
                 {
                     Target = this
@@ -168,6 +175,7 @@ namespace Azul
 
             private void HoverExit()
             {
+                this.changeCursor.OnHoverExit();
                 this.onAltarSpaceHoverExit.Invoke(new OnAltarSpaceHoverExitPayload
                 {
                     Target = this
