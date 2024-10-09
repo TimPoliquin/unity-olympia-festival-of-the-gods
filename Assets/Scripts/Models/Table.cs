@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,13 +100,13 @@ namespace Azul
                         maxX = factory.transform.position.x;
                     }
                 }
-                float width = (Math.Abs(minX) + Math.Abs(maxX)) / 2.0f;
+                float width = (Mathf.Abs(minX) + Mathf.Abs(maxX)) / 2.0f;
                 float scale = width > this.centerWidth ? this.centerWidth / width : width / this.centerWidth;
                 TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
-                yield return CoroutineResult.Multi(tiles.Select(tile =>
+                yield return CoroutineResult.Multi(tiles.Select((tile, idx) =>
                 {
-                    float x = tile.transform.position.x * scale;
-                    float z = this.center.transform.position.z + UnityEngine.Random.Range(-this.centerDepth, this.centerDepth);
+                    float x = tile.transform.position.x * scale + Random.Range(-1f, 1f);
+                    float z = this.center.transform.position.z - this.centerDepth / 2f + idx * this.centerDepth * 2f / tiles.Count - Random.Range(-1f, 0);
                     return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
                     {
                         Position = new Vector3(x, this.dropHeight, z),
