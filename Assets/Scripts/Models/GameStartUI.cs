@@ -115,6 +115,16 @@ namespace Azul
                 });
             }
 
+            public Button GetFirstButton()
+            {
+                return this.playerCountButtons[0];
+            }
+
+            public TMP_InputField GetFirstInput()
+            {
+                return this.playerConfigUIs[0].GetInput();
+            }
+
             private void InitializePlayerNames()
             {
 #if UNITY_EDITOR
@@ -122,6 +132,11 @@ namespace Azul
                 this.playerConfigUIs[1].SetPlayerName("Alex");
                 this.playerConfigUIs[2].SetPlayerName("Oaty");
                 this.playerConfigUIs[3].SetPlayerName("Foobag");
+#else
+                this.playerConfigUIs[0].SetPlayerName("Player 1");
+                this.playerConfigUIs[1].SetPlayerName("Athenian");
+                this.playerConfigUIs[2].SetPlayerName("Spartan");
+                this.playerConfigUIs[3].SetPlayerName("Corinthian");
 #endif
             }
         }

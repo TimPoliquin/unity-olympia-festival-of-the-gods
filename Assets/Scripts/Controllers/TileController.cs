@@ -28,14 +28,12 @@ namespace Azul
 
             private void CreateStandardTiles()
             {
-                PrefabFactory prefabFactory = System.Instance.GetPrefabFactory();
                 this.tiles = new();
                 TileColor[] tileColors = TileColorUtils.GetTileColors();
                 for (int idx = 0; idx < NUM_TILES; idx++)
                 {
                     TileColor tileColor = tileColors[idx % tileColors.Length];
-                    Tile tile = prefabFactory.CreateTile(tileColor);
-                    tiles.Add(tile);
+                    this.CreateTile(tileColor);
                 }
                 tiles.Shuffle();
             }
@@ -61,6 +59,13 @@ namespace Azul
             {
                 TableController tableController = System.Instance.GetTableController();
                 tableController.MoveOneTileToCenter(this.oneTile);
+            }
+
+            public Tile CreateTile(TileColor tileColor)
+            {
+                Tile tile = System.Instance.GetPrefabFactory().CreateTile(tileColor);
+                this.tiles.Add(tile);
+                return tile;
             }
 
 

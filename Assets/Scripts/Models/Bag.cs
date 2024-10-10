@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Controller;
 using UnityEngine;
 
 namespace Azul
@@ -42,6 +43,10 @@ namespace Azul
                     tile.gameObject.SetActive(true);
                     hackList.Remove(tile);
                     this.tiles = new Queue<Tile>(hackList);
+                }
+                else
+                {
+                    return System.Instance.GetTileController().CreateTile(tileColor);
                 }
                 return tile;
             }

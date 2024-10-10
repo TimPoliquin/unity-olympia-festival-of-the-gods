@@ -24,6 +24,7 @@ namespace Azul
         private PrefabFactory prefabFactory;
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
+        private ScreenController screenController;
 
         private TableController tableController;
         private TileController tileController;
@@ -142,6 +143,15 @@ namespace Azul
                 this.scoreBoardController = this.GetComponentInChildren<ScoreBoardController>();
             }
             return this.scoreBoardController;
+        }
+
+        public ScreenController GetScreenController()
+        {
+            if (null == this.screenController)
+            {
+                this.screenController = this.GetComponentInChildren<ScreenController>();
+            }
+            return this.screenController;
         }
 
         public AltarFactory GetStarController()

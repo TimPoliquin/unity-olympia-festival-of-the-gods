@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Azul.Model;
 using Azul.PlayerEvents;
@@ -12,6 +13,17 @@ namespace Azul
 {
     namespace Controller
     {
+        [Serializable]
+        public struct AspectRatio
+        {
+            [SerializeField] private float width;
+            [SerializeField] private float height;
+
+            public float GetAspectRatio()
+            {
+                return this.width / this.height;
+            }
+        }
         public class CameraController : TimeBasedCoroutine
         {
             [SerializeField] private Camera mainCamera;
@@ -20,6 +32,7 @@ namespace Azul
             [SerializeField] private CameraSettings scoreSettings;
             [SerializeField] private CameraSettings previewSettings;
             [SerializeField] private CameraSettings altarSettings;
+            [SerializeField] private AspectRatio aspectRatio;
 
             private UnityEvent onFocusOnTable = new();
             private UnityEvent onFocusOnPlayerBoard = new();
@@ -34,6 +47,11 @@ namespace Azul
                 return this.playerBoardCamera;
             }
 
+            void Start()
+            {
+                this.EnforceAspectRatio();
+            }
+
             public void SetupGame()
             {
                 // nothing to do here yet
@@ -45,6 +63,36 @@ namespace Azul
                 playerController.AddOnBeforePlayerTurnStartListener(this.OnPlayerTurnStart);
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
+                System.Instance.GetScreenController().AddOnScreenSizeChangeListener((payload) =>
+                {
+                    this.EnforceAspectRatio();
+                });
+            }
+
+            private void EnforceAspectRatio()
+            {
+                float targetAspectRatio = this.aspectRatio.GetAspectRatio();
+                float windowAspectRatio = System.Instance.GetScreenController().GetAspectRatio();
+                float scaleHeight = windowAspectRatio / targetAspectRatio;
+                if (scaleHeight < 1.0f)
+                {
+                    Rect rect = this.mainCamera.rect;
+                    rect.width = 1.0f;
+                    rect.height = scaleHeight;
+                    rect.x = 0;
+                    rect.y = (1.0f - scaleHeight) / 2.0f;
+                    this.mainCamera.rect = rect;
+                }
+                else
+                {
+                    float scaleWidth = 1.0f / scaleHeight;
+                    Rect rect = this.mainCamera.rect;
+                    rect.width = scaleWidth;
+                    rect.height = 1.0f;
+                    rect.x = (1.0f - scaleWidth) / 2.0f;
+                    rect.y = 0;
+                    this.mainCamera.rect = rect;
+                }
             }
 
             private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
