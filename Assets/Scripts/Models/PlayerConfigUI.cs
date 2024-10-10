@@ -100,6 +100,11 @@ namespace Azul
                 });
             }
 
+            public TMP_InputField GetInput()
+            {
+                return this.playerNameInput;
+            }
+
 
         }
     }

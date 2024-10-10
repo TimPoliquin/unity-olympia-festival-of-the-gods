@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.GameStartEvents;
 using Azul.Model;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Azul
 {
@@ -19,6 +22,11 @@ namespace Azul
                 this.gameStartUI.gameObject.SetActive(true);
             }
 
+            void Start()
+            {
+                this.StartCoroutine(this.MonitorTabInput());
+            }
+
             public void InitializeListeners()
             {
                 // nothing to do here... yet
@@ -27,6 +35,7 @@ namespace Azul
             public void OnPlayerCountSelection(OnPlayerCountSelectionPayload payload)
             {
                 this.gameStartUI.ShowPlayerConfigs(payload.PlayerCount);
+                this.gameStartUI.GetFirstInput().OnPointerClick(new PointerEventData(EventSystem.current));
             }
 
             public void OnGameStart(OnGameStartPayload payload)
@@ -36,6 +45,42 @@ namespace Azul
                 System.Instance.GetPlayerController().SetStartingPlayer(Random.Range(0, payload.PlayerConfigs.Count));
                 System.Instance.GetGameController().StartGame();
                 this.gameStartUI.gameObject.SetActive(false);
+            }
+
+            IEnumerator MonitorTabInput()
+            {
+                while (this.gameStartUI.gameObject.activeInHierarchy)
+                {
+                    if (Input.GetKeyDown(KeyCode.Tab))
+                    {
+                        Selectable current = EventSystem.current.currentSelectedGameObject?.GetComponentInChildren<Selectable>();
+                        Selectable next;
+                        if (null == current)
+                        {
+                            next = this.gameStartUI.GetFirstButton();
+                        }
+                        else if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+                        {
+                            next = current.FindSelectableOnUp();
+                        }
+                        else
+                        {
+                            next = current.FindSelectableOnDown();
+                        }
+                        if (null != next)
+                        {
+                            next.Select();
+                            TMP_InputField input;
+                            next.TryGetComponent(out input);
+                            if (null != input)
+                            {
+                                input.OnPointerClick(new PointerEventData(EventSystem.current));
+                            }
+                        }
+                    }
+
+                    yield return null;
+                }
             }
         }
     }
