@@ -92,6 +92,7 @@ namespace Azul
                 UnityEngine.Debug.Log($"Scoring Strategy: Player {playerNumber} filling space: {space.GetOriginColor()}{space.GetValue()}");
                 UnityEngine.Debug.Log($"Scoring Strategy: Filling with tiles: {String.Join(joinChar, TileCount.FromDictionary(selectedTiles).Select(count => count.ToString()).ToList())}");
                 yield return System.Instance.GetPlayerBoardController().PlaceTiles(playerNumber, space, selectedColor, selectedTiles).WaitUntilCompleted();
+                this.actionableGoals.ForEach(goal => goal.EndScoring());
                 result.Finish();
             }
 

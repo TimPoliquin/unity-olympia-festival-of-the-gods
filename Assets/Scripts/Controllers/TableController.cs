@@ -59,14 +59,19 @@ namespace Azul
                 public List<TileCount> TileCounts { get; init; }
                 public TileProvider Provider { get; init; }
 
-                public ColoredValue<int> GetMaxColor(TileColor ignore)
+                public ColoredValue<int> GetMaxColor(TileColor wildColor)
                 {
                     ColoredValue<int> max = this.TileCounts[0].ToColoredValue();
+                    if (max.GetTileColor() == wildColor)
+                    {
+                        // if the color is wild, then it only counts for 1.
+                        max = ColoredValue<int>.Create(wildColor, Math.Min(max.GetValue(), 1));
+                    }
                     foreach (TileCount tileCount in this.TileCounts)
                     {
-                        if (tileCount.TileColor != ignore)
+                        if (tileCount.TileColor != wildColor)
                         {
-                            if (max.GetTileColor() == ignore)
+                            if (max.GetTileColor() == wildColor)
                             {
                                 max = tileCount.ToColoredValue();
                             }

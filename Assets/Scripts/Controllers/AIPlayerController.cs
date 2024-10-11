@@ -21,6 +21,7 @@ namespace Azul
             [SerializeField] private int playerNumber;
             private AcquireStrategy acquireStrategy;
             private ScoringStrategy scoringStrategy;
+            private bool scoring = false;
 
             void Awake()
             {
@@ -75,37 +76,47 @@ namespace Azul
 
             private IEnumerator ScoreTurnCoroutine(CoroutineResult result)
             {
-                result.Start();
-                yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
-                yield return new WaitUntil(() => !System.Instance.GetPlayerBoardController().IsPlacingTiles());
-                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
-                int count = 0;
-                while (count < 2 && this.IsMyTurn())
+                if (this.scoring)
                 {
-                    yield return this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals()).WaitUntilCompleted();
-                    if (this.scoringStrategy.CanScore())
-                    {
-                        count = 0;
-                        UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
-                        yield return this.scoringStrategy.Score(this.playerNumber).WaitUntilCompleted();
-                        yield return new WaitForSeconds(.5f);
-                    }
-                    else
-                    {
-                        count++;
-                        yield return new WaitForSeconds(.5f);
-                    }
+                    UnityEngine.Debug.Log($"AIPlayerController: Player {this.playerNumber} is already scoring!");
+                    result.Finish();
                 }
-                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                if (playerBoardController.HasExcessiveOverflow(this.playerNumber))
+                else
                 {
-                    this.HandleOverflow(this.playerNumber, playerBoardController.GetAllowedOverflow());
+                    this.scoring = true;
+                    result.Start();
+                    yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
+                    yield return new WaitUntil(() => !System.Instance.GetPlayerBoardController().IsPlacingTiles());
+                    UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
+                    int count = 0;
+                    while (count < 2 && this.IsMyTurn())
+                    {
+                        yield return this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals()).WaitUntilCompleted();
+                        if (this.scoringStrategy.CanScore())
+                        {
+                            count = 0;
+                            UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
+                            yield return this.scoringStrategy.Score(this.playerNumber).WaitUntilCompleted();
+                            yield return new WaitForSeconds(.5f);
+                        }
+                        else
+                        {
+                            count++;
+                            yield return new WaitForSeconds(.5f);
+                        }
+                    }
+                    PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                    if (playerBoardController.HasExcessiveOverflow(this.playerNumber))
+                    {
+                        this.HandleOverflow(this.playerNumber, playerBoardController.GetAllowedOverflow());
+                    }
+                    // TODO - also see if there are pending rewards somehow.
+                    this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
+                    PlayerController playerController = System.Instance.GetPlayerController();
+                    playerController.EndPlayerScoringTurn();
+                    result.Finish();
+                    this.scoring = false;
                 }
-                // TODO - also see if there are pending rewards somehow.
-                this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
-                PlayerController playerController = System.Instance.GetPlayerController();
-                playerController.EndPlayerScoringTurn();
-                result.Finish();
             }
 
             private bool IsMyTurn()

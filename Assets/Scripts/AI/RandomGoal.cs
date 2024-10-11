@@ -31,9 +31,13 @@ namespace Azul
             private UnityEvent<OnDrawFromFactoryPayload> onDrawFromFactory = new();
             private UnityEvent<OnDrawFromTablePayload> onDrawFromTable = new();
 
-            private RandomScoringSelection scoringSelection;
+            protected RandomScoringSelection scoringSelection;
 
             public abstract void Acquire();
+
+            public abstract AltarSpace ChooseSpace();
+
+            protected abstract float GetRandomChanceOfStupidity();
 
             protected bool ShouldRandomlyDrawFromTable()
             {
@@ -41,7 +45,7 @@ namespace Azul
                 List<TileCount> tileCounts = TileCount.FromDictionary(tableController.GetTableSupplyTileCounts());
                 if (tileCounts.Count > 0)
                 {
-                    bool drawFromTable = Random.Range(0f, 1f) > .8f;
+                    bool drawFromTable = Random.Range(0f, 1f) > this.GetRandomChanceOfStupidity();
                     if (drawFromTable)
                     {
                         UnityEngine.Debug.Log($"Player {playerNumber}: Randomly drawing from the table!");
@@ -117,11 +121,6 @@ namespace Azul
                 return result;
             }
 
-            public AltarSpace ChooseSpace()
-            {
-                return this.scoringSelection.ChooseSpace();
-            }
-
             public TileColor ChooseWildColor(AltarSpace space)
             {
                 return this.scoringSelection.ChooseWildColor(space);
@@ -155,9 +154,11 @@ namespace Azul
 
             public void EndScoring()
             {
-
-                this.scoringSelection.EndScoring();
-                this.scoringSelection = null;
+                if (null != this.scoringSelection)
+                {
+                    this.scoringSelection.EndScoring();
+                    this.scoringSelection = null;
+                }
             }
         }
 
@@ -169,6 +170,21 @@ namespace Azul
                 {
                     playerNumber = playerNumber
                 };
+            }
+            protected override float GetRandomChanceOfStupidity()
+            {
+                return .6f;
+            }
+            public override AltarSpace ChooseSpace()
+            {
+                if (Random.Range(0f, 1f) > this.GetRandomChanceOfStupidity())
+                {
+                    return this.scoringSelection.ChooseRandomSpace();
+                }
+                else
+                {
+                    return this.scoringSelection.ChooseSpace();
+                }
             }
             public override void Acquire()
             {
@@ -226,6 +242,14 @@ namespace Azul
                     playerNumber = playerNumber
                 };
             }
+            protected override float GetRandomChanceOfStupidity()
+            {
+                return .9f;
+            }
+            public override AltarSpace ChooseSpace()
+            {
+                return this.scoringSelection.ChooseSpace();
+            }
             public override void Acquire()
             {
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
@@ -248,6 +272,10 @@ namespace Azul
                     else if (tileProviderCount.Provider.HasHadesToken())
                     {
                         updateChoice = false;
+                    }
+                    else if (choice.TileColor == wildColor)
+                    {
+                        updateChoice = true;
                     }
                     else if (choice.Count < localMax.GetValue())
                     {

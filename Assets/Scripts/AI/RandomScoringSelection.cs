@@ -25,7 +25,6 @@ namespace Azul
         public class RandomScoringSelection
         {
             private List<ActionableSpace> actionableSpaces;
-            private AltarSpace chosenSpace;
             private List<TileCount> tileCounts;
             private int wildTileCount;
             private TileColor wildColor;
@@ -114,16 +113,22 @@ namespace Azul
 
             public AltarSpace ChooseSpace()
             {
+                AltarSpace chosenSpace;
                 int highestScore = this.actionableSpaces[0].Score;
                 if (highestScore == 1)
                 {
-                    this.chosenSpace = ListUtils.GetRandomElement(this.actionableSpaces).Space;
+                    chosenSpace = this.ChooseRandomSpace();
                 }
                 else
                 {
-                    this.chosenSpace = this.actionableSpaces.FindAll(space => space.Score == highestScore).OrderByDescending((space) => space.Space.GetValue()).ToList()[0].Space;
+                    chosenSpace = this.actionableSpaces.FindAll(space => space.Score == highestScore).OrderByDescending((space) => space.Space.GetValue()).ToList()[0].Space;
                 }
-                return this.chosenSpace;
+                return chosenSpace;
+            }
+
+            public AltarSpace ChooseRandomSpace()
+            {
+                return ListUtils.GetRandomElement(this.actionableSpaces).Space;
             }
 
 
@@ -189,7 +194,6 @@ namespace Azul
                 this.onScoreSpaceSelected.RemoveAllListeners();
                 this.onScoreTileSelection.RemoveAllListeners();
                 this.actionableSpaces = null;
-                this.chosenSpace = null;
                 this.tileCounts = null;
                 this.usedWildColors = null;
             }
