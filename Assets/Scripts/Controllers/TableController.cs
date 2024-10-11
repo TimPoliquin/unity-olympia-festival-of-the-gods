@@ -166,7 +166,7 @@ namespace Azul
             {
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
-                List<Factory> matchingFactories = this.table.GetFactories().Where(factory => !factory.IsEmpty()).OrderByDescending(factory =>
+                List<Factory> matchingFactories = this.table.GetFactories().FindAll(factory => !factory.IsEmpty()).OrderByDescending(factory =>
                 {
                     int count = factory.GetTileCount(desiredColor);
                     if (count > 0 && wildColor != desiredColor && factory.HasTileOfColor(wildColor))

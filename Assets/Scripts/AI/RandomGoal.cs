@@ -45,7 +45,7 @@ namespace Azul
                 List<TileCount> tileCounts = TileCount.FromDictionary(tableController.GetTableSupplyTileCounts());
                 if (tileCounts.Count > 0)
                 {
-                    bool drawFromTable = Random.Range(0f, 1f) > this.GetRandomChanceOfStupidity();
+                    bool drawFromTable = Random.Range(0f, 1f) < this.GetRandomChanceOfStupidity();
                     if (drawFromTable)
                     {
                         UnityEngine.Debug.Log($"Player {playerNumber}: Randomly drawing from the table!");
@@ -160,6 +160,19 @@ namespace Azul
                     this.scoringSelection = null;
                 }
             }
+
+            protected void DrawFromProvider(TileProvider tileProvider, TileColor color, TileColor wildColor)
+            {
+                if (tileProvider.IsTable())
+                {
+                    this.DrawFromTable(color, wildColor);
+                }
+                else
+                {
+                    this.DrawFromFactory((Factory)tileProvider, color, wildColor);
+                }
+            }
+
         }
 
         public class RandomGoal : BaseGoal
@@ -173,11 +186,11 @@ namespace Azul
             }
             protected override float GetRandomChanceOfStupidity()
             {
-                return .6f;
+                return .4f;
             }
             public override AltarSpace ChooseSpace()
             {
-                if (Random.Range(0f, 1f) > this.GetRandomChanceOfStupidity())
+                if (Random.Range(0f, 1f) < this.GetRandomChanceOfStupidity())
                 {
                     return this.scoringSelection.ChooseRandomSpace();
                 }
@@ -188,48 +201,40 @@ namespace Azul
             }
             public override void Acquire()
             {
-                // TODO -- there is a bug that is causing this logic to choose tiles from a factory that has already been drawn.
-                // get first factory tile provider with tiles
                 TableController tableController = System.Instance.GetTableController();
-                // find out what's available on the table
-                List<TileCount> tileCounts = tableController.GetTileCounts();
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                // pick a random color that's available
-                TileColor tileColor = tileCounts.Count > 1 ? ListUtils.GetRandomElement(tileCounts.FindAll(tileCount => tileCount.Count > 0).Select(tileCount => tileCount.TileColor).Except(new TileColor[] { wildColor }).ToArray()) : tileCounts[0].TileColor;
-                UnityEngine.Debug.Log($"Random Goal: ${tileColor} / ${wildColor}");
-                // find the factory that has the most tiles of that color
-                Factory factory = tableController.GetFactoryWithMostTilesOfColor(tileColor);
-                bool tableHasOne = tableController.HasHadesToken();
-                bool tableHasWild = tableController.HasTableSupplyTileOfColor(wildColor);
-                int tableTileCount = tableController.GetTableSupplyTileCount(tileColor);
-                int factoryTilesCount = 0;
-                bool factoryHasWild = false;
-                if (null != factory)
+                List<TileProviderCounts> allCounts = tableController.GetTileCountsByProvider();
+                TileProviderCounts pickedCount;
+                TileColor pickedColor;
+                if (allCounts.Count == 1)
                 {
-                    factoryTilesCount = factory.GetTileCount(tileColor);
-                    factoryHasWild = factory.HasTileOfColor(wildColor);
+                    pickedCount = allCounts[0];
                 }
-                UnityEngine.Debug.Log($"Random Goal: Factory Tiles: {factoryTilesCount} / {factoryHasWild}");
-                UnityEngine.Debug.Log($"Random Goal: Table Tiles: {tableTileCount} / {tableHasWild}");
-                bool tableOneFudge = this.ShouldRandomlyDrawFromTable();
-                if (null != factory && (factoryTilesCount >= tableTileCount || tableOneFudge))
+                else if (tableController.HasHadesToken() && this.ShouldRandomlyDrawFromTable())
                 {
-                    // prefer drawing from a factory over the center of the table.
-                    UnityEngine.Debug.Log($"Drawing {tileColor} from factory");
-                    this.DrawFromFactory(factory, tileColor, wildColor);
+                    pickedCount = allCounts.Find(count => count.Provider.IsTable());
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("Drawing from table");
-                    if (tableHasOne)
-                    {
-                        this.DrawFromTable(tableController.GetTableSupplyWithLowestCount(wildColor), wildColor);
-                    }
-                    else
-                    {
-                        this.DrawFromTable(tileColor, wildColor);
-                    }
+                    pickedCount = ListUtils.GetRandomElement(allCounts);
+                    UnityEngine.Debug.Log($"Player {this.playerNumber}: RandomGoal - picking random tile provider: {pickedCount.Provider}");
                 }
+                if (pickedCount.TileCounts.Count == 1)
+                {
+                    pickedColor = pickedCount.TileCounts[0].TileColor;
+                    UnityEngine.Debug.Log($"Player {this.playerNumber}: RandomGoal - provider has one color: {pickedColor}");
+                }
+                else if (pickedCount.Provider.IsTable() && tableController.HasHadesToken())
+                {
+                    pickedColor = pickedCount.TileCounts.FindAll(tileCount => tileCount.TileColor != wildColor).OrderBy(tileCount => tileCount.Count).ToList()[0].TileColor;
+                    UnityEngine.Debug.Log($"Player {this.playerNumber}: RandomGoal - table has hades token - finding lowest count {pickedColor}");
+                }
+                else
+                {
+                    pickedColor = ListUtils.GetRandomElement(pickedCount.TileCounts.FindAll(count => count.TileColor != wildColor)).TileColor;
+                    UnityEngine.Debug.Log($"Player {this.playerNumber}: RandomGoal - picking a random color {pickedColor}");
+                }
+                this.DrawFromProvider(pickedCount.Provider, pickedColor, wildColor);
             }
         }
 
@@ -244,7 +249,7 @@ namespace Azul
             }
             protected override float GetRandomChanceOfStupidity()
             {
-                return .9f;
+                return .1f;
             }
             public override AltarSpace ChooseSpace()
             {
@@ -299,14 +304,7 @@ namespace Azul
                         };
                     }
                 }
-                if (choice.Provider.IsTable())
-                {
-                    this.DrawFromTable(choice.TileColor, wildColor);
-                }
-                else
-                {
-                    this.DrawFromFactory((Factory)choice.Provider, choice.TileColor, wildColor);
-                }
+                this.DrawFromProvider(choice.Provider, choice.TileColor, wildColor);
             }
         }
     }
