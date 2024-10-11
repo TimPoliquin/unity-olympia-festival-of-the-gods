@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
@@ -33,15 +34,16 @@ namespace Azul
             private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
             {
                 AIPlayerController aiPlayerController = this.GetAIPlayerController(payload.PlayerNumber);
-                if (null != aiPlayerController)
+                RoundController roundController = System.Instance.GetRoundController();
+                if (null != aiPlayerController && !roundController.IsAfterLastRound())
                 {
                     switch (payload.Phase)
                     {
                         case Phase.ACQUIRE:
-                            this.StartCoroutine(this.PerformAIPlayerAcquire(aiPlayerController));
+                            aiPlayerController.OnAcquireTurn();
                             break;
                         case Phase.SCORE:
-                            this.StartCoroutine(this.PerformAIPlayerScore(aiPlayerController));
+                            aiPlayerController.OnScoreTurn();
                             break;
                     }
                 }
@@ -50,31 +52,6 @@ namespace Azul
             private AIPlayerController GetAIPlayerController(int playerNumber)
             {
                 return this.aIPlayerControllers.Find(controller => controller.GetPlayerNumber() == playerNumber);
-            }
-
-            private IEnumerator PerformAIPlayerAcquire(AIPlayerController aiPlayerController)
-            {
-                // TODO - this is presently a hack to wait for other controllers to execute before the AI takes immediate action
-                // TODO -- an extra acquire phase event dispatches when the last person draws the last tile.
-                // we should stop that from happening.
-                // in the meantime, this prevents the AI from trying to draw when there are no tiles left.
-                yield return new WaitForSeconds(1.0f);
-                if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.ACQUIRE)
-                {
-                    aiPlayerController.OnAcquireTurn();
-                }
-            }
-            private IEnumerator PerformAIPlayerScore(AIPlayerController aiPlayerController)
-            {
-                // TODO - this is presently a hack to wait for other controllers to execute before the AI takes immediate action
-                // TODO -- an extra acquire phase event dispatches when the last person draws the last tile.
-                // we should stop that from happening.
-                // in the meantime, this prevents the AI from trying to draw when there are no tiles left.
-                yield return new WaitForSeconds(1.0f);
-                if (System.Instance.GetRoundController().GetCurrentPhase() == Phase.SCORE)
-                {
-                    aiPlayerController.OnScoreTurn();
-                }
             }
         }
     }

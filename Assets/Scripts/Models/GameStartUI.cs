@@ -27,6 +27,7 @@ namespace Azul
         public class GameStartUI : MonoBehaviour
         {
             [SerializeField] private List<Button> playerCountButtons;
+            [SerializeField] private GameObject playerUIContainer;
             [SerializeField] private List<PlayerConfigUI> playerConfigUIs;
             [SerializeField] private Button startButton;
             [SerializeField] private List<ColoredValue<IconUI>> icons;
@@ -72,7 +73,7 @@ namespace Azul
 
             public void ShowPlayerConfigs(int playerCount)
             {
-
+                this.playerUIContainer.gameObject.SetActive(true);
                 for (int idx = 0; idx < this.playerConfigUIs.Count; idx++)
                 {
                     this.playerConfigUIs[idx].gameObject.SetActive(idx < playerCount);

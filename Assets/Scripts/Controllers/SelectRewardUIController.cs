@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Event;
 using Azul.GrantRewardEvents;
 using Azul.Model;
 using Azul.PlayerBoardRewardEvents;
@@ -68,12 +69,13 @@ namespace Azul
             }
 
 
-            private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            private void OnEarnReward(EventTracker<OnPlayerBoardEarnRewardPayload> payload)
             {
-                if (System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).IsHuman())
+                if (System.Instance.GetPlayerController().GetPlayer(payload.Payload.PlayerNumber).IsHuman())
                 {
-                    this.Show(playerNumber: payload.PlayerNumber, tileCount: payload.NumberOfTiles);
+                    this.Show(playerNumber: payload.Payload.PlayerNumber, tileCount: payload.Payload.NumberOfTiles);
                 }
+                payload.Done();
             }
 
             private void OnConfirm(OnGrantTileSelectionConfirmPayload payload)

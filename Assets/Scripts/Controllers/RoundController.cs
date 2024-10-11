@@ -67,6 +67,30 @@ namespace Azul
                 return this.GetCurrentRound().GetCurrentPhase();
             }
 
+            public bool IsCurrentPhaseAcquire()
+            {
+                if (this.IsAfterLastRound())
+                {
+                    return false;
+                }
+                else
+                {
+                    return this.GetCurrentPhase() == Phase.ACQUIRE;
+                }
+            }
+
+            public bool IsCurrentPhaseScore()
+            {
+                if (this.IsAfterLastRound())
+                {
+                    return false;
+                }
+                else
+                {
+                    return this.GetCurrentPhase() == Phase.SCORE;
+                }
+            }
+
             public TileColor GetCurrentWild()
             {
                 return this.rounds[this.currentRound].GetWildColor();

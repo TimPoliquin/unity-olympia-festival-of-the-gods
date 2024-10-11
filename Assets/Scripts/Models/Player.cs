@@ -14,12 +14,39 @@ namespace Azul
             GREY,
             WHITE,
         }
+        public enum PlayerType
+        {
+            HUMAN,
+            AI_EASY,
+            AI_DIFFICULT
+        }
+        public sealed class PlayerTypeUtils
+        {
+            public static PlayerType[] GetPlayerTypes()
+            {
+                return new PlayerType[] { PlayerType.HUMAN, PlayerType.AI_EASY, PlayerType.AI_DIFFICULT };
+            }
+            public static string GetPlayerTypeName(PlayerType playerType)
+            {
+                switch (playerType)
+                {
+                    case PlayerType.HUMAN:
+                        return "Human";
+                    case PlayerType.AI_EASY:
+                        return "AI - Easy";
+                    case PlayerType.AI_DIFFICULT:
+                        return "AI - Difficult";
+                    default:
+                        return "";
+                }
+            }
+        }
         public class Player : MonoBehaviour
         {
             [SerializeField] private int playerNumber;
             [SerializeField] private string playerName;
             [SerializeField] private PlayerColor color;
-            [SerializeField] private bool isAI;
+            [SerializeField] private PlayerType playerType;
 
             public int GetPlayerNumber()
             {
@@ -38,19 +65,24 @@ namespace Azul
 
             public bool IsAI()
             {
-                return this.isAI;
+                return this.playerType == PlayerType.AI_EASY || this.playerType == PlayerType.AI_DIFFICULT;
             }
 
             public bool IsHuman()
             {
-                return !this.isAI;
+                return this.playerType == PlayerType.HUMAN;
             }
 
-            public void Initialize(int playerNumber, string playerName, bool isAI)
+            public void Initialize(int playerNumber, string playerName, PlayerType playerType)
             {
                 this.playerNumber = playerNumber;
                 this.playerName = playerName;
-                this.isAI = isAI;
+                this.playerType = playerType;
+            }
+
+            public PlayerType GetPlayerType()
+            {
+                return this.playerType;
             }
         }
     }

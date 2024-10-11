@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azul.AIEvents;
 using Azul.Controller;
+using Azul.Event;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -86,9 +88,11 @@ namespace Azul
             public GoalAcquireFeasability CalculateAcquireFeasibility();
             public void Acquire();
 
-            public void PrepareForScoring();
+            public CoroutineResult PrepareForScoring();
 
-            public void Score();
+            public AltarSpace ChooseSpace();
+
+            public TileColor ChooseWildColor(AltarSpace space);
 
             public void EndScoring();
 
@@ -98,17 +102,85 @@ namespace Azul
 
             public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener);
             public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener);
-            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener);
+            public void AddOnScoreSpaceSelectedListener(UnityAction<EventTracker<OnScoreSpaceSelectedPayload>> listener);
             public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener);
         }
 
+        public class UnimplementedGoal : Goal
+        {
+
+            public void Acquire()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnScoreSpaceSelectedListener(UnityAction<EventTracker<OnScoreSpaceSelectedPayload>> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
+            {
+                throw new NotImplementedException();
+            }
+
+            public GoalAcquireFeasability CalculateAcquireFeasibility()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool CanScore()
+            {
+                throw new NotImplementedException();
+            }
+
+            public AltarSpace ChooseSpace()
+            {
+                throw new NotImplementedException();
+            }
+
+            public TileColor ChooseWildColor(AltarSpace space)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void EndScoring()
+            {
+                throw new NotImplementedException();
+            }
+
+            public GoalStatus EvaluateCompletion()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int GetScoreProgress()
+            {
+                throw new NotImplementedException();
+            }
+
+            public CoroutineResult PrepareForScoring()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         [Serializable]
-        public class StarGoal : Goal
+        public class StarGoal : UnimplementedGoal
         {
             [SerializeField] private int playerNumber;
             [SerializeField] private TileColor starColor;
             [SerializeField] private GoalStatus goalStatus;
-
 
             internal static StarGoal Create(int playerNumber, TileColor starColor)
             {
@@ -125,68 +197,9 @@ namespace Azul
                 return this.goalStatus == GoalStatus.COMPLETE;
             }
 
-            public GoalAcquireFeasability CalculateAcquireFeasibility()
-            {
-                throw new NotImplementedException();
-            }
-
-            public GoalStatus EvaluateCompletion()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Acquire()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Score()
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetScoreProgress()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool CanScore()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void PrepareForScoring()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void EndScoring()
-            {
-                throw new NotImplementedException();
-            }
         }
 
-        public class NumberGoal : Goal
+        public class NumberGoal : UnimplementedGoal
         {
             [SerializeField] private int playerNumber;
             [SerializeField] private int number;
@@ -202,69 +215,9 @@ namespace Azul
                 };
             }
 
-            public void Acquire()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnDrawFromFactoryListener(UnityAction<OnDrawFromFactoryPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void AddOnTileSelectedListener(UnityAction<OnGoalScoreTilesSelectedPayload> listener)
-            {
-                throw new NotImplementedException();
-            }
-
-            public GoalAcquireFeasability CalculateAcquireFeasibility()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool CanScore()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void EndScoring()
-            {
-                throw new NotImplementedException();
-            }
-
-            public GoalStatus EvaluateCompletion()
-            {
-                throw new NotImplementedException();
-            }
-
-            public int GetScoreProgress()
-            {
-                throw new NotImplementedException();
-            }
-
             public bool IsComplete()
             {
                 return this.goalStatus == GoalStatus.COMPLETE;
-            }
-
-            public void PrepareForScoring()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Score()
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -282,6 +235,11 @@ namespace Azul
             public static Goal CreateRandomGoal(int playerNumber)
             {
                 return RandomGoal.Create(playerNumber);
+            }
+
+            public static Goal CreateAgressiveGoal(int playerNumber)
+            {
+                return AgressiveGoal.Create(playerNumber);
             }
 
             public static List<Goal> SortByFeasibility(List<Goal> goals)

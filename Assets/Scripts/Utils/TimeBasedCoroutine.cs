@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Azul
@@ -42,6 +43,7 @@ namespace Azul
                 return new WaitUntil(() => this.IsCompleted());
             }
         }
+
         public class SingleCoroutineResult : CoroutineResult
         {
             private CoroutineStatus status = CoroutineStatus.NOT_STARTED;
@@ -89,6 +91,24 @@ namespace Azul
             public void Finish()
             {
                 this.coroutineResults.ForEach(result => result.Finish());
+            }
+        }
+        public class CoroutineResultValue<T> : SingleCoroutineResult
+        {
+            private T value;
+            public T GetValue()
+            {
+                return this.value;
+            }
+
+            public void Finish(T value)
+            {
+                this.value = value;
+                base.Finish();
+            }
+            public WaitUntil WaitUntilCompleted()
+            {
+                return new WaitUntil(() => this.IsCompleted());
             }
         }
         public class TimeBasedCoroutine : MonoBehaviour

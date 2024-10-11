@@ -28,7 +28,7 @@ namespace Azul
     }
     namespace Model
     {
-        public class Table : MonoBehaviour
+        public class Table : MonoBehaviour, TileProvider
         {
             [SerializeField] private GameObject playerBoards;
             [SerializeField] private LinearLayout factoriesLayout;
@@ -152,7 +152,7 @@ namespace Azul
                 return this.tiles.Any(tile => tile.Color == tileColor);
             }
 
-            public bool HasOneTile()
+            public bool HasHadesToken()
             {
                 return this.tiles.Any(tile => tile.IsHadesToken());
             }
@@ -193,6 +193,14 @@ namespace Azul
                 return this.tiles.Count == 0;
             }
 
+            public bool IsFactory()
+            {
+                return false;
+            }
+            public bool IsTable()
+            {
+                return true;
+            }
         }
     }
 }

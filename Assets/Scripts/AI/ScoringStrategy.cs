@@ -5,8 +5,10 @@ using System.Linq;
 using Azul.AIEvents;
 using Azul.Controller;
 using Azul.Controller.TableUtilities;
+using Azul.Event;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,36 +17,43 @@ using Utils;
 
 namespace Azul
 {
-    namespace AIEvents
-    {
-        public struct OnAIScorePayload
-        {
-
-        }
-    }
     namespace AI
     {
         public class ScoringStrategy : MonoBehaviour
         {
             [SerializeField] private List<Goal> actionableGoals;
-            private UnityEvent<OnAIScorePayload> onScoreComplete = new();
 
-
-            public void EvaluateGoals(List<Goal> goals)
+            public CoroutineResult EvaluateGoals(List<Goal> goals)
             {
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.EvaluateGoalsCoroutine(goals, result));
                 // copy the goals
+                return result;
+            }
+
+            private IEnumerator EvaluateGoalsCoroutine(List<Goal> goals, CoroutineResult result)
+            {
+                result.Start();
                 UnityEngine.Debug.Log($"Starting Goals: {goals.Count}");
-                this.actionableGoals = goals.Where(goal =>
+                List<Goal> actionableGoals = new();
+                foreach (Goal goal in goals)
                 {
-                    goal.PrepareForScoring();
+                    yield return goal.PrepareForScoring().WaitUntilCompleted();
+                    bool actionable;
                     if (goal.EvaluateCompletion() == GoalStatus.COMPLETE)
                     {
                         UnityEngine.Debug.Log($"Removing completed goal");
-                        return false;
+                        actionable = false;
                     }
-                    return goal.CanScore();
-                }).OrderBy(goal => goal.GetScoreProgress()).ToList();
+                    actionable = goal.CanScore();
+                    if (actionable)
+                    {
+                        actionableGoals.Add(goal);
+                    }
+                }
+                this.actionableGoals = actionableGoals.OrderBy(goal => goal.GetScoreProgress()).ToList();
                 UnityEngine.Debug.Log($"Goals: {this.actionableGoals.Count}");
+                result.Finish();
             }
 
             public bool CanScore()
@@ -52,43 +61,44 @@ namespace Azul
                 return this.actionableGoals.Any(goal => goal.CanScore());
             }
 
-            public void Score()
+            public CoroutineResult Score(int playerNumber)
             {
+                CoroutineResult result = CoroutineResult.Single();
                 if (this.actionableGoals.Count > 0)
                 {
-                    Goal goal = this.actionableGoals[0];
-                    goal.AddOnScoreSpaceSelectedListener(this.OnScoreSpaceSelected);
-                    goal.AddOnTileSelectedListener(this.OnGoalScoreTilesSelected);
-                    goal.Score();
+                    this.StartCoroutine(this.ScoreCoroutine(playerNumber, this.actionableGoals[0], result));
                 }
+                else
+                {
+                    result.Finish();
+                }
+                return result;
             }
 
-            private void OnScoreSpaceSelected(OnScoreSpaceSelectedPayload payload)
+            private IEnumerator ScoreCoroutine(int playerNumber, Goal goal, CoroutineResult result)
             {
-                StartCoroutine(this.SelectStarSpace(payload.Selection));
-            }
-
-            private IEnumerator SelectStarSpace(AltarSpace starSpace)
-            {
-                UnityEngine.Debug.Log($"Trying to select space {starSpace.GetOriginColor()} * {starSpace.GetValue()}");
-                starSpace.Select();
+                result.Start();
+                AltarSpace space = goal.ChooseSpace();
+                space.Select();
                 yield return new WaitForSeconds(1.0f);
-            }
-
-            private void OnGoalScoreTilesSelected(OnGoalScoreTilesSelectedPayload payload)
-            {
-                this.StartCoroutine(this.ChooseTilesToFillScoreSpace(
-                    playerBoard: payload.PlayerBoard,
-                    tileColor: payload.TileColor,
+                TileColor selectedColor = space.IsWild() ? goal.ChooseWildColor(space) : space.GetOriginColor();
+                Dictionary<TileColor, int> selectedTiles = this.ChooseTilesToFillScoreSpace(
+                    System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber),
+                    selectedColor,
                     wildColor: System.Instance.GetRoundController().GetCurrentRound().GetWildColor(),
-                    value: payload.Value,
-                    OnConfirm: payload.OnConfirm
-                ));
+                    value: space.GetValue()
+                );
+                string joinChar = ",";
+                UnityEngine.Debug.Log($"Scoring Strategy: Player {playerNumber} filling space: {space.GetOriginColor()}{space.GetValue()}");
+                UnityEngine.Debug.Log($"Scoring Strategy: Filling with tiles: {String.Join(joinChar, TileCount.FromDictionary(selectedTiles).Select(count => count.ToString()).ToList())}");
+                yield return System.Instance.GetPlayerBoardController().PlaceTiles(playerNumber, space, selectedColor, selectedTiles).WaitUntilCompleted();
+                this.actionableGoals.ForEach(goal => goal.EndScoring());
+                result.Finish();
             }
 
-            private IEnumerator ChooseTilesToFillScoreSpace(PlayerBoard playerBoard, TileColor tileColor, TileColor wildColor, int value, UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm)
+
+            private Dictionary<TileColor, int> ChooseTilesToFillScoreSpace(PlayerBoard playerBoard, TileColor tileColor, TileColor wildColor, int value)
             {
-                yield return new WaitForSeconds(1.0f);
                 Dictionary<TileColor, int> selectedTiles = new();
                 int chosenColorTileCount = playerBoard.GetTileCount(tileColor);
                 if (chosenColorTileCount < value && tileColor != wildColor)
@@ -100,19 +110,7 @@ namespace Azul
                 {
                     selectedTiles[tileColor] = value;
                 }
-                OnConfirm(new OnPlayerBoardScoreTileSelectionConfirmPayload
-                {
-                    TilesSelected = selectedTiles,
-                    Color = tileColor
-                });
-                yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
-                yield return null;
-                this.onScoreComplete.Invoke(new OnAIScorePayload());
-            }
-
-            public void AddOnScoreCompleteListener(UnityAction<OnAIScorePayload> listener)
-            {
-                this.onScoreComplete.AddListener(listener);
+                return selectedTiles;
             }
 
             public TileColor ChooseReward()

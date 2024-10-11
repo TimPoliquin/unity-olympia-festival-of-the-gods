@@ -11,6 +11,7 @@ using UnityEngine.Events;
 using Azul.PlayerBoardRewardEvents;
 using System;
 using Azul.Controller.TableUtilities;
+using Azul.Event;
 
 namespace Azul
 {
@@ -192,7 +193,7 @@ namespace Azul
                 this.drawnTilesContainer.transform.localScale = Vector3.one;
             }
 
-            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<EventTracker<OnPlayerBoardEarnRewardPayload>> listener)
             {
                 this.rewardController.AddOnPlayerBoardEarnRewardListener(listener);
             }

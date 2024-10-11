@@ -23,7 +23,7 @@ namespace Azul
             public List<Tile> TilesDrawn { get; init; }
             public List<Tile> TilesDiscarded { get; init; }
         }
-        public class Factory : MonoBehaviour
+        public class Factory : MonoBehaviour, TileProvider
         {
             [SerializeField] private GameObject ivyMesh;
             [SerializeField] private List<GameObject> tileHolder;
@@ -129,6 +129,21 @@ namespace Azul
             public FactorySelectableTileHolderController GetSelectableTileHolderController()
             {
                 return this.GetComponent<FactorySelectableTileHolderController>();
+            }
+
+            public bool HasHadesToken()
+            {
+                return false;
+            }
+
+            public bool IsFactory()
+            {
+                return true;
+            }
+
+            public bool IsTable()
+            {
+                return false;
             }
         }
     }
