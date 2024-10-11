@@ -11,6 +11,7 @@ using System.Linq;
 using Azul.PlayerBoardRewardEvents;
 using Azul.RewardUIEvents;
 using Unity.VisualScripting;
+using Azul.Event;
 
 namespace Azul
 {
@@ -264,10 +265,11 @@ namespace Azul
                 }
             }
 
-            private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            private void OnEarnReward(EventTracker<OnPlayerBoardEarnRewardPayload> payload)
             {
                 this.CleanupScoreSelectionUIElements();
                 this.endTurnPanelUI.Hide();
+                payload.Done();
             }
 
             private void OnGrantReward(OnGrantRewardPayload payload)

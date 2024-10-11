@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Event;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.ScoreBoardEvents;
@@ -72,10 +73,11 @@ namespace Azul
                 }
             }
 
-            private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
+            private void OnPlayerPlaceTile(EventTracker<OnPlayerBoardPlaceStarTilePayload> payload)
             {
-                int points = this.CalculatePointsForTilePlacement(payload.Star, payload.TilePlaced);
-                this.AddPoints(payload.PlayerNumber, points);
+                int points = this.CalculatePointsForTilePlacement(payload.Payload.Star, payload.Payload.TilePlaced);
+                this.AddPoints(payload.Payload.PlayerNumber, points);
+                payload.Done();
             }
 
             public int CalculatePointsForTilePlacement(Altar star, int tilePlaced)

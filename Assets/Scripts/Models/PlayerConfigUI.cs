@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Azul.Model;
 using Azul.PlayerConfigEvents;
 using TMPro;
 using UnityEngine;
@@ -14,7 +16,7 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public string PlayerName { get; init; }
-            public bool IsAI { get; init; }
+            public PlayerType PlayerType { get; init; }
             public bool IsValid { get; init; }
         }
     }
@@ -25,12 +27,12 @@ namespace Azul
         {
             public int PlayerNumber;
             public string Name;
-            public bool isAI;
+            public PlayerType PlayerType;
         }
         public class PlayerConfigUI : MonoBehaviour
         {
             [SerializeField] private TMP_InputField playerNameInput;
-            [SerializeField] private Toggle isAIToggle;
+            [SerializeField] private TMP_Dropdown playerType;
             [SerializeField] private int playerNumber;
 
             private UnityEvent<PlayerConfigOnChangePayload> onChange = new();
@@ -38,15 +40,23 @@ namespace Azul
             void Awake()
             {
                 (this.playerNameInput.placeholder as TextMeshProUGUI).text = $"Player {this.playerNumber + 1} Name";
-                this.isAIToggle.gameObject.SetActive(this.playerNumber > 0);
-                this.isAIToggle.isOn = this.playerNumber > 0;
+                this.playerType.options = PlayerTypeUtils.GetPlayerTypes().Select(playerType => new TMP_Dropdown.OptionData(PlayerTypeUtils.GetPlayerTypeName(playerType))).ToList();
+                if (this.playerNumber == 0)
+                {
+                    this.playerType.value = (int)PlayerType.HUMAN;
+                    this.playerType.interactable = false;
+                }
+                else
+                {
+                    this.playerType.value = (int)PlayerType.AI_EASY;
+                }
                 this.InitializeListeners();
             }
 
             void InitializeListeners()
             {
                 this.playerNameInput.onValueChanged.AddListener(this.OnChangePlayerName);
-                this.isAIToggle.onValueChanged.AddListener(this.OnChangeIsAI);
+                this.playerType.onValueChanged.AddListener(this.OnChangePlayerType);
             }
 
             public PlayerConfig GetPlayerConfig()
@@ -55,7 +65,7 @@ namespace Azul
                 {
                     PlayerNumber = this.playerNumber,
                     Name = this.playerNameInput.text,
-                    isAI = this.isAIToggle.isOn
+                    PlayerType = (PlayerType)this.playerType.value
                 };
             }
 
@@ -84,7 +94,7 @@ namespace Azul
                 this.InvokeChangeEvent();
             }
 
-            private void OnChangeIsAI(bool isAI)
+            private void OnChangePlayerType(int playerType)
             {
                 this.InvokeChangeEvent();
             }
@@ -95,7 +105,7 @@ namespace Azul
                 {
                     PlayerNumber = this.playerNumber,
                     PlayerName = this.playerNameInput.text,
-                    IsAI = this.isAIToggle.isOn,
+                    PlayerType = (PlayerType)this.playerType.value,
                     IsValid = this.IsValid()
                 });
             }

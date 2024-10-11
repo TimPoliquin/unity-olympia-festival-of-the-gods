@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Event;
 using Azul.Layout;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
@@ -53,7 +54,7 @@ namespace Azul
 
             private List<RewardBehavior> rewardBehaviors;
 
-            private UnityEvent<OnPlayerBoardEarnRewardPayload> onEarnReward = new();
+            private AzulEvent<OnPlayerBoardEarnRewardPayload> onEarnReward = new();
 
 
             public void SetupGame(int playerNumber)
@@ -68,9 +69,13 @@ namespace Azul
             {
                 System.Instance.GetPlayerBoardController().AddOnPlaceStarTileListener((payload) =>
                 {
-                    if (payload.PlayerNumber == this.playerNumber)
+                    if (payload.Payload.PlayerNumber == this.playerNumber)
                     {
-                        this.OnPlaceStarTile(payload);
+                        this.StartCoroutine(this.OnPlaceStarTile(payload.Payload, payload.Done));
+                    }
+                    else
+                    {
+                        payload.Done();
                     }
                 });
             }
@@ -102,7 +107,7 @@ namespace Azul
                 return RewardBehavior.Create(this.playerNumber, rewardConfiguration, prefab);
             }
 
-            private void OnPlaceStarTile(OnPlayerBoardPlaceStarTilePayload payload)
+            private IEnumerator OnPlaceStarTile(OnPlayerBoardPlaceStarTilePayload payload, Action Done)
             {
                 List<RewardBehavior> behaviors = this.rewardBehaviors.FindAll(
                     behavior => !behavior.IsCompleted() && behavior.IsConditionParameter(payload.Star.GetColor(), payload.TilePlaced)
@@ -118,15 +123,18 @@ namespace Azul
                 }
                 if (rewardCount > 0)
                 {
-                    this.onEarnReward.Invoke(new OnPlayerBoardEarnRewardPayload
+                    UnityEngine.Debug.Log($"Reward Controller: Player {payload.PlayerNumber} earned {rewardCount} rewards");
+                    yield return this.onEarnReward.Invoke(new OnPlayerBoardEarnRewardPayload
                     {
                         PlayerNumber = this.playerNumber,
                         NumberOfTiles = rewardCount
-                    });
+                    }).WaitUntilCompleted();
+                    UnityEngine.Debug.Log($"Reward Controller: Player {payload.PlayerNumber} claimed rewards");
                 }
+                Done();
             }
 
-            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<EventTracker<OnPlayerBoardEarnRewardPayload>> listener)
             {
                 this.onEarnReward.AddListener(listener);
             }

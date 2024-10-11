@@ -54,7 +54,6 @@ namespace Azul
 
             private IEnumerator MoveCoroutine(Tile tile, int idx, TilesMoveConfig tileMoveConfig)
             {
-                this.isAnimating = true;
                 tile.GetComponentInChildren<Collider>().enabled = false;
                 tile.GetComponentInChildren<Rigidbody>().useGravity = false;
                 Vector3 startingPosition = tile.transform.position;
@@ -68,10 +67,17 @@ namespace Azul
                 }
                 tile.GetComponentInChildren<Collider>().enabled = true;
                 tile.GetComponentInChildren<Rigidbody>().useGravity = true;
-                this.isAnimating = false;
                 if (tileMoveConfig.AfterEach != null)
                 {
                     tileMoveConfig.AfterEach.Invoke(tile, idx);
+                }
+            }
+
+            public IEnumerator WaitUntilDoneAnimating()
+            {
+                if (this.isAnimating)
+                {
+                    yield return new WaitUntil(() => !this.isAnimating);
                 }
             }
         }

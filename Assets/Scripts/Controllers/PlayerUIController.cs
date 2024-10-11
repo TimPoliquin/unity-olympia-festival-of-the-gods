@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Event;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
@@ -92,9 +93,10 @@ namespace Azul
                 this.RecalculatePlayerTileCounts(payload.PlayerNumber);
             }
 
-            private void OnPlayerPlaceTile(OnPlayerBoardPlaceStarTilePayload payload)
+            private void OnPlayerPlaceTile(EventTracker<OnPlayerBoardPlaceStarTilePayload> payload)
             {
-                this.RecalculatePlayerTileCounts(payload.PlayerNumber);
+                this.RecalculatePlayerTileCounts(payload.Payload.PlayerNumber);
+                payload.Done();
             }
 
             private void RecalculatePlayerTileCounts(int playerNumber)

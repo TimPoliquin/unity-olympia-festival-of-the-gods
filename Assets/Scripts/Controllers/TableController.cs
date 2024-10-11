@@ -40,6 +40,49 @@ namespace Azul
                 {
                     return ColoredValue<int>.Create(TileColor, Count);
                 }
+                public override string ToString()
+                {
+                    return $"{this.TileColor}:{this.Count}";
+                }
+                public static List<TileCount> FromDictionary(Dictionary<TileColor, int> dictionary)
+                {
+                    List<TileCount> list = new();
+                    foreach (KeyValuePair<TileColor, int> entry in dictionary)
+                    {
+                        list.Add(new TileCount() { TileColor = entry.Key, Count = entry.Value });
+                    }
+                    return list;
+                }
+            }
+            public class TileProviderCounts
+            {
+                public List<TileCount> TileCounts { get; init; }
+                public TileProvider Provider { get; init; }
+
+                public ColoredValue<int> GetMaxColor(TileColor ignore)
+                {
+                    ColoredValue<int> max = this.TileCounts[0].ToColoredValue();
+                    foreach (TileCount tileCount in this.TileCounts)
+                    {
+                        if (tileCount.TileColor != ignore)
+                        {
+                            if (max.GetTileColor() == ignore)
+                            {
+                                max = tileCount.ToColoredValue();
+                            }
+                            else if (max.GetValue() < tileCount.Count)
+                            {
+                                max = tileCount.ToColoredValue();
+                            }
+                        }
+                    }
+                    return max;
+                }
+
+                public bool HasColor(TileColor color)
+                {
+                    return this.TileCounts.Any(count => count.TileColor == color && count.Count > 0);
+                }
             }
         }
         public class TableController : MonoBehaviour
@@ -142,9 +185,61 @@ namespace Azul
                 return this.table.GetTileCount(tileColor);
             }
 
+            public Dictionary<TileColor, int> GetTableSupplyTileCounts()
+            {
+                return this.table.GetTileCounts();
+            }
+
             public bool HasTableSupplyTileOfColor(TileColor tileColor)
             {
                 return this.table.HasTileOfColor(tileColor);
+            }
+
+            public TileColor GetTableSupplyWithLowestCount(TileColor wildColor)
+            {
+                Dictionary<TileColor, int> tileCountsByColor = this.GetTableSupplyTileCounts();
+                List<ColoredValue<int>> tileCounts = new();
+                foreach (KeyValuePair<TileColor, int> kvp in tileCountsByColor)
+                {
+                    tileCounts.Add(ColoredValue<int>.Create(kvp.Key, kvp.Value));
+                }
+                ColoredValue<int>[] counts = tileCounts.FindAll(count => count.GetTileColor() != wildColor && count.GetValue() > 0).OrderBy(count => count.GetValue()).ToArray();
+                if (counts.Length > 0)
+                {
+                    return counts[0].GetTileColor();
+                }
+                else
+                {
+                    return wildColor;
+                }
+            }
+
+            public List<TileProviderCounts> GetTileCountsByProvider()
+            {
+
+                List<TileProviderCounts> tileProviderCounts = new();
+                foreach (Factory factory in this.table.GetFactories())
+                {
+                    List<TileCount> factoryTileCounts = TileCount.FromDictionary(factory.GetTileCounts());
+                    if (factoryTileCounts.Count > 0)
+                    {
+                        tileProviderCounts.Add(new TileProviderCounts()
+                        {
+                            Provider = factory,
+                            TileCounts = TileCount.FromDictionary(factory.GetTileCounts())
+                        });
+                    }
+                }
+                List<TileCount> tableTileCounts = TileCount.FromDictionary(this.table.GetTileCounts());
+                if (tableTileCounts.Count > 0)
+                {
+                    tileProviderCounts.Add(new TileProviderCounts()
+                    {
+                        Provider = this.table,
+                        TileCounts = tableTileCounts
+                    });
+                }
+                return tileProviderCounts;
             }
 
             public List<TileCount> GetTileCounts()
@@ -190,9 +285,9 @@ namespace Azul
                 return tileCounts.Values.OrderBy(tileCount => tileCount.Count).ToList();
             }
 
-            public bool HasOneTile()
+            public bool HasHadesToken()
             {
-                return this.table.HasOneTile();
+                return this.table.HasHadesToken();
             }
 
             private void OnTilesDiscarded(EventTracker<OnFactoryTilesDiscarded> payload)

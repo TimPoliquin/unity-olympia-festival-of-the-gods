@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.AI;
 using Azul.AIEvents;
+using Azul.Event;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerBoardRewardEvents;
 using Azul.PlayerEvents;
+using Azul.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,7 +26,6 @@ namespace Azul
             {
                 this.acquireStrategy = this.AddComponent<AcquireStrategy>();
                 this.scoringStrategy = this.AddComponent<ScoringStrategy>();
-                this.scoringStrategy.AddOnScoreCompleteListener(this.OnScoreComplete);
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
             }
 
@@ -39,39 +40,93 @@ namespace Azul
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerController.AddOnPlayerBoardExceedsOverflowListener(this.OnOverflow);
                 playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
-
             }
 
             public void OnAcquireTurn()
             {
-                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating strategy");
-                this.acquireStrategy.EvaluateGoals();
-                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Acting");
-                this.acquireStrategy.Acquire();
+                this.StartCoroutine(this.AcquireTurnCoroutine());
             }
 
-            public void OnScoreTurn()
+            private IEnumerator AcquireTurnCoroutine()
             {
-                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
-                this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals());
-                if (this.scoringStrategy.CanScore())
+                // give the players a bit of time to breath
+                yield return new WaitForSeconds(1.0f);
+                // wait for animations to play, if any are left
+                yield return System.Instance.GetTileAnimationController().WaitUntilDoneAnimating();
+                if (System.Instance.GetRoundController().IsCurrentPhaseAcquire() && System.Instance.GetPlayerController().GetCurrentPlayer().GetPlayerNumber() == this.playerNumber)
                 {
-                    UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
-                    this.scoringStrategy.Score();
+                    UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating acquiring strategy");
+                    this.acquireStrategy.EvaluateGoals();
+                    UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Acquiring");
+                    this.acquireStrategy.Acquire();
                 }
                 else
                 {
-                    this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
+                    UnityEngine.Debug.Log($"No longer acquire phase!!!");
+                }
+            }
+
+            public CoroutineResult OnScoreTurn()
+            {
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.ScoreTurnCoroutine(result));
+                return result;
+            }
+
+            private IEnumerator ScoreTurnCoroutine(CoroutineResult result)
+            {
+                result.Start();
+                yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
+                yield return new WaitUntil(() => !System.Instance.GetPlayerBoardController().IsPlacingTiles());
+                UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
+                int count = 0;
+                while (count < 2 && this.IsMyTurn())
+                {
+                    yield return this.scoringStrategy.EvaluateGoals(this.acquireStrategy.GetGoals()).WaitUntilCompleted();
+                    if (this.scoringStrategy.CanScore())
+                    {
+                        count = 0;
+                        UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Placing Tiles");
+                        yield return this.scoringStrategy.Score(this.playerNumber).WaitUntilCompleted();
+                        yield return new WaitForSeconds(.5f);
+                    }
+                    else
+                    {
+                        count++;
+                        yield return new WaitForSeconds(.5f);
+                    }
+                }
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                if (playerBoardController.HasExcessiveOverflow(this.playerNumber))
+                {
+                    this.HandleOverflow(this.playerNumber, playerBoardController.GetAllowedOverflow());
+                }
+                // TODO - also see if there are pending rewards somehow.
+                this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
+                PlayerController playerController = System.Instance.GetPlayerController();
+                playerController.EndPlayerScoringTurn();
+                result.Finish();
+            }
+
+            private bool IsMyTurn()
+            {
+                return !System.Instance.GetRoundController().IsAfterLastRound() && System.Instance.GetPlayerController().GetCurrentPlayer().GetPlayerNumber() == this.playerNumber;
+            }
+
+            private void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
+            {
+                if (this.HandleOverflow(payload.PlayerNumber, payload.TilesAllowed))
+                {
                     PlayerController playerController = System.Instance.GetPlayerController();
                     playerController.EndPlayerScoringTurn();
                 }
             }
 
-            private void OnOverflow(OnPlayerBoardExceedsOverflowPayload payload)
+            private bool HandleOverflow(int playerNumber, int allowedOverflow)
             {
-                if (payload.PlayerNumber == this.playerNumber)
+                if (playerNumber == this.playerNumber)
                 {
-                    Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, payload.TilesAllowed);
+                    Dictionary<TileColor, int> discard = this.scoringStrategy.HandleOverflowDiscard(this.playerNumber, allowedOverflow);
                     PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                     UnityEngine.Debug.Log($"Player {this.playerNumber} is discarding the following tiles:");
                     int totalDiscarded = 0;
@@ -85,33 +140,32 @@ namespace Azul
                         throw new OverflowException("Failed to discard any tiles!");
                     }
                     playerBoardController.DiscardTiles(this.playerNumber, discard);
-                    PlayerController playerController = System.Instance.GetPlayerController();
-                    playerController.EndPlayerScoringTurn();
+                    return true;
                 }
+                return false;
             }
 
-            private void OnEarnReward(OnPlayerBoardEarnRewardPayload payload)
+            private void OnEarnReward(EventTracker<OnPlayerBoardEarnRewardPayload> payload)
             {
-                if (payload.PlayerNumber == this.playerNumber)
+                if (payload.Payload.PlayerNumber == this.playerNumber)
                 {
-                    PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
-                    for (int idx = 0; idx < payload.NumberOfTiles; idx++)
-                    {
-                        TileColor tileColor = this.scoringStrategy.ChooseReward();
-                        playerBoardController.GrantReward(this.playerNumber, tileColor);
-                    }
+                    this.StartCoroutine(this.EarnRewardsCoroutine(payload.Payload.PlayerNumber, payload.Done));
+                }
+                else
+                {
+                    payload.Done();
                 }
             }
 
-            private void OnScoreComplete(OnAIScorePayload payload)
+            private IEnumerator EarnRewardsCoroutine(int numberOfTiles, Action Done)
             {
-                this.StartCoroutine(this.Wait(.5f, () => this.OnScoreTurn()));
-            }
-
-            private IEnumerator Wait(float time, Action callback)
-            {
-                yield return new WaitForSeconds(time);
-                callback.Invoke();
+                PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
+                for (int idx = 0; idx < numberOfTiles; idx++)
+                {
+                    TileColor tileColor = this.scoringStrategy.ChooseReward();
+                    yield return playerBoardController.GrantRewardAndWait(this.playerNumber, tileColor).WaitUntilCompleted();
+                }
+                Done();
             }
 
             public int GetPlayerNumber()

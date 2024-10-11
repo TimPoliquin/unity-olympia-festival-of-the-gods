@@ -79,7 +79,7 @@ namespace Azul
                     PlayerConfig playerConfig = playerConfigs[idx];
                     GameObject playerGO = new GameObject(playerConfig.Name);
                     Player player = playerGO.AddComponent<Player>();
-                    player.Initialize(idx, playerConfig.Name, playerConfig.isAI);
+                    player.Initialize(idx, playerConfig.Name, playerConfig.PlayerType);
                     playerGO.transform.SetParent(this.transform);
                     this.players.Add(player);
                 }

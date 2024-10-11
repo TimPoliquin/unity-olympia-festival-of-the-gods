@@ -18,7 +18,7 @@ namespace Azul
         [SerializeField] private LinearLayout green;
         [SerializeField] private LinearLayout yellow;
 
-        [SerializeField] private List<Tile> drawnTiles = new();
+        [SerializeField] private readonly List<Tile> drawnTiles = new();
         private Dictionary<TileColor, LinearLayout> layoutsByColor;
 
         void Awake()
@@ -103,46 +103,41 @@ namespace Azul
         public List<Tile> UseTiles(TileColor mainColor, int mainCount, TileColor wildColor, int wildCount)
         {
             List<Tile> usedTiles = new();
+            int usedMain = 0;
+            int usedWild = 0;
             foreach (Tile tile in this.drawnTiles)
             {
-                if (tile.Color == mainColor && mainCount > 0)
+                if (tile.Color == mainColor && usedMain < mainCount)
                 {
                     usedTiles.Add(tile);
-                    mainCount--;
+                    usedMain++;
                 }
-                else if (tile.Color == wildColor && wildCount > 0)
+                else if (tile.Color == wildColor && usedWild < wildCount)
                 {
                     usedTiles.Add(tile);
-                    wildCount--;
+                    usedWild++;
                 }
-                if (mainCount == 0 && wildCount == 0)
+                if (usedMain == mainCount && usedWild == wildCount)
                 {
                     break;
                 }
             }
-            if (mainCount > 0)
+            if (usedMain < mainCount || usedWild < wildCount)
             {
-                throw new ArgumentOutOfRangeException(nameof(mainCount), "The player does not have enough tiles of the requested color");
+                UnityEngine.Debug.LogError($"{mainColor}: {usedMain}/{mainCount} | {wildColor}: {usedWild}/{wildCount} / Count used: {usedTiles.Count}");
             }
-            else if (wildCount > 0)
+            foreach (Tile usedTile in usedTiles)
             {
-                throw new ArgumentOutOfRangeException(nameof(wildCount), "The player does not have enough tiles of the requested color");
+                this.drawnTiles.Remove(usedTile);
+                usedTile.transform.SetParent(null);
+                usedTile.EnableSound();
             }
-            else
+            this.layoutsByColor[mainColor].Refresh();
+            if (this.layoutsByColor.ContainsKey(wildColor))
             {
-                foreach (Tile usedTile in usedTiles)
-                {
-                    this.drawnTiles.Remove(usedTile);
-                    usedTile.transform.SetParent(null);
-                    usedTile.EnableSound();
-                }
-                this.layoutsByColor[mainColor].Refresh();
-                if (this.layoutsByColor.ContainsKey(wildColor))
-                {
-                    this.layoutsByColor[wildColor].Refresh();
-                }
-                return usedTiles;
+                this.layoutsByColor[wildColor].Refresh();
             }
+            return usedTiles;
         }
 
         public Tile DiscardOneTile()
@@ -161,13 +156,13 @@ namespace Azul
 
         public List<Tile> DiscardRemainingTiles()
         {
-            List<Tile> discard = this.drawnTiles;
-            foreach (Tile tile in this.drawnTiles)
+            List<Tile> discard = new(this.drawnTiles);
+            foreach (Tile tile in discard)
             {
                 tile.transform.SetParent(null);
                 tile.EnableSound();
             }
-            this.drawnTiles = new();
+            this.drawnTiles.Clear();
             return discard;
         }
 

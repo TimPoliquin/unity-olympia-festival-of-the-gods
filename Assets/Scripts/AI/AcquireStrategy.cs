@@ -30,7 +30,14 @@ namespace Azul
 
             public void CreateGoals(int playerNumber)
             {
-                this.goals.Add(GoalUtils.CreateRandomGoal(playerNumber));
+                if (System.Instance.GetPlayerController().GetPlayer(playerNumber).GetPlayerType() == PlayerType.AI_DIFFICULT)
+                {
+                    this.goals.Add(GoalUtils.CreateAgressiveGoal(playerNumber));
+                }
+                else
+                {
+                    this.goals.Add(GoalUtils.CreateRandomGoal(playerNumber));
+                }
             }
 
             public void EvaluateGoals()
@@ -69,7 +76,6 @@ namespace Azul
             {
                 // highlight the tiles
                 FactorySelectableTileHolderController tileHolder = factory.GetComponent<FactorySelectableTileHolderController>();
-                yield return new WaitForSeconds(.5f);
                 tileHolder.HoverTiles(desiredColor);
                 yield return new WaitForSeconds(1.0f);
                 // draw the tiles
@@ -79,7 +85,6 @@ namespace Azul
             private IEnumerator DrawFromTable(TileColor desiredColor, TileColor wildColor)
             {
                 TableSelectableTileHolderController tileHolder = System.Instance.GetTableController().GetTableSelectableTileHolderController();
-                yield return new WaitForSeconds(.5f);
                 tileHolder.HoverTiles(desiredColor);
                 yield return new WaitForSeconds(1.0f);
                 // draw the tiles

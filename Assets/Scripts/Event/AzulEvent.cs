@@ -55,6 +55,12 @@ namespace Azul
                 return tracker;
             }
 
+            public void RemoveAllListeners()
+            {
+                this.registeredListeners = 0;
+                this.unityEvent.RemoveAllListeners();
+            }
+
         }
     }
 }

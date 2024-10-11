@@ -12,6 +12,7 @@ using UnityEngine.Events;
 using Azul.TileAnimation;
 using Azul.MilestoneEvents;
 using Azul.Util;
+using Azul.Event;
 
 namespace Azul
 {
@@ -70,13 +71,14 @@ namespace Azul
 
             private UnityEvent<OnPlayerBoardScoreSpaceSelectionPayload> onScoreSpaceSelection = new();
             private UnityEvent<OnPlayerBoardWildScoreSpaceSelectionPayload> onWildScoreSpaceSelection = new();
-            private UnityEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
+            private AzulEvent<OnPlayerBoardPlaceStarTilePayload> onPlaceStarTile = new();
             private UnityEvent<OnPlayerBoardTilesDiscardedPayload> onTilesDiscarded = new();
             private UnityEvent<OnPlayerBoardDiscardOneTilePayload> onDiscardOneTile = new();
             private UnityEvent<OnPlayerBoardTilesCollectedPayload> onTilesCollected = new();
             private UnityEvent<OnPlayerAcquireOneTilePayload> onAcquireOneTile = new();
 
             private List<PlayerBoard> playerBoards;
+            private bool isPlacingTiles = false;
 
             public void SetupGame(int numPlayers, AltarFactory starController)
             {
@@ -284,7 +286,7 @@ namespace Azul
                             PlayerNumber = playerBoard.GetPlayerNumber(),
                             Color = space.GetOriginColor(),
                             Value = space.GetValue(),
-                            OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
+                            OnConfirm = (payload) => this.PlaceTiles(playerBoard.GetPlayerNumber(), space, payload.Color, payload.TilesSelected)
                         });
                     }
                     else
@@ -295,7 +297,7 @@ namespace Azul
                             PlayerNumber = playerBoard.GetPlayerNumber(),
                             Space = space,
                             Value = space.GetValue(),
-                            OnConfirm = (payload) => this.OnConfirmScoreTileSelection(playerBoard, space, payload)
+                            OnConfirm = (payload) => this.PlaceTiles(playerBoard.GetPlayerNumber(), space, payload.Color, payload.TilesSelected)
                         });
                     }
                 }
@@ -346,26 +348,30 @@ namespace Azul
                 this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForScoring());
             }
 
-            private void OnConfirmScoreTileSelection(PlayerBoard playerBoard, AltarSpace space, OnPlayerBoardScoreTileSelectionConfirmPayload payload)
+            public CoroutineResult PlaceTiles(int playerNumber, AltarSpace space, TileColor spaceColor, Dictionary<TileColor, int> tilesSelected)
             {
+                CoroutineResult result = CoroutineResult.Single();
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
-                TileColor spaceColor = payload.Color;
+                PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
                 List<Tile> tiles;
                 if (spaceColor != wildColor)
                 {
-                    int wildCount = payload.TilesSelected.ContainsKey(wildColor) ? payload.TilesSelected[wildColor] : 0;
-                    tiles = playerBoard.UseTiles(spaceColor, payload.TilesSelected[spaceColor], wildColor, wildCount);
+                    int wildCount = tilesSelected.ContainsKey(wildColor) ? tilesSelected[wildColor] : 0;
+                    tiles = playerBoard.UseTiles(spaceColor, tilesSelected[spaceColor], wildColor, wildCount);
                 }
                 else
                 {
-                    tiles = playerBoard.UseTiles(wildColor, payload.TilesSelected[wildColor], wildColor, 0);
+                    tiles = playerBoard.UseTiles(wildColor, tilesSelected[wildColor], wildColor, 0);
                 }
-                this.StartCoroutine(this.TilePlacementCoroutine(playerBoard, tiles, space, spaceColor));
+                this.StartCoroutine(this.TilePlacementCoroutine(playerBoard, tiles, space, spaceColor, result));
+                return result;
             }
 
-            private IEnumerator TilePlacementCoroutine(PlayerBoard playerBoard, List<Tile> tiles, AltarSpace space, TileColor effectiveColor)
+            private IEnumerator TilePlacementCoroutine(PlayerBoard playerBoard, List<Tile> tiles, AltarSpace space, TileColor effectiveColor, CoroutineResult result)
             {
+                result.Start();
+                this.isPlacingTiles = true;
                 yield return System.Instance.GetTileAnimationController().MoveTiles(tiles, new TilesMoveConfig
                 {
                     Position = space.transform.position,
@@ -381,21 +387,23 @@ namespace Azul
                 space.PlaceTile(effectiveColor);
                 System.Instance.GetBagController().Discard(tiles);
                 yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard, playerBoard.GetAltar(space.GetOriginColor()), space).WaitUntilCompleted();
-                this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
+                yield return this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),
                     TilePlaced = space.GetValue(),
                     Star = playerBoard.GetAltar(space.GetOriginColor())
-                });
+                }).WaitUntilCompleted();
                 this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
+                this.isPlacingTiles = false;
+                result.Finish();
             }
 
-            public void AddOnPlaceStarTileListener(UnityAction<OnPlayerBoardPlaceStarTilePayload> listener)
+            public void AddOnPlaceStarTileListener(UnityAction<EventTracker<OnPlayerBoardPlaceStarTilePayload>> listener)
             {
                 this.onPlaceStarTile.AddListener(listener);
             }
 
-            public void AddOnPlayerBoardEarnRewardListener(UnityAction<OnPlayerBoardEarnRewardPayload> listener)
+            public void AddOnPlayerBoardEarnRewardListener(UnityAction<EventTracker<OnPlayerBoardEarnRewardPayload>> listener)
             {
                 this.playerBoards.ForEach(playerBoard => playerBoard.AddOnPlayerBoardEarnRewardListener(listener));
             }
@@ -436,6 +444,26 @@ namespace Azul
                 Tile grantedTile = bagController.Draw(tileColor);
                 this.AddDrawnTiles(playerNumber, new() { grantedTile });
                 return grantedTile;
+            }
+
+            public CoroutineResultValue<Tile> GrantRewardAndWait(int playerNumber, TileColor tileColor)
+            {
+                CoroutineResultValue<Tile> result = new CoroutineResultValue<Tile>();
+                this.StartCoroutine(this.GrantRewardCoroutine(playerNumber, tileColor, result)); ;
+                return result;
+            }
+
+            private IEnumerator GrantRewardCoroutine(int playerNumber, TileColor tileColor, CoroutineResultValue<Tile> result)
+            {
+                BagController bagController = System.Instance.GetBagController();
+                Tile grantedTile = bagController.Draw(tileColor);
+                yield return this.AddDrawnTiles(playerNumber, new() { grantedTile }).WaitUntilCompleted();
+                result.Finish(grantedTile);
+            }
+
+            public bool IsPlacingTiles()
+            {
+                return this.isPlacingTiles;
             }
         }
     }

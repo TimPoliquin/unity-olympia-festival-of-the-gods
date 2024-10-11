@@ -5,58 +5,52 @@ using System.Linq;
 using Azul.AIEvents;
 using Azul.Controller;
 using Azul.Controller.TableUtilities;
+using Azul.Event;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
+using Azul.Util;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace Azul
 {
     namespace AI
     {
-        public class RandomGoal : Goal
+        public class AcquireTileChoice
         {
-            private int playerNumber { get; init; }
+            public TileProvider Provider { get; init; }
+            public TileColor TileColor { get; init; }
+            public int Count { get; init; }
+        }
+
+        public abstract class BaseGoal : Goal
+        {
+            protected int playerNumber { get; init; }
             private UnityEvent<OnDrawFromFactoryPayload> onDrawFromFactory = new();
             private UnityEvent<OnDrawFromTablePayload> onDrawFromTable = new();
 
             private RandomScoringSelection scoringSelection;
 
-            public void Acquire()
+            public abstract void Acquire();
+
+            protected bool ShouldRandomlyDrawFromTable()
             {
-                // get first factory tile provider with tiles
                 TableController tableController = System.Instance.GetTableController();
-                // find out what's available on the table
-                List<TileCount> tileCounts = tableController.GetTileCounts();
-                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                // pick a random color that's available
-                TileColor tileColor = tileCounts.Count > 1 ? ListUtils.GetRandomElement(tileCounts.Select(tileCount => tileCount.TileColor).Except(new TileColor[] { wildColor }).ToArray()) : tileCounts[0].TileColor;
-                UnityEngine.Debug.Log($"Random Goal: ${tileColor} / ${wildColor}");
-                // find the factory that has the most tiles of that color
-                Factory factory = tableController.GetFactoryWithMostTilesOfColor(tileColor);
-                int tableTileCount = tableController.GetTableSupplyTileCount(tileColor);
-                bool tableHasWild = tableController.HasTableSupplyTileOfColor(wildColor);
-                bool tableHasOne = tableController.HasOneTile();
-                int factoryTilesCount = 0;
-                bool factoryHasWild = false;
-                if (null != factory)
+                List<TileCount> tileCounts = TileCount.FromDictionary(tableController.GetTableSupplyTileCounts());
+                if (tileCounts.Count > 0)
                 {
-                    factoryTilesCount = factory.GetTileCount(tileColor);
-                    factoryHasWild = factory.HasTileOfColor(wildColor);
-                }
-                UnityEngine.Debug.Log($"Random Goal: Factory Tiles: {factoryTilesCount} / {factoryHasWild}");
-                UnityEngine.Debug.Log($"Random Goal: Table Tiles: {tableTileCount} / {tableHasWild}");
-                if (null != factory && factoryTilesCount >= tableTileCount)
-                {
-                    // prefer drawing from a factory over the center of the table.
-                    UnityEngine.Debug.Log($"Drawing {tileColor} from factory");
-                    this.DrawFromFactory(factory, tileColor, wildColor);
+                    bool drawFromTable = Random.Range(0f, 1f) > .8f;
+                    if (drawFromTable)
+                    {
+                        UnityEngine.Debug.Log($"Player {playerNumber}: Randomly drawing from the table!");
+                    }
+                    return drawFromTable;
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("Drawing from table");
-                    this.DrawFromTable(tileColor, wildColor);
+                    return false;
                 }
             }
 
@@ -76,7 +70,7 @@ namespace Azul
                 return false;
             }
 
-            private void DrawFromFactory(Factory factory, TileColor desiredColor, TileColor wildColor)
+            protected void DrawFromFactory(Factory factory, TileColor desiredColor, TileColor wildColor)
             {
                 this.onDrawFromFactory.Invoke(new OnDrawFromFactoryPayload
                 {
@@ -88,7 +82,7 @@ namespace Azul
                 this.onDrawFromTable.RemoveAllListeners();
             }
 
-            private void DrawFromTable(TileColor desiredColor, TileColor wildColor)
+            protected void DrawFromTable(TileColor desiredColor, TileColor wildColor)
             {
                 this.onDrawFromTable.Invoke(new OnDrawFromTablePayload
                 {
@@ -97,14 +91,6 @@ namespace Azul
                 });
                 this.onDrawFromFactory.RemoveAllListeners();
                 this.onDrawFromTable.RemoveAllListeners();
-            }
-
-            internal static RandomGoal Create(int playerNumber)
-            {
-                return new RandomGoal()
-                {
-                    playerNumber = playerNumber
-                };
             }
 
             public void AddOnDrawFromTableListener(UnityAction<OnDrawFromTablePayload> listener)
@@ -117,19 +103,28 @@ namespace Azul
                 this.onDrawFromFactory.AddListener(listener);
             }
 
-            public void PrepareForScoring()
+            public CoroutineResult PrepareForScoring()
             {
+                CoroutineResult result = CoroutineResult.Single();
+                result.Start();
                 if (null != this.scoringSelection)
                 {
                     this.scoringSelection.EndScoring();
                 }
                 this.scoringSelection = new RandomScoringSelection();
                 this.scoringSelection.Evaluate(this.playerNumber);
+                result.Finish();
+                return result;
             }
 
-            public void Score()
+            public AltarSpace ChooseSpace()
             {
-                this.scoringSelection.Score();
+                return this.scoringSelection.ChooseSpace();
+            }
+
+            public TileColor ChooseWildColor(AltarSpace space)
+            {
+                return this.scoringSelection.ChooseWildColor(space);
             }
 
             public int GetScoreProgress()
@@ -139,10 +134,10 @@ namespace Azul
 
             public bool CanScore()
             {
-                return this.scoringSelection.CanScore();
+                return this.scoringSelection.CanScore() && !this.scoringSelection.WantsToWait();
             }
 
-            public void AddOnScoreSpaceSelectedListener(UnityAction<OnScoreSpaceSelectedPayload> listener)
+            public void AddOnScoreSpaceSelectedListener(UnityAction<EventTracker<OnScoreSpaceSelectedPayload>> listener)
             {
                 this.scoringSelection.AddOnScoreSpaceSelectedListener(listener);
             }
@@ -160,8 +155,130 @@ namespace Azul
 
             public void EndScoring()
             {
+
                 this.scoringSelection.EndScoring();
                 this.scoringSelection = null;
+            }
+        }
+
+        public class RandomGoal : BaseGoal
+        {
+            internal static RandomGoal Create(int playerNumber)
+            {
+                return new RandomGoal()
+                {
+                    playerNumber = playerNumber
+                };
+            }
+            public override void Acquire()
+            {
+                // TODO -- there is a bug that is causing this logic to choose tiles from a factory that has already been drawn.
+                // get first factory tile provider with tiles
+                TableController tableController = System.Instance.GetTableController();
+                // find out what's available on the table
+                List<TileCount> tileCounts = tableController.GetTileCounts();
+                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+                // pick a random color that's available
+                TileColor tileColor = tileCounts.Count > 1 ? ListUtils.GetRandomElement(tileCounts.FindAll(tileCount => tileCount.Count > 0).Select(tileCount => tileCount.TileColor).Except(new TileColor[] { wildColor }).ToArray()) : tileCounts[0].TileColor;
+                UnityEngine.Debug.Log($"Random Goal: ${tileColor} / ${wildColor}");
+                // find the factory that has the most tiles of that color
+                Factory factory = tableController.GetFactoryWithMostTilesOfColor(tileColor);
+                bool tableHasOne = tableController.HasHadesToken();
+                bool tableHasWild = tableController.HasTableSupplyTileOfColor(wildColor);
+                int tableTileCount = tableController.GetTableSupplyTileCount(tileColor);
+                int factoryTilesCount = 0;
+                bool factoryHasWild = false;
+                if (null != factory)
+                {
+                    factoryTilesCount = factory.GetTileCount(tileColor);
+                    factoryHasWild = factory.HasTileOfColor(wildColor);
+                }
+                UnityEngine.Debug.Log($"Random Goal: Factory Tiles: {factoryTilesCount} / {factoryHasWild}");
+                UnityEngine.Debug.Log($"Random Goal: Table Tiles: {tableTileCount} / {tableHasWild}");
+                bool tableOneFudge = this.ShouldRandomlyDrawFromTable();
+                if (null != factory && (factoryTilesCount >= tableTileCount || tableOneFudge))
+                {
+                    // prefer drawing from a factory over the center of the table.
+                    UnityEngine.Debug.Log($"Drawing {tileColor} from factory");
+                    this.DrawFromFactory(factory, tileColor, wildColor);
+                }
+                else
+                {
+                    UnityEngine.Debug.Log("Drawing from table");
+                    if (tableHasOne)
+                    {
+                        this.DrawFromTable(tableController.GetTableSupplyWithLowestCount(wildColor), wildColor);
+                    }
+                    else
+                    {
+                        this.DrawFromTable(tileColor, wildColor);
+                    }
+                }
+            }
+        }
+
+        public class AgressiveGoal : BaseGoal
+        {
+            internal static AgressiveGoal Create(int playerNumber)
+            {
+                return new AgressiveGoal()
+                {
+                    playerNumber = playerNumber
+                };
+            }
+            public override void Acquire()
+            {
+                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
+                TableController tableController = System.Instance.GetTableController();
+                if (tableController.HasHadesToken() && this.ShouldRandomlyDrawFromTable())
+                {
+                    this.DrawFromTable(tableController.GetTableSupplyWithLowestCount(wildColor), wildColor);
+                    return;
+                }
+                List<TileProviderCounts> tileCounts = tableController.GetTileCountsByProvider();
+                AcquireTileChoice choice = null;
+                foreach (TileProviderCounts tileProviderCount in tileCounts)
+                {
+                    ColoredValue<int> localMax = tileProviderCount.GetMaxColor(wildColor);
+                    bool updateChoice;
+                    if (null == choice)
+                    {
+                        updateChoice = true;
+                    }
+                    else if (tileProviderCount.Provider.HasHadesToken())
+                    {
+                        updateChoice = false;
+                    }
+                    else if (choice.Count < localMax.GetValue())
+                    {
+                        updateChoice = true;
+                    }
+                    else if (choice.Count == localMax.GetValue() && tileProviderCount.HasColor(wildColor))
+                    {
+                        updateChoice = true;
+                    }
+                    else
+                    {
+                        updateChoice = false;
+                    }
+                    if (updateChoice)
+                    {
+                        choice = new AcquireTileChoice()
+                        {
+                            Provider = tileProviderCount.Provider,
+                            TileColor = localMax.GetTileColor(),
+                            Count = localMax.GetValue()
+                        };
+                    }
+                }
+                if (choice.Provider.IsTable())
+                {
+                    this.DrawFromTable(choice.TileColor, wildColor);
+                }
+                else
+                {
+                    this.DrawFromFactory((Factory)choice.Provider, choice.TileColor, wildColor);
+                }
             }
         }
     }
