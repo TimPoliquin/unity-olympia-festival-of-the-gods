@@ -816,7 +816,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: STEAMWORKS_NET;STEAMWORKS_LIN_OSX
+    Standalone: STEAMWORKS_NET;STEAMWORKS_WIN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
