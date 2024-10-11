@@ -256,8 +256,14 @@ namespace Azul
 
             private IEnumerator OnTilesDrawn(int playerNumber, List<Tile> tiles, Action Done)
             {
+                RoundController roundController = System.Instance.GetRoundController();
+                TableController tableController = System.Instance.GetTableController();
+                Phase currentPhase = roundController.GetCurrentPhase();
                 yield return System.Instance.GetPlayerBoardController().AddDrawnTiles(playerNumber, tiles).WaitUntilCompleted();
-                this.NextTurn();
+                if (currentPhase == Phase.ACQUIRE && !tableController.IsCompletelyEmpty())
+                {
+                    this.NextTurn();
+                }
                 Done.Invoke();
             }
 

@@ -295,6 +295,11 @@ namespace Azul
                 return this.table.HasHadesToken();
             }
 
+            public bool IsCompletelyEmpty()
+            {
+                return this.table.IsEmpty() && this.table.GetFactories().All(factory => factory.IsEmpty());
+            }
+
             private void OnTilesDiscarded(EventTracker<OnFactoryTilesDiscarded> payload)
             {
                 this.StartCoroutine(this.OnTilesDiscardedCoroutine(payload.Payload.TilesDiscarded, payload.Done));
@@ -324,6 +329,7 @@ namespace Azul
                     Tiles = tilesDrawn,
                     IncludesOneTile = includesHades
                 }).WaitUntilCompleted();
+                yield return new WaitForSeconds(.5f);
                 if (this.table.IsEmpty())
                 {
                     this.onTableEmpty.Invoke();
