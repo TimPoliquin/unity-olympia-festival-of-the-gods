@@ -135,9 +135,9 @@ namespace Azul
                 this.playerConfigUIs[3].SetPlayerName("Foobag");
 #else
                 this.playerConfigUIs[0].SetPlayerName("Player 1");
-                this.playerConfigUIs[1].SetPlayerName("Athenian");
-                this.playerConfigUIs[2].SetPlayerName("Spartan");
-                this.playerConfigUIs[3].SetPlayerName("Corinthian");
+                this.playerConfigUIs[1].SetPlayerName("Helen");
+                this.playerConfigUIs[2].SetPlayerName("Alexander");
+                this.playerConfigUIs[3].SetPlayerName("Phoebe");
 #endif
             }
         }

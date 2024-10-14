@@ -1494,7 +1494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89abf87b15548438fa7bb03310c9be98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideAfterSeconds: 4
+  hideAfterSeconds: 0
   repeatHideAfterSeconds: 0.75
 --- !u!1 &665030963
 GameObject:
@@ -4612,7 +4612,8 @@ MonoBehaviour:
     value: Aphrodite
   - tileColor: 5
     value: Demeter
-  hideAfterSeconds: 3
+  hideAfterSeconds: 5
+  autoHide: 0
 --- !u!1001 &1539786180
 PrefabInstance:
   m_ObjectHideFlags: 0

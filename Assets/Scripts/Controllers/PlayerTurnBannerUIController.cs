@@ -85,8 +85,11 @@ namespace Azul
             private IEnumerator ShowBannerForTime(PlayerTurnBannerUI playerTurnBannerUI, Player player, Phase phase, float time, bool showInstructions, Action callback)
             {
                 yield return playerTurnBannerUI.Show(player.GetPlayerName(), phase, showInstructions).WaitUntilCompleted();
-                yield return new WaitForSeconds(time);
-                yield return this.HideBanner(playerTurnBannerUI, callback);
+                if (time > 0)
+                {
+                    yield return new WaitForSeconds(time);
+                    yield return this.HideBanner(playerTurnBannerUI, callback);
+                }
             }
 
             private IEnumerator HideBanner(PlayerTurnBannerUI playerTurnBannerUI, Action callback)

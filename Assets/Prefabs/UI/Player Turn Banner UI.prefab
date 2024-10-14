@@ -519,7 +519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 484, y: -71}
+  m_AnchoredPosition: {x: 484, y: -76}
   m_SizeDelta: {x: 900, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8974084335586333964
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Acquire tokens by selecting them from columns or the board - but watch
+  m_text: Acquire tokens by selecting them from columns or the table - but watch
     out for
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a11fdfe473f54f469bdb8b3ea97062a, type: 2}

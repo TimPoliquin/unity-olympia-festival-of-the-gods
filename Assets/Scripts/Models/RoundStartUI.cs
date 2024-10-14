@@ -5,6 +5,8 @@ using Azul.Animation;
 using Azul.Util;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Azul
 {
@@ -18,8 +20,17 @@ namespace Azul
             [SerializeField] private string subtitleTemplate = "{0}'s tokens can be used to complete all rituals.";
             [SerializeField] private TextMeshProUGUI titleText;
             [SerializeField] private TextMeshProUGUI subtitleText;
+            [SerializeField] private Button dismissButton;
+            private UnityEvent onDismiss = new();
+
+            private bool isDismissed = false;
 
             private Fade transition;
+
+            void Awake()
+            {
+                this.dismissButton.onClick.AddListener(this.OnDismiss);
+            }
 
             public CoroutineResult Show(string god, TileColor tileColor)
             {
@@ -33,7 +44,32 @@ namespace Azul
 
             public CoroutineResult Hide()
             {
-                return this.transition.Hide();
+                if (!this.isDismissed)
+                {
+                    this.isDismissed = true;
+                    return this.transition.Hide();
+                }
+                else
+                {
+                    CoroutineResult result = CoroutineResult.Single();
+                    result.Finish();
+                    return result;
+                }
+            }
+
+            private void OnDismiss()
+            {
+                this.onDismiss.Invoke();
+            }
+
+            public bool IsDismissed()
+            {
+                return this.isDismissed;
+            }
+
+            public void AddOnDismissListener(UnityAction listener)
+            {
+                this.onDismiss.AddListener(listener);
             }
         }
     }
