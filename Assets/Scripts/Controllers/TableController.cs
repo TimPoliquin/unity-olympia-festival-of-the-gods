@@ -99,6 +99,7 @@ namespace Azul
             private UnityEvent<OnTileHoverEnterPayload> onTilesHoverEnter = new();
             private UnityEvent<OnTileHoverExitPayload> onTilesHoverExit = new();
             private UnityEvent<OnTileSelectPayload> onTilesSelect = new();
+            private UnityEvent onTableDrawComplete = new();
             private UnityEvent onTableEmpty = new();
 
             private Table table;
@@ -160,6 +161,11 @@ namespace Azul
             public void AddOnTableEmptyListener(UnityAction listener)
             {
                 this.onTableEmpty.AddListener(listener);
+            }
+
+            public void AddOnTableDrawCompleteListener(UnityAction listener)
+            {
+                this.onTableDrawComplete.AddListener(listener);
             }
 
             public Factory GetFactoryWithMostTilesOfColor(TileColor desiredColor)
@@ -334,6 +340,7 @@ namespace Azul
                 {
                     this.onTableEmpty.Invoke();
                 }
+                this.onTableDrawComplete.Invoke();
             }
 
             public void AddOnTilesHoverEnterListener(UnityAction<OnTileHoverEnterPayload> listener)

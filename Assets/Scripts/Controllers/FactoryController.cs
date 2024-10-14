@@ -32,6 +32,7 @@ namespace Azul
             private AzulEvent<OnFactoryTilesDrawn> onTilesDrawn = new();
             private AzulEvent<OnFactoryTilesDiscarded> onTilesDiscarded = new();
             private UnityEvent onAllFactoriesEmpty = new();
+            private UnityEvent onFactoryDrawComplete = new();
 
             public void SetupGame(int numPlayers)
             {
@@ -73,6 +74,11 @@ namespace Azul
                 this.onTilesDiscarded.AddListener(listener);
             }
 
+            public void AddOnFactoryDrawCompleteListener(UnityAction listener)
+            {
+                this.onFactoryDrawComplete.AddListener(listener);
+            }
+
             private GameObject CreateFactory(string name)
             {
                 Factory factory = Instantiate(this.factoryPrefab).GetComponent<Factory>();
@@ -101,6 +107,7 @@ namespace Azul
                 {
                     this.onAllFactoriesEmpty.Invoke();
                 }
+                this.onFactoryDrawComplete.Invoke();
             }
 
             public void AddOnAllFactoriesEmptyListener(UnityAction listener)
