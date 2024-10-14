@@ -34,9 +34,6 @@ namespace Azul
             [SerializeField] private UnityEvent<OnRoundPhaseScorePayload> onRoundPhaseScore;
             [SerializeField] private UnityEvent<OnAllRoundsCompletePayload> onAllRoundsComplete;
 
-            private bool factoriesEmpty = false;
-            private bool tableEmpty = false;
-
             public void SetupGame()
             {
                 this.rounds = new();
@@ -49,10 +46,9 @@ namespace Azul
             public void InitializeListeners()
             {
                 TableController tableController = System.Instance.GetTableController();
-                tableController.AddOnTilesAddedListener(this.OnTableTilesAdded);
-                tableController.AddOnTableEmptyListener(this.OnTableEmpty);
+                tableController.AddOnTableDrawCompleteListener(this.OnDrawComplete);
                 FactoryController factoryController = System.Instance.GetFactoryController();
-                factoryController.AddOnAllFactoriesEmptyListener(this.OnAllFactoriesEmpty);
+                factoryController.AddOnFactoryDrawCompleteListener(this.OnDrawComplete);
                 PlayerController playerController = System.Instance.GetPlayerController();
                 playerController.AddOnAllPlayersTurnScoreFinished(this.OnAllPlayersScoreTurnFinished);
             }
@@ -106,19 +102,8 @@ namespace Azul
             }
 
 
-            private void OnTableTilesAdded(OnTableTilesAddedPayload arg0)
+            private void OnDrawComplete()
             {
-                this.tableEmpty = false;
-            }
-            private void OnAllFactoriesEmpty()
-            {
-                this.factoriesEmpty = true;
-                this.CheckAcquirePhaseComplete();
-            }
-
-            private void OnTableEmpty()
-            {
-                this.tableEmpty = true;
                 this.CheckAcquirePhaseComplete();
             }
 
@@ -140,8 +125,6 @@ namespace Azul
 
             public void StartRound()
             {
-                this.factoriesEmpty = false;
-                this.tableEmpty = false;
                 if (this.currentRound == 0)
                 {
                     this.onRoundPhasePrepare.Invoke(new OnRoundPhasePreparePayload
@@ -235,9 +218,12 @@ namespace Azul
 
             private void CheckAcquirePhaseComplete()
             {
-                if (this.rounds[this.currentRound].GetCurrentPhase() == Phase.ACQUIRE && this.factoriesEmpty && this.tableEmpty)
+                if (this.IsCurrentPhaseAcquire())
                 {
-                    this.NextPhase();
+                    if (System.Instance.GetTableController().IsCompletelyEmpty())
+                    {
+                        this.NextPhase();
+                    }
                 }
             }
 

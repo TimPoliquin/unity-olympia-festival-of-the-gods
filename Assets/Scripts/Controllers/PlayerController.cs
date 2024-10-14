@@ -60,8 +60,10 @@ namespace Azul
                 roundController.AddOnRoundPhaseScoreListener(this.OnRoundPhaseScoreStart);
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 factoryController.AddOnFactoryTilesDrawnListener(this.OnFactoryTilesDrawn);
+                factoryController.AddOnFactoryDrawCompleteListener(this.OnDrawComplete);
                 TableController tableController = System.Instance.GetTableController();
                 tableController.AddOnTilesDrawnListener(this.OnTableTilesDrawn);
+                tableController.AddOnTableDrawCompleteListener(this.OnDrawComplete);
                 PlayerBoardController playerBoardController = System.Instance.GetPlayerBoardController();
                 playerBoardController.AddOnPlayerAcquiresOneTileListener(this.onPlayerAcquireOneTile);
             }
@@ -256,15 +258,23 @@ namespace Azul
 
             private IEnumerator OnTilesDrawn(int playerNumber, List<Tile> tiles, Action Done)
             {
-                RoundController roundController = System.Instance.GetRoundController();
-                TableController tableController = System.Instance.GetTableController();
-                Phase currentPhase = roundController.GetCurrentPhase();
                 yield return System.Instance.GetPlayerBoardController().AddDrawnTiles(playerNumber, tiles).WaitUntilCompleted();
-                if (currentPhase == Phase.ACQUIRE && !tableController.IsCompletelyEmpty())
-                {
-                    this.NextTurn();
-                }
                 Done.Invoke();
+            }
+
+            private void OnDrawComplete()
+            {
+                if (System.Instance.GetRoundController().IsCurrentPhaseAcquire())
+                {
+                    if (!System.Instance.GetTableController().IsCompletelyEmpty())
+                    {
+                        this.NextTurn();
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log("Table is completely empty - let the round controller handle this one!");
+                    }
+                }
             }
 
             private void onPlayerAcquireOneTile(OnPlayerAcquireOneTilePayload payload)
