@@ -25,8 +25,8 @@ namespace Azul
 
             void Awake()
             {
-                this.acquireStrategy = this.AddComponent<AcquireStrategy>();
-                this.scoringStrategy = this.AddComponent<ScoringStrategy>();
+                this.acquireStrategy = this.gameObject.AddComponent<AcquireStrategy>();
+                this.scoringStrategy = this.gameObject.AddComponent<ScoringStrategy>();
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
             }
 

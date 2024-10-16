@@ -45,14 +45,10 @@ namespace Azul
             private UnityEvent<OnAltarSpaceHoverExitPayload> onAltarSpaceHoverExit = new();
             private UnityEvent<OnAltarSpaceSelectPayload> onAltarSpaceSelect = new();
 
-            void Awake()
+            void Start()
             {
                 this.outline = this.GetComponent<Outline>();
                 this.changeCursor = this.GetComponent<CursorChange>();
-            }
-
-            void Start()
-            {
                 System.Instance.GetUIController().GetStarUIController().CreateStarSpaceUI(this);
                 this.GetPointerEventController().AddOnPointerSelectListener(payload =>
                 {
@@ -87,7 +83,10 @@ namespace Azul
             {
                 this.originalColor = tileColor;
                 this.effectiveColor = tileColor;
-                this.fire.SetColor(this.originalColor);
+                if (null != this.fire)
+                {
+                    this.fire.SetColor(this.originalColor);
+                }
             }
 
             public bool IsEmpty()
@@ -138,8 +137,11 @@ namespace Azul
             {
                 this.isFilled = true;
                 this.effectiveColor = color;
-                this.fire.SetColor(color);
-                this.fire.Enable();
+                if (null != this.fire)
+                {
+                    this.fire.SetColor(color);
+                    this.fire.Enable();
+                }
             }
 
             public void EnableFire()
@@ -204,6 +206,14 @@ namespace Azul
             public void ClearStarSpaceSelectListeners()
             {
                 this.onAltarSpaceSelect.RemoveAllListeners();
+            }
+
+            public static AltarSpace Create(TileColor tileColor, int value)
+            {
+                AltarSpace space = new GameObject($"{tileColor}:{value}").AddComponent<AltarSpace>();
+                space.SetOriginalColor(tileColor);
+                space.SetValue(value);
+                return space;
             }
         }
 

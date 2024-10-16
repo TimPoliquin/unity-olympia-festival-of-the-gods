@@ -21,7 +21,7 @@ namespace Azul
             {
                 AltarSpace[] spaces = new AltarSpace[6];
                 Altar star = Instantiate(this.altarPrefab).GetComponent<Altar>();
-                star.SetAltar(Instantiate(this.altarPrefabs.Find(altarPrefab => altarPrefab.GetTileColor() == color).GetPrefab()));
+                star.SetAltarModel(Instantiate(this.altarPrefabs.Find(altarPrefab => altarPrefab.GetTileColor() == color).GetPrefab()));
                 for (int idx = 0; idx < this.numSpaces; idx++)
                 {
                     AltarSpace space = Instantiate(this.altarSpacePrefab);
@@ -30,8 +30,7 @@ namespace Azul
                     spaces[idx] = space;
                 }
                 star.SetColor(color);
-                star.AddTilePlaceholders(spaces.ToList(), rotation);
-                star.SetSpaces(spaces);
+                star.AddAltarSpaces(spaces.ToList(), rotation);
                 return star;
             }
         }

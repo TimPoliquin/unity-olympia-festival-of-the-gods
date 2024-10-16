@@ -98,7 +98,7 @@ namespace Azul
                         int value = tilePlaced + idx;
                         if (value > numSpaces)
                         {
-                            value = numSpaces - value;
+                            value = value % numSpaces;
                         }
                         if (filledSpaces.Contains(value) || value == tilePlaced)
                         {

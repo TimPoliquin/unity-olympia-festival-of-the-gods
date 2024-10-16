@@ -31,6 +31,19 @@ namespace Azul
                 }
                 return tileCounts;
             }
+            public static Dictionary<TileColor, int> MapToDictionary(List<TileCount> tileCounts)
+            {
+                Dictionary<TileColor, int> dictionary = new();
+                foreach (TileColor tileColor in TileColorUtils.GetTileColors())
+                {
+                    dictionary.Add(tileColor, 0);
+                }
+                foreach (TileCount tileCount in tileCounts)
+                {
+                    dictionary[tileCount.TileColor] = tileCount.Count;
+                }
+                return dictionary;
+            }
         }
     }
 }

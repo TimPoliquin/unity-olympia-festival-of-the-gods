@@ -5,9 +5,7 @@ using System.Linq;
 using Azul.Controller;
 using Azul.Layout;
 using Azul.Util;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
 
 namespace Azul
 {
@@ -16,19 +14,14 @@ namespace Azul
         public class Altar : TimeBasedCoroutine
         {
             [SerializeField] private GameObject center;
-            [SerializeField] private GameObject layoutGameObject;
+            [SerializeField] private CircularLayout layout;
             [SerializeField] private TileColor color;
             [SerializeField] private AltarSpace[] spaces;
             [SerializeField] private Light milestoneCompletionLight;
 
 
             private readonly int alphaVar = Shader.PropertyToID("_Alpha");
-            private CircularLayout layout;
 
-            void Awake()
-            {
-                this.layout = this.layoutGameObject.GetComponent<CircularLayout>();
-            }
 
             public TileColor GetColor()
             {
@@ -39,21 +32,18 @@ namespace Azul
             {
                 this.color = color;
             }
-            public void SetSpaces(AltarSpace[] spaces)
-            {
-                this.spaces = spaces;
-            }
 
-            public void SetAltar(GameObject altar)
+            public void SetAltarModel(GameObject altar)
             {
                 altar.transform.SetParent(this.center.transform);
                 altar.transform.localPosition = Vector3.zero;
             }
 
-            public void AddTilePlaceholders(List<AltarSpace> spaces, float rotate = 0)
+            public void AddAltarSpaces(List<AltarSpace> spaces, float rotate = 0)
             {
                 this.layout.SetRotateAfterLayout(rotate);
                 this.layout.AddChildren(spaces.Select(placeholder => placeholder.gameObject).ToList());
+                this.spaces = spaces.ToArray();
             }
 
             public List<TileColor> GetTileColors()
@@ -174,6 +164,14 @@ namespace Azul
                 {
                     this.milestoneCompletionLight.intensity = Mathf.Lerp(0, intensity, t / time);
                 }, time);
+            }
+
+            public static Altar Create(TileColor tileColor)
+            {
+                Altar altar = new GameObject($"Altar: {tileColor}").AddComponent<Altar>();
+                altar.layout = new GameObject("Ring").AddComponent<CircularLayout>();
+                altar.center = new GameObject("Center");
+                return altar;
             }
         }
     }
