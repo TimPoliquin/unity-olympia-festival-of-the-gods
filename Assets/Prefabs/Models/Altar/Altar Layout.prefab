@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 1468626977882122497}
-  layoutGameObject: {fileID: 296806032501574409}
+  layout: {fileID: 1949578657907519642}
   color: 0
   spaces: []
   milestoneCompletionLight: {fileID: 2582164449393810916}
