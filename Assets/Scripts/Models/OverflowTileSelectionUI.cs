@@ -23,6 +23,9 @@ namespace Azul
     {
         public class OverflowTileSelectionUI : MonoBehaviour
         {
+            [SerializeField] private string titleTemplate = "Select up to 4 tokens to keep for the next round";
+            [SerializeField] private string finalRoundTitleTemplate = "You must discard all tokens after the final round.";
+            [SerializeField] private TextMeshProUGUI titleText;
             [SerializeField] private TextMeshProUGUI tilesSelectedText;
             [SerializeField] private TextMeshProUGUI tilesNeededText;
             [SerializeField] private TextMeshProUGUI pointsLostText;
@@ -54,6 +57,14 @@ namespace Azul
             {
                 this.maxSelectionCount = requiredSelectionCount;
                 this.tilesNeededText.text = $"{requiredSelectionCount}";
+                if (requiredSelectionCount > 0)
+                {
+                    this.titleText.text = this.titleTemplate;
+                }
+                else
+                {
+                    this.titleText.text = this.finalRoundTitleTemplate;
+                }
                 this.CheckSelectionCount();
             }
 

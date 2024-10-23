@@ -1038,7 +1038,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Each Ritual has a      ,         , or         marker nearby! Complete
-    all of the Rituals surrounding these markers to earn bonus Token from the Gods!
+    all of the Rituals surrounding these markers to earn bonus tokens from the Gods!
 
 '
   m_isRightToLeft: 0
