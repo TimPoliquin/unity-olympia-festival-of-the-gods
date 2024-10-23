@@ -20,6 +20,7 @@ namespace Azul
             [SerializeField] private HadesTokenPanelUI hadesTokenPanelUIPrefab;
             [SerializeField] private HelpPanelUI helpPanelUIPrefab;
             [SerializeField] private MilestoneCompletedPanelUI milestoneCompletedPanelUIPrefab;
+            [SerializeField] private OptionsPanelUI optionsPanelUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
             [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
@@ -95,6 +96,11 @@ namespace Azul
             public MilestoneCompletedPanelUI CreateMilestoneCompletedPanelUI()
             {
                 return Instantiate(this.milestoneCompletedPanelUIPrefab, this.canvas.transform);
+            }
+
+            public OptionsPanelUI CreateOptionsPanelUI()
+            {
+                return Instantiate(this.optionsPanelUIPrefab, this.canvas.transform);
             }
 
             public PlayerUI CreatePlayerUI()
