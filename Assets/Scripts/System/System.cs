@@ -18,6 +18,7 @@ namespace Azul
         private CameraController cameraController;
         private FactoryController factoryController;
         private GameController gameController;
+        private GraphicsSettingsController graphicsSettingsController;
         private MilestoneCompletionController milestoneCompletionController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
@@ -89,6 +90,15 @@ namespace Azul
                 this.gameController = this.GetComponentInChildren<GameController>();
             }
             return this.gameController;
+        }
+
+        public GraphicsSettingsController GetGraphicsSettingsController()
+        {
+            if (null == this.graphicsSettingsController)
+            {
+                this.graphicsSettingsController = this.GetComponentInChildren<GraphicsSettingsController>();
+            }
+            return this.graphicsSettingsController;
         }
 
         public MilestoneCompletionController GetMilestoneCompletionController()
@@ -215,6 +225,16 @@ namespace Azul
                 this.uiController = this.GetComponentInChildren<UIController>();
             }
             return this.uiController;
+        }
+
+        public void Pause()
+        {
+            Time.timeScale = 0;
+        }
+
+        public void Resume()
+        {
+            Time.timeScale = 1;
         }
     }
 }
