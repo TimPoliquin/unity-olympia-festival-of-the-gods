@@ -4,6 +4,8 @@ using Azul.Animation;
 using Azul.Util;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Azul
 {
@@ -16,14 +18,18 @@ namespace Azul
             [SerializeField] private IconUI hadesIcon;
             [SerializeField] private GameObject scoreContainer;
             [SerializeField] private TextMeshProUGUI scoreText;
+            [SerializeField] private Button dismissButton;
             private Fade fade;
             private MoveAndScale moveAndScale;
+            private UnityEvent onDismiss = new();
 
             void Awake()
             {
                 this.fade = this.GetComponent<Fade>();
                 this.moveAndScale = this.GetComponent<MoveAndScale>();
+                this.dismissButton.onClick.AddListener(this.OnDismiss);
             }
+
             public CoroutineResult Show(int tileCount)
             {
                 this.hadesIcon.SetTileColor(TileColor.ONE);
@@ -40,6 +46,16 @@ namespace Azul
             public CoroutineResult Hide()
             {
                 return this.fade.Hide();
+            }
+
+            private void OnDismiss()
+            {
+                this.onDismiss.Invoke();
+            }
+
+            public void AddOnDismissHandler(UnityAction listener)
+            {
+                this.onDismiss.AddListener(listener);
             }
         }
 

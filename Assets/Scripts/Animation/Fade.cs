@@ -13,6 +13,7 @@ namespace Azul
         {
             private CanvasGroup canvasGroup;
             private bool hidden;
+            private CoroutineResult hiddenResult;
 
             [SerializeField] private float delay;
             [SerializeField] private float time = .25f;
@@ -39,13 +40,20 @@ namespace Azul
 
             public CoroutineResult Hide()
             {
-                CoroutineResult result = CoroutineResult.Single();
+                if (null != this.hiddenResult)
+                {
+                    return this.hiddenResult;
+                }
+                this.hiddenResult = CoroutineResult.Single();
                 this.hidden = true;
-                this.StartCoroutine(this.Transition(0, this.time, 0, result));
-                return result;
+                this.StartCoroutine(this.Transition(0, this.time, 0, this.hiddenResult, () =>
+                {
+                    this.hiddenResult = null;
+                }));
+                return this.hiddenResult;
             }
 
-            private IEnumerator Transition(float delay, float time, float alpha, CoroutineResult result)
+            private IEnumerator Transition(float delay, float time, float alpha, CoroutineResult result, Action callback = null)
             {
                 result.Start();
                 bool hidden = this.hidden;
@@ -57,6 +65,7 @@ namespace Azul
                     yield return null;
                 }
                 result.Finish();
+                callback?.Invoke();
             }
         }
     }
