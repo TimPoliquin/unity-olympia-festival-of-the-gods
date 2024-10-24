@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Event;
-using Azul.GrantRewardEvents;
+using Azul.ClaimRewardEvents;
 using Azul.Model;
 using Azul.PlayerBoardRewardEvents;
 using Azul.RewardUIEvents;
-using Azul.WildColorSelectionEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +14,7 @@ namespace Azul
 {
     namespace RewardUIEvents
     {
-        public class OnGrantRewardPayload
+        public class OnClaimRewardPayload
         {
             public int PlayerNumber { get; init; }
             public Tile Tile { get; init; }
@@ -26,7 +25,7 @@ namespace Azul
         public class SelectRewardUIController : MonoBehaviour
         {
             private GrantRewardTilesUI selectionUI;
-            private UnityEvent<OnGrantRewardPayload> onGrantReward = new();
+            private UnityEvent<OnClaimRewardPayload> onClaimReward = new();
 
             public void InitializeListeners()
             {
@@ -39,13 +38,14 @@ namespace Azul
                 return this.selectionUI != null;
             }
 
-            public void Show(int playerNumber, int tileCount)
+            public void Show(int playerNumber, int tileCount, Action callback)
             {
+                System.Instance.GetPlayerBoardController().HideScoringUI(playerNumber);
                 this.selectionUI = System.Instance.GetPrefabFactory().CreateGrantRewardTilesUI();
                 this.selectionUI.SetScoreTileSelectionUIs(this.CreateTileSelectionUIs(tileCount));
                 this.selectionUI.SetPlayerNumber(playerNumber);
                 this.selectionUI.SetMaxSelectionCount(tileCount);
-                this.selectionUI.AddOnConfirmListener(this.OnConfirm);
+                this.selectionUI.AddOnConfirmListener((payload) => this.OnConfirm(payload, callback));
             }
 
             private List<ScoreTileSelectionUI> CreateTileSelectionUIs(int count)
@@ -64,8 +64,11 @@ namespace Azul
 
             private void Hide()
             {
-                Destroy(this.selectionUI.gameObject);
-                this.selectionUI = null;
+                if (null != this.selectionUI)
+                {
+                    Destroy(this.selectionUI.gameObject);
+                    this.selectionUI = null;
+                }
             }
 
 
@@ -73,33 +76,37 @@ namespace Azul
             {
                 if (System.Instance.GetPlayerController().GetPlayer(payload.Payload.PlayerNumber).IsHuman())
                 {
-                    this.Show(playerNumber: payload.Payload.PlayerNumber, tileCount: payload.Payload.NumberOfTiles);
+                    this.Show(playerNumber: payload.Payload.PlayerNumber, tileCount: payload.Payload.NumberOfTiles, payload.Done);
                 }
-                payload.Done();
+                else
+                {
+                    payload.Done();
+                }
             }
 
-            private void OnConfirm(OnGrantTileSelectionConfirmPayload payload)
+            private void OnConfirm(OnClaimTileSelectionConfirmPayload payload, Action callback)
             {
                 foreach (TileColor rewardColor in payload.Selections)
                 {
-                    this.GrantReward(payload.PlayerNumber, rewardColor);
+                    this.ClaimReward(payload.PlayerNumber, rewardColor);
                 }
                 this.Hide();
+                callback?.Invoke();
             }
 
-            private void GrantReward(int playerNumber, TileColor color)
+            private void ClaimReward(int playerNumber, TileColor color)
             {
-                Tile grantedTile = System.Instance.GetPlayerBoardController().GrantReward(playerNumber, color);
-                this.onGrantReward.Invoke(new OnGrantRewardPayload
+                Tile claimedTile = System.Instance.GetPlayerBoardController().ClaimReward(playerNumber, color);
+                this.onClaimReward.Invoke(new OnClaimRewardPayload
                 {
                     PlayerNumber = playerNumber,
-                    Tile = grantedTile
+                    Tile = claimedTile
                 });
             }
 
-            public void AddOnGrantRewardListener(UnityAction<OnGrantRewardPayload> listener)
+            public void AddOnClaimRewardListener(UnityAction<OnClaimRewardPayload> listener)
             {
-                this.onGrantReward.AddListener(listener);
+                this.onClaimReward.AddListener(listener);
             }
         }
 

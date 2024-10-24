@@ -51,7 +51,7 @@ namespace Azul
                 overflowTileSelectionUIController.AddOnCancelListener(this.OnOverflowSelectionCancel);
                 playerBoardController.AddOnPlayerBoardEarnRewardListener(this.OnEarnReward);
                 SelectRewardUIController selectRewardUIController = System.Instance.GetUIController().GetSelectRewardUIController();
-                selectRewardUIController.AddOnGrantRewardListener(this.OnGrantReward);
+                selectRewardUIController.AddOnClaimRewardListener(this.OnClaimReward);
             }
 
             public bool IsPanelOpen()
@@ -272,7 +272,7 @@ namespace Azul
                 payload.Done();
             }
 
-            private void OnGrantReward(OnGrantRewardPayload payload)
+            private void OnClaimReward(OnClaimRewardPayload payload)
             {
                 this.CleanupScoreSelectionUIElements();
                 if (this.isCurrentPlayerHuman)
