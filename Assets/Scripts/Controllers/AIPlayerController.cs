@@ -174,7 +174,7 @@ namespace Azul
                 for (int idx = 0; idx < numberOfTiles; idx++)
                 {
                     TileColor tileColor = this.scoringStrategy.ChooseReward();
-                    yield return playerBoardController.GrantRewardAndWait(this.playerNumber, tileColor).WaitUntilCompleted();
+                    yield return playerBoardController.ClaimRewardAndWait(this.playerNumber, tileColor).WaitUntilCompleted();
                 }
                 Done();
             }

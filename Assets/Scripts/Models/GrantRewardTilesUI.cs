@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Azul.GrantRewardEvents;
+using Azul.ClaimRewardEvents;
 using Azul.Model;
 using Azul.ScoreTileSelectionUIEvent;
 using TMPro;
@@ -10,9 +10,9 @@ using UnityEngine.UI;
 
 namespace Azul
 {
-    namespace GrantRewardEvents
+    namespace ClaimRewardEvents
     {
-        public struct OnGrantTileSelectionConfirmPayload
+        public struct OnClaimTileSelectionConfirmPayload
         {
             public int PlayerNumber { get; init; }
             public List<TileColor> Selections { get; init; }
@@ -33,7 +33,7 @@ namespace Azul
 
             private List<ScoreTileSelectionUI> scoreTileSelectionUIs;
 
-            private UnityEvent<OnGrantTileSelectionConfirmPayload> onGrantTileSelectionConfirm = new();
+            private UnityEvent<OnClaimTileSelectionConfirmPayload> onClaimTileSelectionConfirm = new();
 
             void Awake()
             {
@@ -115,8 +115,8 @@ namespace Azul
                         tileSelections.Add(scoreTileSelectionUI.GetColor());
                     }
                 }
-                this.onGrantTileSelectionConfirm.Invoke(
-                    new OnGrantTileSelectionConfirmPayload
+                this.onClaimTileSelectionConfirm.Invoke(
+                    new OnClaimTileSelectionConfirmPayload
                     {
                         PlayerNumber = this.playerNumber,
                         Selections = tileSelections
@@ -124,9 +124,9 @@ namespace Azul
                 );
             }
 
-            public void AddOnConfirmListener(UnityAction<OnGrantTileSelectionConfirmPayload> listener)
+            public void AddOnConfirmListener(UnityAction<OnClaimTileSelectionConfirmPayload> listener)
             {
-                this.onGrantTileSelectionConfirm.AddListener(listener);
+                this.onClaimTileSelectionConfirm.AddListener(listener);
             }
 
             public void AddScoreTileSelectionUI(ScoreTileSelectionUI ui)

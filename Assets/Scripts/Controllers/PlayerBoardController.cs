@@ -233,6 +233,7 @@ namespace Azul
 
             private void OnPlayerTurnScoringStart(int playerNumber)
             {
+                UnityEngine.Debug.Log($"PlayerTurnScoringStart {playerNumber}");
                 Dictionary<TileColor, int> tileColorCounts = new();
                 PlayerBoard board = this.playerBoards[playerNumber];
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
@@ -261,6 +262,11 @@ namespace Azul
                     space.ActivateHighlight();
                     space.AddOnStarSpaceSelectListener(this.OnPointerSelectSpace);
                 });
+            }
+
+            public void RestoreScoringUI(int playerNumber)
+            {
+                this.OnPlayerTurnScoringStart(playerNumber);
             }
 
             public void HideScoringUI(int playerNumber)
@@ -438,27 +444,27 @@ namespace Azul
                 }
             }
 
-            public Tile GrantReward(int playerNumber, TileColor tileColor)
+            public Tile ClaimReward(int playerNumber, TileColor tileColor)
             {
                 BagController bagController = System.Instance.GetBagController();
-                Tile grantedTile = bagController.Draw(tileColor);
-                this.AddDrawnTiles(playerNumber, new() { grantedTile });
-                return grantedTile;
+                Tile claimedTile = bagController.Draw(tileColor);
+                this.AddDrawnTiles(playerNumber, new() { claimedTile });
+                return claimedTile;
             }
 
-            public CoroutineResultValue<Tile> GrantRewardAndWait(int playerNumber, TileColor tileColor)
+            public CoroutineResultValue<Tile> ClaimRewardAndWait(int playerNumber, TileColor tileColor)
             {
                 CoroutineResultValue<Tile> result = new CoroutineResultValue<Tile>();
-                this.StartCoroutine(this.GrantRewardCoroutine(playerNumber, tileColor, result)); ;
+                this.StartCoroutine(this.ClaimRewardCoroutine(playerNumber, tileColor, result)); ;
                 return result;
             }
 
-            private IEnumerator GrantRewardCoroutine(int playerNumber, TileColor tileColor, CoroutineResultValue<Tile> result)
+            private IEnumerator ClaimRewardCoroutine(int playerNumber, TileColor tileColor, CoroutineResultValue<Tile> result)
             {
                 BagController bagController = System.Instance.GetBagController();
-                Tile grantedTile = bagController.Draw(tileColor);
-                yield return this.AddDrawnTiles(playerNumber, new() { grantedTile }).WaitUntilCompleted();
-                result.Finish(grantedTile);
+                Tile claimedTile = bagController.Draw(tileColor);
+                yield return this.AddDrawnTiles(playerNumber, new() { claimedTile }).WaitUntilCompleted();
+                result.Finish(claimedTile);
             }
 
             public bool IsPlacingTiles()
