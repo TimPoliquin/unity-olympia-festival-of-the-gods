@@ -27,6 +27,7 @@ namespace Azul
             {
                 this.fade = this.GetComponent<Fade>();
                 this.moveAndScale = this.GetComponent<MoveAndScale>();
+                this.dismissButton.gameObject.SetActive(false);
                 this.dismissButton.onClick.AddListener(this.OnDismiss);
             }
 
@@ -55,6 +56,7 @@ namespace Azul
 
             public void AddOnDismissHandler(UnityAction listener)
             {
+                this.dismissButton.gameObject.SetActive(true);
                 this.onDismiss.AddListener(listener);
             }
         }

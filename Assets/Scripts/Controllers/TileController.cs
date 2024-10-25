@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Azul.Model;
 using Azul.GameEvents;
+using Azul.RoundEvents;
 
 namespace Azul
 {
@@ -18,6 +19,9 @@ namespace Azul
             /// </summary>
             private Tile oneTile;
             private List<Tile> tiles;
+
+            private int var_ShaderWildEnabled = Shader.PropertyToID("_Enabled");
+            private int var_ShaderOffset = Shader.PropertyToID("_Offset");
 
             public void SetupGame()
             {
@@ -59,16 +63,24 @@ namespace Azul
             {
                 TableController tableController = System.Instance.GetTableController();
                 tableController.MoveOneTileToCenter(this.oneTile);
+                System.Instance.GetRoundController().AddOnBeforeRoundStartListener(this.OnRoundPrepare);
             }
 
             public Tile CreateTile(TileColor tileColor)
             {
                 Tile tile = System.Instance.GetPrefabFactory().CreateTile(tileColor);
+                tile.GetTokenRenderer().material.SetVector(this.var_ShaderOffset, new Vector2(this.tiles.Count, this.tiles.Count));
                 this.tiles.Add(tile);
                 return tile;
             }
 
-
+            private void OnRoundPrepare(OnBeforeRoundStartPayload payload)
+            {
+                foreach (Tile tile in this.tiles)
+                {
+                    tile.GetTokenRenderer().material.SetInt(this.var_ShaderWildEnabled, tile.Color == payload.WildColor ? 1 : 0);
+                }
+            }
         }
     }
 }

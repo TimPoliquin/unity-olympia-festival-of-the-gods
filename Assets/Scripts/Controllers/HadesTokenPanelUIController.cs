@@ -25,8 +25,16 @@ namespace Azul
                 result.Start();
                 this.hadesSFX.Play();
                 HadesTokenPanelUI panel = System.Instance.GetPrefabFactory().CreateHadesTokenPanelUI();
-                panel.AddOnDismissHandler(() => this.OnDismiss(panel, playerNumber, tileCount, result));
                 yield return panel.Show(tileCount).WaitUntilCompleted();
+                if (System.Instance.GetPlayerController().GetPlayer(playerNumber).IsAI())
+                {
+                    yield return new WaitForSeconds(this.displaySeconds);
+                    yield return this.OnDismissCoroutine(panel, playerNumber, tileCount, result);
+                }
+                else
+                {
+                    panel.AddOnDismissHandler(() => this.OnDismiss(panel, playerNumber, tileCount, result));
+                }
             }
 
             private void OnDismiss(HadesTokenPanelUI panel, int playerNumber, int tileCount, CoroutineResult result)

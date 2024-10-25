@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 6
+  tokenRenderer: {fileID: 6286208313216689614}
   tableCollisionSFX: {fileID: 8379736540920056304}
 --- !u!114 &3077641019178284570
 MonoBehaviour:

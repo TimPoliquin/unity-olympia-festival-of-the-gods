@@ -129,7 +129,8 @@ namespace Azul
                 {
                     this.onRoundPhasePrepare.Invoke(new OnRoundPhasePreparePayload
                     {
-                        RoundNumber = this.currentRound
+                        RoundNumber = this.currentRound,
+                        WildColor = this.GetCurrentWild()
                     });
                 }
                 this.onBeforeRoundStart.Invoke(new OnBeforeRoundStartPayload
@@ -190,7 +191,8 @@ namespace Azul
                         UnityEngine.Debug.Log($"Round {this.currentRound + 1} Phase Prepare");
                         this.onRoundPhasePrepare.Invoke(new OnRoundPhasePreparePayload
                         {
-                            RoundNumber = this.currentRound
+                            RoundNumber = this.currentRound,
+                            WildColor = this.GetCurrentWild(),
                         });
                         this.NextPhase();
                         break;

@@ -45,6 +45,7 @@ namespace Azul
         {
             public int RoundNumber { get; init; }
             public readonly Phase Phase = Phase.PREPARE;
+            public TileColor WildColor { get; init; }
         }
 
         public class OnAllRoundsCompletePayload
