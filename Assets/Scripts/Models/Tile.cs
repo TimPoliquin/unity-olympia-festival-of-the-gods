@@ -12,6 +12,7 @@ namespace Azul
         public class Tile : MonoBehaviour
         {
             [SerializeField] private TileColor color;
+            [SerializeField] private Renderer tokenRenderer;
             [SerializeField] private AudioSource tableCollisionSFX;
 
             private Outline outline;
@@ -108,6 +109,11 @@ namespace Azul
             public void EnableSound()
             {
                 this.tableCollisionSFX.enabled = true;
+            }
+
+            public Renderer GetTokenRenderer()
+            {
+                return this.tokenRenderer;
             }
         }
 
