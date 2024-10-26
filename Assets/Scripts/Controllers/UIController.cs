@@ -16,6 +16,7 @@ namespace Azul
             private IconUIFactory iconUIFactory;
             private MilestoneCompletedPanelUIController milestoneCompletedPanelUIController;
             private OverflowTileSelectionUIController overflowTileSelectionUIController;
+            private PanelManagerController panelManagerController;
             private PlayerUIController playerUIController;
             private ScoreTileSelectionUIController scoreTileSelectionUIController;
             private ScoreTilesPreviewPanelUIController scoreTilesPreviewPanelUIController;
@@ -77,6 +78,11 @@ namespace Azul
                 return this.milestoneCompletedPanelUIController;
             }
 
+            public PlayerBoardPreviewUIController GetPlayerBoardPreviewUIController()
+            {
+                return this.GetComponentInChildren<PlayerBoardPreviewUIController>();
+            }
+
             public OverflowTileSelectionUIController GetOverflowTileSelectionUIController()
             {
                 if (null == this.overflowTileSelectionUIController)
@@ -84,6 +90,15 @@ namespace Azul
                     this.overflowTileSelectionUIController = this.GetComponentInChildren<OverflowTileSelectionUIController>();
                 }
                 return this.overflowTileSelectionUIController;
+            }
+
+            public PanelManagerController GetPanelManagerController()
+            {
+                if (null == this.panelManagerController)
+                {
+                    this.panelManagerController = this.GetComponentInChildren<PanelManagerController>();
+                }
+                return this.panelManagerController;
             }
 
             public PlayerUIController GetPlayerUIController()

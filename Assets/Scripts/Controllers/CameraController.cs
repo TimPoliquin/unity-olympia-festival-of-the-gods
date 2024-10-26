@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Azul.GameEvents;
 using Azul.Model;
 using Azul.PlayerEvents;
 using Azul.RoundEvents;
@@ -7,6 +9,7 @@ using Azul.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UIElements;
 
 namespace Azul
@@ -27,34 +30,26 @@ namespace Azul
         public class CameraController : TimeBasedCoroutine
         {
             [SerializeField] private Camera mainCamera;
-            [SerializeField] private Camera playerBoardCamera;
             [SerializeField] private CameraSettings acquireSettings;
             [SerializeField] private CameraSettings scoreSettings;
             [SerializeField] private CameraSettings previewSettings;
             [SerializeField] private CameraSettings altarSettings;
             [SerializeField] private AspectRatio aspectRatio;
+            private List<Camera> playerBoardCameras = new();
 
             private UnityEvent onFocusOnTable = new();
             private UnityEvent onFocusOnPlayerBoard = new();
+            private bool disablePreviewCameras = true;
 
             public Camera GetMainCamera()
             {
                 return this.mainCamera;
             }
 
-            public Camera GetPreviewCamera()
-            {
-                return this.playerBoardCamera;
-            }
-
             void Start()
             {
                 this.EnforceAspectRatio();
-            }
-
-            public void SetupGame()
-            {
-                // nothing to do here yet
+                System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
             }
 
             public void InitializeListeners()
@@ -67,6 +62,20 @@ namespace Azul
                 {
                     this.EnforceAspectRatio();
                 });
+            }
+
+            private void OnGameSetupComplete(OnGameSetupCompletePayload payload)
+            {
+                PlayerBoardPreviewUIController playerBoardPreviewUIController = System.Instance.GetUIController().GetPlayerBoardPreviewUIController();
+                for (int playerNumber = 0; playerNumber < payload.NumberOfPlayers; playerNumber++)
+                {
+                    Camera previewCamera = System.Instance.GetPrefabFactory().CreatePlayerBoardPreviewCamera();
+                    previewCamera.name = $"Player {playerNumber + 1} Preview Camera";
+                    previewCamera.targetTexture = playerBoardPreviewUIController.GetPreviewTexture(playerNumber);
+                    this.playerBoardCameras.Add(previewCamera);
+                    this.FocusPreviewCameraOnPlayerBoard(playerNumber);
+                    previewCamera.gameObject.SetActive(false);
+                }
             }
 
             private void EnforceAspectRatio()
@@ -98,6 +107,11 @@ namespace Azul
             private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
                 this.FocusOnTable(this.mainCamera);
+                for (int idx = 0; idx < this.playerBoardCameras.Count; idx++)
+                {
+                    this.FocusPreviewCameraOnPlayerBoard(idx);
+                }
+                this.ActivatePreviewCameras();
             }
 
 
@@ -106,13 +120,32 @@ namespace Azul
                 if (payload.Phase == Phase.SCORE)
                 {
                     this.FocusOnPlayerBoard(this.mainCamera, this.scoreSettings, payload.Player.GetPlayerNumber());
-                    this.playerBoardCamera.gameObject.SetActive(false);
+                    this.DisablePreviewCameras();
                 }
                 else
                 {
-                    this.playerBoardCamera.gameObject.SetActive(true);
                     this.FocusOnTable(this.mainCamera);
-                    this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, payload.Player.GetPlayerNumber());
+                }
+            }
+
+            private void DisablePreviewCameras()
+            {
+                if (!this.disablePreviewCameras)
+                {
+                    this.disablePreviewCameras = true;
+                    foreach (Camera camera in this.playerBoardCameras)
+                    {
+                        camera.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            private void ActivatePreviewCameras()
+            {
+                if (this.disablePreviewCameras)
+                {
+                    this.disablePreviewCameras = false;
+                    this.StartCoroutine(this.PreviewCameraUpdateCoroutine());
                 }
             }
 
@@ -123,7 +156,7 @@ namespace Azul
 
             public void FocusPreviewCameraOnPlayerBoard(int playerNumber)
             {
-                this.FocusOnPlayerBoard(this.playerBoardCamera, this.previewSettings, playerNumber);
+                this.FocusOnPlayerBoard(this.playerBoardCameras[playerNumber], this.previewSettings, playerNumber);
             }
 
             public void FocusMainCameraOnTable()
@@ -204,7 +237,17 @@ namespace Azul
                 }, time);
                 return result;
             }
-
+            private IEnumerator PreviewCameraUpdateCoroutine()
+            {
+                yield return null;
+                // first frame should enable all cameras
+                this.playerBoardCameras.ForEach(camera => camera.gameObject.SetActive(true));
+                // wait two frames to allow flames to accumulate
+                yield return null;
+                yield return null;
+                this.DisablePreviewCameras();
+            }
         }
+
     }
 }

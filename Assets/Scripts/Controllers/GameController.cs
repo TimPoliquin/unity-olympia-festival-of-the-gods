@@ -36,7 +36,6 @@ namespace Azul
                 UIController uIController = System.Instance.GetUIController();
                 // TODO - this should be triggered by the UI/Player Ready
                 aiController.SetupGame(playerController.GetPlayers());
-                cameraController.SetupGame();
                 tableController.SetupGame();
                 playerBoardController.SetupGame(playerController.GetNumberOfPlayers(), starController);
                 scoreBoardController.SetupGame(playerController.GetNumberOfPlayers());

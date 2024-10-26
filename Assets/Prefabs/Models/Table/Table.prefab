@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3649427237301199214}
-  - component: {fileID: 3089737495418234027}
+  - component: {fileID: 7332574719521135330}
   m_Layer: 0
   m_Name: Factories
   m_TagString: Untagged
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 350419591959452425}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.7, y: 0, z: 23.8}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5216580235194095682}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3089737495418234027
+--- !u!114 &7332574719521135330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 350419591959452425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da99836b4336341d792ee10f10550501, type: 3}
+  m_Script: {fileID: 11500000, guid: aa679326fcbb04ca9a28eef929a4afb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: 0
-  direction: 2
-  spacing: 15
-  normalizeRotation: 0
+  radius: 35
+  arcSize: 180
 --- !u!1 &620407776254951268
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,10 +231,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBoards: {fileID: 5933051557797473536}
-  factoriesLayout: {fileID: 3089737495418234027}
+  factoriesLayout: {fileID: 7332574719521135330}
   scoreBoard: {fileID: 8361112308366185155}
   center: {fileID: 6196003202671131085}
-  centerWidth: 25
+  centerWidth: 22
   centerDepth: 15
   dropHeight: 0.1
 --- !u!114 &3317494338426430283
@@ -323,7 +321,7 @@ Transform:
   m_GameObject: {fileID: 6196003202671131085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

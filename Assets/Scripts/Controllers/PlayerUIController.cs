@@ -15,7 +15,7 @@ namespace Azul
     {
         public class PlayerUIController : MonoBehaviour
         {
-            [SerializeField] private GameObject playerUIContainer;
+            [SerializeField] private List<GameObject> playerUIContainers;
             [SerializeField] private AudioSource scoreIncreaseSFX;
             [SerializeField] private AudioSource scoreDecreaseSFX;
             private List<PlayerUI> playerUIs = new();
@@ -48,9 +48,10 @@ namespace Azul
             {
                 ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
                 PlayerUI playerUI = System.Instance.GetPrefabFactory().CreatePlayerUI();
-                playerUI.transform.SetParent(this.playerUIContainer.transform);
+                playerUI.transform.SetParent(this.playerUIContainers[player.GetPlayerNumber()].transform);
                 playerUI.transform.localScale = Vector3.one;
                 playerUI.SetPlayer(player);
+                playerUI.SetActive(false);
                 playerUI.SetScore(scoreBoardController.GetPlayerScore(player.GetPlayerNumber()));
                 this.playerUIs.Add(playerUI);
             }
@@ -110,7 +111,7 @@ namespace Azul
 
             private void OnAllRoundsCompleted(OnAllRoundsCompletePayload payload)
             {
-                this.playerUIContainer.SetActive(false);
+                this.playerUIContainers.ForEach(playerUiContainer => playerUiContainer.SetActive(false));
             }
 
             public Vector3 GetTileCountPosition(int playerNumber, TileColor tileColor)

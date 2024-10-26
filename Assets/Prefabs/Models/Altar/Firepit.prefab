@@ -112,7 +112,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5239839043057899104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -15897,7 +15897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalColor: 0
   effectiveColor: 0
-  value: 0
+  value: 1
   isFilled: 0
   fire: {fileID: 1442041067539763141}
 --- !u!114 &5311763120112216607

@@ -22,7 +22,10 @@ namespace Azul
             [SerializeField] private MilestoneCompletedPanelUI milestoneCompletedPanelUIPrefab;
             [SerializeField] private OptionsPanelUI optionsPanelUIPrefab;
             [SerializeField] private PlayerUI playerUIPrefab;
+            [SerializeField] private Camera playerBoardPreviewCamera;
+            [SerializeField] private PlayerBoardPreviewUI playerBoardPreviewUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
+            [SerializeField] private PreviewingBannerUI previewBannerUIPrefab;
             [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
             [SerializeField] private RoundStartUI roundStartUIPrefab;
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
@@ -34,6 +37,7 @@ namespace Azul
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
             private AltarFactory altarFactory;
+            private PanelManagerController panelManagerController;
 
             void Awake()
             {
@@ -65,7 +69,10 @@ namespace Azul
 
             public AcquireTilesPanelUI CreateAcquireTilesPanelUI()
             {
-                return Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
+                AcquireTilesPanelUI panel = Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                return panel;
+
             }
 
             public ExplosionEffect CreateExplosionEffect(Transform parent = null)
@@ -80,17 +87,23 @@ namespace Azul
 
             public GrantRewardTilesUI CreateGrantRewardTilesUI()
             {
-                return Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
+                GrantRewardTilesUI panel = Instantiate(this.grantRewardTilesUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                return panel;
             }
 
             public HadesTokenPanelUI CreateHadesTokenPanelUI()
             {
-                return Instantiate(this.hadesTokenPanelUIPrefab, this.canvas.transform);
+                HadesTokenPanelUI panel = Instantiate(this.hadesTokenPanelUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                return panel;
             }
 
             public HelpPanelUI CreateHelpPanelUI()
             {
-                return Instantiate(this.helpPanelUIPrefab, this.canvas.transform);
+                HelpPanelUI panel = Instantiate(this.helpPanelUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                return panel;
             }
 
             public MilestoneCompletedPanelUI CreateMilestoneCompletedPanelUI()
@@ -108,9 +121,28 @@ namespace Azul
                 return Instantiate(this.playerUIPrefab);
             }
 
-            public PlayerTurnBannerUI CreatePlayerTurnBannerUI()
+            public Camera CreatePlayerBoardPreviewCamera()
             {
-                return Instantiate(this.playerTurnBannerUIPrefab, this.canvas.transform);
+                return Instantiate(this.playerBoardPreviewCamera);
+            }
+
+            public PlayerBoardPreviewUI CreatePlayerBoardPreviewUI(Transform parent)
+            {
+                return Instantiate(this.playerBoardPreviewUIPrefab, parent ? parent : this.canvas.transform);
+            }
+
+            public PlayerTurnBannerUI CreatePlayerTurnBannerUI(string layer = null)
+            {
+                PlayerTurnBannerUI panel = Instantiate(this.playerTurnBannerUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToLayer(layer, panel.gameObject);
+                return panel;
+            }
+
+            public PreviewingBannerUI CreatePreviewBannerUI(string layer = null)
+            {
+                PreviewingBannerUI panel = Instantiate(this.previewBannerUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToLayer(layer, panel.gameObject);
+                return panel;
             }
 
             public RewardProgressFieldUI CreateRewardProgressFieldUI()
@@ -118,9 +150,11 @@ namespace Azul
                 return Instantiate(this.rewardProgressFieldUIPrefab, this.canvas.transform);
             }
 
-            public RoundStartUI CreateRoundStartUI()
+            public RoundStartUI CreateRoundStartUI(string layer = null)
             {
-                return Instantiate(this.roundStartUIPrefab, this.canvas.transform);
+                RoundStartUI roundStartUI = Instantiate(this.roundStartUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToLayer(layer, roundStartUI.gameObject);
+                return roundStartUI;
             }
 
             public RitualScoreUI CreateRitualScoreUI()
@@ -155,6 +189,15 @@ namespace Azul
             public WildColorSelectionUI CreateWildColorSelectionUI(Transform parent = null)
             {
                 return Instantiate(this.wildColorSelectionUIPrefab, parent ? parent : this.canvas.transform);
+            }
+
+            public PanelManagerController GetPanelManagerController()
+            {
+                if (null == this.panelManagerController)
+                {
+                    this.panelManagerController = System.Instance.GetUIController().GetPanelManagerController();
+                }
+                return this.panelManagerController;
             }
         }
     }
