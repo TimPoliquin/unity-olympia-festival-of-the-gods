@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.PreviewEvents;
+using Azul.RoundEvents;
 using UnityEngine;
 
 namespace Azul
@@ -11,60 +13,97 @@ namespace Azul
     {
         public class PlayerBoardPreviewUIController : MonoBehaviour
         {
-            [SerializeField] private PlayerBoardPreviewUI previewUI;
+            [Serializable]
+            public struct PreviewConfig
+            {
+                public GameObject Container;
+                public RenderTexture Texture;
+            }
+            [SerializeField] private List<PreviewConfig> previewConfigs;
+            private static readonly string PANEL_LAYER = "preview";
 
             // Start is called before the first frame update
             void Start()
             {
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
-                this.previewUI.gameObject.SetActive(false);
-                this.previewUI.AddOnZoomInListener(this.OnZoomIn);
-                this.previewUI.AddOnZoomOutListener(this.OnZoomOut);
-                this.previewUI.AddOnPreviewSelectionChangeListener(this.OnPreviewChange);
+            }
+
+            public RenderTexture GetPreviewTexture(int playerNumber)
+            {
+                return this.previewConfigs[playerNumber].Texture;
             }
 
             private void OnGameSetupComplete(OnGameSetupCompletePayload payload)
             {
-                this.previewUI.SetPlayerNames(System.Instance.GetPlayerController().GetPlayers());
-                System.Instance.GetRoundController().AddOnRoundPhaseAcquireListener(this.OnPhaseAcquire);
+                System.Instance.GetRoundController().AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
                 System.Instance.GetRoundController().AddOnRoundPhaseScoreListener(this.OnPhaseScore);
                 System.Instance.GetRoundController().AddOnAllRoundsCompleteListener(this.OnAllRoundsComplete);
-                System.Instance.GetPlayerController().AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+                for (int playerNumber = 0; playerNumber < payload.NumberOfPlayers; playerNumber++)
+                {
+                    this.CreatePreviewUI(playerNumber);
+                }
             }
 
-            private void OnPhaseAcquire(OnRoundPhaseAcquirePayload payload)
+            private void CreatePreviewUI(int playerNumber)
             {
-                this.previewUI.gameObject.SetActive(true);
+                PreviewConfig previewConfig = this.previewConfigs[playerNumber];
+                PlayerBoardPreviewUI previewUI = System.Instance.GetPrefabFactory().CreatePlayerBoardPreviewUI(previewConfig.Container.transform);
+                previewUI.SetTexture(previewConfig.Texture);
+                previewUI.SetPlayerNumber(playerNumber);
+                previewUI.AddOnZoomInListener(this.OnZoomIn);
+            }
+
+            private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
+            {
+                foreach (PreviewConfig config in this.previewConfigs)
+                {
+                    config.Container.SetActive(true);
+                }
             }
 
             private void OnPhaseScore(OnRoundPhaseScorePayload payload)
             {
-                this.previewUI.gameObject.SetActive(false);
+                foreach (PreviewConfig config in this.previewConfigs)
+                {
+                    config.Container.SetActive(false);
+                }
             }
 
             private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
             {
-                this.previewUI.gameObject.SetActive(false);
-            }
-
-            private void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
-            {
-                this.previewUI.SetActivePlayer(payload.Player.GetPlayerNumber());
+                foreach (PreviewConfig config in this.previewConfigs)
+                {
+                    config.Container.SetActive(false);
+                }
             }
 
             private void OnZoomIn(OnZoomPayload payload)
             {
                 System.Instance.GetCameraController().FocusMainCameraOnPlayerBoard(payload.PlayerNumber);
+                for (int idx = 0; idx < this.previewConfigs.Count; idx++)
+                {
+                    this.previewConfigs[idx].Container.SetActive(false);
+                }
+                PreviewingBannerUI previewingBannerUI = System.Instance.GetPrefabFactory().CreatePreviewBannerUI(PANEL_LAYER);
+                previewingBannerUI.Show(System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).GetPlayerName());
+                previewingBannerUI.AddOnDismissListener(() =>
+                {
+                    this.OnZoomOut();
+                    Destroy(previewingBannerUI.gameObject);
+                    System.Instance.GetUIController().GetPanelManagerController().HideLayer(PANEL_LAYER);
+                });
+                System.Instance.GetUIController().GetPanelManagerController().ShowLayer(PANEL_LAYER);
+                Time.timeScale = 0;
             }
 
-            private void OnZoomOut(OnZoomPayload payload)
+            private void OnZoomOut()
             {
                 System.Instance.GetCameraController().FocusMainCameraOnTable();
-            }
-
-            private void OnPreviewChange(OnPreviewSelectionChangePayload payload)
-            {
-                System.Instance.GetCameraController().FocusPreviewCameraOnPlayerBoard(payload.PlayerNumber);
+                for (int idx = 0; idx < this.previewConfigs.Count; idx++)
+                {
+                    this.previewConfigs[idx].Container.SetActive(true);
+                }
+                Time.timeScale = 1;
             }
         }
     }

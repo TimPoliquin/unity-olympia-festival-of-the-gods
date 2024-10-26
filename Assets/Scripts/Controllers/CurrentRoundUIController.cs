@@ -11,12 +11,14 @@ namespace Azul
     {
         public class CurrentRoundUIController : MonoBehaviour
         {
-            [SerializeField] private GameObject currentRoundContainer;
+            [SerializeField] private GameObject topBanner;
+            [SerializeField] private GameObject footer;
             [SerializeField] private CurrentRoundUI currentRoundUI;
             void Start()
             {
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener((_payload) => this.InitializeListeners());
-                this.currentRoundContainer.gameObject.SetActive(false);
+                this.topBanner.gameObject.SetActive(false);
+                this.footer.gameObject.SetActive(false);
             }
 
             void InitializeListeners()
@@ -28,13 +30,19 @@ namespace Azul
 
             private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
-                this.currentRoundContainer.gameObject.SetActive(true);
+                this.topBanner.gameObject.SetActive(true);
+                if (System.Instance.GetPlayerController().GetNumberOfPlayers() > 2)
+                {
+                    this.footer.gameObject.SetActive(true);
+                }
                 this.currentRoundUI.SetActiveColor(payload.WildColor);
             }
 
             private void OnAllRoundsCompleted(OnAllRoundsCompletePayload payload)
             {
-                this.currentRoundContainer.gameObject.SetActive(false);
+                this.topBanner.gameObject.SetActive(false);
+                this.footer.gameObject.SetActive(false);
+
             }
         }
     }

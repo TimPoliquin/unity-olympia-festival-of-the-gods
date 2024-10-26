@@ -24,74 +24,39 @@ namespace Azul
     {
         public class PlayerBoardPreviewUI : MonoBehaviour
         {
-            [SerializeField] private Toggle previewButton;
+            [SerializeField] private RawImage image;
+            [SerializeField] private Button previewButton;
 
-            [SerializeField] private TMP_Dropdown players;
-            private List<string> playerNames;
+            private int playerNumber;
+
             private UnityEvent<OnZoomPayload> onZoomIn = new();
-            private UnityEvent<OnZoomPayload> onZoomOut = new();
-            private UnityEvent<OnPreviewSelectionChangePayload> onSelectionChange = new();
 
             void Awake()
             {
-                this.previewButton.onValueChanged.AddListener(this.OnClick);
-                this.players.onValueChanged.AddListener(this.OnSelectionChange);
+                this.previewButton.onClick.AddListener(this.OnPreview);
             }
 
-
-            public void SetPlayerNames(List<Player> playerNames)
+            public void SetPlayerNumber(int playerNumber)
             {
-                this.playerNames = playerNames.Select(player => player.GetPlayerName()).ToList();
-                this.players.AddOptions(playerNames.Select(player => new TMP_Dropdown.OptionData(player.GetPlayerName())).ToList());
+                this.playerNumber = playerNumber;
             }
 
-            public void SetActivePlayer(int playerNumber)
+            public void SetTexture(RenderTexture texture)
             {
-                this.players.options[this.players.value].text = this.playerNames[this.players.value];
-                this.players.options[playerNumber].text = $"{this.playerNames[playerNumber]} (Current)";
-                this.players.value = playerNumber;
+                this.image.texture = texture;
             }
 
-            private void OnClick(bool value)
+            private void OnPreview()
             {
-                this.previewButton.GetComponentInChildren<Text>().text = $"Zoom {(value ? "-" : " + ")}";
-                if (value)
+                this.onZoomIn.Invoke(new OnZoomPayload
                 {
-                    this.onZoomIn.Invoke(new OnZoomPayload
-                    {
-                        PlayerNumber = this.players.value
-                    });
-                }
-                else
-                {
-                    this.onZoomOut.Invoke(new OnZoomPayload
-                    {
-                        PlayerNumber = this.players.value
-                    });
-                }
-            }
-
-            private void OnSelectionChange(int selection)
-            {
-                this.onSelectionChange.Invoke(new OnPreviewSelectionChangePayload
-                {
-                    PlayerNumber = selection
+                    PlayerNumber = this.playerNumber
                 });
-                this.previewButton.isOn = false;
             }
 
             public void AddOnZoomInListener(UnityAction<OnZoomPayload> listener)
             {
                 this.onZoomIn.AddListener(listener);
-            }
-            public void AddOnZoomOutListener(UnityAction<OnZoomPayload> listener)
-            {
-                this.onZoomOut.AddListener(listener);
-            }
-
-            public void AddOnPreviewSelectionChangeListener(UnityAction<OnPreviewSelectionChangePayload> listener)
-            {
-                this.onSelectionChange.AddListener(listener);
             }
         }
     }

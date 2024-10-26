@@ -31,7 +31,7 @@ namespace Azul
         public class Table : MonoBehaviour, TileProvider
         {
             [SerializeField] private GameObject playerBoards;
-            [SerializeField] private LinearLayout factoriesLayout;
+            [SerializeField] private ArcLayout factoriesLayout;
             [SerializeField] private GameObject scoreBoard;
             [SerializeField] private GameObject center;
             [SerializeField] private float centerWidth = 30.0f;
@@ -106,7 +106,7 @@ namespace Azul
                 yield return CoroutineResult.Multi(tiles.Select((tile, idx) =>
                 {
                     float x = tile.transform.position.x * scale + Random.Range(-1f, 1f);
-                    float z = this.center.transform.position.z - this.centerDepth / 2f + idx * this.centerDepth * 2f / tiles.Count - Random.Range(-1f, 0);
+                    float z = this.center.transform.position.z - this.centerDepth / 2f + idx * this.centerDepth * 2f / tiles.Count + Random.Range(0f, 2f);
                     return tileAnimationController.MoveTiles(new() { tile }, new TilesMoveConfig()
                     {
                         Position = new Vector3(x, this.dropHeight, z),
