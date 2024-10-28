@@ -12,6 +12,8 @@ namespace Azul
         {
             [SerializeField] private Button helpButton;
 
+            private HelpPanelUI helpPanelUI;
+
             void Start()
             {
                 this.helpButton.onClick.AddListener(this.OnHelp);
@@ -19,15 +21,17 @@ namespace Azul
 
             private void OnHelp()
             {
+                if (null == this.helpPanelUI)
+                {
+                    this.helpPanelUI = System.Instance.GetPrefabFactory().CreateHelpPanelUI();
+                    this.helpPanelUI.AddOnCloseClickListener(() => this.OnClose(helpPanelUI));
+                }
                 this.StartCoroutine(this.OnHelpCoroutine());
             }
 
             private IEnumerator OnHelpCoroutine()
             {
-                this.helpButton.interactable = false;
-                HelpPanelUI helpPanelUI = System.Instance.GetPrefabFactory().CreateHelpPanelUI();
-                helpPanelUI.AddOnCloseClickListener(() => this.OnClose(helpPanelUI));
-                yield return helpPanelUI.Show().WaitUntilCompleted();
+                yield return this.helpPanelUI.Toggle().WaitUntilCompleted();
             }
 
             private void OnClose(HelpPanelUI helpPanelUI)
@@ -38,8 +42,6 @@ namespace Azul
             private IEnumerator OnCloseCoroutine(HelpPanelUI helpPanelUI)
             {
                 yield return helpPanelUI.Hide().WaitUntilCompleted();
-                Destroy(helpPanelUI.gameObject);
-                this.helpButton.interactable = true;
             }
         }
     }

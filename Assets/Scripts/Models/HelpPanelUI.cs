@@ -23,17 +23,31 @@ namespace Azul
                 this.closeButton.onClick.AddListener(() =>
                 {
                     this.onClose.Invoke();
-                    this.closeButton.interactable = false;
+                    this.closeButton.gameObject.SetActive(false);
                 });
+            }
+
+            public CoroutineResult Toggle()
+            {
+                if (this.slideIn.IsShowing())
+                {
+                    return this.Hide();
+                }
+                else
+                {
+                    return this.Show();
+                }
             }
 
             public CoroutineResult Show()
             {
+                this.closeButton.gameObject.SetActive(true);
                 return this.slideIn.Show();
             }
 
             public CoroutineResult Hide()
             {
+                this.closeButton.gameObject.SetActive(false);
                 return this.slideIn.Hide();
             }
 
