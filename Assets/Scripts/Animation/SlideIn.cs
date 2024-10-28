@@ -21,15 +21,15 @@ namespace Azul
             rectTransform.anchoredPosition = new Vector2(rectTransform.rect.width, rectTransform.anchoredPosition.y);
         }
 
-        public void Toggle()
+        public CoroutineResult Toggle()
         {
             if (this.showing)
             {
-                this.Hide();
+                return this.Hide();
             }
             else
             {
-                this.Show();
+                return this.Show();
             }
         }
 
@@ -60,6 +60,11 @@ namespace Azul
                 result.Finish();
             }
             return result;
+        }
+
+        public bool IsShowing()
+        {
+            return this.showing;
         }
 
         private IEnumerator SlideInCoroutine(CoroutineResult result)
