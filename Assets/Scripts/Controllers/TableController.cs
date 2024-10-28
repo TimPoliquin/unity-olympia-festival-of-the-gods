@@ -306,7 +306,7 @@ namespace Azul
                 return this.table.IsEmpty() && this.table.GetFactories().All(factory => factory.IsEmpty());
             }
 
-            private void OnTilesDiscarded(EventTracker<OnFactoryTilesDiscarded> payload)
+            private void OnTilesDiscarded(EventTracker<OnFactoryTilesDiscardedPayload> payload)
             {
                 this.StartCoroutine(this.OnTilesDiscardedCoroutine(payload.Payload.TilesDiscarded, payload.Done));
             }
@@ -356,6 +356,11 @@ namespace Azul
             public void AddOnTileSelectListener(UnityAction<OnTileSelectPayload> listener)
             {
                 this.onTilesSelect.AddListener(listener);
+            }
+
+            public void AddOnUnavailableTokenHoverEnterListener(UnityAction<OnUnavailableTokenHoverEnter> listener)
+            {
+                this.GetTableSelectableTileHolderController().AddOnUnavailableTokenHoverEnterListener(listener);
             }
 
             private void OnTilesHoverEnter(OnTileHoverEnterPayload payload)

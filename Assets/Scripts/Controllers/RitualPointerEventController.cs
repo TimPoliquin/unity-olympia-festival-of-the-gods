@@ -9,8 +9,9 @@ namespace Azul
     namespace Controller
     {
         [RequireComponent(typeof(AltarSpace))]
-        public class TilePlaceholderPointerEventController : PointerEventController<AltarSpace>
+        public class RitualPointerEventController : PointerEventController<AltarSpace>
         {
+
         }
     }
 }

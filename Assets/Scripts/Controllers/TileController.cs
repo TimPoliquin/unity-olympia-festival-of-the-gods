@@ -4,6 +4,9 @@ using UnityEngine;
 using Azul.Model;
 using Azul.GameEvents;
 using Azul.RoundEvents;
+using Azul.TableEvents;
+using Azul.Controller.TableEvents;
+using Azul.Event;
 
 namespace Azul
 {
@@ -64,12 +67,16 @@ namespace Azul
                 TableController tableController = System.Instance.GetTableController();
                 tableController.MoveOneTileToCenter(this.oneTile);
                 System.Instance.GetRoundController().AddOnBeforeRoundStartListener(this.OnRoundPrepare);
+                System.Instance.GetPlayerController().AddOnPlayerTurnStartListener(this.OnPlayerTurnStart);
+                System.Instance.GetTableController().AddOnTilesDrawnListener(this.OnTableTilesDrawn);
+                System.Instance.GetFactoryController().AddOnFactoryTilesDrawnListener(this.OnFactoryTilesDrawn);
             }
 
             public Tile CreateTile(TileColor tileColor)
             {
                 Tile tile = System.Instance.GetPrefabFactory().CreateTile(tileColor);
                 tile.GetTokenRenderer().material.SetVector(this.var_ShaderOffset, new Vector2(this.tiles.Count, this.tiles.Count));
+                tile.GetTilePointerController().SetInteractable(false);
                 this.tiles.Add(tile);
                 return tile;
             }
@@ -80,6 +87,41 @@ namespace Azul
                 {
                     tile.GetTokenRenderer().material.SetInt(this.var_ShaderWildEnabled, tile.Color == payload.WildColor ? 1 : 0);
                 }
+            }
+
+            public void OnPlayerTurnStart(OnPlayerTurnStartPayload payload)
+            {
+                bool enablePointer = payload.Player.IsHuman() && payload.Phase == Phase.ACQUIRE;
+                foreach (Tile tile in this.tiles)
+                {
+                    if (tile.gameObject.activeInHierarchy)
+                    {
+                        tile.GetTilePointerController().SetInteractable(enablePointer);
+                    }
+                }
+                this.oneTile.GetTilePointerController().SetInteractable(enablePointer);
+            }
+
+            public void OnTableTilesDrawn(EventTracker<OnTableTilesDrawnPayload> eventTracker)
+            {
+                // Disable all tiles
+                this.DisableAllTilePointerActions();
+                eventTracker.Done();
+            }
+
+            public void OnFactoryTilesDrawn(EventTracker<OnFactoryTilesDrawnPayload> eventTracker)
+            {
+                this.DisableAllTilePointerActions();
+                eventTracker.Done();
+            }
+
+            private void DisableAllTilePointerActions()
+            {
+                foreach (Tile tile in this.tiles)
+                {
+                    tile.GetTilePointerController().SetInteractable(false);
+                }
+                this.oneTile.GetTilePointerController().SetInteractable(false);
             }
         }
     }

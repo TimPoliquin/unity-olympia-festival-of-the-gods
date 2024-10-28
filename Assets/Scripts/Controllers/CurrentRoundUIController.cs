@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Azul.GameEvents;
 using Azul.Model;
 using Azul.RoundEvents;
@@ -16,9 +14,18 @@ namespace Azul
             [SerializeField] private CurrentRoundUI currentRoundUI;
             void Start()
             {
-                System.Instance.GetGameController().AddOnGameSetupCompleteListener((_payload) => this.InitializeListeners());
+                System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
                 this.topBanner.gameObject.SetActive(false);
                 this.footer.gameObject.SetActive(false);
+            }
+
+            void OnGameSetupComplete(OnGameSetupCompletePayload payload)
+            {
+                this.InitializeListeners();
+                if (payload.NumberOfPlayers > 2)
+                {
+                    this.footer.SetActive(true);
+                }
             }
 
             void InitializeListeners()
@@ -26,15 +33,13 @@ namespace Azul
                 RoundController roundController = System.Instance.GetRoundController();
                 roundController.AddOnBeforeRoundStartListener(this.OnBeforeRoundStart);
                 roundController.AddOnAllRoundsCompleteListener(this.OnAllRoundsCompleted);
+                roundController.AddOnRoundPhaseScoreListener(this.OnScoreStart);
             }
 
             private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
                 this.topBanner.gameObject.SetActive(true);
-                if (System.Instance.GetPlayerController().GetNumberOfPlayers() > 2)
-                {
-                    this.footer.gameObject.SetActive(true);
-                }
+                this.footer.SetActive(System.Instance.GetPlayerController().GetNumberOfPlayers() > 2);
                 this.currentRoundUI.SetActiveColor(payload.WildColor);
             }
 
@@ -43,6 +48,11 @@ namespace Azul
                 this.topBanner.gameObject.SetActive(false);
                 this.footer.gameObject.SetActive(false);
 
+            }
+
+            private void OnScoreStart(OnRoundPhaseScorePayload arg0)
+            {
+                this.footer.SetActive(true);
             }
         }
     }

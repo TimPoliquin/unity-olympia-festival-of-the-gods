@@ -6,6 +6,7 @@ using Azul.Debug;
 using Azul.Event;
 using Azul.Layout;
 using Azul.Model;
+using Azul.TileHolderEvents;
 using Azul.Util;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,12 +16,12 @@ namespace Azul
 {
     namespace Controller
     {
-        public class OnFactoryTilesDrawn
+        public struct OnFactoryTilesDrawnPayload
         {
             public List<Tile> TilesDrawn { get; init; }
             public Action Done { get; init; }
         }
-        public class OnFactoryTilesDiscarded
+        public struct OnFactoryTilesDiscardedPayload
         {
             public List<Tile> TilesDiscarded { get; init; }
         }
@@ -29,8 +30,8 @@ namespace Azul
             [SerializeField] private GameObject factoryPrefab;
             private List<Factory> factories;
 
-            private AzulEvent<OnFactoryTilesDrawn> onTilesDrawn = new();
-            private AzulEvent<OnFactoryTilesDiscarded> onTilesDiscarded = new();
+            private AzulEvent<OnFactoryTilesDrawnPayload> onTilesDrawn = new();
+            private AzulEvent<OnFactoryTilesDiscardedPayload> onTilesDiscarded = new();
             private UnityEvent onAllFactoriesEmpty = new();
             private UnityEvent onFactoryDrawComplete = new();
 
@@ -64,12 +65,12 @@ namespace Azul
                 return this.factories;
             }
 
-            public void AddOnFactoryTilesDrawnListener(UnityAction<EventTracker<OnFactoryTilesDrawn>> listener)
+            public void AddOnFactoryTilesDrawnListener(UnityAction<EventTracker<OnFactoryTilesDrawnPayload>> listener)
             {
                 this.onTilesDrawn.AddListener(listener);
             }
 
-            public void AddOnFactoryTilesDiscardedListener(UnityAction<EventTracker<OnFactoryTilesDiscarded>> listener)
+            public void AddOnFactoryTilesDiscardedListener(UnityAction<EventTracker<OnFactoryTilesDiscardedPayload>> listener)
             {
                 this.onTilesDiscarded.AddListener(listener);
             }
@@ -100,8 +101,8 @@ namespace Azul
 
             private IEnumerator FactoryDrawTilesCoroutine(List<Tile> tilesDrawn, List<Tile> tilesDiscarded)
             {
-                yield return this.onTilesDrawn.Invoke(new OnFactoryTilesDrawn { TilesDrawn = tilesDrawn }).WaitUntilCompleted();
-                yield return this.onTilesDiscarded.Invoke(new OnFactoryTilesDiscarded { TilesDiscarded = tilesDiscarded }).WaitUntilCompleted();
+                yield return this.onTilesDrawn.Invoke(new OnFactoryTilesDrawnPayload { TilesDrawn = tilesDrawn }).WaitUntilCompleted();
+                yield return this.onTilesDiscarded.Invoke(new OnFactoryTilesDiscardedPayload { TilesDiscarded = tilesDiscarded }).WaitUntilCompleted();
                 // check for empty factories
                 if (this.factories.All(factory => factory.IsEmpty()))
                 {
@@ -113,6 +114,22 @@ namespace Azul
             public void AddOnAllFactoriesEmptyListener(UnityAction listener)
             {
                 this.onAllFactoriesEmpty.AddListener(listener);
+            }
+
+            public void AddOnTokenHoverExitListener(UnityAction<OnTileHoverExitPayload> listener)
+            {
+                foreach (Factory factory in this.factories)
+                {
+                    factory.GetSelectableTileHolderController().AddOnTileHoverExitListener(listener);
+                }
+            }
+
+            public void AddOnUnavailableTokenHoverEnterListener(UnityAction<OnUnavailableTokenHoverEnter> listener)
+            {
+                foreach (Factory factory in this.factories)
+                {
+                    factory.GetSelectableTileHolderController().AddOnUnavailableTokenHoverEnterListener(listener);
+                }
             }
         }
     }

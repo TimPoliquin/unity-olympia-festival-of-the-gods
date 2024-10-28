@@ -25,6 +25,10 @@ namespace Azul
 
             public void StartHidden()
             {
+                if (null == this.canvasGroup)
+                {
+                    this.canvasGroup = this.GetComponent<CanvasGroup>();
+                }
                 this.canvasGroup.alpha = 0;
             }
 

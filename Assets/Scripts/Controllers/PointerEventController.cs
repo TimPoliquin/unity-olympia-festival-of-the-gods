@@ -35,24 +35,18 @@ namespace Azul
             private UnityEvent<OnPointerEnterPayload<T>> onPointerEnter = new();
             private UnityEvent<OnPointerExitPayload<T>> onPointerExit = new();
             private UnityEvent<OnPointerSelectPayload<T>> onPointerSelect = new();
+            private bool interactable;
 
             private T target;
-
-            private bool allowEvents = false;
 
             void Awake()
             {
                 this.target = this.GetComponent<T>();
-                PlayerController playerController = System.Instance.GetPlayerController();
-                playerController.AddOnPlayerTurnStartListener((payload) =>
-                {
-                    this.allowEvents = payload.Player.IsHuman();
-                });
             }
 
             public void OnPointerEnter(PointerEventData eventData)
             {
-                if (this.allowEvents)
+                if (this.interactable)
                 {
                     this.onPointerEnter.Invoke(new OnPointerEnterPayload<T> { Target = this.target });
                 }
@@ -60,14 +54,14 @@ namespace Azul
 
             public void OnPointerExit(PointerEventData eventData)
             {
-                if (this.allowEvents)
+                if (this.interactable)
                 {
                     this.onPointerExit.Invoke(new OnPointerExitPayload<T> { Target = this.target });
                 }
             }
             public void OnPointerDown(PointerEventData eventData)
             {
-                if (this.allowEvents)
+                if (this.interactable)
                 {
                     this.onPointerSelect.Invoke(new OnPointerSelectPayload<T> { Target = this.target });
                 }
@@ -104,6 +98,11 @@ namespace Azul
             public void ClearOnPointerSelectListeners()
             {
                 this.onPointerSelect.RemoveAllListeners();
+            }
+
+            public void SetInteractable(bool interactable)
+            {
+                this.interactable = interactable;
             }
         }
     }
