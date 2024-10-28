@@ -33,6 +33,7 @@ namespace Azul
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
             [SerializeField] private ScoreTilesPreviewPanelUI scoreTilesPreviewPanelUIPrefab;
             [SerializeField] private PlayerTileCountUI tileCountUIPrefab;
+            [SerializeField] private UnavailableTokensPanelUI unavailableTokensPanelUIPrefab;
             [SerializeField] private WildColorSelectionUI wildColorSelectionUIPrefab;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
@@ -184,6 +185,14 @@ namespace Azul
                 PlayerTileCountUI playerTileCountUI = Instantiate(this.tileCountUIPrefab, parent ? parent : this.canvas.transform);
                 playerTileCountUI.SetTileColor(tileColor);
                 return playerTileCountUI;
+            }
+
+            public UnavailableTokensPanelUI CreateUnavailableTokensPanelUI(string layer = null)
+            {
+                PanelManagerController panelManagerController = this.GetPanelManagerController();
+                UnavailableTokensPanelUI panelUI = Instantiate(this.unavailableTokensPanelUIPrefab, this.canvas.transform);
+                panelManagerController.AddToLayer(layer, panelUI.gameObject);
+                return panelUI;
             }
 
             public WildColorSelectionUI CreateWildColorSelectionUI(Transform parent = null)

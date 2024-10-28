@@ -81,6 +81,11 @@ namespace Azul
                 return this.color == TileColor.ONE;
             }
 
+            public bool IsWild()
+            {
+                return this.color == System.Instance.GetRoundController().GetCurrentWild();
+            }
+
             public static Tile Create(GameObject tilePrefab, TileColor color)
             {
                 GameObject gameObject = Instantiate(tilePrefab);

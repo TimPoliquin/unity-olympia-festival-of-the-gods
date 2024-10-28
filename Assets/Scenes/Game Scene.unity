@@ -433,6 +433,66 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7290308133638066055}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &302903082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302903083}
+  - component: {fileID: 302903084}
+  - component: {fileID: 302903085}
+  m_Layer: 0
+  m_Name: Unavailable Tokens Panel UI Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &302903083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302903082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110538240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &302903084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302903082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf1ebb705af4883917a3d548a6dd4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 30, y: 0, z: 0}
+--- !u!114 &302903085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302903082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d8c884286aa40129a445b1366e4874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverTexture: {fileID: 2800000, guid: fdf5c1dd2a2f2421784f7019b97f2ada, type: 3}
+  offset: {x: 6, y: 6}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4223,6 +4283,8 @@ MonoBehaviour:
     type: 3}
   tileCountUIPrefab: {fileID: 4532902485550771721, guid: 8fae7a60db424443cab3ac0b793992b7,
     type: 3}
+  unavailableTokensPanelUIPrefab: {fileID: 6801770107753760777, guid: e34c41bf15e8c4f54b3be41870b192a7,
+    type: 3}
   wildColorSelectionUIPrefab: {fileID: 8860949731101903510, guid: 2b793d7140ec443aebcd9d9cd45a38cf,
     type: 3}
 --- !u!1 &1641158616
@@ -5253,6 +5315,7 @@ Transform:
   - {fileID: 1257572493}
   - {fileID: 47535149}
   - {fileID: 825219574}
+  - {fileID: 302903083}
   m_Father: {fileID: 1372239317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110538241

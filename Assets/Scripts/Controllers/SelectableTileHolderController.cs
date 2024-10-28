@@ -1,15 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
 using Azul.PointerEvents;
 using Azul.TileHolderEvents;
 using Azul.Utils;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 namespace Azul
 {
@@ -29,6 +26,10 @@ namespace Azul
         {
             public List<ColoredValue<int>> TilesSelected { get; init; }
         }
+        public struct OnUnavailableTokenHoverEnter
+        {
+            public Tile Tile { get; init; }
+        }
     }
     namespace Controller
     {
@@ -43,6 +44,7 @@ namespace Azul
             private UnityEvent<OnTileHoverEnterPayload> onTilesHoverStart = new();
             private UnityEvent<OnTileHoverExitPayload> onTilesHoverEnd = new();
             private UnityEvent<OnTileSelectPayload> onTileSelect = new();
+            private UnityEvent<OnUnavailableTokenHoverEnter> onUnavailableTokenHover = new();
 
             protected virtual void Awake()
             {
@@ -84,10 +86,7 @@ namespace Azul
                 {
                     return;
                 }
-                if (null != this.hoveredTiles && this.hoveredTiles.Contains(payload.Target))
-                {
-                    this.DeselectTiles();
-                }
+                this.DeselectTiles();
             }
 
             private void OnTileSelect(OnPointerSelectPayload<Tile> payload)
@@ -141,8 +140,10 @@ namespace Azul
                 bool hasHoveredWild = tile.Color == this.wildColor;
                 if (tile.IsHadesToken())
                 {
-                    // TODO - we might want to change the cursor so you can't
-                    // draw the one tile.
+                    this.onUnavailableTokenHover.Invoke(new OnUnavailableTokenHoverEnter
+                    {
+                        Tile = tile,
+                    });
                 }
                 else if (hasHoveredWild)
                 {
@@ -158,8 +159,10 @@ namespace Azul
                     }
                     else
                     {
-                        // TODO - we might want to change the cursor so you can't draw
-                        // just a wild if there are other tile colors present.
+                        this.onUnavailableTokenHover.Invoke(new OnUnavailableTokenHoverEnter
+                        {
+                            Tile = tile,
+                        });
                     }
                 }
                 else if (null != this.tiles)
@@ -197,6 +200,7 @@ namespace Azul
                     this.hoveredTiles = null;
                 }
                 this.onTilesHoverEnd.Invoke(new OnTileHoverExitPayload());
+
             }
 
             private void InitializeRoundPhaseHandlers()
@@ -262,6 +266,11 @@ namespace Azul
             public void AddOnTileSelectListener(UnityAction<OnTileSelectPayload> listener)
             {
                 this.onTileSelect.AddListener(listener);
+            }
+
+            public void AddOnUnavailableTokenHoverEnterListener(UnityAction<OnUnavailableTokenHoverEnter> listener)
+            {
+                this.onUnavailableTokenHover.AddListener(listener);
             }
         }
 

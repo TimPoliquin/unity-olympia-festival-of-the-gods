@@ -246,7 +246,7 @@ namespace Azul
                 this.StartTurn();
             }
 
-            private void OnFactoryTilesDrawn(EventTracker<OnFactoryTilesDrawn> payload)
+            private void OnFactoryTilesDrawn(EventTracker<OnFactoryTilesDrawnPayload> payload)
             {
                 this.StartCoroutine(this.OnTilesDrawn(this.currentPlayer, payload.Payload.TilesDrawn, payload.Done));
             }

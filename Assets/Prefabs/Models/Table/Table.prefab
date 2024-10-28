@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa679326fcbb04ca9a28eef929a4afb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 36.5
+  radius: 37
   arcSize: 180
 --- !u!1 &620407776254951268
 GameObject:
@@ -234,8 +234,8 @@ MonoBehaviour:
   factoriesLayout: {fileID: 7332574719521135330}
   scoreBoard: {fileID: 8361112308366185155}
   center: {fileID: 6196003202671131085}
-  centerWidth: 22
-  centerDepth: 15
+  centerWidth: 24
+  centerDepth: 16
   dropHeight: 0.1
 --- !u!114 &3317494338426430283
 MonoBehaviour:

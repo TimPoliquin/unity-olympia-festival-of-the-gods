@@ -98,12 +98,14 @@ namespace Azul
             {
                 this.outline.enabled = true;
                 this.changeCursor.enabled = true;
+                this.GetPointerEventController().SetInteractable(true);
             }
 
             public void DisableHighlight()
             {
                 this.changeCursor.enabled = false;
                 this.outline.enabled = false;
+                this.GetPointerEventController().SetInteractable(false);
             }
 
             public TileColor GetOriginColor()
@@ -128,9 +130,9 @@ namespace Azul
                 return this.originalColor == TileColor.WILD;
             }
 
-            public TilePlaceholderPointerEventController GetPointerEventController()
+            public RitualPointerEventController GetPointerEventController()
             {
-                return this.GetComponent<TilePlaceholderPointerEventController>();
+                return this.GetComponent<RitualPointerEventController>();
             }
 
             public void PlaceTile(TileColor color)
