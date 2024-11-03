@@ -13,11 +13,16 @@ namespace Azul
         public struct IconConfig
         {
             [SerializeField] private Color Color;
+            [SerializeField] private Color FrameColor;
             [SerializeField] private Sprite Icon;
 
             public Color GetColor()
             {
                 return this.Color;
+            }
+            public Color GetFrameColor()
+            {
+                return this.FrameColor;
             }
             public Sprite GetIcon()
             {
@@ -32,6 +37,7 @@ namespace Azul
 
             private Dictionary<TileColor, Sprite> iconsByColor;
             private Dictionary<TileColor, Color> backgroundsByColor;
+            private Dictionary<TileColor, Color> framesByColor;
 
             void Start()
             {
@@ -42,10 +48,12 @@ namespace Azul
             {
                 this.iconsByColor = new();
                 this.backgroundsByColor = new();
+                this.framesByColor = new();
                 foreach (ColoredValue<IconConfig> honoringIcon in this.icons)
                 {
                     this.iconsByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetIcon();
                     this.backgroundsByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetColor();
+                    this.framesByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetFrameColor();
                 }
             }
 
@@ -59,16 +67,30 @@ namespace Azul
                 return this.backgroundsByColor[color];
             }
 
+            public Color GetFrameColor(TileColor color)
+            {
+                return this.framesByColor[color];
+            }
+
             public void SetIconValues(IconUI iconUI, TileColor color)
             {
                 iconUI.SetBackgroundColor(this.GetBackgroundColor(color));
                 iconUI.SetIcon(this.GetIcon(color));
+                iconUI.SetFrameColor(this.GetFrameColor(color));
             }
 
             public IconUI Create(TileColor color, Transform parent)
             {
                 IconUI iconUI = Instantiate(this.iconUIPrefab, parent);
                 this.SetIconValues(iconUI, color);
+                return iconUI;
+            }
+
+            public IconUI CreateFramed(TileColor color, Transform parent)
+            {
+                IconUI iconUI = Instantiate(this.iconUIPrefab, parent);
+                this.SetIconValues(iconUI, color);
+                iconUI.EnableFrame();
                 return iconUI;
             }
 
