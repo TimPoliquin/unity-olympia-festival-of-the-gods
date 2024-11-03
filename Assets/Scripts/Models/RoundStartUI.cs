@@ -37,6 +37,7 @@ namespace Azul
                 this.transition = this.GetComponent<Fade>();
                 this.transition.StartHidden();
                 this.icon.SetTileColor(tileColor);
+                this.icon.EnableFrame();
                 this.titleText.text = string.Format(this.titleTemplate, god);
                 this.subtitleText.text = string.Format(this.subtitleTemplate, god);
                 return this.transition.Show();

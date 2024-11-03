@@ -10,6 +10,7 @@ namespace Azul
         public class TileColorMappingController : MonoBehaviour
         {
             [SerializeField] private List<ColoredValue<string>> godNames;
+            [SerializeField] private List<ColoredValue<Color>> fireColors;
 
             public string GetGodName(TileColor color)
             {
@@ -19,6 +20,11 @@ namespace Azul
             public int GetGodPoints(TileColor color)
             {
                 return System.Instance.GetScoreBoardController().GetCompletionPoints(color);
+            }
+
+            public Color GetGodFireColor(TileColor color)
+            {
+                return this.fireColors.Find(fireColor => fireColor.GetTileColor() == color).GetValue();
             }
         }
     }

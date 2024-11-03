@@ -12,8 +12,7 @@ namespace Azul
         {
             [SerializeField] private Color inactiveColor;
             [SerializeField] private Color activeColor;
-            [SerializeField] private Image currentBackground;
-            [SerializeField] private Image currentIcon;
+            [SerializeField] private IconUI currentIcon;
             [SerializeField] private List<ColoredValue<HonoringIconUI>> honoringIcons;
 
             public void SetActiveColor(TileColor activeColor)
@@ -24,8 +23,6 @@ namespace Azul
                     if (honoringIcon.GetTileColor() == activeColor)
                     {
                         statusColor = this.activeColor;
-                        this.currentBackground.color = honoringIcon.GetValue().GetBackgroundColor();
-                        this.currentIcon.sprite = honoringIcon.GetValue().GetIcon();
                     }
                     else
                     {
@@ -35,6 +32,8 @@ namespace Azul
                         .GetValue()
                         .SetStatusColor(statusColor);
                 }
+                System.Instance.GetUIController().GetIconUIFactory().SetIconValues(this.currentIcon, activeColor);
+                this.currentIcon.EnableFrame();
             }
         }
     }

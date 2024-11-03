@@ -12,6 +12,7 @@ namespace Azul
 
             [SerializeField] private Image backgroundImage;
             [SerializeField] private Image iconImage;
+            [SerializeField] private Image frame;
 
             public void SetBackgroundColor(Color color)
             {
@@ -21,6 +22,14 @@ namespace Azul
             public void SetIcon(Sprite icon)
             {
                 this.iconImage.sprite = icon;
+            }
+
+            public void SetFrameColor(Color color)
+            {
+                if (this.frame != null)
+                {
+                    this.frame.color = color;
+                }
             }
 
             public Sprite GetIcon()
@@ -46,6 +55,11 @@ namespace Azul
             public void SetSize(float size)
             {
                 this.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+            }
+
+            public void EnableFrame()
+            {
+                this.frame.gameObject.SetActive(true);
             }
         }
     }
