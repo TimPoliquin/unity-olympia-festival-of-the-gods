@@ -1031,7 +1031,7 @@ MonoBehaviour:
       Icon: {fileID: 21300000, guid: 06e370812040e4efe8d1e3f74c379709, type: 3}
   - tileColor: 3
     value:
-      IconColor: {r: 1, g: 1, b: 1, a: 1}
+      IconColor: {r: 0, g: 1, b: 0, a: 1}
       Color: {r: 0, g: 0.4627451, b: 0, a: 1}
       FrameColor: {r: 0, g: 0.69411767, b: 0, a: 1}
       Icon: {fileID: 21300000, guid: 33e7524bd6fa2465ab405fcf652361f7, type: 3}
@@ -7526,6 +7526,21 @@ PrefabInstance:
     - target: {fileID: 5597858368494428500, guid: 13a2786c31e4240d39f876c3f2298df3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806004362432551871, guid: 13a2786c31e4240d39f876c3f2298df3,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806004362432551871, guid: 13a2786c31e4240d39f876c3f2298df3,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806004362432551871, guid: 13a2786c31e4240d39f876c3f2298df3,
+        type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6028563461589549314, guid: 13a2786c31e4240d39f876c3f2298df3,
