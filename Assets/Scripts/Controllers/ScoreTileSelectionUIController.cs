@@ -167,7 +167,7 @@ namespace Azul
                 this.currentPanel = System.Instance.GetPrefabFactory().CreateScoreTileSelectionPanelUI();
                 this.currentPanel.AddOnCancelListener(this.OnCancelSelection);
                 this.currentPanel.AddOnConfirmListener(this.OnConfirmSelection);
-                this.currentPanel.Show(value, iconUIFactory.GetIcon(selectedColor), iconUIFactory.GetBackgroundColor(selectedColor));
+                this.currentPanel.Show(value, selectedColor);
                 TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
                 this.selectedColor = selectedColor;
                 this.countNeeded = value;
@@ -201,9 +201,8 @@ namespace Azul
 
             private void CreateScoreTileSelectionUI(ScoreTileSelectionPanelUI panel, PlayerBoard playerBoard, TileColor color, int min, int max, int defaultValue)
             {
-                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
                 ScoreTileSelectionUI scoreTileSelectionUI = System.Instance.GetPrefabFactory().CreateScoreTileSelectionUI(panel);
-                scoreTileSelectionUI.SetColor(color, iconUIFactory.GetIcon(color), iconUIFactory.GetBackgroundColor(color));
+                scoreTileSelectionUI.SetColor(color);
                 scoreTileSelectionUI.SetCounterRange(min, max, playerBoard.GetTileCount(color));
                 scoreTileSelectionUI.SetDefaultValue(defaultValue);
                 scoreTileSelectionUI.gameObject.name = $"Score Selection: {color}";

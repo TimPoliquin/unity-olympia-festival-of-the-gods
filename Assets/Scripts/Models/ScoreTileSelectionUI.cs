@@ -25,8 +25,7 @@ namespace Azul
         }
         public class ScoreTileSelectionUI : MonoBehaviour
         {
-            [SerializeField] private Image iconContainer;
-            [SerializeField] private Image icon;
+            [SerializeField] private IconUI tokenIcon;
             [SerializeField] private Slider counter;
             [SerializeField] private Button subtractButton;
             [SerializeField] private Button addButton;
@@ -49,11 +48,10 @@ namespace Azul
                 return this.color;
             }
 
-            public void SetColor(TileColor color, Sprite icon, Color backgroundColor)
+            public void SetColor(TileColor color)
             {
                 this.color = color;
-                this.icon.sprite = icon;
-                this.iconContainer.color = backgroundColor;
+                this.tokenIcon.SetTileColor(color);
             }
 
             public void SetCounterRange(int min, int max, int total)

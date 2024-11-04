@@ -51,11 +51,10 @@ namespace Azul
             private List<ScoreTileSelectionUI> CreateTileSelectionUIs(int count)
             {
                 PrefabFactory prefabFactory = System.Instance.GetPrefabFactory();
-                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
                 return TileColorUtils.GetTileColors().Select(tileColor =>
                 {
                     ScoreTileSelectionUI scoreTileSelectionUI = prefabFactory.CreateScoreTileSelectionUI(this.selectionUI);
-                    scoreTileSelectionUI.SetColor(tileColor, iconUIFactory.GetIcon(tileColor), iconUIFactory.GetBackgroundColor(tileColor));
+                    scoreTileSelectionUI.SetColor(tileColor);
                     scoreTileSelectionUI.SetCounterRange(0, count, count);
                     scoreTileSelectionUI.SetDefaultValue(0);
                     return scoreTileSelectionUI;
