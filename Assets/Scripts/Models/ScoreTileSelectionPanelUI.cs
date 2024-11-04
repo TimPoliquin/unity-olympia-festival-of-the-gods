@@ -28,8 +28,7 @@ namespace Azul
         public class ScoreTileSelectionPanelUI : MonoBehaviour, ScoreTileSelectionUIContainer
         {
             [SerializeField] private PanelUI panel;
-            [SerializeField] private Image backgroundColorContainer;
-            [SerializeField] private Image icon;
+            [SerializeField] private IconUI selectedIcon;
             [SerializeField] private TextMeshProUGUI selectedCountText;
             [SerializeField] private GameObject scoreTileSelectionUIContainer;
             [SerializeField] private Button confirmButton;
@@ -48,11 +47,10 @@ namespace Azul
                 this.cancelButton.onClick.AddListener(this.OnCancel);
             }
 
-            public void Show(int value, Sprite icon, Color backgroundColor)
+            public void Show(int value, TileColor selectedColor)
             {
+                System.Instance.GetUIController().GetIconUIFactory().SetIconValues(this.selectedIcon, selectedColor);
                 this.panel.Show();
-                this.icon.sprite = icon;
-                this.backgroundColorContainer.color = backgroundColor;
                 this.selectedCountText.text = $"{value}";
                 this.countNeeded = value;
             }

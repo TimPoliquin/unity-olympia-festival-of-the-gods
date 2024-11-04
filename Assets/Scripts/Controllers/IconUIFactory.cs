@@ -12,9 +12,15 @@ namespace Azul
         [Serializable]
         public struct IconConfig
         {
+            [SerializeField] private Color IconColor;
             [SerializeField] private Color Color;
             [SerializeField] private Color FrameColor;
             [SerializeField] private Sprite Icon;
+
+            public Color GetIconColor()
+            {
+                return this.IconColor;
+            }
 
             public Color GetColor()
             {
@@ -37,6 +43,7 @@ namespace Azul
 
             private Dictionary<TileColor, Sprite> iconsByColor;
             private Dictionary<TileColor, Color> backgroundsByColor;
+            private Dictionary<TileColor, Color> iconColorByColor;
             private Dictionary<TileColor, Color> framesByColor;
 
             void Start()
@@ -48,10 +55,12 @@ namespace Azul
             {
                 this.iconsByColor = new();
                 this.backgroundsByColor = new();
+                this.iconColorByColor = new();
                 this.framesByColor = new();
                 foreach (ColoredValue<IconConfig> honoringIcon in this.icons)
                 {
                     this.iconsByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetIcon();
+                    this.iconColorByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetIconColor();
                     this.backgroundsByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetColor();
                     this.framesByColor[honoringIcon.GetTileColor()] = honoringIcon.GetValue().GetFrameColor();
                 }
@@ -60,6 +69,11 @@ namespace Azul
             public Sprite GetIcon(TileColor color)
             {
                 return this.iconsByColor[color];
+            }
+
+            public Color GetIconColor(TileColor color)
+            {
+                return this.iconColorByColor[color];
             }
 
             public Color GetBackgroundColor(TileColor color)
@@ -75,7 +89,7 @@ namespace Azul
             public void SetIconValues(IconUI iconUI, TileColor color)
             {
                 iconUI.SetBackgroundColor(this.GetBackgroundColor(color));
-                iconUI.SetIcon(this.GetIcon(color));
+                iconUI.SetIcon(this.GetIcon(color), this.GetIconColor(color));
                 iconUI.SetFrameColor(this.GetFrameColor(color));
             }
 

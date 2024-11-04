@@ -19,9 +19,10 @@ namespace Azul
                 this.backgroundImage.color = color;
             }
 
-            public void SetIcon(Sprite icon)
+            public void SetIcon(Sprite icon, Color iconColor)
             {
                 this.iconImage.sprite = icon;
+                this.iconImage.color = iconColor;
             }
 
             public void SetFrameColor(Color color)

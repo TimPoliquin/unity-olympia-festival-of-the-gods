@@ -47,13 +47,12 @@ namespace Azul
                 }
                 this.overflowTileSelectionUI = Instantiate(this.prefab, this.container.transform).GetComponent<OverflowTileSelectionUI>();
                 List<ScoreTileSelectionUI> scoreTileSelectionUIs = new();
-                IconUIFactory iconUIFactory = System.Instance.GetUIController().GetIconUIFactory();
                 foreach (KeyValuePair<TileColor, int> tileCount in tileCounts)
                 {
                     TileColor tileColor = tileCount.Key;
                     int count = tileCount.Value;
                     ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.overflowTileSelectionUI.transform).GetComponent<ScoreTileSelectionUI>();
-                    scoreTileSelectionUI.SetColor(tileColor, iconUIFactory.GetIcon(tileColor), iconUIFactory.GetBackgroundColor(tileColor));
+                    scoreTileSelectionUI.SetColor(tileColor);
                     scoreTileSelectionUI.SetCounterRange(0, count, count);
                     scoreTileSelectionUI.SetDefaultValue(0);
                     scoreTileSelectionUIs.Add(scoreTileSelectionUI);

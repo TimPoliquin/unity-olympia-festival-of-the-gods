@@ -41,7 +41,7 @@ Material:
     m_Floats:
     - _Enabled: 0
     m_Colors:
-    - _BaseColor: {r: 0.7372549, g: 0.7372549, b: 0, a: 1}
+    - _BaseColor: {r: 0.7, g: 0.7, b: 0, a: 1}
     - _ElectricityColor: {r: 2, g: 2, b: 0, a: 0.84313726}
     - _Offset: {r: 129, g: 129, b: 0, a: 0}
   m_BuildTextureStacks: []
