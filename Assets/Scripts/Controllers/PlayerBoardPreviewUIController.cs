@@ -21,6 +21,7 @@ namespace Azul
             }
             [SerializeField] private List<PreviewConfig> previewConfigs;
             private static readonly string PANEL_LAYER = "preview";
+            private bool isPreviewing = false;
 
             // Start is called before the first frame update
             void Start()
@@ -79,6 +80,7 @@ namespace Azul
 
             private void OnZoomIn(OnZoomPayload payload)
             {
+                this.isPreviewing = true;
                 System.Instance.GetCameraController().FocusMainCameraOnPlayerBoard(payload.PlayerNumber);
                 for (int idx = 0; idx < this.previewConfigs.Count; idx++)
                 {
@@ -93,17 +95,30 @@ namespace Azul
                     System.Instance.GetUIController().GetPanelManagerController().HideLayer(PANEL_LAYER);
                 });
                 System.Instance.GetUIController().GetPanelManagerController().ShowLayer(PANEL_LAYER);
-                Time.timeScale = 0;
+                this.StartCoroutine(this.PauseIfNotPlayerTurn());
             }
 
             private void OnZoomOut()
             {
+                this.isPreviewing = false;
                 System.Instance.GetCameraController().FocusMainCameraOnTable();
                 for (int idx = 0; idx < this.previewConfigs.Count; idx++)
                 {
                     this.previewConfigs[idx].Container.SetActive(true);
                 }
                 Time.timeScale = 1;
+            }
+
+            private IEnumerator PauseIfNotPlayerTurn()
+            {
+                while (this.isPreviewing)
+                {
+                    if (System.Instance.GetPlayerController().GetCurrentPlayer().IsAI())
+                    {
+                        Time.timeScale = 0;
+                    }
+                    yield return null;
+                }
             }
         }
     }

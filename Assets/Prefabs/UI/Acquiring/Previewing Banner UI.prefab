@@ -60,6 +60,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6132342012488589516}
     m_Modifications:
+    - target: {fileID: 1999257816205457736, guid: f1672ae5c65924dafa04aaa68e211042,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3406050984017357158, guid: f1672ae5c65924dafa04aaa68e211042,
         type: 3}
       propertyPath: dragRoot

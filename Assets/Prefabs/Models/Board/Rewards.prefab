@@ -54,9 +54,9 @@ MonoBehaviour:
     - Color: 6
       TileNumber: 2
     - Color: 0
-      TileNumber: 3
+      TileNumber: 2
     - Color: 0
-      TileNumber: 2
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
@@ -65,9 +65,9 @@ MonoBehaviour:
     - Color: 6
       TileNumber: 3
     - Color: 1
-      TileNumber: 3
+      TileNumber: 2
     - Color: 1
-      TileNumber: 2
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
@@ -76,9 +76,9 @@ MonoBehaviour:
     - Color: 6
       TileNumber: 4
     - Color: 2
-      TileNumber: 3
-    - Color: 2
       TileNumber: 2
+    - Color: 2
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
@@ -87,9 +87,9 @@ MonoBehaviour:
     - Color: 6
       TileNumber: 5
     - Color: 3
-      TileNumber: 3
-    - Color: 3
       TileNumber: 2
+    - Color: 3
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
@@ -98,20 +98,20 @@ MonoBehaviour:
     - Color: 6
       TileNumber: 6
     - Color: 4
-      TileNumber: 3
-    - Color: 4
       TileNumber: 2
+    - Color: 4
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
-    - Color: 6
-      TileNumber: 6
     - Color: 6
       TileNumber: 1
-    - Color: 5
-      TileNumber: 3
+    - Color: 6
+      TileNumber: 6
     - Color: 5
       TileNumber: 2
+    - Color: 5
+      TileNumber: 3
     reward:
       numberOfTiles: 1
   - conditions:
@@ -225,15 +225,15 @@ MonoBehaviour:
   layouts:
   - Value: 1
     Layout: {fileID: 7279252990448611531}
-    Prefab: {fileID: 6464905695784310597, guid: c339d02d907ec46c9bd2a2c7ceb0c024,
+    Prefab: {fileID: 3451556723395749625, guid: 68cf6ace4550c41ab9cd8ff16ffba879,
       type: 3}
   - Value: 2
     Layout: {fileID: 5240187374402168468}
-    Prefab: {fileID: 6464905695784310597, guid: 92d49e1a516264c5f87fb486854df53a,
+    Prefab: {fileID: 4635252069553021981, guid: 92d49e1a516264c5f87fb486854df53a,
       type: 3}
   - Value: 3
     Layout: {fileID: 6406455712709593349}
-    Prefab: {fileID: 6464905695784310597, guid: 6d4571b6facf24e648215231eeaba788,
+    Prefab: {fileID: 5803979974005515677, guid: 6d4571b6facf24e648215231eeaba788,
       type: 3}
 --- !u!1 &2514955851684016675
 GameObject:
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f179ae791929e4fdfb3da55bf7a74191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 16
+  radius: 16.5
   rotate: 1
   rotateAfterLayout: 30
 --- !u!1 &6950047109538955110

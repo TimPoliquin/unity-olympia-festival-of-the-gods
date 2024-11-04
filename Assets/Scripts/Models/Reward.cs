@@ -5,6 +5,7 @@ using System.Linq;
 using Azul.Model;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Azul
 {
@@ -89,13 +90,20 @@ namespace Azul
             {
                 return this.conditions.FindAll(condition => condition.IsConditionMet(playerNumber)).Count;
             }
+
+            public List<RewardCondition> GetRewardConditions()
+            {
+                return this.conditions;
+            }
         }
 
         public class RewardBehavior : MonoBehaviour
         {
-            private RewardConfiguration RewardConfiguration { get; set; }
+            public RewardConfiguration RewardConfiguration { get; set; }
             private bool Completed;
             private int playerNumber;
+
+            private UnityEvent onComplete = new();
 
             public bool IsCompleted()
             {
@@ -105,7 +113,7 @@ namespace Azul
             public void MarkCompleted()
             {
                 this.Completed = true;
-                // update presentation to show completed
+                this.onComplete.Invoke();
             }
 
             public bool IsConditionParameter(TileColor color, int tileNumber)
@@ -138,13 +146,18 @@ namespace Azul
                 return $"{this.RewardConfiguration.ToString()}: {this.Completed}";
             }
 
-            public static RewardBehavior Create(int playerNumber, RewardConfiguration rewardConfiguration, GameObject prefab)
+            public void AddOnCompleteListener(UnityAction listener)
             {
-                RewardBehavior behavior = Instantiate(prefab).AddComponent<RewardBehavior>();
-                behavior.playerNumber = playerNumber;
-                behavior.Completed = false;
-                behavior.RewardConfiguration = rewardConfiguration;
-                return behavior;
+                this.onComplete.AddListener(listener);
+            }
+
+            public static RewardBehavior Create(GameObject parent, int playerNumber, RewardConfiguration rewardConfiguration)
+            {
+                RewardBehavior rewardBehavior = parent.AddComponent<RewardBehavior>();
+                rewardBehavior.playerNumber = playerNumber;
+                rewardBehavior.Completed = false;
+                rewardBehavior.RewardConfiguration = rewardConfiguration;
+                return rewardBehavior;
             }
         }
     }

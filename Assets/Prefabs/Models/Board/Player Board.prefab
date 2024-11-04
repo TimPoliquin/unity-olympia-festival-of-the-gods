@@ -202,7 +202,6 @@ MonoBehaviour:
   purple: {fileID: 5955532672617973257}
   green: {fileID: 8159924248656528451}
   yellow: {fileID: 8635281806610729832}
-  drawnTiles: []
 --- !u!1 &4076293424659256708
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +799,7 @@ PrefabInstance:
     - target: {fileID: 8187002764348862257, guid: 1ad769f4890114f2da59a2aac79af893,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6
+      value: 1.58
       objectReference: {fileID: 0}
     - target: {fileID: 8187002764348862257, guid: 1ad769f4890114f2da59a2aac79af893,
         type: 3}

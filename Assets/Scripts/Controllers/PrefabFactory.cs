@@ -26,7 +26,9 @@ namespace Azul
             [SerializeField] private PlayerBoardPreviewUI playerBoardPreviewUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
             [SerializeField] private PreviewingBannerUI previewBannerUIPrefab;
+            [SerializeField] private RewardPreviewPanelUI rewardPreviewPanelUIPrefab;
             [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
+            [SerializeField] private RewardRitualUI rewardRitualUIPrefab;
             [SerializeField] private RoundStartUI roundStartUIPrefab;
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
@@ -146,9 +148,18 @@ namespace Azul
                 return panel;
             }
 
+            public RewardPreviewPanelUI CreateRewardPreviewPanelUI()
+            {
+                return Instantiate(this.rewardPreviewPanelUIPrefab, this.canvas.transform);
+            }
+
             public RewardProgressFieldUI CreateRewardProgressFieldUI()
             {
                 return Instantiate(this.rewardProgressFieldUIPrefab, this.canvas.transform);
+            }
+            public RewardRitualUI CreateRewardRitualUI()
+            {
+                return Instantiate(this.rewardRitualUIPrefab, this.canvas.transform);
             }
 
             public RoundStartUI CreateRoundStartUI(string layer = null)
