@@ -28,7 +28,6 @@ namespace Azul
 
             public void SetBoonValue(int value)
             {
-                UnityEngine.Debug.Log($"Boon value: {value}");
                 RewardColor rewardColor = this.rewardConfiguration[value - 1];
                 this.boonIcon.sprite = rewardColor.Icon;
                 this.boonIcon.color = rewardColor.Color;

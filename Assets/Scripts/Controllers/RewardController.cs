@@ -125,11 +125,11 @@ namespace Azul
 
             private IEnumerator OnPlaceStarTile(OnPlayerBoardPlaceStarTilePayload payload, Action Done)
             {
-                List<RewardBehavior> behaviors = this.rewardIndicators.Select(indicator => indicator.GetRewardBehavior()).Where(
+                List<RewardBehavior> behaviorsToComplete = this.rewardIndicators.Select(indicator => indicator.GetRewardBehavior()).Where(
                     behavior => !behavior.IsCompleted() && behavior.IsConditionParameter(payload.Star.GetColor(), payload.TilePlaced)
                 ).ToList();
                 int rewardCount = 0;
-                foreach (RewardBehavior rewardBehavior in behaviors)
+                foreach (RewardBehavior rewardBehavior in behaviorsToComplete)
                 {
                     if (rewardBehavior.IsConditionMet())
                     {
@@ -146,6 +146,13 @@ namespace Azul
                         NumberOfTiles = rewardCount
                     }).WaitUntilCompleted();
                     UnityEngine.Debug.Log($"Reward Controller: Player {payload.PlayerNumber} claimed rewards");
+                    foreach (RewardBehavior completedBehavior in behaviorsToComplete)
+                    {
+                        if (completedBehavior.IsCompleted())
+                        {
+                            completedBehavior.GetRewardIndicator().OnRewardClaim();
+                        }
+                    }
                 }
                 Done();
             }

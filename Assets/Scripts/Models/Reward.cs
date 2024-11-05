@@ -151,6 +151,13 @@ namespace Azul
                 this.onComplete.AddListener(listener);
             }
 
+            public RewardIndicator GetRewardIndicator()
+            {
+                RewardIndicator rewardIndicator;
+                this.TryGetComponent(out rewardIndicator);
+                return rewardIndicator;
+            }
+
             public static RewardBehavior Create(GameObject parent, int playerNumber, RewardConfiguration rewardConfiguration)
             {
                 RewardBehavior rewardBehavior = parent.AddComponent<RewardBehavior>();

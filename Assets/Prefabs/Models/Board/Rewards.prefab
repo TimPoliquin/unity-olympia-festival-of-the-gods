@@ -375,4 +375,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 9.5
   rotate: 1
-  rotateAfterLayout: 0
+  rotateAfterLayout: 60
