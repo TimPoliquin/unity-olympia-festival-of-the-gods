@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Reward 3 Spot Light
+  m_Name: m_Fire Spot Light
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: b82209a363e2e4cc1827c1c81ec8a8fd, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -34,11 +34,10 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.9921568, b: 0.5607843, a: 0.7607843}
-    - _Color: {r: 1, g: 0.9921568, b: 0.5607843, a: 0.7607843}
-    - _EmissionColor: {r: 1, g: 0.9882353, b: 0.14509805, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.14117648}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.14117648}
   m_BuildTextureStacks: []
---- !u!114 &148432033816217705
+--- !u!114 &6404371435378954941
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

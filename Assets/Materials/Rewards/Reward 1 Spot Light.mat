@@ -67,7 +67,7 @@ Material:
     - _SpecularHighlights: 0
     - _SrcBlend: 5
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.9940451, b: 0.5613207, a: 0.7294118}
-    - _Color: {r: 1, g: 0.9940451, b: 0.5613207, a: 0.7294118}
+    - _BaseColor: {r: 1, g: 0.9940451, b: 0.5613207, a: 0.33333334}
+    - _Color: {r: 1, g: 0.9940451, b: 0.5613207, a: 0.33333334}
     - _EmissionColor: {r: 1, g: 0.9893722, b: 0.1462264, a: 1}
   m_BuildTextureStacks: []
