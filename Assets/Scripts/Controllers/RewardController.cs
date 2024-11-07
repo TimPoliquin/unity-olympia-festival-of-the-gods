@@ -7,6 +7,7 @@ using Azul.Layout;
 using Azul.Model;
 using Azul.PlayerBoardEvents;
 using Azul.PlayerBoardRewardEvents;
+using Azul.PointerEvents;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +21,16 @@ namespace Azul
             public int PlayerNumber { get; init; }
             public int NumberOfTiles { get; init; }
         }
+
+        public struct OnPlayerBoardHoverEnterReward
+        {
+            public RewardIndicator RewardIndicator { get; init; }
+        }
+
+        public struct OnPlayerBoardHoverExitReward
+        {
+            public RewardIndicator RewardIndicator { get; init; }
+        }
     }
 
     namespace Controller
@@ -31,9 +42,9 @@ namespace Azul
             {
                 [SerializeField] private int Value;
                 [SerializeField] private CircularLayout Layout;
-                [SerializeField] private GameObject Prefab;
+                [SerializeField] private RewardIndicator Prefab;
 
-                public GameObject GetPrefab()
+                public RewardIndicator GetPrefab()
                 {
                     return this.Prefab;
                 }
@@ -51,11 +62,11 @@ namespace Azul
             [SerializeField] private List<RewardConfiguration> configurations;
             [SerializeField] private List<RewardLayout> layouts;
             private int playerNumber;
-
-            private List<RewardBehavior> rewardBehaviors;
+            private List<RewardIndicator> rewardIndicators;
 
             private AzulEvent<OnPlayerBoardEarnRewardPayload> onEarnReward = new();
-
+            private UnityEvent<OnPointerEnterPayload<RewardIndicator>> onHoverEnterReward = new();
+            private UnityEvent<OnPointerExitPayload<RewardIndicator>> onHoverExitReward = new();
 
             public void SetupGame(int playerNumber)
             {
@@ -82,38 +93,43 @@ namespace Azul
 
             public List<RewardBehavior> GetRewardBehaviors(TileColor tileColor, int value)
             {
-                return this.rewardBehaviors.FindAll(behavior => behavior.IsConditionParameter(tileColor, value));
+                return this.rewardIndicators.Select(indicator => indicator.GetRewardBehavior()).Where(behavior => behavior.IsConditionParameter(tileColor, value)).ToList();
             }
 
             private void CreateRewardSpaces()
             {
-                this.rewardBehaviors = new();
+                this.rewardIndicators = new();
                 foreach (RewardLayout rewardLayout in this.layouts)
                 {
                     List<RewardConfiguration> layoutConfigurations = this.configurations.FindAll(configuration => configuration.GetReward().GetValue() == rewardLayout.GetValue());
-                    List<RewardBehavior> rewards = new();
+                    List<RewardIndicator> rewards = new();
                     foreach (RewardConfiguration configuration in layoutConfigurations)
                     {
-                        RewardBehavior rewardBehavior = this.CreateRewardSpace(rewardLayout.GetPrefab(), configuration);
-                        rewards.Add(rewardBehavior);
+                        RewardIndicator rewardIndicator = this.CreateRewardSpace(rewardLayout.GetPrefab(), configuration);
+                        rewards.Add(rewardIndicator);
                     }
-                    rewardBehaviors.AddRange(rewards);
+                    rewardIndicators.AddRange(rewards);
                     rewardLayout.GetLayout().AddChildren(rewards.Select(reward => reward.gameObject).ToList());
                 }
             }
 
-            private RewardBehavior CreateRewardSpace(GameObject prefab, RewardConfiguration rewardConfiguration)
+            private RewardIndicator CreateRewardSpace(RewardIndicator prefab, RewardConfiguration rewardConfiguration)
             {
-                return RewardBehavior.Create(this.playerNumber, rewardConfiguration, prefab);
+                RewardIndicator rewardIndicator = Instantiate(prefab);
+                RewardBehavior rewardBehavior = RewardBehavior.Create(rewardIndicator.gameObject, this.playerNumber, rewardConfiguration);
+                rewardIndicator.SetRewardBehavior(rewardBehavior);
+                rewardIndicator.GetPointerEventController().AddOnPointerEnterListener(this.OnPointerEnter);
+                rewardIndicator.GetPointerEventController().AddOnPointerExitListener(this.OnPointerExit);
+                return rewardIndicator;
             }
 
             private IEnumerator OnPlaceStarTile(OnPlayerBoardPlaceStarTilePayload payload, Action Done)
             {
-                List<RewardBehavior> behaviors = this.rewardBehaviors.FindAll(
+                List<RewardBehavior> behaviorsToComplete = this.rewardIndicators.Select(indicator => indicator.GetRewardBehavior()).Where(
                     behavior => !behavior.IsCompleted() && behavior.IsConditionParameter(payload.Star.GetColor(), payload.TilePlaced)
                 ).ToList();
                 int rewardCount = 0;
-                foreach (RewardBehavior rewardBehavior in behaviors)
+                foreach (RewardBehavior rewardBehavior in behaviorsToComplete)
                 {
                     if (rewardBehavior.IsConditionMet())
                     {
@@ -130,6 +146,13 @@ namespace Azul
                         NumberOfTiles = rewardCount
                     }).WaitUntilCompleted();
                     UnityEngine.Debug.Log($"Reward Controller: Player {payload.PlayerNumber} claimed rewards");
+                    foreach (RewardBehavior completedBehavior in behaviorsToComplete)
+                    {
+                        if (completedBehavior.IsCompleted())
+                        {
+                            completedBehavior.GetRewardIndicator().OnRewardClaim();
+                        }
+                    }
                 }
                 Done();
             }
@@ -137,6 +160,27 @@ namespace Azul
             public void AddOnPlayerBoardEarnRewardListener(UnityAction<EventTracker<OnPlayerBoardEarnRewardPayload>> listener)
             {
                 this.onEarnReward.AddListener(listener);
+            }
+
+            public void AddOnPointerEnterRewardListener(UnityAction<OnPointerEnterPayload<RewardIndicator>> listener)
+            {
+                this.onHoverEnterReward.AddListener(listener);
+            }
+
+            public void AddOnPointerExitRewardListener(UnityAction<OnPointerExitPayload<RewardIndicator>> listener)
+            {
+                this.onHoverExitReward.AddListener(listener);
+            }
+
+            private void OnPointerEnter(OnPointerEnterPayload<RewardIndicator> payload)
+            {
+                this.onHoverEnterReward.Invoke(payload);
+            }
+
+            private void OnPointerExit(OnPointerExitPayload<RewardIndicator> payload)
+            {
+                this.onHoverExitReward.Invoke(payload);
+
             }
         }
 

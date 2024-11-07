@@ -414,6 +414,15 @@ namespace Azul
                 this.playerBoards.ForEach(playerBoard => playerBoard.AddOnPlayerBoardEarnRewardListener(listener));
             }
 
+            public void AddOnPointerEnterRewardListener(UnityAction<OnPointerEnterPayload<RewardIndicator>> listener)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.GetRewardController().AddOnPointerEnterRewardListener(listener));
+            }
+
+            public void AddOnPointerExitRewardListener(UnityAction<OnPointerExitPayload<RewardIndicator>> listener)
+            {
+                this.playerBoards.ForEach(playerBoard => playerBoard.GetRewardController().AddOnPointerExitRewardListener(listener));
+            }
             public void AddOnPlayerBoardTilesDiscardedListener(UnityAction<OnPlayerBoardTilesDiscardedPayload> listener)
             {
                 this.onTilesDiscarded.AddListener(listener);
