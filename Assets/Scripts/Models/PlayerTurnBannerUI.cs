@@ -67,7 +67,7 @@ namespace Azul
                 {
                     if (!showInstructions)
                     {
-                        this.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 120);
+                        this.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 85);
                         this.closeButton.gameObject.SetActive(false);
                     }
                     Fade transition = this.GetComponent<Fade>();

@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _EMISSION
   - _ENVIRONMENTREFLECTIONS_OFF
+  - _RECEIVE_SHADOWS_OFF
   - _SPECULARHIGHLIGHTS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
@@ -32,7 +33,10 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats: []
-    m_Colors: []
+    m_Colors:
+    - _BaseColor: {r: 1, g: 0.9921568, b: 0.5607843, a: 0.5254902}
+    - _Color: {r: 1, g: 0.9921568, b: 0.5607843, a: 0.5254902}
+    - _EmissionColor: {r: 1, g: 0.9882353, b: 0.14509805, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2851127702036021788
 MonoBehaviour:

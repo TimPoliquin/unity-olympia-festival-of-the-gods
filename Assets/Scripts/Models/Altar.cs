@@ -142,7 +142,7 @@ namespace Azul
                 {
                     materialColors[material] = new()
                     {
-                        Original = material.GetFloat(this.alphaVar),
+                        Original = material.HasFloat(this.alphaVar) ? material.GetFloat(this.alphaVar) : 1f,
                         Target = target,
                     };
                 }
@@ -150,8 +150,11 @@ namespace Azul
                 {
                     foreach (Material material in materials)
                     {
-                        float alpha = Mathf.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
-                        material.SetFloat(this.alphaVar, alpha);
+                        if (material.HasFloat(this.alphaVar))
+                        {
+                            float alpha = Mathf.Lerp(materialColors[material].Original, materialColors[material].Target, t / time);
+                            material.SetFloat(this.alphaVar, alpha);
+                        }
                     }
                 }, time);
             }
