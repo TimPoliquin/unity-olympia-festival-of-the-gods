@@ -56,8 +56,8 @@ namespace Azul
                     foreach (RewardCondition rewardCondition in target.GetRewardBehavior().RewardConfiguration.GetRewardConditions())
                     {
                         RewardRitualUI rewardRitualUI = System.Instance.GetPrefabFactory().CreateRewardRitualUI();
-                        rewardRitualUI.Setup(rewardCondition.GetTileColor(), rewardCondition.GetTileNumber());
-                        this.panel.AddRequirement(rewardRitualUI.gameObject);
+                        rewardRitualUI.Setup(rewardCondition.GetTileColor(), rewardCondition.GetTileNumber(), rewardCondition.IsConditionMet(target.GetRewardBehavior().GetPlayerNumber()));
+                        this.panel.AddRequirement(rewardRitualUI);
                     }
                     this.panel.transform.position = Camera.main.WorldToScreenPoint(target.transform.position) + this.offset;
                     yield return this.panel.Show().WaitUntilCompleted();

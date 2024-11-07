@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lid: {fileID: 5650842620042738920}
   treasure: {fileID: 4731261076229169991}
-  pointLight: {fileID: 7411946530464929668}
+  pointLight: {fileID: 1679570309427917922}
   force: 12
   openTime: 1.75
 --- !u!65 &8215683764667262206
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 4853874033856749018}
   - component: {fileID: 319754230702120050}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5375,6 +5375,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8994886947375058280, guid: 828073434d90b4b1c9f2a930025ee07c, type: 3}
+    - {fileID: 7209448120502424580, guid: 828073434d90b4b1c9f2a930025ee07c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8972446618652173294, guid: 828073434d90b4b1c9f2a930025ee07c,
         type: 3}
@@ -5389,12 +5390,6 @@ PrefabInstance:
 --- !u!1 &4731261076229169991 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5481138756321948999, guid: 828073434d90b4b1c9f2a930025ee07c,
-    type: 3}
-  m_PrefabInstance: {fileID: 988604204412540416}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &7411946530464929668 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7738517112888131972, guid: 828073434d90b4b1c9f2a930025ee07c,
     type: 3}
   m_PrefabInstance: {fileID: 988604204412540416}
   m_PrefabAsset: {fileID: 0}

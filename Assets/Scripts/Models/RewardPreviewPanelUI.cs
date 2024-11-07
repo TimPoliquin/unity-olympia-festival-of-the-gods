@@ -18,8 +18,12 @@ namespace Azul
             [SerializeField] private TextMeshProUGUI boonValueText;
             [SerializeField] private GameObject ritualsContainer;
             [SerializeField] private List<RewardColor> rewardConfiguration;
+            [SerializeField] private GameObject requirementsContainer;
+            [SerializeField] private GameObject completedContainer;
 
             private Fade fade;
+
+            private bool completed = true;
 
             void Awake()
             {
@@ -41,9 +45,12 @@ namespace Azul
                 }
             }
 
-            public void AddRequirement(GameObject requirement)
+            public void AddRequirement(RewardRitualUI requirement)
             {
                 requirement.transform.SetParent(this.ritualsContainer.transform);
+                this.completed &= requirement.IsCompleted();
+                this.completedContainer.SetActive(this.completed);
+                this.requirementsContainer.SetActive(!this.completed);
             }
 
             public CoroutineResult Show()

@@ -116,6 +116,12 @@ namespace Azul
                 this.onComplete.Invoke();
             }
 
+            public int GetPlayerNumber()
+            {
+                return this.playerNumber;
+            }
+
+
             public bool IsConditionParameter(TileColor color, int tileNumber)
             {
                 return this.RewardConfiguration.IsConditionParameter(color, tileNumber);
