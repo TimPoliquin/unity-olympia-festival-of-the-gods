@@ -15,7 +15,7 @@ namespace Azul
         {
             [SerializeField] private GameObject lid;
             [SerializeField] private GameObject treasure;
-            [SerializeField] private Light pointLight;
+            [SerializeField] private GameObject pointLight;
             [SerializeField] private float force = 12.0f;
             [SerializeField] private float openTime = 2.0f;
 
@@ -56,7 +56,7 @@ namespace Azul
 
             public void OnRewardClaim()
             {
-                this.pointLight.enabled = false;
+                this.pointLight.SetActive(false);
                 this.treasure.SetActive(false);
             }
 
