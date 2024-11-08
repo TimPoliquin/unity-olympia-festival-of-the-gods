@@ -59,7 +59,7 @@ namespace Azul
                 }
                 else
                 {
-                    this.material.SetColor(BASE_COLOR, new Color(this.baseColor.r, this.baseColor.g, this.baseColor.b, .3f));
+                    this.material.SetColor(BASE_COLOR, new Color(this.baseColor.r, this.baseColor.g, this.baseColor.b, .2f));
                 }
                 this.SetEmissionColor(this.baseColor);
             }
