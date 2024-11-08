@@ -170,6 +170,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5520907526341757849}
+          m_TargetAssemblyTypeName: Azul.Model.ButtonUI, Olympia
+          m_MethodName: OnPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5520907526341757849}
+          m_TargetAssemblyTypeName: Azul.Model.ButtonUI, Olympia
+          m_MethodName: OnPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &7769132248242285907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7217325981748162380}
+  - component: {fileID: 5520907526341757849}
   m_Layer: 5
   m_Name: Button UI
   m_TagString: Untagged
@@ -220,6 +253,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 156.8, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5520907526341757849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398494408331526473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413e47815c08e4afdbb98821413599de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 2003797093437117462}
+  buttonDown: {fileID: 8300000, guid: 719460130a43c401a88d0b893f598d88, type: 3}
+  buttonUp: {fileID: 8300000, guid: bc0cc95c8222e4d91aef5dc6e144d294, type: 3}
 --- !u!1 &8617708137418793822
 GameObject:
   m_ObjectHideFlags: 0
