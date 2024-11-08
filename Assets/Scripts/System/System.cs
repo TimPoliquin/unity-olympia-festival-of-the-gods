@@ -14,6 +14,7 @@ namespace Azul
 
         private AIController aiController;
         private AltarFactory starController;
+        private AudioController audioController;
         private BagController bagController;
         private CameraController cameraController;
         private FactoryController factoryController;
@@ -54,6 +55,15 @@ namespace Azul
                 this.aiController = this.GetComponentInChildren<AIController>();
             }
             return this.aiController;
+        }
+
+        public AudioController GetAudioController()
+        {
+            if (null == this.audioController)
+            {
+                this.audioController = this.GetComponentInChildren<AudioController>();
+            }
+            return this.audioController;
         }
 
         public BagController GetBagController()
