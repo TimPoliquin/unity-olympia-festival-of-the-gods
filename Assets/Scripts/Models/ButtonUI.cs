@@ -14,10 +14,6 @@ namespace Azul
             [SerializeField] private AudioClip buttonDown;
             [SerializeField] private AudioClip buttonUp;
 
-            void Awake()
-            {
-            }
-
             public void OnPointerDown()
             {
                 if (this.button.interactable)

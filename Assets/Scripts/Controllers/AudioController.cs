@@ -17,7 +17,6 @@ namespace Azul
 
             private IEnumerator PlayCoroutine(AudioClip audioClip, float volume = 1.0f)
             {
-                UnityEngine.Debug.Log($"Playing {audioClip.name}");
                 AudioSource audioSource = this.CreateAudioSource(audioClip.name);
                 audioSource.clip = audioClip;
                 audioSource.volume = volume;
@@ -28,7 +27,6 @@ namespace Azul
                     yield return null;
                 }
                 Destroy(audioSource.gameObject);
-                UnityEngine.Debug.Log($"Done {audioClip.name}");
             }
 
             private AudioSource CreateAudioSource(string name)
