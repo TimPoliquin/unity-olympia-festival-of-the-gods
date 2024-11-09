@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 6936284017740846399}
   iconImage: {fileID: 3902175708867831295}
+  frame: {fileID: 0}
   button: {fileID: 1479878817234314318}
 --- !u!1 &2212295397494038634
 GameObject:
@@ -139,6 +140,7 @@ GameObject:
   - component: {fileID: 1479878817234314318}
   - component: {fileID: 3510753455175388168}
   - component: {fileID: 6979780539980203740}
+  - component: {fileID: 2012614714079886093}
   m_Layer: 5
   m_Name: Icon Container
   m_TagString: Untagged
@@ -256,6 +258,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2012614714079886093}
+          m_TargetAssemblyTypeName: Azul.Model.ButtonUI, Olympia
+          m_MethodName: OnPointerDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2012614714079886093}
+          m_TargetAssemblyTypeName: Azul.Model.ButtonUI, Olympia
+          m_MethodName: OnPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6979780539980203740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +304,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverTexture: {fileID: 2800000, guid: 15ec72fcdb7494f94bb968a09e6a78c1, type: 3}
   offset: {x: 6, y: 6}
+--- !u!114 &2012614714079886093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880761114449133328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413e47815c08e4afdbb98821413599de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1479878817234314318}
+  buttonDown: {fileID: 8300000, guid: 719460130a43c401a88d0b893f598d88, type: 3}
+  buttonUp: {fileID: 8300000, guid: bc0cc95c8222e4d91aef5dc6e144d294, type: 3}
 --- !u!1 &7559685656078365582
 GameObject:
   m_ObjectHideFlags: 0

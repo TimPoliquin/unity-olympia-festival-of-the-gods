@@ -5,6 +5,7 @@ using Azul.GameEvents;
 using Azul.Model;
 using Azul.PreviewEvents;
 using Azul.RoundEvents;
+using Azul.ScreenEvents;
 using UnityEngine;
 
 namespace Azul
@@ -19,6 +20,7 @@ namespace Azul
                 public GameObject Container;
                 public RenderTexture Texture;
             }
+            [SerializeField] private Canvas playerBoardPreviewCanvas;
             [SerializeField] private List<PreviewConfig> previewConfigs;
             private static readonly string PANEL_LAYER = "preview";
             private bool isPreviewing = false;
@@ -27,6 +29,7 @@ namespace Azul
             void Start()
             {
                 System.Instance.GetGameController().AddOnGameSetupCompleteListener(this.OnGameSetupComplete);
+                System.Instance.GetScreenController().AddOnScreenSizeChangeListener(this.OnScreenSizeChange);
             }
 
             public RenderTexture GetPreviewTexture(int playerNumber)
@@ -43,6 +46,7 @@ namespace Azul
                 {
                     this.CreatePreviewUI(playerNumber);
                 }
+                this.ShowCanvas();
             }
 
             private void CreatePreviewUI(int playerNumber)
@@ -56,36 +60,26 @@ namespace Azul
 
             private void OnBeforeRoundStart(OnBeforeRoundStartPayload payload)
             {
-                foreach (PreviewConfig config in this.previewConfigs)
-                {
-                    config.Container.SetActive(true);
-                }
+                this.ShowCanvas();
             }
 
             private void OnPhaseScore(OnRoundPhaseScorePayload payload)
             {
-                foreach (PreviewConfig config in this.previewConfigs)
-                {
-                    config.Container.SetActive(false);
-                }
+                this.HideCanvas();
+
             }
 
             private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
             {
-                foreach (PreviewConfig config in this.previewConfigs)
-                {
-                    config.Container.SetActive(false);
-                }
+                this.HideCanvas();
+
             }
 
             private void OnZoomIn(OnZoomPayload payload)
             {
                 this.isPreviewing = true;
+                this.HideCanvas();
                 System.Instance.GetCameraController().FocusMainCameraOnPlayerBoard(payload.PlayerNumber);
-                for (int idx = 0; idx < this.previewConfigs.Count; idx++)
-                {
-                    this.previewConfigs[idx].Container.SetActive(false);
-                }
                 PreviewingBannerUI previewingBannerUI = System.Instance.GetPrefabFactory().CreatePreviewBannerUI(PANEL_LAYER);
                 previewingBannerUI.Show(System.Instance.GetPlayerController().GetPlayer(payload.PlayerNumber).GetPlayerName());
                 previewingBannerUI.AddOnDismissListener(() =>
@@ -102,10 +96,7 @@ namespace Azul
             {
                 this.isPreviewing = false;
                 System.Instance.GetCameraController().FocusMainCameraOnTable();
-                for (int idx = 0; idx < this.previewConfigs.Count; idx++)
-                {
-                    this.previewConfigs[idx].Container.SetActive(true);
-                }
+                this.ShowCanvas();
                 Time.timeScale = 1;
             }
 
@@ -119,6 +110,34 @@ namespace Azul
                     }
                     yield return null;
                 }
+            }
+
+            private void OnScreenSizeChange(OnScreenSizeChangePayload payload)
+            {
+                if (this.playerBoardPreviewCanvas.gameObject.activeInHierarchy)
+                {
+                    this.ShowCanvas();
+                }
+            }
+
+            private void ShowCanvas()
+            {
+                float aspectRatio = System.Instance.GetScreenController().GetAspectRatio();
+                RectTransform rectTransform = this.playerBoardPreviewCanvas.GetComponent<RectTransform>();
+                if (aspectRatio >= (16f / 9f))
+                {
+                    rectTransform.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * (9f / 16f) - 200f);
+                }
+                else
+                {
+                    rectTransform.sizeDelta = new Vector2(rectTransform.rect.width, Mathf.Min(rectTransform.rect.width / aspectRatio - 220f, rectTransform.rect.width * (9f / 16f) + 200f));
+                }
+                this.playerBoardPreviewCanvas.gameObject.SetActive(true);
+            }
+
+            private void HideCanvas()
+            {
+                this.playerBoardPreviewCanvas.gameObject.SetActive(false);
             }
         }
     }
