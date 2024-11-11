@@ -18,7 +18,7 @@ namespace Azul
             {
                 if (this.button.interactable)
                 {
-                    System.Instance.GetAudioController().Play(this.buttonDown, .5f);
+                    System.Instance.GetAudioController().PlaySFX(this.buttonDown, .5f);
                 }
             }
 
@@ -26,7 +26,7 @@ namespace Azul
             {
                 if (this.button.interactable)
                 {
-                    System.Instance.GetAudioController().Play(this.buttonUp, .5f);
+                    System.Instance.GetAudioController().PlaySFX(this.buttonUp, .5f);
                 }
             }
         }
