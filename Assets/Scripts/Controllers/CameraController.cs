@@ -34,6 +34,7 @@ namespace Azul
             [SerializeField] private CameraSettings scoreSettings;
             [SerializeField] private CameraSettings previewSettings;
             [SerializeField] private CameraSettings altarSettings;
+            [SerializeField] private CameraSettings finaleSettings;
             [SerializeField] private AspectRatio aspectRatio;
             private List<Camera> playerBoardCameras = new();
 
@@ -204,10 +205,20 @@ namespace Azul
 
             public CoroutineResult FocusMainCameraOnAltar(Altar altar, float rotationTime)
             {
-                Vector3 targetRotation = this.altarSettings.GetRotation().eulerAngles;
-                targetRotation.y = this.mainCamera.transform.rotation.eulerAngles.y;
-                Vector3 targetPosition = altar.transform.position + (altar.transform.forward * this.altarSettings.GetOffset().z) + Vector3.up * this.altarSettings.GetOffset().y;
-                return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.altarSettings.GetSize(), rotationTime);
+                return this.FocusCameraOnGameObject(this.mainCamera, altar.gameObject, this.altarSettings, rotationTime);
+            }
+            public CoroutineResult FocusMainCameraOnPlayerBoard(PlayerBoard playerBoard, float rotationTime)
+            {
+                return this.FocusCameraOnGameObject(this.mainCamera, playerBoard.gameObject, this.finaleSettings, rotationTime);
+            }
+
+            public CoroutineResult FocusCameraOnGameObject(Camera camera, GameObject target, CameraSettings settings, float time)
+            {
+                Vector3 targetRotation = settings.GetRotation().eulerAngles;
+                targetRotation.y = camera.transform.rotation.eulerAngles.y;
+                Vector3 targetPosition = target.transform.position + (target.transform.forward * settings.GetOffset().z) + Vector3.up * settings.GetOffset().y;
+                return this.RefocusCameraAnimated(camera, targetPosition, targetRotation, this.finaleSettings.GetSize(), time);
+
             }
 
             public CoroutineResult AnimateFocusMainCameraOnPlayerBoard(int playerNumber, float time)
@@ -246,6 +257,26 @@ namespace Azul
                 yield return null;
                 yield return null;
                 this.DisablePreviewCameras();
+            }
+
+            public CoroutineResult RotateCameraAroundPoint(Vector3 position, float radius, float duration)
+            {
+                CoroutineResult result = CoroutineResult.Single();
+                this.StartCoroutine(this.RotateCameraAroundPointCoroutine(this.mainCamera, position, radius, duration, result));
+                return result;
+            }
+
+            private IEnumerator RotateCameraAroundPointCoroutine(Camera camera, Vector3 position, float radius, float duration, CoroutineResult result)
+            {
+                result.Start();
+                float timeRemaining = duration;
+                while (timeRemaining > 0)
+                {
+                    timeRemaining -= Time.deltaTime;
+                    camera.transform.RotateAround(position, Vector3.down, Time.deltaTime * (360f / duration));
+                    yield return null;
+                }
+                result.Finish();
             }
         }
 

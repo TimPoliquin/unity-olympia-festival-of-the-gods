@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ namespace Azul
             [SerializeField] private Color activeColor;
             [SerializeField] private IconUI currentIcon;
             [SerializeField] private List<ColoredValue<HonoringIconUI>> honoringIcons;
+            [SerializeField] private TextMeshProUGUI currentPlayerText;
+            [SerializeField] private GameObject currentPlayerContainer;
 
             public void SetActiveColor(TileColor activeColor)
             {
@@ -34,6 +37,19 @@ namespace Azul
                 }
                 System.Instance.GetUIController().GetIconUIFactory().SetIconValues(this.currentIcon, activeColor);
                 this.currentIcon.EnableFrame();
+            }
+
+            public void SetCurrentPlayerName(string playerName)
+            {
+                if (null == playerName)
+                {
+                    this.currentPlayerContainer.SetActive(false);
+                }
+                else
+                {
+                    this.currentPlayerContainer.SetActive(true);
+                    this.currentPlayerText.text = playerName;
+                }
             }
         }
     }

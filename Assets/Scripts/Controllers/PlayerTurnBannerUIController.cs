@@ -51,9 +51,8 @@ namespace Azul
                             List<Phase> shownPhases = this.playerPhases[payload.Player.GetPlayerNumber()];
                             if (shownPhases.Contains(this.currentPhase) || payload.Player.IsAI())
                             {
-                                showInstructions = false;
-                                hideDelay = this.repeatHideAfterSeconds;
-                                callback = null;
+                                payload.Done.Invoke();
+                                return;
                             }
                             else
                             {
