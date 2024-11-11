@@ -12,14 +12,14 @@ namespace Azul
     {
         public class PlayerScore
         {
-            public string PlayerName { get; init; }
+            public Player Player { get; init; }
             public int Score { get; init; }
         }
         public class OnGameEndPayload
         {
 
             public List<PlayerScore> PlayerScores { get; init; }
-            public string Winner { get; init; }
+            public Player Winner { get; init; }
         }
     }
     namespace Controller
@@ -29,38 +29,12 @@ namespace Azul
             [SerializeField] private GameEndUI gameEndUI;
             [SerializeField] private ScoreRowUI scoreRowUIPrefab;
 
-            public void InitializeListeners()
-            {
-                System.Instance.GetRoundController().AddOnAllRoundsCompleteListener(this.OnAllRoundsComplete);
-            }
-
-            private void OnAllRoundsComplete(OnAllRoundsCompletePayload payload)
-            {
-                PlayerController playerController = System.Instance.GetPlayerController();
-                ScoreBoardController scoreBoardController = System.Instance.GetScoreBoardController();
-                List<PlayerScore> playerScores = new();
-                foreach (Player player in playerController.GetPlayers())
-                {
-                    playerScores.Add(new()
-                    {
-                        PlayerName = player.GetPlayerName(),
-                        Score = scoreBoardController.GetPlayerScore(player.GetPlayerNumber())
-                    });
-                }
-                playerScores = playerScores.OrderBy(score => score.Score).Reverse().ToList();
-                this.OnGameEnd(new OnGameEndPayload
-                {
-                    Winner = playerScores[0].PlayerName,
-                    PlayerScores = playerScores
-                });
-            }
-
             public void OnGameEnd(OnGameEndPayload payload)
             {
-                this.gameEndUI.SetWinnerName(payload.Winner);
+                this.gameEndUI.SetWinnerName(payload.Winner.GetPlayerName());
                 payload.PlayerScores.ForEach(playerScore =>
                 {
-                    this.gameEndUI.AddScoreRow(this.scoreRowUIPrefab, playerScore.PlayerName, playerScore.Score);
+                    this.gameEndUI.AddScoreRow(this.scoreRowUIPrefab, playerScore.Player.GetPlayerName(), playerScore.Score);
                 });
                 this.gameEndUI.gameObject.SetActive(true);
             }

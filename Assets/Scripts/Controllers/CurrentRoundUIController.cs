@@ -1,5 +1,7 @@
+using System;
 using Azul.GameEvents;
 using Azul.Model;
+using Azul.PlayerEvents;
 using Azul.RoundEvents;
 using UnityEngine;
 
@@ -26,6 +28,12 @@ namespace Azul
                 {
                     this.footer.SetActive(true);
                 }
+                System.Instance.GetPlayerController().AddOnBeforePlayerTurnStartListener(this.OnPlayerTurnStart);
+            }
+
+            private void OnPlayerTurnStart(OnBeforePlayerTurnStartPayload payload)
+            {
+                this.currentRoundUI.SetCurrentPlayerName(payload.Player.GetPlayerName());
             }
 
             void InitializeListeners()
@@ -41,6 +49,7 @@ namespace Azul
                 this.topBanner.gameObject.SetActive(true);
                 this.footer.SetActive(System.Instance.GetPlayerController().GetNumberOfPlayers() > 2);
                 this.currentRoundUI.SetActiveColor(payload.WildColor);
+                this.currentRoundUI.SetCurrentPlayerName(null);
             }
 
             private void OnAllRoundsCompleted(OnAllRoundsCompletePayload payload)

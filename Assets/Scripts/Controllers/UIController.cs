@@ -26,7 +26,6 @@ namespace Azul
             public void InitializeListeners()
             {
                 this.GetGameStartUIController().InitializeListeners();
-                this.GetGameEndUIController().InitializeListeners();
                 this.GetOverflowTileSelectionUIController().InitializeListeners();
                 this.GetScoreTileSelectionUIController().InitializeListeners();
                 this.GetSelectRewardUIController().InitializeListeners();
