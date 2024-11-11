@@ -19,9 +19,18 @@ namespace Azul
         public class GameController : MonoBehaviour
         {
             [SerializeField] private UnityEvent<OnGameSetupCompletePayload> onGameSetupComplete = new();
+            [SerializeField] private AudioClip startBGM;
+
             private bool isGameSetupComplete;
+
+            void Start()
+            {
+                System.Instance.GetAudioController().PlayBGM(this.startBGM, .5f);
+            }
+
             public void StartGame()
             {
+                System.Instance.GetAudioController().StopBGM();
                 AIController aiController = System.Instance.GetAIController();
                 BagController bagController = System.Instance.GetBagController();
                 CameraController cameraController = System.Instance.GetCameraController();

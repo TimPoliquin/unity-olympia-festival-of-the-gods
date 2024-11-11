@@ -38,12 +38,16 @@ namespace Azul
                 this.optionsPanelUI.AddOnGraphicsAntiAliasingChangeListener(this.OnAntiAliasingChange);
                 this.optionsPanelUI.AddOnGraphicsRenderScaleChangeListener(this.OnRenderScaleChange);
                 this.optionsPanelUI.AddOnGraphicsVSyncChangeListener(this.OnVsyncChange);
+                this.optionsPanelUI.AddOnMusicVolumeChangeListener(this.OnMusicVolumeChange);
+                this.optionsPanelUI.AddOnSoundVolumeChangeListener(this.OnSoundVolumeChange);
                 this.optionsPanelUI.AddOnReturnToGameListener(this.HideOptions);
                 this.optionsPanelUI.AddOnQuitListener(this.OnQuit);
                 this.optionsPanelUI.SetGraphicsLevel(System.Instance.GetGraphicsSettingsController().GetQualityLevel());
                 this.optionsPanelUI.SetAntiAliasing(graphicsSettingsController.GetAntiAliasingLevel());
                 this.optionsPanelUI.SetVSync(graphicsSettingsController.GetVSync());
                 this.optionsPanelUI.SetRenderScale(graphicsSettingsController.GetRenderScale());
+                this.optionsPanelUI.SetBGMVolume(System.Instance.GetAudioController().GetBGMVolume());
+                this.optionsPanelUI.SetSFXVolume(System.Instance.GetAudioController().GetSFXVolume());
             }
 
             private void OnVsyncChange(OnGraphicsVSyncChangePayload payload)
@@ -64,6 +68,7 @@ namespace Azul
             private void HideOptions()
             {
                 System.Instance.GetGraphicsSettingsController().SaveGraphicsConfig();
+                System.Instance.GetAudioController().SaveAudioConfig();
                 Destroy(this.optionsPanelUI.gameObject);
                 this.optionsPanelUI = null;
                 System.Instance.Resume();
@@ -74,6 +79,17 @@ namespace Azul
                 GraphicsSettingsController graphicsSettingsController = System.Instance.GetGraphicsSettingsController();
                 graphicsSettingsController.SetQualityLevel(payload.Level);
                 this.optionsPanelUI.SetGraphicsLevel(payload.Level);
+            }
+
+
+            private void OnSoundVolumeChange(OnSoundVolumeChangePayload payload)
+            {
+                System.Instance.GetAudioController().SetSFXVolume(payload.SoundVolume);
+            }
+
+            private void OnMusicVolumeChange(OnMusicVolumeChangePayload payload)
+            {
+                System.Instance.GetAudioController().SetBGMVolume(payload.MusicVolume);
             }
 
             private void OnQuit()

@@ -28,6 +28,14 @@ namespace Azul
         {
             public float RenderScale { get; init; }
         }
+        public struct OnMusicVolumeChangePayload
+        {
+            public float MusicVolume { get; init; }
+        }
+        public struct OnSoundVolumeChangePayload
+        {
+            public float SoundVolume { get; init; }
+        }
     }
     namespace Model
     {
@@ -45,11 +53,17 @@ namespace Azul
             [SerializeField] private TextMeshProUGUI currentRenderScaleText;
             [SerializeField] private Toggle vsyncToggle;
             [SerializeField] private TMP_Dropdown antiAliasingDropdown;
+            [SerializeField] private Slider musicVolumeSlider;
+            [SerializeField] private TextMeshProUGUI currentBGMVolume;
+            [SerializeField] private Slider soundVolumeSlider;
+            [SerializeField] private TextMeshProUGUI currentSFXVolume;
             [SerializeField] private Button okButton;
             [SerializeField] private Button quitButton;
             private UnityEvent<OnGraphicsOptionChangePayload> onGraphicsOptionChange = new();
             private UnityEvent<OnGraphicsAntiAliasingChangePayload> onGraphicsAntiAliasingChange = new();
             private UnityEvent<OnGraphicsRenderScaleChangePayload> onGraphicsRenderScaleChange = new();
+            private UnityEvent<OnMusicVolumeChangePayload> onMusicVolumeChange = new();
+            private UnityEvent<OnSoundVolumeChangePayload> onSoundVolumeChange = new();
             private UnityEvent<OnGraphicsVSyncChangePayload> onGraphicsVSyncChange = new();
             private UnityEvent onOk = new();
             private UnityEvent onQuit = new();
@@ -60,6 +74,8 @@ namespace Azul
                 this.Awake_AntiAliasingOptions();
                 this.vsyncToggle.onValueChanged.AddListener(this.OnVSyncChange);
                 this.renderScaleSlider.onValueChanged.AddListener(this.OnRenderScaleChange);
+                this.musicVolumeSlider.onValueChanged.AddListener(this.OnMusicVolumeChange);
+                this.soundVolumeSlider.onValueChanged.AddListener(this.OnSoundVolumeChange);
                 this.okButton.onClick.AddListener(this.OnOk);
                 this.quitButton.onClick.AddListener(this.OnQuit);
             }
@@ -102,6 +118,19 @@ namespace Azul
 
             }
 
+            public void SetBGMVolume(float volume)
+            {
+                this.currentBGMVolume.text = $"{(int)(this.musicVolumeSlider.value * 100)}%";
+                this.musicVolumeSlider.value = volume;
+            }
+
+            public void SetSFXVolume(float volume)
+            {
+                this.soundVolumeSlider.value = volume;
+                this.currentSFXVolume.text = $"{(int)(this.soundVolumeSlider.value * 100)}%";
+
+            }
+
             private void OnGraphicsOptionClick(GraphicsLevel level)
             {
                 this.onGraphicsOptionChange.Invoke(new OnGraphicsOptionChangePayload
@@ -140,6 +169,15 @@ namespace Azul
                 this.onGraphicsAntiAliasingChange.AddListener(listener);
             }
 
+            public void AddOnMusicVolumeChangeListener(UnityAction<OnMusicVolumeChangePayload> listener)
+            {
+                this.onMusicVolumeChange.AddListener(listener);
+            }
+            public void AddOnSoundVolumeChangeListener(UnityAction<OnSoundVolumeChangePayload> listener)
+            {
+                this.onSoundVolumeChange.AddListener(listener);
+            }
+
             private void OnOk()
             {
                 this.onOk.Invoke();
@@ -171,6 +209,24 @@ namespace Azul
                 this.onGraphicsRenderScaleChange.Invoke(new()
                 {
                     RenderScale = renderScale
+                });
+            }
+
+            private void OnSoundVolumeChange(float volume)
+            {
+                this.currentSFXVolume.text = $"{(int)(volume * 100)}%";
+                this.onSoundVolumeChange.Invoke(new OnSoundVolumeChangePayload
+                {
+                    SoundVolume = volume
+                });
+            }
+
+            private void OnMusicVolumeChange(float volume)
+            {
+                this.currentBGMVolume.text = $"{(int)(volume * 100)}%";
+                this.onMusicVolumeChange.Invoke(new OnMusicVolumeChangePayload
+                {
+                    MusicVolume = volume
                 });
             }
         }
