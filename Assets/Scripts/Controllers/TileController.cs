@@ -23,7 +23,6 @@ namespace Azul
             private Tile oneTile;
             private List<Tile> tiles;
 
-            private int var_ShaderWildEnabled = Shader.PropertyToID("_Enabled");
             private int var_ShaderOffset = Shader.PropertyToID("_Offset");
 
             public void SetupGame()
@@ -85,7 +84,14 @@ namespace Azul
             {
                 foreach (Tile tile in this.tiles)
                 {
-                    tile.GetTokenRenderer().material.SetInt(this.var_ShaderWildEnabled, tile.Color == payload.WildColor ? 1 : 0);
+                    if (tile.Color == payload.WildColor)
+                    {
+                        tile.EnableWildEffect();
+                    }
+                    else
+                    {
+                        tile.DisableWildEffect();
+                    }
                 }
             }
 

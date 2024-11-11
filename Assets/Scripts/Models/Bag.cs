@@ -46,7 +46,16 @@ namespace Azul
                 }
                 else
                 {
-                    return System.Instance.GetTileController().CreateTile(tileColor);
+                    tile = System.Instance.GetTileController().CreateTile(tileColor);
+                    if (System.Instance.GetRoundController().GetCurrentWild() == tileColor)
+                    {
+                        tile.EnableWildEffect();
+                    }
+                    else
+                    {
+                        tile.DisableWildEffect();
+                    }
+                    return tile;
                 }
                 return tile;
             }

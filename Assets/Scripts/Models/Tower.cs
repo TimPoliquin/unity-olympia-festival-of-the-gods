@@ -16,6 +16,7 @@ namespace Azul
                 foreach (Tile tile in tiles)
                 {
                     tile.transform.SetParent(this.transform);
+                    tile.DisableWildEffect();
                     tile.gameObject.SetActive(false);
                 }
             }

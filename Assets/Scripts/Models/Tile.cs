@@ -11,6 +11,8 @@ namespace Azul
     {
         public class Tile : MonoBehaviour
         {
+            private int var_ShaderWildEnabled = Shader.PropertyToID("_Enabled");
+
             [SerializeField] private TileColor color;
             [SerializeField] private Renderer tokenRenderer;
             [SerializeField] private AudioSource tableCollisionSFX;
@@ -119,6 +121,17 @@ namespace Azul
             public Renderer GetTokenRenderer()
             {
                 return this.tokenRenderer;
+            }
+
+            public void EnableWildEffect()
+            {
+                this.GetTokenRenderer().material.SetInt(this.var_ShaderWildEnabled, 1);
+
+            }
+
+            public void DisableWildEffect()
+            {
+                this.GetTokenRenderer().material.SetInt(this.var_ShaderWildEnabled, 0);
             }
         }
 
