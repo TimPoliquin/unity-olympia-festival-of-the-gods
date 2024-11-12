@@ -128,17 +128,10 @@ namespace Azul
 
             private void InitializePlayerNames()
             {
-#if UNITY_EDITOR
-                this.playerConfigUIs[0].SetPlayerName("Tim");
-                this.playerConfigUIs[1].SetPlayerName("Alex");
-                this.playerConfigUIs[2].SetPlayerName("Oaty");
-                this.playerConfigUIs[3].SetPlayerName("Foobag");
-#else
                 this.playerConfigUIs[0].SetPlayerName("Player 1");
                 this.playerConfigUIs[1].SetPlayerName("Helen");
                 this.playerConfigUIs[2].SetPlayerName("Alexander");
                 this.playerConfigUIs[3].SetPlayerName("Phoebe");
-#endif
             }
         }
     }
