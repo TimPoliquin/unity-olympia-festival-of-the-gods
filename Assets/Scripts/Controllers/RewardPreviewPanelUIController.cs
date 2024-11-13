@@ -31,8 +31,27 @@ namespace Azul
 
             private void OnHoverEnter(OnPointerEnterPayload<RewardIndicator> payload)
             {
-                rewardIndicatorStatus[payload.Target] = true;
-                this.StartCoroutine(this.ShowPanel(this.hoverDelay, payload.Target));
+                if (System.Instance.GetUIController().GetScoreTileSelectionUIController().IsPanelOpen())
+                {
+                    return;
+                }
+                else if (System.Instance.GetUIController().GetSelectRewardUIController().IsRewardPanelOpen())
+                {
+                    return;
+                }
+                else if (System.Instance.GetTileAnimationController().IsAnimating())
+                {
+                    return;
+                }
+                else if (System.Instance.GetMilestoneCompletionController().IsShowingMilestoneCompletion())
+                {
+                    return;
+                }
+                else
+                {
+                    rewardIndicatorStatus[payload.Target] = true;
+                    this.StartCoroutine(this.ShowPanel(this.hoverDelay, payload.Target));
+                }
             }
 
             private void OnHoverExit(OnPointerExitPayload<RewardIndicator> payload)
