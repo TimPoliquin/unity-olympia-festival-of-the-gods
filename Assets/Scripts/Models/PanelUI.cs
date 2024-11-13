@@ -65,6 +65,7 @@ namespace Azul
                     this.onExit.Invoke();
                 }
             }
+            [SerializeField] private GameObject dragIcon;
             [SerializeField] private GameObject dragHandle;
             [SerializeField] private GameObject dragRoot;
             private RectTransform rootTransform;
@@ -79,6 +80,11 @@ namespace Azul
                     dragManager.onHover.AddListener(cursorChange.OnHoverEnter);
                     dragManager.onExit.AddListener(cursorChange.OnHoverExit);
                     this.rootTransform = dragRoot.GetComponent<RectTransform>();
+                    this.dragIcon.SetActive(true);
+                }
+                else
+                {
+                    this.dragIcon.SetActive(false);
                 }
             }
 
