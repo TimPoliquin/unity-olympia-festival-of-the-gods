@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,14 @@ namespace Azul
             private TileColor wildColor;
             private List<TileColor> usedWildColors;
 
-
+            private bool randomize;
             private AzulEvent<OnScoreSpaceSelectedPayload> onScoreSpaceSelected = new();
             private UnityEvent<OnGoalScoreTilesSelectedPayload> onScoreTileSelection = new();
+
+            public RandomScoringSelection(bool randomize)
+            {
+                this.randomize = randomize;
+            }
 
             public void Evaluate(int playerNumber)
             {
@@ -114,14 +120,21 @@ namespace Azul
             public AltarSpace ChooseSpace()
             {
                 AltarSpace chosenSpace;
-                int highestScore = this.actionableSpaces[0].Score;
-                if (highestScore == 1)
+                int highestScore = this.actionableSpaces.Select(space => space.Score).Max();
+                if (highestScore == 1 && this.randomize)
                 {
                     chosenSpace = this.ChooseRandomSpace();
                 }
                 else
                 {
-                    chosenSpace = this.actionableSpaces.FindAll(space => space.Score == highestScore).OrderByDescending((space) => space.Space.GetValue()).ToList()[0].Space;
+                    List<ActionableSpace> spacesWithHighestScore = this.actionableSpaces
+                        .Where(space => space.Score == highestScore)
+                        .OrderByDescending((space) => space.Space.GetValue())
+                        .ToList();
+                    List<ActionableSpace> spacesWithHighestValue = spacesWithHighestScore
+                        .Where(space => space.Space.GetValue() == spacesWithHighestScore[0].Space.GetValue())
+                        .ToList();
+                    chosenSpace = ListUtils.GetRandomElement(spacesWithHighestValue).Space;
                 }
                 return chosenSpace;
             }

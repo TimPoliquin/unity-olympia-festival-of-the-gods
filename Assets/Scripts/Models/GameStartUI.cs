@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Utils;
 
 namespace Azul
 {
@@ -26,6 +27,7 @@ namespace Azul
     {
         public class GameStartUI : MonoBehaviour
         {
+            [SerializeField] private List<string> defaultPlayerNames = new() { "Helen", "Alexander", "Phoebe", "Metron", "Philomenes", "Eurymachos", "Demonous", "Aetios", "Halie", "Alexis", "Calliope", "Cassandra", "Daphne", "Sophia", "Zoe", "Basil", "Castor", "Georgios", "Jason", "Neo", "Odysseus", "Theodore", "Troy" };
             [SerializeField] private List<Button> playerCountButtons;
             [SerializeField] private GameObject playerUIContainer;
             [SerializeField] private List<PlayerConfigUI> playerConfigUIs;
@@ -39,6 +41,7 @@ namespace Azul
             // Start is called before the first frame update
             void Awake()
             {
+                this.playerConfigUIs[0].SetPlayerName("Player 1");
                 this.playerConfigUIs.ForEach(input =>
                 {
                     input.gameObject.SetActive(false);
@@ -57,7 +60,6 @@ namespace Azul
                 }
                 this.startButton.onClick.AddListener(this.OnClickStart);
                 this.startButton.gameObject.SetActive(false);
-                this.InitializePlayerNames();
             }
 
             void Start()
@@ -68,6 +70,7 @@ namespace Azul
 
             private void OnClickPlayerCount(int playerCount)
             {
+                this.InitializePlayerNames(playerCount - 1);
                 this.onPlayerCountSelection.Invoke(new OnPlayerCountSelectionPayload { PlayerCount = playerCount });
             }
 
@@ -126,12 +129,21 @@ namespace Azul
                 return this.playerConfigUIs[0].GetInput();
             }
 
-            private void InitializePlayerNames()
+            private void InitializePlayerNames(int playerCount)
             {
-                this.playerConfigUIs[0].SetPlayerName("Player 1");
-                this.playerConfigUIs[1].SetPlayerName("Helen");
-                this.playerConfigUIs[2].SetPlayerName("Alexander");
-                this.playerConfigUIs[3].SetPlayerName("Phoebe");
+                List<string> names = new();
+                while (names.Count < playerCount)
+                {
+                    string name = ListUtils.GetRandomElement(this.defaultPlayerNames);
+                    if (!names.Contains(name))
+                    {
+                        names.Add(name);
+                    }
+                }
+                for (int idx = 0; idx < playerCount; idx++)
+                {
+                    this.playerConfigUIs[idx + 1].SetPlayerName(names[idx]);
+                }
             }
         }
     }

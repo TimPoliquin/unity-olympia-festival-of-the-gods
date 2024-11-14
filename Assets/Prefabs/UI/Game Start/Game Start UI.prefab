@@ -1126,6 +1126,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf247592579a4c9eb6864ad516c2c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerNames:
+  - Helen
+  - Alexander
+  - Phoebe
+  - Metron
+  - Philomenes
+  - Eurymachos
+  - Demonous
+  - Aetios
+  - Halie
+  - Alexis
+  - Calliope
+  - Cassandra
+  - Daphne
+  - Sophia
+  - Zoe
+  - Basil
+  - Castor
+  - Georgios
+  - Jason
+  - Neo
+  - Odysseus
+  - Theodore
+  - Troy
   playerCountButtons:
   - {fileID: 5578890947336162914}
   - {fileID: 4668126091274612472}
@@ -1878,6 +1902,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 346175467425405933}
     m_Modifications:
+    - target: {fileID: 2147351106643085522, guid: 3ed0b01bc0ed14699b779739a2407cc7,
+        type: 3}
+      propertyPath: m_Text
+      value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673005214089722498, guid: 3ed0b01bc0ed14699b779739a2407cc7,
+        type: 3}
+      propertyPath: m_text
+      value: Player 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2673005214089722498, guid: 3ed0b01bc0ed14699b779739a2407cc7,
         type: 3}
       propertyPath: m_fontAsset

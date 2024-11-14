@@ -9,6 +9,7 @@ using Azul.Model;
 using Azul.TableEvents;
 using Azul.TileHolderEvents;
 using Unity.VisualScripting;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -82,6 +83,11 @@ namespace Azul
                         }
                     }
                     return max;
+                }
+
+                public int GetTileCount(TileColor color)
+                {
+                    return this.TileCounts.Find(tileCount => tileCount.TileColor == color).Count;
                 }
 
                 public bool HasColor(TileColor color)

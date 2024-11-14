@@ -23,6 +23,7 @@ namespace Azul
             public TileProvider Provider { get; init; }
             public TileColor TileColor { get; init; }
             public int Count { get; init; }
+            public int Priority { get; init; }
         }
 
         public abstract class BaseGoal : Goal
@@ -115,7 +116,7 @@ namespace Azul
                 {
                     this.scoringSelection.EndScoring();
                 }
-                this.scoringSelection = new RandomScoringSelection();
+                this.scoringSelection = new RandomScoringSelection(Random.Range(0f, 1f) < this.GetRandomChanceOfStupidity());
                 this.scoringSelection.Evaluate(this.playerNumber);
                 result.Finish();
                 return result;
@@ -238,74 +239,6 @@ namespace Azul
             }
         }
 
-        public class AgressiveGoal : BaseGoal
-        {
-            internal static AgressiveGoal Create(int playerNumber)
-            {
-                return new AgressiveGoal()
-                {
-                    playerNumber = playerNumber
-                };
-            }
-            protected override float GetRandomChanceOfStupidity()
-            {
-                return .1f;
-            }
-            public override AltarSpace ChooseSpace()
-            {
-                return this.scoringSelection.ChooseSpace();
-            }
-            public override void Acquire()
-            {
-                TileColor wildColor = System.Instance.GetRoundController().GetCurrentRound().GetWildColor();
-                TableController tableController = System.Instance.GetTableController();
-                if (tableController.HasHadesToken() && this.ShouldRandomlyDrawFromTable())
-                {
-                    this.DrawFromTable(tableController.GetTableSupplyWithLowestCount(wildColor), wildColor);
-                    return;
-                }
-                List<TileProviderCounts> tileCounts = tableController.GetTileCountsByProvider();
-                AcquireTileChoice choice = null;
-                foreach (TileProviderCounts tileProviderCount in tileCounts)
-                {
-                    ColoredValue<int> localMax = tileProviderCount.GetMaxColor(wildColor);
-                    bool updateChoice;
-                    if (null == choice)
-                    {
-                        updateChoice = true;
-                    }
-                    else if (tileProviderCount.Provider.HasHadesToken())
-                    {
-                        updateChoice = false;
-                    }
-                    else if (choice.TileColor == wildColor)
-                    {
-                        updateChoice = true;
-                    }
-                    else if (choice.Count < localMax.GetValue())
-                    {
-                        updateChoice = true;
-                    }
-                    else if (choice.Count == localMax.GetValue() && tileProviderCount.HasColor(wildColor))
-                    {
-                        updateChoice = true;
-                    }
-                    else
-                    {
-                        updateChoice = false;
-                    }
-                    if (updateChoice)
-                    {
-                        choice = new AcquireTileChoice()
-                        {
-                            Provider = tileProviderCount.Provider,
-                            TileColor = localMax.GetTileColor(),
-                            Count = localMax.GetValue()
-                        };
-                    }
-                }
-                this.DrawFromProvider(choice.Provider, choice.TileColor, wildColor);
-            }
-        }
+
     }
 }
