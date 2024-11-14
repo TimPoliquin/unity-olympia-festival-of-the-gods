@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Azul.Controller;
 using Azul.Model;
 using Azul.Provider;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -235,6 +236,15 @@ namespace Azul
                 this.uiController = this.GetComponentInChildren<UIController>();
             }
             return this.uiController;
+        }
+
+        public void Quit()
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
         }
 
         public void Pause()

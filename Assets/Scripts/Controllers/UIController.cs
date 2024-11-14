@@ -15,6 +15,7 @@ namespace Azul
             private HadesTokenPanelUIController hadesTokenPanelUIController;
             private IconUIFactory iconUIFactory;
             private MilestoneCompletedPanelUIController milestoneCompletedPanelUIController;
+            private OptionsPanelUIController optionsPanelUIController;
             private OverflowTileSelectionUIController overflowTileSelectionUIController;
             private PanelManagerController panelManagerController;
             private PlayerUIController playerUIController;
@@ -75,6 +76,15 @@ namespace Azul
                     this.milestoneCompletedPanelUIController = this.GetComponentInChildren<MilestoneCompletedPanelUIController>();
                 }
                 return this.milestoneCompletedPanelUIController;
+            }
+
+            public OptionsPanelUIController GetOptionsPanelUIController()
+            {
+                if (null == this.optionsPanelUIController)
+                {
+                    this.optionsPanelUIController = this.GetComponentInChildren<OptionsPanelUIController>();
+                }
+                return this.optionsPanelUIController;
             }
 
             public PlayerBoardPreviewUIController GetPlayerBoardPreviewUIController()

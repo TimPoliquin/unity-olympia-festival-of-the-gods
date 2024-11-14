@@ -17,8 +17,8 @@ namespace Azul
 
             void Awake()
             {
-                this.gameStartUI.AddOnPlayerCountSelectionListener(this.OnPlayerCountSelection);
-                this.gameStartUI.AddOnGameStartListener(this.OnGameStart);
+                this.gameStartUI.GetIntroStep().AddOnPlayListener(this.OnPlay);
+                this.gameStartUI.GetSetupStep().AddOnGameStartListener(this.OnGameStart);
                 this.gameStartUI.gameObject.SetActive(true);
             }
 
@@ -32,10 +32,9 @@ namespace Azul
                 // nothing to do here... yet
             }
 
-            public void OnPlayerCountSelection(OnPlayerCountSelectionPayload payload)
+            private void OnPlay()
             {
-                this.gameStartUI.ShowPlayerConfigs(payload.PlayerCount);
-                this.gameStartUI.GetFirstInput().OnPointerClick(new PointerEventData(EventSystem.current));
+                this.gameStartUI.ShowSetupStep();
             }
 
             public void OnGameStart(OnGameStartPayload payload)
@@ -57,7 +56,7 @@ namespace Azul
                         Selectable next;
                         if (null == current)
                         {
-                            next = this.gameStartUI.GetFirstButton();
+                            next = this.gameStartUI.GetSetupStep().GetFirstButton();
                         }
                         else if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
                         {

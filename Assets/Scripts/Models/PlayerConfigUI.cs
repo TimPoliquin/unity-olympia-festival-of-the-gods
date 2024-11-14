@@ -41,15 +41,6 @@ namespace Azul
             {
                 (this.playerNameInput.placeholder as TextMeshProUGUI).text = $"Player {this.playerNumber + 1} Name";
                 this.playerType.options = PlayerTypeUtils.GetPlayerTypes().Select(playerType => new TMP_Dropdown.OptionData(PlayerTypeUtils.GetPlayerTypeName(playerType))).ToList();
-                if (this.playerNumber == 0)
-                {
-                    this.playerType.value = (int)PlayerType.HUMAN;
-                    this.playerType.interactable = false;
-                }
-                else
-                {
-                    this.playerType.value = (int)PlayerType.AI_EASY;
-                }
                 this.InitializeListeners();
             }
 
@@ -67,6 +58,21 @@ namespace Azul
                     Name = this.playerNameInput.text,
                     PlayerType = (PlayerType)this.playerType.value
                 };
+            }
+
+            public void SetPlayerNumber(int playerNumber)
+            {
+                this.playerNumber = playerNumber;
+            }
+
+            public void SetPlayerType(PlayerType playerType)
+            {
+                this.playerType.value = (int)playerType;
+            }
+
+            public void SetPlayerTypeInteractable(bool interactable)
+            {
+                this.playerType.interactable = interactable;
             }
 
             public void AddOnPlayerConfigChangeListener(UnityAction<PlayerConfigOnChangePayload> listener)

@@ -29,7 +29,7 @@ namespace Azul
                 }
             }
 
-            private void ShowOptions()
+            public void ShowOptions()
             {
                 System.Instance.Pause();
                 GraphicsSettingsController graphicsSettingsController = System.Instance.GetGraphicsSettingsController();
@@ -94,11 +94,7 @@ namespace Azul
 
             private void OnQuit()
             {
-#if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+                System.Instance.Quit();
             }
         }
     }
