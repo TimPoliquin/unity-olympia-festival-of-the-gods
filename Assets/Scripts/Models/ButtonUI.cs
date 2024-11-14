@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -28,6 +29,16 @@ namespace Azul
                 {
                     System.Instance.GetAudioController().PlaySFX(this.buttonUp, .5f);
                 }
+            }
+
+            public void AddOnClickListener(UnityAction listener)
+            {
+                this.button.onClick.AddListener(listener);
+            }
+
+            public void SetInteractable(bool interactable)
+            {
+                this.button.interactable = interactable;
             }
         }
     }

@@ -18,48 +18,20 @@ namespace Azul
         {
             public int PlayerCount { get; init; }
         }
-        public class OnGameStartPayload
-        {
-            public List<PlayerConfig> PlayerConfigs { get; init; }
-        }
+
     }
     namespace Model
     {
         public class GameStartUI : MonoBehaviour
         {
-            [SerializeField] private List<string> defaultPlayerNames = new() { "Helen", "Alexander", "Phoebe", "Metron", "Philomenes", "Eurymachos", "Demonous", "Aetios", "Halie", "Alexis", "Calliope", "Cassandra", "Daphne", "Sophia", "Zoe", "Basil", "Castor", "Georgios", "Jason", "Neo", "Odysseus", "Theodore", "Troy" };
-            [SerializeField] private List<Button> playerCountButtons;
-            [SerializeField] private GameObject playerUIContainer;
-            [SerializeField] private List<PlayerConfigUI> playerConfigUIs;
-            [SerializeField] private Button startButton;
             [SerializeField] private List<ColoredValue<IconUI>> icons;
-
-            private UnityEvent<OnPlayerCountSelectionPayload> onPlayerCountSelection = new();
-            private UnityEvent<OnGameStartPayload> onGameStart = new();
-
+            [SerializeField] private GameStartUIIntroStep introStep;
+            [SerializeField] private GameStartUISetupStep setupStep;
 
             // Start is called before the first frame update
             void Awake()
             {
-                this.playerConfigUIs[0].SetPlayerName("Player 1");
-                this.playerConfigUIs.ForEach(input =>
-                {
-                    input.gameObject.SetActive(false);
-                    input.AddOnPlayerConfigChangeListener((payload) =>
-                    {
-                        this.VerifyIfStartIsReady();
-                    });
-                });
-                for (int idx = 0; idx < this.playerCountButtons.Count; idx++)
-                {
-                    int playerCount = idx + 2;
-                    this.playerCountButtons[idx].onClick.AddListener(() =>
-                    {
-                        this.OnClickPlayerCount(playerCount);
-                    });
-                }
-                this.startButton.onClick.AddListener(this.OnClickStart);
-                this.startButton.gameObject.SetActive(false);
+                this.ShowIntroStep();
             }
 
             void Start()
@@ -67,83 +39,26 @@ namespace Azul
                 this.icons.ForEach(icon => icon.GetValue().SetTileColor(icon.GetTileColor()));
             }
 
-
-            private void OnClickPlayerCount(int playerCount)
+            public GameStartUIIntroStep GetIntroStep()
             {
-                this.InitializePlayerNames(playerCount - 1);
-                this.onPlayerCountSelection.Invoke(new OnPlayerCountSelectionPayload { PlayerCount = playerCount });
+                return this.introStep;
             }
 
-            public void ShowPlayerConfigs(int playerCount)
+            public GameStartUISetupStep GetSetupStep()
             {
-                this.playerUIContainer.gameObject.SetActive(true);
-                for (int idx = 0; idx < this.playerConfigUIs.Count; idx++)
-                {
-                    this.playerConfigUIs[idx].gameObject.SetActive(idx < playerCount);
-                }
-                this.startButton.gameObject.SetActive(true);
-                this.VerifyIfStartIsReady();
+                return this.setupStep;
             }
 
-            public void AddOnPlayerCountSelectionListener(UnityAction<OnPlayerCountSelectionPayload> listener)
+            public void ShowIntroStep()
             {
-                this.onPlayerCountSelection.AddListener(listener);
+                this.introStep.gameObject.SetActive(true);
+                this.setupStep.gameObject.SetActive(false);
             }
 
-            public void AddOnGameStartListener(UnityAction<OnGameStartPayload> listener)
+            public void ShowSetupStep()
             {
-                this.onGameStart.AddListener(listener);
-            }
-
-            private void VerifyIfStartIsReady()
-            {
-                bool ready = true;
-                foreach (PlayerConfigUI input in this.playerConfigUIs)
-                {
-                    if (input.IsActive())
-                    {
-                        ready &= input.IsValid();
-                    }
-                }
-                this.startButton.interactable = ready;
-            }
-
-            private void OnClickStart()
-            {
-                this.onGameStart.Invoke(new OnGameStartPayload
-                {
-                    PlayerConfigs = this.playerConfigUIs
-                        .FindAll(input => input.gameObject.activeInHierarchy)
-                        .Select(input => input.GetPlayerConfig())
-                        .ToList()
-                });
-            }
-
-            public Button GetFirstButton()
-            {
-                return this.playerCountButtons[0];
-            }
-
-            public TMP_InputField GetFirstInput()
-            {
-                return this.playerConfigUIs[0].GetInput();
-            }
-
-            private void InitializePlayerNames(int playerCount)
-            {
-                List<string> names = new();
-                while (names.Count < playerCount)
-                {
-                    string name = ListUtils.GetRandomElement(this.defaultPlayerNames);
-                    if (!names.Contains(name))
-                    {
-                        names.Add(name);
-                    }
-                }
-                for (int idx = 0; idx < playerCount; idx++)
-                {
-                    this.playerConfigUIs[idx + 1].SetPlayerName(names[idx]);
-                }
+                this.introStep.gameObject.SetActive(false);
+                this.setupStep.gameObject.SetActive(true);
             }
         }
     }

@@ -24,6 +24,7 @@ namespace Azul
             [SerializeField] private PlayerUI playerUIPrefab;
             [SerializeField] private Camera playerBoardPreviewCamera;
             [SerializeField] private PlayerBoardPreviewUI playerBoardPreviewUIPrefab;
+            [SerializeField] private PlayerConfigUI playerConfigUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
             [SerializeField] private PreviewingBannerUI previewBannerUIPrefab;
             [SerializeField] private RewardPreviewPanelUI rewardPreviewPanelUIPrefab;
@@ -132,6 +133,11 @@ namespace Azul
             public PlayerBoardPreviewUI CreatePlayerBoardPreviewUI(Transform parent)
             {
                 return Instantiate(this.playerBoardPreviewUIPrefab, parent ? parent : this.canvas.transform);
+            }
+
+            public PlayerConfigUI CreatePlayerConfigUI(Transform parent)
+            {
+                return Instantiate(this.playerConfigUIPrefab, parent);
             }
 
             public PlayerTurnBannerUI CreatePlayerTurnBannerUI(string layer = null)
