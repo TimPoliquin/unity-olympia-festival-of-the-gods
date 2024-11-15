@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.Prefab;
+using Unity.Profiling;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ namespace Azul
             [SerializeField] private Canvas canvas;
             [SerializeField] private List<TokenPrefab> tokenPrefabs;
             [SerializeField] private AcquireTilesPanelUI acquireTilesPanelUIPrefab;
+            [SerializeField] private BlackScreenUI blackScreenUIPrefab;
             [SerializeField] private ExplosionEffect explosionEffectPrefab;
+            [SerializeField] private GameEndUI gameEndUIPrefab;
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
             [SerializeField] private HadesTokenPanelUI hadesTokenPanelUIPrefab;
@@ -25,13 +28,16 @@ namespace Azul
             [SerializeField] private Camera playerBoardPreviewCamera;
             [SerializeField] private PlayerBoardPreviewUI playerBoardPreviewUIPrefab;
             [SerializeField] private PlayerConfigUI playerConfigUIPrefab;
+            [SerializeField] private PlayerStatsUI playerStatsUIPrefab;
             [SerializeField] private PlayerTurnBannerUI playerTurnBannerUIPrefab;
             [SerializeField] private PreviewingBannerUI previewBannerUIPrefab;
             [SerializeField] private RewardPreviewPanelUI rewardPreviewPanelUIPrefab;
             [SerializeField] private RewardProgressFieldUI rewardProgressFieldUIPrefab;
             [SerializeField] private RewardRitualUI rewardRitualUIPrefab;
-            [SerializeField] private RoundStartUI roundStartUIPrefab;
+            [SerializeField] private RitualNumberIconUI ritualNumberIconUIPrefab;
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
+            [SerializeField] private RoundStartUI roundStartUIPrefab;
+            [SerializeField] private ScoringIconUI scoringIconUIPrefab;
             [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
             [SerializeField] private ScoreTilesPreviewPanelUI scoreTilesPreviewPanelUIPrefab;
@@ -76,12 +82,21 @@ namespace Azul
                 AcquireTilesPanelUI panel = Instantiate(this.acquireTilesPanelUIPrefab, this.canvas.transform);
                 this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
                 return panel;
+            }
 
+            public BlackScreenUI CreateBlackScreenUI()
+            {
+                return Instantiate(this.blackScreenUIPrefab, this.canvas.transform);
             }
 
             public ExplosionEffect CreateExplosionEffect(Transform parent = null)
             {
                 return Instantiate(this.explosionEffectPrefab, parent);
+            }
+
+            public GameEndUI CreateGameEndUI()
+            {
+                return Instantiate(this.gameEndUIPrefab, this.canvas.transform);
             }
 
             public GodScoreUI CreateGodScoreUI()
@@ -140,6 +155,11 @@ namespace Azul
                 return Instantiate(this.playerConfigUIPrefab, parent);
             }
 
+            public PlayerStatsUI CreatePlayerStatsUI(Transform parent)
+            {
+                return Instantiate(this.playerStatsUIPrefab, parent);
+            }
+
             public PlayerTurnBannerUI CreatePlayerTurnBannerUI(string layer = null)
             {
                 PlayerTurnBannerUI panel = Instantiate(this.playerTurnBannerUIPrefab, this.canvas.transform);
@@ -175,9 +195,21 @@ namespace Azul
                 return roundStartUI;
             }
 
+            public RitualNumberIconUI CreateRitualNumberIconUI(int ritualNumber)
+            {
+                RitualNumberIconUI ritualNumberIconUI = Instantiate(this.ritualNumberIconUIPrefab);
+                ritualNumberIconUI.SetRitualNumber(ritualNumber);
+                return ritualNumberIconUI;
+            }
+
             public RitualScoreUI CreateRitualScoreUI()
             {
                 return Instantiate(this.ritualScoreUIPrefab, this.canvas.transform);
+            }
+
+            public ScoringIconUI CreateScoringIconUI()
+            {
+                return Instantiate(this.scoringIconUIPrefab, this.canvas.transform);
             }
 
             public ScoreTilesPreviewPanelUI CreateScoreTilesPreviewPanelUI()

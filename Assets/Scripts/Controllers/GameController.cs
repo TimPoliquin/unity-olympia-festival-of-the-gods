@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azul.GameEvents;
+using Azul.OnGameEndEvents;
 using Azul.ScoreBoardEvents;
 using UnityEngine;
 using UnityEngine.Events;
@@ -66,21 +68,11 @@ namespace Azul
                 scoreBoardController.InitializeListeners();
                 tableController.InitializeListeners();
                 uIController.InitializeListeners();
-                scoreBoardController.AddOnScoreBoardUpdatedListener(this.OnScoreUpdate);
                 // populate the table
                 tableController.AddPlayerBoards(playerBoardController.GetPlayerBoards());
                 tableController.AddFactories(factoryController.GetFactories());
                 // Start the first round!   
                 roundController.StartRound();
-            }
-
-            private void OnScoreUpdate(OnScoreBoardUpdatePayload payload)
-            {
-                UnityEngine.Debug.Log("Scores updated!");
-                for (int idx = 0; idx < payload.Scores.Count; idx++)
-                {
-                    UnityEngine.Debug.Log($"Player {idx + 1}: {payload.Scores[idx]}");
-                }
             }
 
             public void AddOnGameSetupCompleteListener(UnityAction<OnGameSetupCompletePayload> listener)

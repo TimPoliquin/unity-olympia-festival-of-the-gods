@@ -480,6 +480,25 @@ namespace Azul
             {
                 return this.isPlacingTiles;
             }
+
+            public List<TileColor> GetCompletedAltarColors(int playerNumber)
+            {
+                PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
+                return playerBoard.GetAltars()
+                    .Where(altar => altar.IsFilled())
+                    .Select(altar => altar.GetColor())
+                    .ToList();
+            }
+
+            public List<int> GetCompletedRitualNumbers(int playerNumber)
+            {
+                List<int> ritualNumbers = new() { 1, 2, 3, 4 };
+                PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
+                List<Altar> altars = playerBoard.GetAltars();
+                return ritualNumbers
+                    .Where(ritualNumber => altars.All(altar => altar.IsSpaceFilled(ritualNumber)))
+                    .ToList();
+            }
         }
     }
 }

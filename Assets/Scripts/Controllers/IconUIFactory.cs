@@ -93,9 +93,9 @@ namespace Azul
                 iconUI.SetFrameColor(this.GetFrameColor(color));
             }
 
-            public IconUI Create(TileColor color, Transform parent)
+            public IconUI Create(TileColor color, Transform parent = null)
             {
-                IconUI iconUI = Instantiate(this.iconUIPrefab, parent);
+                IconUI iconUI = Instantiate(this.iconUIPrefab, parent ? parent : null);
                 this.SetIconValues(iconUI, color);
                 return iconUI;
             }

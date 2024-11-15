@@ -10,6 +10,7 @@ namespace Azul
     {
         public class UIController : MonoBehaviour
         {
+            private BlackScreenUIController blackScreenUIController;
             private GameEndUIController gameEndUIController;
             private GameStartUIController gameStartUIController;
             private HadesTokenPanelUIController hadesTokenPanelUIController;
@@ -31,6 +32,15 @@ namespace Azul
                 this.GetScoreTileSelectionUIController().InitializeListeners();
                 this.GetSelectRewardUIController().InitializeListeners();
                 this.GetStarUIController().InitializeListeners();
+            }
+
+            public BlackScreenUIController GetBlackScreenUIController()
+            {
+                if (null == this.blackScreenUIController)
+                {
+                    this.blackScreenUIController = this.GetComponentInChildren<BlackScreenUIController>();
+                }
+                return this.blackScreenUIController;
             }
 
             public GameEndUIController GetGameEndUIController()

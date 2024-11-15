@@ -84,6 +84,31 @@ namespace Azul
                     return max;
                 }
 
+                public ColoredValue<int> GetMinColor(TileColor wildColor)
+                {
+                    ColoredValue<int> min = this.TileCounts[0].ToColoredValue();
+                    if (min.GetTileColor() == wildColor)
+                    {
+                        // if the color is wild, then it only counts for 1.
+                        min = ColoredValue<int>.Create(wildColor, Math.Min(min.GetValue(), 1));
+                    }
+                    foreach (TileCount tileCount in this.TileCounts)
+                    {
+                        if (tileCount.TileColor != wildColor)
+                        {
+                            if (min.GetTileColor() == wildColor)
+                            {
+                                min = tileCount.ToColoredValue();
+                            }
+                            else if (min.GetValue() > tileCount.Count)
+                            {
+                                min = tileCount.ToColoredValue();
+                            }
+                        }
+                    }
+                    return min;
+                }
+
                 public bool HasColor(TileColor color)
                 {
                     return this.TileCounts.Any(count => count.TileColor == color && count.Count > 0);

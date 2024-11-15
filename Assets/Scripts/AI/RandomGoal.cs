@@ -296,12 +296,25 @@ namespace Azul
                     }
                     if (updateChoice)
                     {
-                        choice = new AcquireTileChoice()
+                        if (tileProviderCount.Provider.HasHadesToken())
                         {
-                            Provider = tileProviderCount.Provider,
-                            TileColor = localMax.GetTileColor(),
-                            Count = localMax.GetValue()
-                        };
+                            ColoredValue<int> min = tileProviderCount.GetMinColor(wildColor);
+                            choice = new AcquireTileChoice()
+                            {
+                                Provider = tileProviderCount.Provider,
+                                TileColor = min.GetTileColor(),
+                                Count = min.GetValue(),
+                            };
+                        }
+                        else
+                        {
+                            choice = new AcquireTileChoice()
+                            {
+                                Provider = tileProviderCount.Provider,
+                                TileColor = localMax.GetTileColor(),
+                                Count = localMax.GetValue()
+                            };
+                        }
                     }
                 }
                 this.DrawFromProvider(choice.Provider, choice.TileColor, wildColor);
