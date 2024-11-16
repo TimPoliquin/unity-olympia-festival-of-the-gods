@@ -4,7 +4,6 @@ using System.Linq;
 using Azul.Model;
 using Azul.OnGameEndEvents;
 using Azul.Util;
-using Castle.DynamicProxy;
 using UnityEngine;
 
 namespace Azul
