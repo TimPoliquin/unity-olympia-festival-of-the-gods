@@ -6,6 +6,7 @@ using Azul.Provider;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 namespace Azul
 {
@@ -38,15 +39,12 @@ namespace Azul
 
         void Awake()
         {
-            if (null == Instance)
+
+            if (null != Instance)
             {
-                Instance = this;
-                DontDestroyOnLoad(this.gameObject);
+                Destroy(Instance);
             }
-            else
-            {
-                Destroy(this.gameObject);
-            }
+            Instance = this;
         }
 
         public AIController GetAIController()
@@ -255,6 +253,11 @@ namespace Azul
         public void Resume()
         {
             Time.timeScale = 1;
+        }
+
+        public void PlayAgain()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
