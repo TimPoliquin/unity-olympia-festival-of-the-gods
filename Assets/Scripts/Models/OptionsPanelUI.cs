@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Azul.GraphicsSettings;
 using Azul.OptionsEvents;
-using log4net.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
