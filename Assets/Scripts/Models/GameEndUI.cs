@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Animation;
 using Azul.OnGameEndEvents;
+using Azul.Util;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -11,28 +13,42 @@ namespace Azul
 
     namespace Model
     {
+        [RequireComponent(typeof(Fade))]
         public class GameEndUI : MonoBehaviour
         {
-            [SerializeField] private TextMeshProUGUI winnerNameText;
-            [SerializeField] private GameObject scoresContainer;
-            [SerializeField] private Button playAgain;
-            [SerializeField] private Button quit;
+            [SerializeField] private GameObject playerStatsContainer;
+            [SerializeField] private RectTransform panelContainer;
+            [SerializeField] private float defaultPanelHeight = 350f;
+            [SerializeField] private float rowHeight = 64f;
+            [SerializeField] private Fade playerStatsFade;
+            [SerializeField] private Fade buttonsFade;
+            [SerializeField] private ButtonUI playAgain;
+            [SerializeField] private ButtonUI quit;
+
+            private Fade fade;
 
             void Awake()
             {
-                this.playAgain.onClick.AddListener(this.OnPlayAgain);
-                this.quit.onClick.AddListener(this.OnQuit);
+                this.playAgain.AddOnClickListener(this.OnPlayAgain);
+                this.quit.AddOnClickListener(this.OnQuit);
+                this.fade = this.GetComponent<Fade>();
+                this.fade.StartHidden();
+                this.playerStatsFade.StartHidden();
+                this.buttonsFade.StartHidden();
             }
 
-            public void SetWinnerName(string winnerName)
+            public GameObject GetPlayerStatsContainer()
             {
-                this.winnerNameText.text = winnerName;
+                return this.playerStatsContainer;
             }
 
-            public void AddScoreRow(ScoreRowUI prefab, string playerName, int score)
+            public void SetPlayerCount(int playerCount)
             {
-                ScoreRowUI scoreRowUI = Instantiate(prefab, this.scoresContainer.transform);
-                scoreRowUI.SetValues(playerName, score);
+                float verticalScale = this.panelContainer.rect.height / 350f;
+                float scaledRowHeight = this.rowHeight * verticalScale;
+                float reductionFactor = 4 - playerCount;
+                this.panelContainer.sizeDelta = new Vector2(this.panelContainer.rect.width, this.defaultPanelHeight * verticalScale - reductionFactor * scaledRowHeight);
+                this.panelContainer.position = new Vector2(this.panelContainer.position.x, -1 * this.panelContainer.rect.height);
             }
 
             private void OnPlayAgain()
@@ -42,11 +58,22 @@ namespace Azul
 
             private void OnQuit()
             {
-#if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+                System.Instance.Quit();
+            }
+
+            public CoroutineResult Show()
+            {
+                return this.fade.Show();
+            }
+
+            public CoroutineResult ShowPlayerStats()
+            {
+                return this.playerStatsFade.Show();
+            }
+
+            public CoroutineResult ShowButtons()
+            {
+                return this.buttonsFade.Show();
             }
         }
     }

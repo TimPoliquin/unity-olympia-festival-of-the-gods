@@ -55,7 +55,10 @@ namespace Azul
             {
                 System.Instance.GetPlayerController().ContinueTurn();
                 System.Instance.GetUIController().GetStarUIController().Show();
-                System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
+                if (System.Instance.GetPlayerController().GetCurrentPlayer().IsHuman())
+                {
+                    System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
+                }
             }
 
             IEnumerator PlayAltarMilestoneCompletionEvent(OnAltarMilestoneCompletedPayload payload)

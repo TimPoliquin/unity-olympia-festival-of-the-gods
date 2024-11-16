@@ -39,7 +39,7 @@ namespace Azul
                         Score = scoreBoardController.GetPlayerScore(player.GetPlayerNumber())
                     });
                 }
-                playerScores = playerScores.OrderBy(score => score.Score).Reverse().ToList();
+                playerScores = playerScores.OrderByDescending(score => score.Score).ToList();
                 return new OnGameEndPayload
                 {
                     Winner = playerScores[0].Player,
@@ -49,17 +49,18 @@ namespace Azul
 
             private IEnumerator FinaleCoroutine(OnGameEndPayload payload)
             {
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(.5f);
+                yield return System.Instance.GetUIController().GetBlackScreenUIController().FadeToBlack(1.0f).WaitUntilCompleted();
                 // move camera to winning player board
                 yield return this.MoveCameraToWinnerPlayerBoard(payload).WaitUntilCompleted();
+                yield return System.Instance.GetUIController().GetBlackScreenUIController().FadeIn(1.0f).WaitUntilCompleted();
                 // show UI
-                System.Instance.GetUIController().GetGameEndUIController().OnGameEnd(payload);
+                System.Instance.GetUIController().GetGameEndUIController().ShowGameEnd(payload);
                 // spin the camera
                 while (true)
                 {
                     yield return this.RotateCameraAroundWinnerBoard(payload).WaitUntilCompleted();
                 }
-
             }
 
             private CoroutineResult MoveCameraToWinnerPlayerBoard(OnGameEndPayload payload)
