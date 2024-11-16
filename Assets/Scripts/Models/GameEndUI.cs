@@ -53,7 +53,7 @@ namespace Azul
 
             private void OnPlayAgain()
             {
-                // UH OH!
+                System.Instance.PlayAgain();
             }
 
             private void OnQuit()
