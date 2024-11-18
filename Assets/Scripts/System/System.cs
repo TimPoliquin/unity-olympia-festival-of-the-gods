@@ -30,8 +30,6 @@ namespace Azul
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
         private ScreenController screenController;
-        private SteamManager steamManager;
-
         private TableController tableController;
         private TileController tileController;
         private TileColorMappingController tileColorMappingController;
@@ -173,15 +171,6 @@ namespace Azul
                 this.screenController = this.GetComponentInChildren<ScreenController>();
             }
             return this.screenController;
-        }
-
-        public SteamManager GetSteamManager()
-        {
-            if (null == this.steamManager)
-            {
-                this.steamManager = this.GetComponentInChildren<SteamManager>();
-            }
-            return this.steamManager;
         }
 
         public AltarFactory GetStarController()
