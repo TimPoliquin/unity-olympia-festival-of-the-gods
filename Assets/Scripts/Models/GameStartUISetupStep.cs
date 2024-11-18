@@ -150,7 +150,7 @@ namespace Azul
 
             private List<string> CreatePlayerNames(int playerCount)
             {
-                List<string> names = new() { "Player 1" };
+                List<string> names = new() { System.Instance.GetUsername() };
                 while (names.Count < playerCount)
                 {
                     string name = ListUtils.GetRandomElement(this.defaultPlayerNames);

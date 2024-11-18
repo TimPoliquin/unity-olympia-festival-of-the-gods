@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Azul.Controller;
 using Azul.Model;
 using Azul.Provider;
+using Steamworks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -29,7 +30,6 @@ namespace Azul
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
         private ScreenController screenController;
-
         private TableController tableController;
         private TileController tileController;
         private TileColorMappingController tileColorMappingController;
@@ -258,6 +258,17 @@ namespace Azul
         public void PlayAgain()
         {
             SceneManager.LoadScene(0);
+        }
+
+        public string GetUsername()
+        {
+# if !DISABLESTEAMWORKS
+            if (SteamManager.Initialized)
+            {
+                return SteamFriends.GetPersonaName();
+            }
+# endif
+            return "Player 1";
         }
     }
 }
