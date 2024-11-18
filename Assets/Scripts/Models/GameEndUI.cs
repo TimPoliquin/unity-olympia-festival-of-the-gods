@@ -44,11 +44,10 @@ namespace Azul
 
             public void SetPlayerCount(int playerCount)
             {
-                float verticalScale = this.panelContainer.rect.height / 350f;
+                float verticalScale = this.panelContainer.sizeDelta.y / 350f;
                 float scaledRowHeight = this.rowHeight * verticalScale;
                 float reductionFactor = 4 - playerCount;
-                this.panelContainer.sizeDelta = new Vector2(this.panelContainer.rect.width, this.defaultPanelHeight * verticalScale - reductionFactor * scaledRowHeight);
-                this.panelContainer.position = new Vector2(this.panelContainer.position.x, -1 * this.panelContainer.rect.height);
+                this.panelContainer.sizeDelta = new Vector2(this.panelContainer.sizeDelta.x, this.defaultPanelHeight * verticalScale - reductionFactor * scaledRowHeight);
             }
 
             private void OnPlayAgain()
