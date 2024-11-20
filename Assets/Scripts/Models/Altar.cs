@@ -120,7 +120,7 @@ namespace Azul
                 }
             }
 
-            public CoroutineResult Fade(float time, float target)
+            public CoroutineStatus Fade(float time, float target)
             {
                 Material[] materials = this.GetComponentsInChildren<MeshRenderer>().Select(renderer => renderer.material).ToArray();
                 Dictionary<Material, Transition<float>> materialColors = new();
@@ -159,7 +159,7 @@ namespace Azul
                 }, time);
             }
 
-            public CoroutineResult TurnOnMilestoneCompletionLight(Color color, float intensity, float time)
+            public CoroutineStatus TurnOnMilestoneCompletionLight(Color color, float intensity, float time)
             {
                 this.milestoneCompletionLight.gameObject.SetActive(true);
                 this.milestoneCompletionLight.color = color;

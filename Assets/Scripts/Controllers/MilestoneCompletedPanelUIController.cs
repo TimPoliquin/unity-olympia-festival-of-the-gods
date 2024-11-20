@@ -12,7 +12,7 @@ namespace Azul
         {
             private MilestoneCompletedPanelUI currentPanel;
 
-            public CoroutineResult Show(TileColor tileColor)
+            public CoroutineStatus Show(TileColor tileColor)
             {
                 if (null != this.currentPanel)
                 {
@@ -23,7 +23,7 @@ namespace Azul
                 return this.currentPanel.Show(tileColorMappingController.GetGodName(tileColor), tileColor, tileColorMappingController.GetGodPoints(tileColor));
             }
 
-            public CoroutineResult Show(int ritualNumber)
+            public CoroutineStatus Show(int ritualNumber)
             {
                 if (null != this.currentPanel)
                 {
@@ -34,7 +34,7 @@ namespace Azul
 
             }
 
-            public CoroutineResult AnimateScore(int playerNumber, float time)
+            public CoroutineStatus AnimateScore(int playerNumber, float time)
             {
                 return this.currentPanel.AnimateScoreToPoint(
                     System.Instance.GetUIController().GetPlayerUIController().GetScoreScreenPosition(playerNumber),
@@ -43,27 +43,27 @@ namespace Azul
                 );
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
-                CoroutineResult result = CoroutineResult.Single();
+                CoroutineStatus status = CoroutineStatus.Single();
                 if (null != this.currentPanel && this.currentPanel.gameObject.activeInHierarchy)
                 {
-                    this.StartCoroutine(this.HideCoroutine(this.currentPanel, result));
+                    this.StartCoroutine(this.HideCoroutine(this.currentPanel, status));
                     this.currentPanel = null;
                 }
                 else
                 {
-                    result.Finish();
+                    status.Finish();
                 }
-                return result;
+                return status;
             }
 
-            private IEnumerator HideCoroutine(MilestoneCompletedPanelUI panel, CoroutineResult result)
+            private IEnumerator HideCoroutine(MilestoneCompletedPanelUI panel, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 yield return panel.Hide().WaitUntilCompleted();
                 Destroy(panel.gameObject);
-                result.Finish();
+                status.Finish();
             }
 
         }

@@ -62,13 +62,13 @@ namespace Azul
                 }
             }
 
-            private CoroutineResult MoveCameraToWinnerPlayerBoard(OnGameEndPayload payload)
+            private CoroutineStatus MoveCameraToWinnerPlayerBoard(OnGameEndPayload payload)
             {
                 PlayerBoard winnerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(payload.Winner.GetPlayerNumber());
                 return System.Instance.GetCameraController().FocusMainCameraOnPlayerBoard(winnerBoard, 1f);
             }
 
-            private CoroutineResult RotateCameraAroundWinnerBoard(OnGameEndPayload payload)
+            private CoroutineStatus RotateCameraAroundWinnerBoard(OnGameEndPayload payload)
             {
                 // rotate the camera around the object
                 Camera camera = System.Instance.GetCameraController().GetMainCamera();

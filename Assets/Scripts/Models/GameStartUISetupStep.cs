@@ -135,6 +135,7 @@ namespace Azul
                 {
                     playerConfigUI.SetPlayerType(PlayerType.HUMAN);
                     playerConfigUI.SetPlayerTypeInteractable(false);
+                    playerConfigUI.SetPlayerUserName(name);
                 }
                 else
                 {

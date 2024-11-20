@@ -42,17 +42,17 @@ namespace Azul
             }
 
 
-            public CoroutineResult OnStarTilePlaced(PlayerBoard playerBoard, Altar altar, AltarSpace space)
+            public CoroutineStatus OnStarTilePlaced(PlayerBoard playerBoard, Altar altar, AltarSpace space)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                result.Start();
+                CoroutineStatus status = CoroutineStatus.Single();
+                status.Start();
                 if (altar.GetFilledSpaces().Count == altar.GetNumberOfSpaces())
                 {
                     this.onAltarMilestoneComplete.Invoke(new OnAltarMilestoneCompletedPayload
                     {
                         PlayerNumber = this.playerBoard.GetPlayerNumber(),
                         CompletedMilestone = altar,
-                        Done = () => result.Finish(),
+                        Done = () => status.Finish(),
                     }
                     );
                 }
@@ -62,15 +62,15 @@ namespace Azul
                     {
                         PlayerNumber = this.playerBoard.GetPlayerNumber(),
                         Value = space.GetValue(),
-                        Done = () => result.Finish(),
+                        Done = () => status.Finish(),
                     }
                     );
                 }
                 else
                 {
-                    result.Finish();
+                    status.Finish();
                 }
-                return result;
+                return status;
             }
 
             public void AddOnAltarMilestoneCompleteListener(UnityAction<OnAltarMilestoneCompletedPayload> listener)

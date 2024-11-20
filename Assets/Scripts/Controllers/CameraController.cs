@@ -203,16 +203,16 @@ namespace Azul
                 return position.x >= 0 & position.x <= 1 && position.y >= 0 && position.y <= 1 && position.z > 0;
             }
 
-            public CoroutineResult FocusMainCameraOnAltar(Altar altar, float rotationTime)
+            public CoroutineStatus FocusMainCameraOnAltar(Altar altar, float rotationTime)
             {
                 return this.FocusCameraOnGameObject(this.mainCamera, altar.gameObject, this.altarSettings, rotationTime);
             }
-            public CoroutineResult FocusMainCameraOnPlayerBoard(PlayerBoard playerBoard, float rotationTime)
+            public CoroutineStatus FocusMainCameraOnPlayerBoard(PlayerBoard playerBoard, float rotationTime)
             {
                 return this.FocusCameraOnGameObject(this.mainCamera, playerBoard.gameObject, this.finaleSettings, rotationTime);
             }
 
-            public CoroutineResult FocusCameraOnGameObject(Camera camera, GameObject target, CameraSettings settings, float time)
+            public CoroutineStatus FocusCameraOnGameObject(Camera camera, GameObject target, CameraSettings settings, float time)
             {
                 Vector3 targetRotation = settings.GetRotation().eulerAngles;
                 targetRotation.y = camera.transform.rotation.eulerAngles.y;
@@ -221,7 +221,7 @@ namespace Azul
 
             }
 
-            public CoroutineResult AnimateFocusMainCameraOnPlayerBoard(int playerNumber, float time)
+            public CoroutineStatus AnimateFocusMainCameraOnPlayerBoard(int playerNumber, float time)
             {
                 PlayerController playerController = System.Instance.GetPlayerController();
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
@@ -234,19 +234,19 @@ namespace Azul
                 return this.RefocusCameraAnimated(this.mainCamera, targetPosition, targetRotation, this.scoreSettings.GetSize(), time);
             }
 
-            public CoroutineResult RefocusCameraAnimated(Camera camera, Vector3 targetPosition, Vector3 targetRotation, float targetSize, float time)
+            public CoroutineStatus RefocusCameraAnimated(Camera camera, Vector3 targetPosition, Vector3 targetRotation, float targetSize, float time)
             {
                 Vector3 originalPosition = camera.transform.position;
                 Quaternion originalRotation = camera.transform.rotation;
                 float originalSize = camera.orthographicSize;
-                CoroutineResult result = this.Execute((t) =>
+                CoroutineStatus status = this.Execute((t) =>
                 {
                     camera.transform.rotation = Quaternion.Lerp(originalRotation, Quaternion.Euler(targetRotation), t / time);
                     camera.transform.position = Vector3.Lerp(originalPosition, targetPosition, t / time);
                     camera.orthographicSize = Mathf.Lerp(originalSize, targetSize, t / time);
 
                 }, time);
-                return result;
+                return status;
             }
             private IEnumerator PreviewCameraUpdateCoroutine()
             {
@@ -259,16 +259,16 @@ namespace Azul
                 this.DisablePreviewCameras();
             }
 
-            public CoroutineResult RotateCameraAroundPoint(Vector3 position, float radius, float duration)
+            public CoroutineStatus RotateCameraAroundPoint(Vector3 position, float radius, float duration)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.RotateCameraAroundPointCoroutine(this.mainCamera, position, radius, duration, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.RotateCameraAroundPointCoroutine(this.mainCamera, position, radius, duration, status));
+                return status;
             }
 
-            private IEnumerator RotateCameraAroundPointCoroutine(Camera camera, Vector3 position, float radius, float duration, CoroutineResult result)
+            private IEnumerator RotateCameraAroundPointCoroutine(Camera camera, Vector3 position, float radius, float duration, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 float timeRemaining = duration;
                 while (timeRemaining > 0)
                 {
@@ -276,7 +276,7 @@ namespace Azul
                     camera.transform.RotateAround(position, Vector3.down, Time.deltaTime * (360f / duration));
                     yield return null;
                 }
-                result.Finish();
+                status.Finish();
             }
         }
 

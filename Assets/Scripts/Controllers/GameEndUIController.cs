@@ -45,16 +45,16 @@ namespace Azul
                     });
                 }
             }
-            public CoroutineResult ShowGameEnd(OnGameEndPayload payload)
+            public CoroutineStatus ShowGameEnd(OnGameEndPayload payload)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.ShowGameEndCoroutine(payload, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.ShowGameEndCoroutine(payload, status));
+                return status;
             }
 
-            private IEnumerator ShowGameEndCoroutine(OnGameEndPayload payload, CoroutineResult result)
+            private IEnumerator ShowGameEndCoroutine(OnGameEndPayload payload, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 GameEndUI gameEndUI = System.Instance.GetPrefabFactory().CreateGameEndUI();
                 gameEndUI.SetPlayerCount(payload.PlayerScores.Count);
                 foreach (PlayerScore playerScore in payload.PlayerScores)
@@ -64,7 +64,7 @@ namespace Azul
                 yield return gameEndUI.Show().WaitUntilCompleted();
                 yield return gameEndUI.ShowPlayerStats();
                 yield return gameEndUI.ShowButtons();
-                result.Finish();
+                status.Finish();
             }
 
 

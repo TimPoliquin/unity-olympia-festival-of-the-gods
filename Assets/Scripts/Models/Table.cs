@@ -76,16 +76,16 @@ namespace Azul
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = new() { tile } });
             }
 
-            public CoroutineResult AddToCenter(List<Tile> tiles)
+            public CoroutineStatus AddToCenter(List<Tile> tiles)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.MoveToCenterCoroutine(tiles, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.MoveToCenterCoroutine(tiles, status));
+                return status;
             }
 
-            private IEnumerator MoveToCenterCoroutine(List<Tile> tiles, CoroutineResult result)
+            private IEnumerator MoveToCenterCoroutine(List<Tile> tiles, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 FactoryController factoryController = System.Instance.GetFactoryController();
                 float minX = this.center.transform.position.x;
                 float maxX = this.center.transform.position.x;
@@ -103,7 +103,7 @@ namespace Azul
                 float width = (Mathf.Abs(minX) + Mathf.Abs(maxX)) / 2.0f;
                 float scale = width > this.centerWidth ? this.centerWidth / width : width / this.centerWidth;
                 TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
-                yield return CoroutineResult.Multi(tiles.Select((tile, idx) =>
+                yield return CoroutineStatus.Multi(tiles.Select((tile, idx) =>
                 {
                     float x = tile.transform.position.x * scale + Random.Range(-1f, 1f);
                     float z = this.center.transform.position.z - this.centerDepth / 2f + idx * this.centerDepth * 2f / tiles.Count + Random.Range(0f, 2f);
@@ -120,7 +120,7 @@ namespace Azul
                 }).ToArray()).WaitUntilCompleted();
                 this.tiles.AddRange(tiles);
                 this.onAddTiles.Invoke(new OnTableAddTilesPayload { Tiles = tiles });
-                result.Finish();
+                status.Finish();
             }
 
             public void DrawTiles(List<Tile> drawnTiles)

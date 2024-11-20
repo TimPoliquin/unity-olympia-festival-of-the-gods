@@ -29,16 +29,16 @@ namespace Azul
             {
                 return this.isAnimating;
             }
-            public CoroutineResult MoveTiles(List<Tile> tiles, TilesMoveConfig config)
+            public CoroutineStatus MoveTiles(List<Tile> tiles, TilesMoveConfig config)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.MoveMultipleCoroutine(tiles, config, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.MoveMultipleCoroutine(tiles, config, status));
+                return status;
             }
 
-            private IEnumerator MoveMultipleCoroutine(List<Tile> tiles, TilesMoveConfig config, CoroutineResult result)
+            private IEnumerator MoveMultipleCoroutine(List<Tile> tiles, TilesMoveConfig config, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 this.isAnimating = true;
                 for (int idx = 0; idx < tiles.Count; idx++)
                 {
@@ -49,7 +49,7 @@ namespace Azul
                     yield return new WaitForSeconds(config.Delay);
                 }
                 this.isAnimating = false;
-                result.Finish();
+                status.Finish();
             }
 
             private IEnumerator MoveCoroutine(Tile tile, int idx, TilesMoveConfig tileMoveConfig)

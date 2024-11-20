@@ -47,6 +47,7 @@ namespace Azul
             [SerializeField] private string playerName;
             [SerializeField] private PlayerColor color;
             [SerializeField] private PlayerType playerType;
+            private string userName;
 
             public int GetPlayerNumber()
             {
@@ -56,6 +57,11 @@ namespace Azul
             public string GetPlayerName()
             {
                 return this.playerName;
+            }
+
+            public string GetUsername()
+            {
+                return this.userName;
             }
 
             public PlayerColor GetPlayerColor()
@@ -73,11 +79,12 @@ namespace Azul
                 return this.playerType == PlayerType.HUMAN;
             }
 
-            public void Initialize(int playerNumber, string playerName, PlayerType playerType)
+            public void Initialize(int playerNumber, string playerName, PlayerType playerType, string userName)
             {
                 this.playerNumber = playerNumber;
                 this.playerName = playerName;
                 this.playerType = playerType;
+                this.userName = userName;
             }
 
             public PlayerType GetPlayerType()

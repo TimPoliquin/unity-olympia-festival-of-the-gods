@@ -17,6 +17,7 @@ namespace Azul
             [SerializeField] private AcquireTilesPanelUI acquireTilesPanelUIPrefab;
             [SerializeField] private BlackScreenUI blackScreenUIPrefab;
             [SerializeField] private ExplosionEffect explosionEffectPrefab;
+            [SerializeField] private FirstTimePlayerPanelUI firstTimePlayerPanelUIPrefab;
             [SerializeField] private GameEndUI gameEndUIPrefab;
             [SerializeField] private GodScoreUI godScoreUI;
             [SerializeField] private GrantRewardTilesUI grantRewardTilesUIPrefab;
@@ -94,6 +95,13 @@ namespace Azul
                 return Instantiate(this.explosionEffectPrefab, parent);
             }
 
+            public FirstTimePlayerPanelUI CreateFirstTimePlayerPanelUI(string layer = null)
+            {
+                FirstTimePlayerPanelUI panel = Instantiate(this.firstTimePlayerPanelUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToLayer(layer, panel.gameObject);
+                return panel;
+            }
+
             public GameEndUI CreateGameEndUI()
             {
                 return Instantiate(this.gameEndUIPrefab, this.canvas.transform);
@@ -118,10 +126,10 @@ namespace Azul
                 return panel;
             }
 
-            public HelpPanelUI CreateHelpPanelUI()
+            public HelpPanelUI CreateHelpPanelUI(string layer)
             {
                 HelpPanelUI panel = Instantiate(this.helpPanelUIPrefab, this.canvas.transform);
-                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                this.GetPanelManagerController().AddToLayer(layer, panel.gameObject);
                 return panel;
             }
 

@@ -1,0 +1,1984 @@
+fileFormatVersion: 2
+guid: a8f035e86645949fca14e9bbe99afbb0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: asprite_boons_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8544
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89b12c2101e7b48c3aca3cf597217f5b
+      internalID: 1404298454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_1
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 8544
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6830d68f22af416e8ed19afdd8984a4
+      internalID: 902494519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_2
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 8544
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85d559ccc495946d68b65dcfc5d3d31f
+      internalID: 691767014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_3
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 8544
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae542b2bd688342df91fd86f583e1df3
+      internalID: 257752105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_4
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 8544
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfbe2424052d34f52a89ff92aebbf4eb
+      internalID: -394303716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8010
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa1d260b2d2e4a739e029993de19762
+      internalID: -394250044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_6
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 8010
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1f51d1755307475bb95ebe5cfbbef4e
+      internalID: -2105481188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 8010
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00778f54ad02a4e9e810939d5b706408
+      internalID: -114395559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 8010
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed4c9384deb6b452d8b5b072e95b4104
+      internalID: -223904860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_9
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 8010
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c8988fe6117c4c19a44a570ac328c98
+      internalID: 961055497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7476
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca107fb55f5db47d6942f6f8e4eac041
+      internalID: 1407070601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_11
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 7476
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 385c35f01b63a42aab10693416fba06a
+      internalID: -1012160075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_12
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 7476
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b83c4f17ceddb4891807a1de0cb75c22
+      internalID: 1113186958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_13
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 7476
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25791a78261424ec38a46ea13b217793
+      internalID: 1198773276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_14
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 7476
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26709612e04184dab87c5f527fa8755b
+      internalID: -318759084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6942
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6a1d3b04268c48b2b0d1eca486588a6
+      internalID: 563722833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_16
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 6942
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2007260346b4f4deea02d953912f89f7
+      internalID: 52102961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_17
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 6942
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4008efcec9d864eab9e23f039d3896f5
+      internalID: 978335150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_18
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 6942
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9948f2aafd6684bec8a4300559ff36d8
+      internalID: -792262829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_19
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 6942
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd7fd8e1340a04f9eb02ed741bf47315
+      internalID: -907571493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6408
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf8f10a20d74a470a9f05d9f756937af
+      internalID: 1146791465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_21
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 6408
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e90a15ba53a34cd5933d9ffc392739e
+      internalID: -1629501702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_22
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 6408
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e09e682c014724dbe9b543f5aa3a8921
+      internalID: 272761754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_23
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 6408
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 008d9c0e809d54e3599495b2fec7dc29
+      internalID: 1521108150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_24
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 6408
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 541c649ff7b0e4add9f83be8369d8b39
+      internalID: -1039331492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5874
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac848c91d00b40bb90334e74e2d236d
+      internalID: -1845226332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_26
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 5874
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c09eb6d268af4f2388003152a77bffb
+      internalID: 444420975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_27
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 5874
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d5b9c2278ff144a88f03ec4d49f22a4
+      internalID: -1779572982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_28
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 5874
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 124a996a3344948658b422e615065718
+      internalID: 1958161142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_29
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 5874
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 599355468c51645b8879a0a1ef4ee583
+      internalID: 1007356631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5340
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3134583575050435ca514fa7b5e80046
+      internalID: -1411679033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_31
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 5340
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9624f11b697484c06b0b3ad84a8be7ee
+      internalID: 1101456185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_32
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 5340
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38051f07311fc4fca910ec39f4163d34
+      internalID: 1177409129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_33
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 5340
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77470e260feba470188a5871c2a8b29e
+      internalID: -1065125366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_34
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 5340
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a9b0e8123d6447b3a80e2be3aad0776
+      internalID: 1493283419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4806
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b05ed097b6f49e788975f4e38066fb
+      internalID: 1854895963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_36
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4806
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 239c10fdb26d94a97a949a9bb9b2acbe
+      internalID: 974936089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_37
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4806
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0767c5816188a4d89987d9111b673cf6
+      internalID: 573282746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_38
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4806
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 859baaf0292d248e4bba0c061a8f4b11
+      internalID: -1492075521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_39
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4806
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f99d060fe71341a7aa9c0e652145b02
+      internalID: -811312380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4272
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ccc631005d724b3f8ab5d13c0a0be8c
+      internalID: -1188921638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_41
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4272
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c095a0227421941249299d6eb509627d
+      internalID: -2095034540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_42
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4272
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c95630754750419c958ace6dba22ded
+      internalID: 301989593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_43
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4272
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a51b28b0451a44757aa0e7c5120dc6c3
+      internalID: 1028501556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_44
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4272
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab64a247d6e7a4b4692e6202c57e149e
+      internalID: -1038651619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3738
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 087deaeccf3c34a72a7645df96075abc
+      internalID: 1052772991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_46
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3738
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a95e86c50bb0547789cb8ff2e22754de
+      internalID: 130371796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_47
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3738
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f143f29924aab42ea9b4855b4db3a278
+      internalID: 1946265871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_48
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3738
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e1b07cd14d3a47ed9368901b68879c3
+      internalID: -184429669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_49
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3738
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13526dcc51d01468190c02b339f766e8
+      internalID: 2038968726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3204
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b893bde32024abf80d4716474aa679
+      internalID: 722908286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_51
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3204
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dafe09b743934a6a89f62cc9aec5f32
+      internalID: 1632547223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_52
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3204
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9cc9d5badd514f429ee4a6d5916d930
+      internalID: -548451159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_53
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3204
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd3198a881ea8439bbdb0b4ee847737b
+      internalID: -421212272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_54
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3204
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729592af96e7b4cf5afa6569054a6439
+      internalID: -601144365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2670
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb38b8c0cb1a444fb9de80f91368a36d
+      internalID: -650889634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_56
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2670
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b77ab52040cd641ba93fb363fbed3090
+      internalID: 1028474654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_57
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2670
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a657c7f0881445d97499e006899657
+      internalID: 288154727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_58
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2670
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a1fa6e9cbb24f2b8bd1be0767e3a1c
+      internalID: 183362545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_59
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2670
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdf56e4cbfd4f49eca1976b6b01e8e77
+      internalID: 2068225363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2136
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac8aadd68e2004525a825877a1a6b2dc
+      internalID: 1171583681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_61
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2136
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b4f5e8411b7a45c285568e7a3c90083
+      internalID: 753496601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_62
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2136
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea4d1ecfeaaf4fd289c532684800690
+      internalID: -202395469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_63
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2136
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9203f578a88e5409eab5eacf4a47a76e
+      internalID: -1925480003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_64
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2136
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22f8e33143146436e89b39cf8f53415a
+      internalID: -1395338848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_65
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1602
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb919004e33c9442dac9e943a84a61c7
+      internalID: 123399742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_66
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1602
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e68d9f85405c4cb9a2a070b1b03c7c9
+      internalID: 1140939747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_67
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1602
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9a9f7635f8d34c678e339d7cd70c7ab
+      internalID: -438310013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_68
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1602
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1440c548397134a318cfe280c7bb6149
+      internalID: 1940082023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_69
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1602
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9fc41a7b509d420faf346e89b04da18
+      internalID: 237443368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1068
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67581a58b21a84240b01d53cfa01752d
+      internalID: -1484151742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_71
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1068
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1d5e0c34a084e4e93be49e7f5f0d2f
+      internalID: 1883425440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_72
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1068
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93348e855a495488e84aef3ffc4016d9
+      internalID: 1705590841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_73
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1068
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2446f69e89a8451e9c4a61f7c47613e
+      internalID: -327092503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_74
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1068
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b974d947cbf4922a69e9469f9633ad
+      internalID: -434808776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_75
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 534
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34ab7a12375fd42c29cd1b0fa41e819a
+      internalID: 1886034516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_76
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 534
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20b17a44e8a54c389559240e01feb6c
+      internalID: 551935332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_77
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 534
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1426e9ff8d76d4630bf72074830b10be
+      internalID: 1965905173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_78
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 534
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7212d2f7846447e8a47fcaa4a1b5ac
+      internalID: 1523260440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_79
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 534
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d046d273e24e74486a651d97f4b215b4
+      internalID: -1222370666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0624dc372d1ad45dbad968c007214878
+      internalID: 417697373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_81
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 936697e1606104cf09192c2bbc708806
+      internalID: 1336294496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_82
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ed15c1bef7eb4b13bcc5d010f97b261
+      internalID: -1365018663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_83
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3999b38a9459c4c1e81033551c2c3e2d
+      internalID: 144942793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_boons_84
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 960
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7931c1d8b4f54922b7013d7399f992d
+      internalID: -1960811955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 20cd72b4c87f6466fa63cd6857313e7b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      asprite_boons_0: 1404298454
+      asprite_boons_1: 902494519
+      asprite_boons_10: 1407070601
+      asprite_boons_11: -1012160075
+      asprite_boons_12: 1113186958
+      asprite_boons_13: 1198773276
+      asprite_boons_14: -318759084
+      asprite_boons_15: 563722833
+      asprite_boons_16: 52102961
+      asprite_boons_17: 978335150
+      asprite_boons_18: -792262829
+      asprite_boons_19: -907571493
+      asprite_boons_2: 691767014
+      asprite_boons_20: 1146791465
+      asprite_boons_21: -1629501702
+      asprite_boons_22: 272761754
+      asprite_boons_23: 1521108150
+      asprite_boons_24: -1039331492
+      asprite_boons_25: -1845226332
+      asprite_boons_26: 444420975
+      asprite_boons_27: -1779572982
+      asprite_boons_28: 1958161142
+      asprite_boons_29: 1007356631
+      asprite_boons_3: 257752105
+      asprite_boons_30: -1411679033
+      asprite_boons_31: 1101456185
+      asprite_boons_32: 1177409129
+      asprite_boons_33: -1065125366
+      asprite_boons_34: 1493283419
+      asprite_boons_35: 1854895963
+      asprite_boons_36: 974936089
+      asprite_boons_37: 573282746
+      asprite_boons_38: -1492075521
+      asprite_boons_39: -811312380
+      asprite_boons_4: -394303716
+      asprite_boons_40: -1188921638
+      asprite_boons_41: -2095034540
+      asprite_boons_42: 301989593
+      asprite_boons_43: 1028501556
+      asprite_boons_44: -1038651619
+      asprite_boons_45: 1052772991
+      asprite_boons_46: 130371796
+      asprite_boons_47: 1946265871
+      asprite_boons_48: -184429669
+      asprite_boons_49: 2038968726
+      asprite_boons_5: -394250044
+      asprite_boons_50: 722908286
+      asprite_boons_51: 1632547223
+      asprite_boons_52: -548451159
+      asprite_boons_53: -421212272
+      asprite_boons_54: -601144365
+      asprite_boons_55: -650889634
+      asprite_boons_56: 1028474654
+      asprite_boons_57: 288154727
+      asprite_boons_58: 183362545
+      asprite_boons_59: 2068225363
+      asprite_boons_6: -2105481188
+      asprite_boons_60: 1171583681
+      asprite_boons_61: 753496601
+      asprite_boons_62: -202395469
+      asprite_boons_63: -1925480003
+      asprite_boons_64: -1395338848
+      asprite_boons_65: 123399742
+      asprite_boons_66: 1140939747
+      asprite_boons_67: -438310013
+      asprite_boons_68: 1940082023
+      asprite_boons_69: 237443368
+      asprite_boons_7: -114395559
+      asprite_boons_70: -1484151742
+      asprite_boons_71: 1883425440
+      asprite_boons_72: 1705590841
+      asprite_boons_73: -327092503
+      asprite_boons_74: -434808776
+      asprite_boons_75: 1886034516
+      asprite_boons_76: 551935332
+      asprite_boons_77: 1965905173
+      asprite_boons_78: 1523260440
+      asprite_boons_79: -1222370666
+      asprite_boons_8: -223904860
+      asprite_boons_80: 417697373
+      asprite_boons_81: 1336294496
+      asprite_boons_82: -1365018663
+      asprite_boons_83: 144942793
+      asprite_boons_84: -1960811955
+      asprite_boons_9: 961055497
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

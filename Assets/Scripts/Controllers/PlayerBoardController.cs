@@ -111,16 +111,16 @@ namespace Azul
                 return this.playerBoards[playerNumber];
             }
 
-            public CoroutineResult AddDrawnTiles(int player, List<Tile> tiles)
+            public CoroutineStatus AddDrawnTiles(int player, List<Tile> tiles)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.AddDrawnTilesCoroutine(this.playerBoards[player], tiles, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.AddDrawnTilesCoroutine(this.playerBoards[player], tiles, status));
+                return status;
             }
 
-            private IEnumerator AddDrawnTilesCoroutine(PlayerBoard playerBoard, List<Tile> tiles, CoroutineResult result)
+            private IEnumerator AddDrawnTilesCoroutine(PlayerBoard playerBoard, List<Tile> tiles, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 PlayerController playerController = System.Instance.GetPlayerController();
                 RoundController roundController = System.Instance.GetRoundController();
                 TileAnimationController tileAnimationController = System.Instance.GetTileAnimationController();
@@ -155,7 +155,7 @@ namespace Azul
                 {
                     this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
                 }
-                result.Finish();
+                status.Finish();
             }
 
             public void DiscardTiles(int playerNumber, Dictionary<TileColor, int> tilesToDiscard)
@@ -354,9 +354,9 @@ namespace Azul
                 this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForScoring());
             }
 
-            public CoroutineResult PlaceTiles(int playerNumber, AltarSpace space, TileColor spaceColor, Dictionary<TileColor, int> tilesSelected)
+            public CoroutineStatus PlaceTiles(int playerNumber, AltarSpace space, TileColor spaceColor, Dictionary<TileColor, int> tilesSelected)
             {
-                CoroutineResult result = CoroutineResult.Single();
+                CoroutineStatus status = CoroutineStatus.Single();
                 RoundController roundController = System.Instance.GetRoundController();
                 TileColor wildColor = roundController.GetCurrentRound().GetWildColor();
                 PlayerBoard playerBoard = this.GetPlayerBoard(playerNumber);
@@ -370,13 +370,13 @@ namespace Azul
                 {
                     tiles = playerBoard.UseTiles(wildColor, tilesSelected[wildColor], wildColor, 0);
                 }
-                this.StartCoroutine(this.TilePlacementCoroutine(playerBoard, tiles, space, spaceColor, result));
-                return result;
+                this.StartCoroutine(this.TilePlacementCoroutine(playerBoard, tiles, space, spaceColor, status));
+                return status;
             }
 
-            private IEnumerator TilePlacementCoroutine(PlayerBoard playerBoard, List<Tile> tiles, AltarSpace space, TileColor effectiveColor, CoroutineResult result)
+            private IEnumerator TilePlacementCoroutine(PlayerBoard playerBoard, List<Tile> tiles, AltarSpace space, TileColor effectiveColor, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 this.isPlacingTiles = true;
                 yield return System.Instance.GetTileAnimationController().MoveTiles(tiles, new TilesMoveConfig
                 {
@@ -401,7 +401,7 @@ namespace Azul
                 }).WaitUntilCompleted();
                 this.OnPlayerTurnScoringStart(playerBoard.GetPlayerNumber());
                 this.isPlacingTiles = false;
-                result.Finish();
+                status.Finish();
             }
 
             public void AddOnPlaceStarTileListener(UnityAction<EventTracker<OnPlayerBoardPlaceStarTilePayload>> listener)

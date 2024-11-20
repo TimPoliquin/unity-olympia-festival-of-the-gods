@@ -65,7 +65,7 @@ namespace Azul
             {
                 this.isShowingMilestoneCompletion = true;
                 this.HideScoringUI(payload.PlayerNumber);
-                yield return CoroutineResult.Multi(
+                yield return CoroutineStatus.Multi(
                     this.MoveCameraToAltar(payload.CompletedMilestone),
                     this.FadeOutAltars(payload.PlayerNumber, payload.CompletedMilestone),
                     this.BloomAltarLight(payload.CompletedMilestone),
@@ -73,7 +73,7 @@ namespace Azul
                 ).WaitUntilCompleted();
                 yield return this.ShowAltarCompletionUI(payload.PlayerNumber, payload.CompletedMilestone).WaitUntilCompleted();
                 // restore everything to the way it was!
-                yield return CoroutineResult.Multi(
+                yield return CoroutineStatus.Multi(
                     this.MoveCameraToPlayerBoard(payload.PlayerNumber),
                     this.FadeInAltars(payload.PlayerNumber, payload.CompletedMilestone)
                 ).WaitUntilCompleted();
@@ -94,75 +94,75 @@ namespace Azul
                 payload.Done();
             }
 
-            CoroutineResult MoveCameraToAltar(Altar completedAltar)
+            CoroutineStatus MoveCameraToAltar(Altar completedAltar)
             {
                 return System.Instance.GetCameraController().FocusMainCameraOnAltar(completedAltar, this.cameraRotationSeconds);
             }
 
-            CoroutineResult MoveCameraToPlayerBoard(int playerNumber)
+            CoroutineStatus MoveCameraToPlayerBoard(int playerNumber)
             {
                 return System.Instance.GetCameraController().AnimateFocusMainCameraOnPlayerBoard(playerNumber, this.cameraRotationSeconds);
             }
 
-            CoroutineResult FadeAltars(int playerNumber, Altar altarToKeep, float alpha)
+            CoroutineStatus FadeAltars(int playerNumber, Altar altarToKeep, float alpha)
             {
                 PlayerBoard playerBoard = System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber);
                 List<Altar> altarsToFade = playerBoard.GetAltars().FindAll(altar => !ReferenceEquals(altar, altarToKeep));
-                List<CoroutineResult> results = new();
+                List<CoroutineStatus> results = new();
                 foreach (Altar altar in altarsToFade)
                 {
                     results.Add(altar.Fade(this.cameraRotationSeconds, alpha));
                 }
-                return CoroutineResult.Multi(results);
+                return CoroutineStatus.Multi(results);
             }
 
-            CoroutineResult FadeOutAltars(int playerNumber, Altar altarToKeep)
+            CoroutineStatus FadeOutAltars(int playerNumber, Altar altarToKeep)
             {
                 return this.FadeAltars(playerNumber, altarToKeep, 0.0f);
             }
-            CoroutineResult FadeInAltars(int playerNumber, Altar altarToKeep)
+            CoroutineStatus FadeInAltars(int playerNumber, Altar altarToKeep)
             {
                 return this.FadeAltars(playerNumber, altarToKeep, 1.0f);
             }
 
-            CoroutineResult BloomAltarLight(Altar altar)
+            CoroutineStatus BloomAltarLight(Altar altar)
             {
                 return altar.TurnOnMilestoneCompletionLight(System.Instance.GetTileMaterialProvider().GetColor(altar.GetColor()), this.lightBloomIntensity, this.lightBloomTime);
             }
 
-            CoroutineResult ShowCompletionParticles(Altar altar)
+            CoroutineStatus ShowCompletionParticles(Altar altar)
             {
                 GameObject prefab = this.milestoneParticles.Find(particle => particle.GetTileColor() == altar.GetColor()).GetValue();
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.CompletionParticlesCoroutine(prefab, altar.transform, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.CompletionParticlesCoroutine(prefab, altar.transform, status));
+                return status;
             }
 
-            CoroutineResult ShowAltarCompletionUI(int playerNumber, Altar altar)
+            CoroutineStatus ShowAltarCompletionUI(int playerNumber, Altar altar)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.ShowCompletionUICoroutine(playerNumber, altar.GetColor(), this.bannerHoldTime, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.ShowCompletionUICoroutine(playerNumber, altar.GetColor(), this.bannerHoldTime, status));
+                return status;
             }
 
-            CoroutineResult ShowNumberCompletionUI(int playerNumber, int ritualNumber)
+            CoroutineStatus ShowNumberCompletionUI(int playerNumber, int ritualNumber)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.ShowNumberCompletionUICoroutine(playerNumber, ritualNumber, this.bannerHoldTime, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.ShowNumberCompletionUICoroutine(playerNumber, ritualNumber, this.bannerHoldTime, status));
+                return status;
             }
 
-            IEnumerator CompletionParticlesCoroutine(GameObject particlesPrefab, Transform target, CoroutineResult result)
+            IEnumerator CompletionParticlesCoroutine(GameObject particlesPrefab, Transform target, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 yield return new WaitForSeconds(this.particleStartDelay);
                 Instantiate(particlesPrefab, target);
-                result.Finish();
+                status.Finish();
             }
 
-            IEnumerator ShowCompletionUICoroutine(int playerNumber, TileColor color, float time, CoroutineResult result)
+            IEnumerator ShowCompletionUICoroutine(int playerNumber, TileColor color, float time, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
                 int points = System.Instance.GetScoreBoardController().GetCompletionPoints(color);
                 this.completionSFX.Play();
@@ -171,12 +171,12 @@ namespace Azul
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
                 System.Instance.GetScoreBoardController().AddPoints(playerNumber, points);
                 controller.Hide();
-                result.Finish();
+                status.Finish();
             }
 
-            IEnumerator ShowNumberCompletionUICoroutine(int playerNumber, int ritualNumber, float time, CoroutineResult result)
+            IEnumerator ShowNumberCompletionUICoroutine(int playerNumber, int ritualNumber, float time, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 MilestoneCompletedPanelUIController controller = System.Instance.GetUIController().GetMilestoneCompletedPanelUIController();
                 int points = System.Instance.GetScoreBoardController().GetCompletionPoints(ritualNumber);
                 this.completionSFX.Play();
@@ -185,7 +185,7 @@ namespace Azul
                 yield return controller.AnimateScore(playerNumber, this.scoreAnimateTime).WaitUntilCompleted();
                 System.Instance.GetScoreBoardController().AddPoints(playerNumber, points);
                 controller.Hide();
-                result.Finish();
+                status.Finish();
             }
 
             public bool IsShowingMilestoneCompletion()

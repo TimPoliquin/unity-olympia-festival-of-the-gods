@@ -23,17 +23,17 @@ namespace Azul
         {
             [SerializeField] private List<Goal> actionableGoals;
 
-            public CoroutineResult EvaluateGoals(List<Goal> goals)
+            public CoroutineStatus EvaluateGoals(List<Goal> goals)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.EvaluateGoalsCoroutine(goals, result));
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.EvaluateGoalsCoroutine(goals, status));
                 // copy the goals
-                return result;
+                return status;
             }
 
-            private IEnumerator EvaluateGoalsCoroutine(List<Goal> goals, CoroutineResult result)
+            private IEnumerator EvaluateGoalsCoroutine(List<Goal> goals, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 UnityEngine.Debug.Log($"Starting Goals: {goals.Count}");
                 List<Goal> actionableGoals = new();
                 foreach (Goal goal in goals)
@@ -53,7 +53,7 @@ namespace Azul
                 }
                 this.actionableGoals = actionableGoals.OrderBy(goal => goal.GetScoreProgress()).ToList();
                 UnityEngine.Debug.Log($"Goals: {this.actionableGoals.Count}");
-                result.Finish();
+                status.Finish();
             }
 
             public bool CanScore()
@@ -61,23 +61,23 @@ namespace Azul
                 return this.actionableGoals.Any(goal => goal.CanScore());
             }
 
-            public CoroutineResult Score(int playerNumber)
+            public CoroutineStatus Score(int playerNumber)
             {
-                CoroutineResult result = CoroutineResult.Single();
+                CoroutineStatus status = CoroutineStatus.Single();
                 if (this.actionableGoals.Count > 0)
                 {
-                    this.StartCoroutine(this.ScoreCoroutine(playerNumber, this.actionableGoals[0], result));
+                    this.StartCoroutine(this.ScoreCoroutine(playerNumber, this.actionableGoals[0], status));
                 }
                 else
                 {
-                    result.Finish();
+                    status.Finish();
                 }
-                return result;
+                return status;
             }
 
-            private IEnumerator ScoreCoroutine(int playerNumber, Goal goal, CoroutineResult result)
+            private IEnumerator ScoreCoroutine(int playerNumber, Goal goal, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 AltarSpace space = goal.ChooseSpace();
                 space.Select();
                 yield return new WaitForSeconds(1.0f);
@@ -93,7 +93,7 @@ namespace Azul
                 UnityEngine.Debug.Log($"Scoring Strategy: Filling with tiles: {String.Join(joinChar, TileCount.FromDictionary(selectedTiles).Select(count => count.ToString()).ToList())}");
                 yield return System.Instance.GetPlayerBoardController().PlaceTiles(playerNumber, space, selectedColor, selectedTiles).WaitUntilCompleted();
                 this.actionableGoals.ForEach(goal => goal.EndScoring());
-                result.Finish();
+                status.Finish();
             }
 
 

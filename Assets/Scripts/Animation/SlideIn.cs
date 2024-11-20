@@ -21,7 +21,7 @@ namespace Azul
             rectTransform.anchoredPosition = new Vector2(rectTransform.rect.width, rectTransform.anchoredPosition.y);
         }
 
-        public CoroutineResult Toggle()
+        public CoroutineStatus Toggle()
         {
             if (this.showing)
             {
@@ -33,33 +33,33 @@ namespace Azul
             }
         }
 
-        public CoroutineResult Show()
+        public CoroutineStatus Show()
         {
-            CoroutineResult result = CoroutineResult.Single();
+            CoroutineStatus status = CoroutineStatus.Single();
             if (!this.showing)
             {
                 this.gameObject.SetActive(true);
-                this.StartCoroutine(this.SlideInCoroutine(result));
+                this.StartCoroutine(this.SlideInCoroutine(status));
             }
             else
             {
-                result.Finish();
+                status.Finish();
             }
-            return result;
+            return status;
         }
 
-        public CoroutineResult Hide()
+        public CoroutineStatus Hide()
         {
-            CoroutineResult result = CoroutineResult.Single();
+            CoroutineStatus status = CoroutineStatus.Single();
             if (showing)
             {
-                this.StartCoroutine(this.SlideOut(result));
+                this.StartCoroutine(this.SlideOut(status));
             }
             else
             {
-                result.Finish();
+                status.Finish();
             }
-            return result;
+            return status;
         }
 
         public bool IsShowing()
@@ -67,10 +67,10 @@ namespace Azul
             return this.showing;
         }
 
-        private IEnumerator SlideInCoroutine(CoroutineResult result)
+        private IEnumerator SlideInCoroutine(CoroutineStatus status)
         {
             UnityEngine.Debug.Log("Showing help panel!");
-            result.Start();
+            status.Start();
             this.showing = true;
             RectTransform rectTransform = this.GetComponent<RectTransform>();
             while (this.showing && rectTransform.anchoredPosition.x > 0)
@@ -79,12 +79,12 @@ namespace Azul
                 rectTransform.anchoredPosition = new Vector2(x, rectTransform.anchoredPosition.y);
                 yield return null;
             }
-            result.Finish();
+            status.Finish();
         }
 
-        private IEnumerator SlideOut(CoroutineResult result)
+        private IEnumerator SlideOut(CoroutineStatus status)
         {
-            result.Start();
+            status.Start();
             this.showing = false;
             RectTransform rectTransform = this.GetComponent<RectTransform>();
             while (!this.showing && rectTransform.anchoredPosition.x < rectTransform.rect.width)
@@ -93,7 +93,7 @@ namespace Azul
                 rectTransform.anchoredPosition = new Vector2(x, rectTransform.anchoredPosition.y);
                 yield return null;
             }
-            result.Finish();
+            status.Finish();
         }
     }
 }

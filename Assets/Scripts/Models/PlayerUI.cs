@@ -60,7 +60,7 @@ namespace Azul
                 this.scoreText.text = $"{score}";
             }
 
-            public CoroutineResult UpdateScore(int score, float time)
+            public CoroutineStatus UpdateScore(int score, float time)
             {
                 if (this.score != score)
                 {
@@ -70,9 +70,9 @@ namespace Azul
                 }
                 else
                 {
-                    CoroutineResult result = CoroutineResult.Single();
-                    result.Finish();
-                    return result;
+                    CoroutineStatus status = CoroutineStatus.Single();
+                    status.Finish();
+                    return status;
                 }
             }
 

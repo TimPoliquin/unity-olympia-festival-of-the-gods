@@ -9,25 +9,25 @@ namespace Azul
     {
         public class ScalePulse : TimeBasedCoroutine
         {
-            public CoroutineResult Animate(GameObject subject, float scaleTo, float totalTime)
+            public CoroutineStatus Animate(GameObject subject, float scaleTo, float totalTime)
             {
                 Vector3 originalScale = Vector3.one;
                 Vector3 targetScale = Vector3.one * scaleTo;
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.Animate(subject, originalScale, targetScale, totalTime, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.Animate(subject, originalScale, targetScale, totalTime, status));
+                return status;
             }
 
-            IEnumerator Animate(GameObject subject, Vector3 startScale, Vector3 targetScale, float totalTime, CoroutineResult result)
+            IEnumerator Animate(GameObject subject, Vector3 startScale, Vector3 targetScale, float totalTime, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 yield return this.Scale(subject, startScale, targetScale, totalTime / 2.0f).WaitUntilCompleted();
                 yield return this.Scale(subject, targetScale, startScale, totalTime / 2.0f).WaitUntilCompleted();
-                result.Finish();
+                status.Finish();
             }
 
 
-            CoroutineResult Scale(GameObject subject, Vector3 startScale, Vector3 targetScale, float time)
+            CoroutineStatus Scale(GameObject subject, Vector3 startScale, Vector3 targetScale, float time)
             {
                 return this.Execute((t) =>
                 {

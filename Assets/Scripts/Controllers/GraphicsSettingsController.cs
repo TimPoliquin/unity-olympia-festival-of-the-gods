@@ -1,5 +1,7 @@
+using System.Collections;
 using Azul.GraphicsSettings;
 using Azul.Model;
+using Azul.Util;
 using Azul.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -32,27 +34,30 @@ namespace Azul
 
             void Start()
             {
-                this.LoadGraphicsConfig();
+                this.StartCoroutine(this.LoadGraphicsConfig());
             }
 
-            public void LoadGraphicsConfig()
+            public IEnumerator LoadGraphicsConfig()
             {
-                GraphicsOptions graphicsOptions = FileUtils.LoadResource<GraphicsOptions>(GRAPHICS_FILENAME);
-                if (null != graphicsOptions)
+                CoroutineResultValue<GraphicsOptions> readResult = System.Instance.GetFileController().ReadFile<GraphicsOptions>(GRAPHICS_FILENAME);
+                yield return readResult.WaitUntilCompleted();
+                if (null != readResult.GetValue())
                 {
-                    this.SetQualityLevel(graphicsOptions.Level);
-                    this.SetAntiAliasing(graphicsOptions.AntiAliasingLevel);
+                    GraphicsOptions graphicsOptions = readResult.GetValue();
+                    this.SetQualityLevel((GraphicsLevel)graphicsOptions.Level);
+                    this.SetAntiAliasing((AntiAliasingLevel)graphicsOptions.AntiAliasingLevel);
                     this.SetRenderScale(graphicsOptions.RenderScale);
                     this.SetVsync(graphicsOptions.VSync);
                 }
             }
 
+
             public void SaveGraphicsConfig()
             {
-                FileUtils.SaveResource(GRAPHICS_FILENAME, new GraphicsOptions
+                System.Instance.GetFileController().WriteFile(GRAPHICS_FILENAME, new GraphicsOptions
                 {
-                    Level = this.GetQualityLevel(),
-                    AntiAliasingLevel = this.GetAntiAliasingLevel(),
+                    Level = (int)this.GetQualityLevel(),
+                    AntiAliasingLevel = (int)this.GetAntiAliasingLevel(),
                     RenderScale = this.GetRenderScale(),
                     VSync = this.GetVSync()
                 });

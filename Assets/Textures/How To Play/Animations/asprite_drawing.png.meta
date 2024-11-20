@@ -1,0 +1,1236 @@
+fileFormatVersion: 2
+guid: ade631159aaa142f8bd483058803bcdb
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: asprite_drawing_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd3e970216e844a5ca79f73d5ae0064e
+      internalID: 400364747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_1
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b00a5eae4314f5980f0c8b024f26c8
+      internalID: 906795766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_2
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff6127e4919bf47248fccb200abc4777
+      internalID: -2102220786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_3
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ada42172fd524e8982f582ed345d366
+      internalID: 1515932026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_4
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f498de9b9700842439aca52e7f995fcf
+      internalID: -1959479590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5b181dccdb84a9fb62df838c86da21
+      internalID: -992729302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_6
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d60b8b64cfa54d3ebabf42404ead52d
+      internalID: -423428329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2d68256bdd154caf94b163057beebd2
+      internalID: -1471918585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f62133e5822d429b9de043f311d519f
+      internalID: -1365957839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_9
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6339efbe35b24fd4be3e70219630839
+      internalID: -1992100217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a413442a1d2749b8953bf0fdd595f7f
+      internalID: -80682857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_11
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c59a93ed75854a2f83ce5aa3d586715
+      internalID: 1186841165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_12
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a589761a6d7a4873aa5c29f951f60f1
+      internalID: -1883726273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_13
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1f43415d124640dd8b76fb02b472168
+      internalID: -316301479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_14
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa9d3e91c9f2a4058ad80c8fd2481cba
+      internalID: 474151451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca223d7ff3dc2462da2385c395972596
+      internalID: 1624660315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_16
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5720e01b6a3c343f9840dca31ee00327
+      internalID: 1038674331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_17
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d0f001974a554781bd3e3b58da47623
+      internalID: -1522989513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_18
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc70aaa44846e44bba7a498978575f68
+      internalID: -430878531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_19
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bacf5d8c5a746400980d9073e632e437
+      internalID: 1745749217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64c93bd400ecc42738f1361bd3c93634
+      internalID: -1276041844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_21
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e93bdc056331446d89dc7ce89bb13d28
+      internalID: 326577265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_22
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8658ba3002a746638eb0224816ebde4
+      internalID: 1870784093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_23
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc33f21845864bcd8e361b6decc8a38
+      internalID: -1177945433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_24
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3e0072c6b5f7401cbdfd21b9c5fb83e
+      internalID: -2015315659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c9ff36b78e144d8ae36ebdac606a40
+      internalID: -1331022712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_26
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0de188164b9494d948d0e747b6927a33
+      internalID: 335976571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_27
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d388423466c4e70ad54753090f09df
+      internalID: 1852783045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_28
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ef8a3327d10f433ebb6131ac114335a
+      internalID: 126775637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_29
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1c70fbed392048899fcb901dd3a7b9e
+      internalID: -1438248994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e6f1ea292b454f4d85286fd37b83d45
+      internalID: 1405979383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_31
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53c758d4e02dd44ce8ef53b2c23a62ec
+      internalID: -1144035659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_32
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 064a3a1f4fd154acd818209fa1956ef2
+      internalID: -282990481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_33
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729a2fff392c94765803b9652448406b
+      internalID: 1806469419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_34
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7befda80e9a6d4ea0a020ad60650a86a
+      internalID: -951788451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a3e4312ff2b469f8141d1bbe93e0ff
+      internalID: 947566896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_36
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e57f4f6bafd3b4cdebe87542027c7856
+      internalID: -2137452758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_37
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ffc6f30b6aa46659bb942c130e3b02
+      internalID: 591646723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_38
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de1519a1c47614b359ddc83ff0c799c2
+      internalID: 1599931403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_39
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adcd883c12354417d9efe1b06323c424
+      internalID: -1042303436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef6b4f70e57e6487b9ada34f615ac745
+      internalID: -896185231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_41
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed6a05ca2e84412aa5d0c87aaf61705
+      internalID: -793662901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_42
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a883782188b2f4a369a69a95f86708d3
+      internalID: -162543605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_43
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aab89d4c261e47b297ee20de4687131
+      internalID: -2038948288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_44
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 488b1bcb05ee64662ae778120e1ec333
+      internalID: -586683042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c5915aceb0b409897eb5ed0228f0fb
+      internalID: -1179776230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_46
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa281d0adb53434aa33b67ff22d76e6
+      internalID: 1437290212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_47
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533d62e7cf5854387ba370302f2a05a1
+      internalID: -1409009100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_48
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 032675322ec764dbe8a8dbcac99e93a7
+      internalID: 181745672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_49
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e951cfdcc5d4740f9bebec8b240b488a
+      internalID: -849582355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: asprite_drawing_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcdb03c19590f4c27958d90b3206a653
+      internalID: -990264606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      asprite_drawing_0: 400364747
+      asprite_drawing_1: 906795766
+      asprite_drawing_10: -80682857
+      asprite_drawing_11: 1186841165
+      asprite_drawing_12: -1883726273
+      asprite_drawing_13: -316301479
+      asprite_drawing_14: 474151451
+      asprite_drawing_15: 1624660315
+      asprite_drawing_16: 1038674331
+      asprite_drawing_17: -1522989513
+      asprite_drawing_18: -430878531
+      asprite_drawing_19: 1745749217
+      asprite_drawing_2: -2102220786
+      asprite_drawing_20: -1276041844
+      asprite_drawing_21: 326577265
+      asprite_drawing_22: 1870784093
+      asprite_drawing_23: -1177945433
+      asprite_drawing_24: -2015315659
+      asprite_drawing_25: -1331022712
+      asprite_drawing_26: 335976571
+      asprite_drawing_27: 1852783045
+      asprite_drawing_28: 126775637
+      asprite_drawing_29: -1438248994
+      asprite_drawing_3: 1515932026
+      asprite_drawing_30: 1405979383
+      asprite_drawing_31: -1144035659
+      asprite_drawing_32: -282990481
+      asprite_drawing_33: 1806469419
+      asprite_drawing_34: -951788451
+      asprite_drawing_35: 947566896
+      asprite_drawing_36: -2137452758
+      asprite_drawing_37: 591646723
+      asprite_drawing_38: 1599931403
+      asprite_drawing_39: -1042303436
+      asprite_drawing_4: -1959479590
+      asprite_drawing_40: -896185231
+      asprite_drawing_41: -793662901
+      asprite_drawing_42: -162543605
+      asprite_drawing_43: -2038948288
+      asprite_drawing_44: -586683042
+      asprite_drawing_45: -1179776230
+      asprite_drawing_46: 1437290212
+      asprite_drawing_47: -1409009100
+      asprite_drawing_48: 181745672
+      asprite_drawing_49: -849582355
+      asprite_drawing_5: -992729302
+      asprite_drawing_50: -990264606
+      asprite_drawing_6: -423428329
+      asprite_drawing_7: -1471918585
+      asprite_drawing_8: -1365957839
+      asprite_drawing_9: -1992100217
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

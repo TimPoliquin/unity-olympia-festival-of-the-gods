@@ -53,13 +53,13 @@ namespace Azul
                 this.requirementsContainer.SetActive(!this.completed);
             }
 
-            public CoroutineResult Show()
+            public CoroutineStatus Show()
             {
                 this.fade.StartHidden();
                 return this.fade.Show();
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 return this.fade.Hide();
             }

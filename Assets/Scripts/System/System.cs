@@ -21,11 +21,13 @@ namespace Azul
         private BagController bagController;
         private CameraController cameraController;
         private FactoryController factoryController;
+        private FileController fileController;
         private GameController gameController;
         private GraphicsSettingsController graphicsSettingsController;
         private MilestoneCompletionController milestoneCompletionController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
+        private PlayerDataController playerDataController;
         private PrefabFactory prefabFactory;
         private RoundController roundController;
         private ScoreBoardController scoreBoardController;
@@ -92,6 +94,15 @@ namespace Azul
             return this.factoryController;
         }
 
+        public FileController GetFileController()
+        {
+            if (null == this.fileController)
+            {
+                this.fileController = this.GetComponentInChildren<FileController>();
+            }
+            return this.fileController;
+        }
+
         public GameController GetGameController()
         {
             if (null == this.gameController)
@@ -126,6 +137,15 @@ namespace Azul
                 this.playerController = this.GetComponentInChildren<PlayerController>();
             }
             return this.playerController;
+        }
+
+        public PlayerDataController GetPlayerDataController()
+        {
+            if (null == this.playerDataController)
+            {
+                this.playerDataController = this.GetComponentInChildren<PlayerDataController>();
+            }
+            return this.playerDataController;
         }
 
         public PlayerBoardController GetPlayerBoardController()

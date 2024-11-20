@@ -28,12 +28,14 @@ namespace Azul
             public int PlayerNumber;
             public string Name;
             public PlayerType PlayerType;
+            public string UserName;
         }
         public class PlayerConfigUI : MonoBehaviour
         {
             [SerializeField] private TMP_InputField playerNameInput;
             [SerializeField] private TMP_Dropdown playerType;
             [SerializeField] private int playerNumber;
+            private string userName;
 
             private UnityEvent<PlayerConfigOnChangePayload> onChange = new();
 
@@ -56,13 +58,19 @@ namespace Azul
                 {
                     PlayerNumber = this.playerNumber,
                     Name = this.playerNameInput.text,
-                    PlayerType = (PlayerType)this.playerType.value
+                    PlayerType = (PlayerType)this.playerType.value,
+                    UserName = this.userName,
                 };
             }
 
             public void SetPlayerNumber(int playerNumber)
             {
                 this.playerNumber = playerNumber;
+            }
+
+            public void SetPlayerUserName(string userName)
+            {
+                this.userName = userName;
             }
 
             public void SetPlayerType(PlayerType playerType)

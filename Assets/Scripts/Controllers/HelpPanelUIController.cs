@@ -10,6 +10,7 @@ namespace Azul
     {
         public class HelpPanelUIController : MonoBehaviour
         {
+            public static readonly string HELP_LAYER = "help";
             [SerializeField] private Button helpButton;
 
             private HelpPanelUI helpPanelUI;
@@ -19,11 +20,16 @@ namespace Azul
                 this.helpButton.onClick.AddListener(this.OnHelp);
             }
 
+            public void ShowHelp()
+            {
+                this.OnHelp();
+            }
+
             private void OnHelp()
             {
                 if (null == this.helpPanelUI)
                 {
-                    this.helpPanelUI = System.Instance.GetPrefabFactory().CreateHelpPanelUI();
+                    this.helpPanelUI = System.Instance.GetPrefabFactory().CreateHelpPanelUI(HELP_LAYER);
                     this.helpPanelUI.AddOnCloseClickListener(() => this.OnClose(helpPanelUI));
                 }
                 this.StartCoroutine(this.OnHelpCoroutine());
@@ -31,7 +37,8 @@ namespace Azul
 
             private IEnumerator OnHelpCoroutine()
             {
-                yield return this.helpPanelUI.Toggle().WaitUntilCompleted();
+                System.Instance.GetUIController().GetPanelManagerController().ShowLayer(HELP_LAYER);
+                yield return this.helpPanelUI.Show().WaitUntilCompleted();
             }
 
             private void OnClose(HelpPanelUI helpPanelUI)
@@ -42,6 +49,8 @@ namespace Azul
             private IEnumerator OnCloseCoroutine(HelpPanelUI helpPanelUI)
             {
                 yield return helpPanelUI.Hide().WaitUntilCompleted();
+                Destroy(this.helpPanelUI.gameObject);
+                System.Instance.GetUIController().GetPanelManagerController().ShowDefaultLayer();
             }
         }
     }
