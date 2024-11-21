@@ -41,13 +41,14 @@ namespace Azul
                 if (File.Exists(filename))
                 {
                     string[] lines = await File.ReadAllLinesAsync(filename);
-                    if (null == lines || lines.Length == 0)
+                    string json = null != lines ? string.Join('\n', lines).Trim() : null;
+                    if (null != json && json.Length > 0)
                     {
-                        return null;
+                        return JsonUtility.FromJson<T>(json);
                     }
                     else
                     {
-                        return JsonUtility.FromJson<T>(string.Join('\n', lines));
+                        return null;
                     }
                 }
                 else
