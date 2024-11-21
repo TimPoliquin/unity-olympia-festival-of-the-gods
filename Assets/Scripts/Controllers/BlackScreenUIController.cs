@@ -13,7 +13,7 @@ namespace Azul
             private BlackScreenUI blackScreenUI;
 
 
-            public CoroutineResult FadeToBlack(float time)
+            public CoroutineStatus FadeToBlack(float time)
             {
                 if (null == this.blackScreenUI)
                 {
@@ -26,14 +26,14 @@ namespace Azul
                 }
             }
 
-            public CoroutineResult FadeIn(float time)
+            public CoroutineStatus FadeIn(float time)
             {
                 if (null != blackScreenUI)
                 {
-                    CoroutineResult result = this.blackScreenUI.FadeIn(time);
-                    this.StartCoroutine(this.DestroyOnComplete(this.blackScreenUI, result));
+                    CoroutineStatus status = this.blackScreenUI.FadeIn(time);
+                    this.StartCoroutine(this.DestroyOnComplete(this.blackScreenUI, status));
                     this.blackScreenUI = null;
-                    return result;
+                    return status;
                 }
                 else
                 {
@@ -41,9 +41,9 @@ namespace Azul
                 }
             }
 
-            private IEnumerator DestroyOnComplete(BlackScreenUI blackScreenUI, CoroutineResult result)
+            private IEnumerator DestroyOnComplete(BlackScreenUI blackScreenUI, CoroutineStatus status)
             {
-                yield return result.WaitUntilCompleted();
+                yield return status.WaitUntilCompleted();
                 Destroy(blackScreenUI.gameObject);
             }
         }

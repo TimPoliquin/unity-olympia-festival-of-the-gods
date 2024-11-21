@@ -11,10 +11,10 @@ namespace Azul
         [Serializable]
         public class GraphicsOptions
         {
-            public GraphicsLevel Level;
+            public int Level;
             public float RenderScale;
             public bool VSync;
-            public AntiAliasingLevel AntiAliasingLevel;
+            public int AntiAliasingLevel;
         }
     }
 }

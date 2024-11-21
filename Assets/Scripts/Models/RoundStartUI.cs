@@ -32,7 +32,7 @@ namespace Azul
                 this.dismissButton.onClick.AddListener(this.OnDismiss);
             }
 
-            public CoroutineResult Show(string god, TileColor tileColor)
+            public CoroutineStatus Show(string god, TileColor tileColor)
             {
                 this.transition = this.GetComponent<Fade>();
                 this.transition.StartHidden();
@@ -43,7 +43,7 @@ namespace Azul
                 return this.transition.Show();
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 if (!this.isDismissed)
                 {
@@ -52,9 +52,9 @@ namespace Azul
                 }
                 else
                 {
-                    CoroutineResult result = CoroutineResult.Single();
-                    result.Finish();
-                    return result;
+                    CoroutineStatus status = CoroutineStatus.Single();
+                    status.Finish();
+                    return status;
                 }
             }
 

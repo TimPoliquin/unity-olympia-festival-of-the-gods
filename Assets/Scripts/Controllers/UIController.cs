@@ -14,6 +14,7 @@ namespace Azul
             private GameEndUIController gameEndUIController;
             private GameStartUIController gameStartUIController;
             private HadesTokenPanelUIController hadesTokenPanelUIController;
+            private HelpPanelUIController helpPanelUIController;
             private IconUIFactory iconUIFactory;
             private MilestoneCompletedPanelUIController milestoneCompletedPanelUIController;
             private OptionsPanelUIController optionsPanelUIController;
@@ -59,6 +60,15 @@ namespace Azul
                     this.gameStartUIController = this.GetComponentInChildren<GameStartUIController>();
                 }
                 return this.gameStartUIController;
+            }
+
+            public HelpPanelUIController GetHelpPanelUIController()
+            {
+                if (null == this.helpPanelUIController)
+                {
+                    this.helpPanelUIController = this.GetComponentInChildren<HelpPanelUIController>();
+                }
+                return this.helpPanelUIController;
             }
 
             public HadesTokenPanelUIController GetHadesTokenPanelUIController()

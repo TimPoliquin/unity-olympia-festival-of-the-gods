@@ -13,7 +13,7 @@ namespace Azul
         {
             private CanvasGroup canvasGroup;
             private bool hidden;
-            private CoroutineResult hiddenResult;
+            private CoroutineStatus hiddenResult;
 
             [SerializeField] private float delay;
             [SerializeField] private float time = .25f;
@@ -32,23 +32,23 @@ namespace Azul
                 this.canvasGroup.alpha = 0;
             }
 
-            public CoroutineResult Show()
+            public CoroutineStatus Show()
             {
-                CoroutineResult result = CoroutineResult.Single();
+                CoroutineStatus status = CoroutineStatus.Single();
                 bool startedHidden = this.canvasGroup.alpha == 0;
                 this.gameObject.SetActive(true);
                 this.hidden = false;
-                this.StartCoroutine(this.Transition(startedHidden ? this.delay : 0, this.time, 1, result));
-                return result;
+                this.StartCoroutine(this.Transition(startedHidden ? this.delay : 0, this.time, 1, status));
+                return status;
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 if (null != this.hiddenResult)
                 {
                     return this.hiddenResult;
                 }
-                this.hiddenResult = CoroutineResult.Single();
+                this.hiddenResult = CoroutineStatus.Single();
                 this.hidden = true;
                 this.StartCoroutine(this.Transition(0, this.time, 0, this.hiddenResult, () =>
                 {
@@ -57,9 +57,9 @@ namespace Azul
                 return this.hiddenResult;
             }
 
-            private IEnumerator Transition(float delay, float time, float alpha, CoroutineResult result, Action callback = null)
+            private IEnumerator Transition(float delay, float time, float alpha, CoroutineStatus status, Action callback = null)
             {
-                result.Start();
+                status.Start();
                 bool hidden = this.hidden;
                 float alphaDirection = alpha < this.canvasGroup.alpha ? -1 : 1;
                 yield return new WaitForSeconds(delay);
@@ -68,7 +68,7 @@ namespace Azul
                     this.canvasGroup.alpha = Mathf.Clamp(this.canvasGroup.alpha + Time.deltaTime / time * alphaDirection, 0, 1);
                     yield return null;
                 }
-                result.Finish();
+                status.Finish();
                 callback?.Invoke();
             }
         }

@@ -60,17 +60,17 @@ namespace Azul
                 System.Instance.Quit();
             }
 
-            public CoroutineResult Show()
+            public CoroutineStatus Show()
             {
                 return this.fade.Show();
             }
 
-            public CoroutineResult ShowPlayerStats()
+            public CoroutineStatus ShowPlayerStats()
             {
                 return this.playerStatsFade.Show();
             }
 
-            public CoroutineResult ShowButtons()
+            public CoroutineStatus ShowButtons()
             {
                 return this.buttonsFade.Show();
             }

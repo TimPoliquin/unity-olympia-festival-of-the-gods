@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.AudioSettings;
+using Azul.Model;
+using Azul.Util;
 using Azul.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -27,10 +29,11 @@ namespace Azul
             [SerializeField] private AudioMixerGroup sfxOutput;
             [SerializeField] private AudioMixerGroup bgmOutput;
             private AudioSource bgm;
+            private bool isReady = false;
 
             void Start()
             {
-                this.LoadConfig();
+                this.StartCoroutine(this.LoadConfig());
                 this.bgm = this.CreateAudioSource("BGM", this.bgmOutput);
             }
 
@@ -87,6 +90,7 @@ namespace Azul
 
             private IEnumerator PlayCoroutine(AudioSource audioSource, AudioClip audioClip, float volume, bool loop)
             {
+                yield return this.WaitUntilReady();
                 audioSource.clip = audioClip;
                 audioSource.volume = volume;
                 audioSource.loop = loop;
@@ -105,23 +109,30 @@ namespace Azul
                 return audioSource;
             }
 
-            private void LoadConfig()
+            private IEnumerator LoadConfig()
             {
-                AudioOptions audioOptions = FileUtils.LoadResource<AudioOptions>(SETTINGS_FILENAME);
-                if (null != audioOptions)
+                CoroutineResultValue<AudioOptions> result = System.Instance.GetFileController().ReadFile<AudioOptions>(SETTINGS_FILENAME);
+                yield return result.WaitUntilCompleted();
+                if (null != result.GetValue())
                 {
-                    this.SetBGMVolume(audioOptions.BGMVolume);
-                    this.SetSFXVolume(audioOptions.SFXVolume);
+                    this.SetBGMVolume(result.GetValue().BGMVolume);
+                    this.SetSFXVolume(result.GetValue().SFXVolume);
                 }
+                this.isReady = true;
             }
 
             public void SaveAudioConfig()
             {
-                FileUtils.SaveResource(SETTINGS_FILENAME, new AudioOptions
+                System.Instance.GetFileController().WriteFile(SETTINGS_FILENAME, new AudioOptions
                 {
                     BGMVolume = this.GetBGMVolume(),
                     SFXVolume = this.GetSFXVolume(),
                 });
+            }
+
+            private WaitUntil WaitUntilReady()
+            {
+                return new WaitUntil(() => this.isReady);
             }
         }
     }

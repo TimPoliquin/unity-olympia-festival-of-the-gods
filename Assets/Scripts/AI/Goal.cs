@@ -88,7 +88,7 @@ namespace Azul
             public GoalAcquireFeasability CalculateAcquireFeasibility();
             public void Acquire();
 
-            public CoroutineResult PrepareForScoring();
+            public CoroutineStatus PrepareForScoring();
 
             public AltarSpace ChooseSpace();
 
@@ -169,7 +169,7 @@ namespace Azul
                 throw new NotImplementedException();
             }
 
-            public CoroutineResult PrepareForScoring()
+            public CoroutineStatus PrepareForScoring()
             {
                 throw new NotImplementedException();
             }

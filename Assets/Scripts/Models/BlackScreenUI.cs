@@ -13,26 +13,26 @@ namespace Azul
         {
             [SerializeField] private Image image;
 
-            public CoroutineResult FadeToBlack(float time)
+            public CoroutineStatus FadeToBlack(float time)
             {
-                CoroutineResult result = CoroutineResult.Single();
+                CoroutineStatus status = CoroutineStatus.Single();
                 this.image.color = new Color(0, 0, 0, 0);
-                this.StartCoroutine(this.Fade(1, time, result));
-                return result;
+                this.StartCoroutine(this.Fade(1, time, status));
+                return status;
             }
 
-            public CoroutineResult FadeIn(float time)
+            public CoroutineStatus FadeIn(float time)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.Fade(0, time, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.Fade(0, time, status));
+                return status;
             }
 
-            private IEnumerator Fade(float alpha, float time, CoroutineResult result)
+            private IEnumerator Fade(float alpha, float time, CoroutineStatus status)
             {
                 float progress = 0;
                 float originalAlpha = this.image.color.a;
-                result.Start();
+                status.Start();
                 while (progress < time)
                 {
                     progress += Time.deltaTime;
@@ -40,7 +40,7 @@ namespace Azul
                     yield return null;
                 }
                 this.image.color = new Color(0, 0, 0, alpha);
-                result.Finish();
+                status.Finish();
             }
         }
     }

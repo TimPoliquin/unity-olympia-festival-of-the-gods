@@ -10,7 +10,7 @@ namespace Azul
         public class MoveAndScale : TimeBasedCoroutine
         {
 
-            public CoroutineResult Animate(GameObject subject, Vector3 targetPosition, float scale, float totalTime)
+            public CoroutineStatus Animate(GameObject subject, Vector3 targetPosition, float scale, float totalTime)
             {
                 Vector3 originalPosition = subject.transform.position;
                 Vector3 originalScale = subject.transform.localScale;

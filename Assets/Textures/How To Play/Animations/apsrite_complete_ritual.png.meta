@@ -1,0 +1,2754 @@
+fileFormatVersion: 2
+guid: 8b2b4438b2cf246a2a9631a38e71be16
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12259
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d48ad6412f8704909910d8589e7d61d8
+      internalID: 363274983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_1
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 12259
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3b28e5149d6647b2bd10f0e81d5417f
+      internalID: 1569672602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_2
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 12259
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefb424cc4cd24a6199f2735123ff5f9
+      internalID: 323438138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_3
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 12259
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed559555095c944e08e0c42eb7c2a5d7
+      internalID: 303688381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_4
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 12259
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043b614504b764a9f9114073a1241d93
+      internalID: 252977289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11726
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 911727325ede84c30b814b931e6eaa46
+      internalID: 711257393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_6
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 11726
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bad3c0576d59b4c71b4e951a6bc280cf
+      internalID: 1834702386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 11726
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6741681c4380a4f8eb1a090124cf67eb
+      internalID: -2003370866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 11726
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cb4b3810d9fc494aa98d0973f42496d
+      internalID: -1973772104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_9
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 11726
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 488b510358fc24c60b60f2b5ad6b9018
+      internalID: 1010808243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11193
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb20a590d78a44808bd59f4b786dbdef
+      internalID: 1973779261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_11
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 11193
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b4887bd30fe0487085031abf2e5d92b
+      internalID: -2077621526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_12
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 11193
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8de4feb851daf4fccac550eefa6be923
+      internalID: 240535502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_13
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 11193
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b34c5c104b408473aaa14199e645d854
+      internalID: -241711153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_14
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 11193
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb0ec1890d3f4471ab0b0da7002fe9d
+      internalID: -1790307719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10660
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f19080a3f83704b8cacb242828fc56ee
+      internalID: -878512702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_16
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 10660
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bb831547e5f44748b1c70c7deb65820
+      internalID: -619769713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_17
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 10660
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4272d4c8b5206434a85615cd37570d54
+      internalID: 2129235014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_18
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 10660
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ad59c6eb1f8c4d7abc9a22c5faf476e
+      internalID: -169945791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_19
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 10660
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a97b6a302572d4bcdad70d69a884e06c
+      internalID: -1889760701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10127
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869d1060935444dc88cf6136bf578069
+      internalID: 1533292362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_21
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 10127
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84164ae6de8f54f3ab0f250c0c2b5096
+      internalID: 2012386879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_22
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 10127
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb0ffefcc476a4b2a97cf56b584a4b9d
+      internalID: 1979235500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_23
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 10127
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 380fb27a5d47c414292f8b2edfa7159a
+      internalID: 2012744709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_24
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 10127
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32f65103e5e604e11a6fc9c9393f9b7e
+      internalID: 1046611335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 9594
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4868c3103e9b14313a498b0f2972354a
+      internalID: 1214665530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_26
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 9594
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e42741cdf8c54a6690347343c7c5460
+      internalID: -698728608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_27
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 9594
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 442aa08f6e85c4efb9ee1179f70ebcac
+      internalID: 627546306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_28
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 9594
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aff431a3b3f5f499ab9b1ef5804799a1
+      internalID: -499624693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_29
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 9594
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e19349e5af95e4f58bd641d3ba6b447a
+      internalID: -455529521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 9061
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6134ad67c3c0f4135a5b55471a7aae4b
+      internalID: -863578190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_31
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 9061
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd8c3877df9374075bec1be58bea5400
+      internalID: 1299207103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_32
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 9061
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abc815e8b77749b78eb63214d05c6ee
+      internalID: 811185742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_33
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 9061
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d85aa158a0f264e6b9f7b5220963a7e5
+      internalID: 259209020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_34
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 9061
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d4f9605552074871937385e286656be
+      internalID: 124597479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8528
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62b3558a3a00348de9b56c95718a2667
+      internalID: -1566379492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_36
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 8528
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b163e2263def49ec8180dfa73f4276a
+      internalID: 1746465637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_37
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 8528
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 176794a462f2d40ea9f32c03dba8e15d
+      internalID: 1890958780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_38
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 8528
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ed56563bec884759a2373f3a881da35
+      internalID: 1237844760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_39
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 8528
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fb6347a3dd0040bea31fd41053e4528
+      internalID: 954282376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7995
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab0cdd68cb91544e3bf9f9c6c2033151
+      internalID: -435208019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_41
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 7995
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98927bfea4d444137aef6ba7d0867af6
+      internalID: 952403465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_42
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 7995
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2293233c778ee4758ae9f7ddad6b2db3
+      internalID: 436882967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_43
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 7995
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b14bc7d402c164f988a38df51b1b18ed
+      internalID: -646652274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_44
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 7995
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 278256b2b512f43f9ad6a65d20cab917
+      internalID: 2049964006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7462
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13d108111efdb46488ac68b7271dcfcd
+      internalID: 576745702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_46
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 7462
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21dd45d0d8e7431c932b179ba7b82f9
+      internalID: 2036842788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_47
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 7462
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7417d96549d4744199449e941fc5b494
+      internalID: 686150243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_48
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 7462
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e12c1e6347d664a38ab91feeb9a6552c
+      internalID: -610340895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_49
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 7462
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6026aa7718e2740df9be1c54d6d6095c
+      internalID: -1613057151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6929
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26ee9cc1f32044c06a26f6c01af13d75
+      internalID: -1882348070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_51
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 6929
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3db4416e5561480292813fdd3e1db58
+      internalID: 338960229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_52
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 6929
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddd66ddc9f5641f8bf4af58f2323a1c
+      internalID: -1222011409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_53
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 6929
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1a2f64b72bea4a77bbadd45b6bf9e37
+      internalID: 261967603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_54
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 6929
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8884742e23eb40fbb6e6e6fcd5d7357
+      internalID: -2091588217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6396
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31a4b1d630316460a98f99d254c77403
+      internalID: -117722589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_56
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 6396
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 420d8222da3ec4962a287bfe5a8e0219
+      internalID: 456252286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_57
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 6396
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f9af8919273b49768e6e6ead46e0b31
+      internalID: 322680151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_58
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 6396
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1355653311d984fbfa314e47e1235847
+      internalID: 702769065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_59
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 6396
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37b4e298d30194887bac936ad89706d9
+      internalID: 876110044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5863
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 336544a1bef8c4be2b0071399ba98f65
+      internalID: 627874271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_61
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 5863
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5acdc9f42bec14748bd07a71e3be8888
+      internalID: -1713686403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_62
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 5863
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7114884f3f24d1c8d56df284b2f23b
+      internalID: 1204171047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_63
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 5863
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4babf59a9327d43749921e8c7d02f813
+      internalID: -369548322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_64
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 5863
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4933ecdca71374543b73d65fb1dfed04
+      internalID: 1162967498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_65
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01c0637b56a7547c9b3e27514755037e
+      internalID: -1447018468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_66
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821d92ee9a61a4337a54bc78d5331ced
+      internalID: -967722529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_67
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d89158ff33364adf995b88c34164c24
+      internalID: 183858039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_68
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad138540a0f094f4592109ba7a1a359b
+      internalID: -351324434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_69
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 5330
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b81430865323b4c8990e8aab207e1f15
+      internalID: 146724205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 515d48bd031984679b1b36e65befc2e9
+      internalID: -1264576079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_71
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36c2cf8ccb9f84b13b1439c0a5346367
+      internalID: 470178054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_72
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c249665790a44cd3b2b14aeabea8961
+      internalID: 1648424025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_73
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f17f008bdff3481293a51710904fe6b
+      internalID: 1781842784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_74
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4797
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 650b0ad482ce549669e1de3f984e090a
+      internalID: 1862215361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_75
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 336adb98dfb674594a3bbaaaa49de7d5
+      internalID: -1926204732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_76
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 967c2e88309a444e1a2251779516551c
+      internalID: -1964692310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_77
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b472508c1734f458989af0f75cf194bb
+      internalID: -366813274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_78
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cf1f84a24bd4ed0bffa8f045199f0d
+      internalID: -800210626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_79
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 4264
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3a7eca54c714bfeb99e9a1de44a0b5
+      internalID: 1249556977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d044085c261584cc99b23e7c8739daff
+      internalID: -631150938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_81
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b65109eb9b744804957672b470bd914
+      internalID: -1610799197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_82
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7242449a7f0d4459d8a400374e0af9b5
+      internalID: -1760708807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_83
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45e2754de2f8b452696309a3262c6f1e
+      internalID: -1923441402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_84
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3731
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 470ea4dcfa9e14d26a5fb8dd093efc46
+      internalID: -1338293307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_85
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e9ac7b0a6ba3449e84257192fde7d48
+      internalID: 901406597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_86
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c2790683b3b94be69c0133a09679e66
+      internalID: -717705179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_87
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6851569a9e9de4d6fb71a3d5af6aab00
+      internalID: 542853902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_88
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28334570bfd2b40bb8f43d19aa08a756
+      internalID: 1846957060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_89
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3198
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d35f055f599f24d4a96aa956e5278fc7
+      internalID: -167250672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebf9afdfca0284750aa84d40899587df
+      internalID: -881450206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_91
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eaa6373c355047659c7e30c1a92bfce
+      internalID: -2080728232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_92
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25277000bea99444792d07e3913fc245
+      internalID: -86265589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_93
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35969b873a094ff2be87c96e0f853ce
+      internalID: -720212711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_94
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2665
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 337a9f467eb3949f5956ed59cd44e46e
+      internalID: 1644070717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_95
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3cac4bfcd154479ea5428ae44e6ee77
+      internalID: 782232615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_96
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aac130d7b6aa4b509ca36926c83261a
+      internalID: 1187650797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_97
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e184ba8a09014dd5ba6345c334ee782
+      internalID: 618462213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_98
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d4781e6a8cd4eb3a8e8230dbf73b26
+      internalID: 1031737823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_99
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 2132
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee6719cc0880a4604afb3b06b10b22db
+      internalID: -1278642711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_100
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0037bc648bd70489a8e2b18fee618e4b
+      internalID: -512248764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_101
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85d6d7a6b2c93452ba17f0fe11e56e01
+      internalID: -2046591619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_102
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 620dbdf4097c54e738ae4f586bfeed91
+      internalID: -1775739241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_103
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d04db3cb876614409b8b9d56b6415d7d
+      internalID: -1913027905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_104
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1599
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33e97180296024043a257763795424b4
+      internalID: -1121415955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_105
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49a55655c73c4a689ec06d2c0c25206
+      internalID: 464594923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_106
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b51161e83a524eb391ab5e35343ea07
+      internalID: -722939237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_107
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b71b16bd290648eb9f8bb2a7e4df884
+      internalID: -2002178126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_108
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8417594b482e04506a6635743748da59
+      internalID: 312221345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_109
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1066
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c7a958f8d7f74aed8d017e3e676402e
+      internalID: 768901506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_110
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 070eeb23f1a174e7bbe642e036fdae5f
+      internalID: 1111346587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_111
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049b679c270a6414aaf65914d5399166
+      internalID: -843124483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_112
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93099bde534254900b5e0968e70faf04
+      internalID: -835051170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_113
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1555cbb7135644b9499f57cfaf38dfb3
+      internalID: -1638859278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_114
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 533
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68817e4cdd1fd4803b89ce90c592f6a2
+      internalID: -1682309208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_115
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3b0a067f7fd4e4eb2b9e46b1ab5560
+      internalID: -274902995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_116
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5711c69f80a8f4b7d99b83913bed5804
+      internalID: -1109375381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_117
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc0161a6ef28e4f3595498774c880466
+      internalID: -1334896756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_118
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd65c884a69354d799b1ec52d26db0b2
+      internalID: 1401111174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apsrite_complete_ritual_119
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 960
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43f1147b33c2c40da8e86b61ae46f2ab
+      internalID: -881302457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      apsrite_complete_ritual_0: 363274983
+      apsrite_complete_ritual_1: 1569672602
+      apsrite_complete_ritual_10: 1973779261
+      apsrite_complete_ritual_100: -512248764
+      apsrite_complete_ritual_101: -2046591619
+      apsrite_complete_ritual_102: -1775739241
+      apsrite_complete_ritual_103: -1913027905
+      apsrite_complete_ritual_104: -1121415955
+      apsrite_complete_ritual_105: 464594923
+      apsrite_complete_ritual_106: -722939237
+      apsrite_complete_ritual_107: -2002178126
+      apsrite_complete_ritual_108: 312221345
+      apsrite_complete_ritual_109: 768901506
+      apsrite_complete_ritual_11: -2077621526
+      apsrite_complete_ritual_110: 1111346587
+      apsrite_complete_ritual_111: -843124483
+      apsrite_complete_ritual_112: -835051170
+      apsrite_complete_ritual_113: -1638859278
+      apsrite_complete_ritual_114: -1682309208
+      apsrite_complete_ritual_115: -274902995
+      apsrite_complete_ritual_116: -1109375381
+      apsrite_complete_ritual_117: -1334896756
+      apsrite_complete_ritual_118: 1401111174
+      apsrite_complete_ritual_119: -881302457
+      apsrite_complete_ritual_12: 240535502
+      apsrite_complete_ritual_13: -241711153
+      apsrite_complete_ritual_14: -1790307719
+      apsrite_complete_ritual_15: -878512702
+      apsrite_complete_ritual_16: -619769713
+      apsrite_complete_ritual_17: 2129235014
+      apsrite_complete_ritual_18: -169945791
+      apsrite_complete_ritual_19: -1889760701
+      apsrite_complete_ritual_2: 323438138
+      apsrite_complete_ritual_20: 1533292362
+      apsrite_complete_ritual_21: 2012386879
+      apsrite_complete_ritual_22: 1979235500
+      apsrite_complete_ritual_23: 2012744709
+      apsrite_complete_ritual_24: 1046611335
+      apsrite_complete_ritual_25: 1214665530
+      apsrite_complete_ritual_26: -698728608
+      apsrite_complete_ritual_27: 627546306
+      apsrite_complete_ritual_28: -499624693
+      apsrite_complete_ritual_29: -455529521
+      apsrite_complete_ritual_3: 303688381
+      apsrite_complete_ritual_30: -863578190
+      apsrite_complete_ritual_31: 1299207103
+      apsrite_complete_ritual_32: 811185742
+      apsrite_complete_ritual_33: 259209020
+      apsrite_complete_ritual_34: 124597479
+      apsrite_complete_ritual_35: -1566379492
+      apsrite_complete_ritual_36: 1746465637
+      apsrite_complete_ritual_37: 1890958780
+      apsrite_complete_ritual_38: 1237844760
+      apsrite_complete_ritual_39: 954282376
+      apsrite_complete_ritual_4: 252977289
+      apsrite_complete_ritual_40: -435208019
+      apsrite_complete_ritual_41: 952403465
+      apsrite_complete_ritual_42: 436882967
+      apsrite_complete_ritual_43: -646652274
+      apsrite_complete_ritual_44: 2049964006
+      apsrite_complete_ritual_45: 576745702
+      apsrite_complete_ritual_46: 2036842788
+      apsrite_complete_ritual_47: 686150243
+      apsrite_complete_ritual_48: -610340895
+      apsrite_complete_ritual_49: -1613057151
+      apsrite_complete_ritual_5: 711257393
+      apsrite_complete_ritual_50: -1882348070
+      apsrite_complete_ritual_51: 338960229
+      apsrite_complete_ritual_52: -1222011409
+      apsrite_complete_ritual_53: 261967603
+      apsrite_complete_ritual_54: -2091588217
+      apsrite_complete_ritual_55: -117722589
+      apsrite_complete_ritual_56: 456252286
+      apsrite_complete_ritual_57: 322680151
+      apsrite_complete_ritual_58: 702769065
+      apsrite_complete_ritual_59: 876110044
+      apsrite_complete_ritual_6: 1834702386
+      apsrite_complete_ritual_60: 627874271
+      apsrite_complete_ritual_61: -1713686403
+      apsrite_complete_ritual_62: 1204171047
+      apsrite_complete_ritual_63: -369548322
+      apsrite_complete_ritual_64: 1162967498
+      apsrite_complete_ritual_65: -1447018468
+      apsrite_complete_ritual_66: -967722529
+      apsrite_complete_ritual_67: 183858039
+      apsrite_complete_ritual_68: -351324434
+      apsrite_complete_ritual_69: 146724205
+      apsrite_complete_ritual_7: -2003370866
+      apsrite_complete_ritual_70: -1264576079
+      apsrite_complete_ritual_71: 470178054
+      apsrite_complete_ritual_72: 1648424025
+      apsrite_complete_ritual_73: 1781842784
+      apsrite_complete_ritual_74: 1862215361
+      apsrite_complete_ritual_75: -1926204732
+      apsrite_complete_ritual_76: -1964692310
+      apsrite_complete_ritual_77: -366813274
+      apsrite_complete_ritual_78: -800210626
+      apsrite_complete_ritual_79: 1249556977
+      apsrite_complete_ritual_8: -1973772104
+      apsrite_complete_ritual_80: -631150938
+      apsrite_complete_ritual_81: -1610799197
+      apsrite_complete_ritual_82: -1760708807
+      apsrite_complete_ritual_83: -1923441402
+      apsrite_complete_ritual_84: -1338293307
+      apsrite_complete_ritual_85: 901406597
+      apsrite_complete_ritual_86: -717705179
+      apsrite_complete_ritual_87: 542853902
+      apsrite_complete_ritual_88: 1846957060
+      apsrite_complete_ritual_89: -167250672
+      apsrite_complete_ritual_9: 1010808243
+      apsrite_complete_ritual_90: -881450206
+      apsrite_complete_ritual_91: -2080728232
+      apsrite_complete_ritual_92: -86265589
+      apsrite_complete_ritual_93: -720212711
+      apsrite_complete_ritual_94: 1644070717
+      apsrite_complete_ritual_95: 782232615
+      apsrite_complete_ritual_96: 1187650797
+      apsrite_complete_ritual_97: 618462213
+      apsrite_complete_ritual_98: 1031737823
+      apsrite_complete_ritual_99: -1278642711
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

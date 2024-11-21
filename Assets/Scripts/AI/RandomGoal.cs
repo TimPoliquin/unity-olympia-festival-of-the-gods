@@ -107,18 +107,18 @@ namespace Azul
                 this.onDrawFromFactory.AddListener(listener);
             }
 
-            public CoroutineResult PrepareForScoring()
+            public CoroutineStatus PrepareForScoring()
             {
-                CoroutineResult result = CoroutineResult.Single();
-                result.Start();
+                CoroutineStatus status = CoroutineStatus.Single();
+                status.Start();
                 if (null != this.scoringSelection)
                 {
                     this.scoringSelection.EndScoring();
                 }
                 this.scoringSelection = new RandomScoringSelection();
                 this.scoringSelection.Evaluate(this.playerNumber);
-                result.Finish();
-                return result;
+                status.Finish();
+                return status;
             }
 
             public TileColor ChooseWildColor(AltarSpace space)

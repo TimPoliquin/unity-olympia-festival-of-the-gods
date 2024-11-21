@@ -31,7 +31,7 @@ namespace Azul
                 this.moveAndScale = this.GetComponent<MoveAndScale>();
             }
 
-            public CoroutineResult Show(string godName, TileColor color, int points)
+            public CoroutineStatus Show(string godName, TileColor color, int points)
             {
                 this.subtitleText.text = string.Format(this.subtitleTextTemplate, godName);
                 this.godIcon.SetTileColor(color);
@@ -41,7 +41,7 @@ namespace Azul
                 return this.fade.Show();
             }
 
-            public CoroutineResult Show(int ritualNumber, int points)
+            public CoroutineStatus Show(int ritualNumber, int points)
             {
                 this.subtitleText.text = string.Format(this.subtitleTextTemplate, "The Gods");
                 this.godIcon.gameObject.SetActive(false);
@@ -52,12 +52,12 @@ namespace Azul
                 return this.fade.Show();
             }
 
-            public CoroutineResult AnimateScoreToPoint(Vector3 target, float scale, float time)
+            public CoroutineStatus AnimateScoreToPoint(Vector3 target, float scale, float time)
             {
                 return this.moveAndScale.Animate(this.scoreContainer, target, scale, time);
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 return this.fade.Hide();
             }

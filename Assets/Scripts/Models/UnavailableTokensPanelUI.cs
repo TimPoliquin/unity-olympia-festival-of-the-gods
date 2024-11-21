@@ -32,21 +32,21 @@ namespace Azul
                 this.fade.StartHidden();
             }
 
-            public CoroutineResult ShowHadesUnavailable()
+            public CoroutineStatus ShowHadesUnavailable()
             {
                 this.titleText.text = this.hadesTokenText.TitleTemplate;
                 this.subtitleText.text = this.hadesTokenText.SubTitleTemplate;
                 return this.fade.Show();
             }
 
-            public CoroutineResult ShowWildUnavailable(string godName)
+            public CoroutineStatus ShowWildUnavailable(string godName)
             {
                 this.titleText.text = string.Format(this.wildTokenText.TitleTemplate, godName);
                 this.subtitleText.text = this.wildTokenText.SubTitleTemplate;
                 return this.fade.Show();
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 return this.fade.Hide();
             }

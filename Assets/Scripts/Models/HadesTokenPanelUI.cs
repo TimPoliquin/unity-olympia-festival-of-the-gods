@@ -31,7 +31,7 @@ namespace Azul
                 this.dismissButton.onClick.AddListener(this.OnDismiss);
             }
 
-            public CoroutineResult Show(int tileCount)
+            public CoroutineStatus Show(int tileCount)
             {
                 this.hadesIcon.SetTileColor(TileColor.ONE);
                 this.scoreText.text = $"-{tileCount}";
@@ -39,12 +39,12 @@ namespace Azul
                 return this.fade.Show();
             }
 
-            public CoroutineResult AnimateScoreToPoint(Vector3 target, float scale, float time)
+            public CoroutineStatus AnimateScoreToPoint(Vector3 target, float scale, float time)
             {
                 return this.moveAndScale.Animate(this.scoreContainer, target, scale, time);
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 return this.fade.Hide();
             }

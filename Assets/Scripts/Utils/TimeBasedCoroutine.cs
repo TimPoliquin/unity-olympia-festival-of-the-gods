@@ -9,13 +9,13 @@ namespace Azul
 {
     namespace Util
     {
-        public enum CoroutineStatus
+        public enum CoroutineRunStatus
         {
             NOT_STARTED,
             RUNNING,
             COMPLETED
         }
-        public interface CoroutineResult
+        public interface CoroutineStatus
         {
             public bool IsCompleted();
 
@@ -25,16 +25,16 @@ namespace Azul
 
             public void Finish();
 
-            public static CoroutineResult Single()
+            public static CoroutineStatus Single()
             {
                 return new SingleCoroutineResult();
             }
 
-            public static CoroutineResult Multi(List<CoroutineResult> results)
+            public static CoroutineStatus Multi(List<CoroutineStatus> results)
             {
                 return new MultiCoroutineResult(results);
             }
-            public static CoroutineResult Multi(params CoroutineResult[] results)
+            public static CoroutineStatus Multi(params CoroutineStatus[] results)
             {
                 return new MultiCoroutineResult(results.ToList());
             }
@@ -44,35 +44,35 @@ namespace Azul
             }
         }
 
-        public class SingleCoroutineResult : CoroutineResult
+        public class SingleCoroutineResult : CoroutineStatus
         {
-            private CoroutineStatus status = CoroutineStatus.NOT_STARTED;
+            private CoroutineRunStatus status = CoroutineRunStatus.NOT_STARTED;
 
             public bool IsCompleted()
             {
-                return this.status == CoroutineStatus.COMPLETED;
+                return this.status == CoroutineRunStatus.COMPLETED;
             }
 
             public bool IsRunning()
             {
-                return this.status == CoroutineStatus.RUNNING;
+                return this.status == CoroutineRunStatus.RUNNING;
             }
 
             public void Start()
             {
-                this.status = CoroutineStatus.RUNNING;
+                this.status = CoroutineRunStatus.RUNNING;
             }
 
             public void Finish()
             {
-                this.status = CoroutineStatus.COMPLETED;
+                this.status = CoroutineRunStatus.COMPLETED;
             }
         }
 
-        public class MultiCoroutineResult : CoroutineResult
+        public class MultiCoroutineResult : CoroutineStatus
         {
-            private List<CoroutineResult> coroutineResults;
-            public MultiCoroutineResult(List<CoroutineResult> results)
+            private List<CoroutineStatus> coroutineResults;
+            public MultiCoroutineResult(List<CoroutineStatus> results)
             {
                 this.coroutineResults = results;
             }
@@ -113,23 +113,23 @@ namespace Azul
         }
         public class TimeBasedCoroutine : MonoBehaviour
         {
-            public CoroutineResult Execute(Action<float> action, float time)
+            public CoroutineStatus Execute(Action<float> action, float time)
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.Run(action, time, result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.Run(action, time, status));
+                return status;
             }
 
-            IEnumerator Run(Action<float> action, float time, CoroutineResult result)
+            IEnumerator Run(Action<float> action, float time, CoroutineStatus status)
             {
-                result.Start();
+                status.Start();
                 for (float t = 0; t < time; t += Time.deltaTime)
                 {
                     action(t);
                     yield return 0;
                 }
                 action(time);
-                result.Finish();
+                status.Finish();
             }
         }
     }

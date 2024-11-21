@@ -67,24 +67,24 @@ namespace Azul
                 }
             }
 
-            public CoroutineResult OnScoreTurn()
+            public CoroutineStatus OnScoreTurn()
             {
-                CoroutineResult result = CoroutineResult.Single();
-                this.StartCoroutine(this.ScoreTurnCoroutine(result));
-                return result;
+                CoroutineStatus status = CoroutineStatus.Single();
+                this.StartCoroutine(this.ScoreTurnCoroutine(status));
+                return status;
             }
 
-            private IEnumerator ScoreTurnCoroutine(CoroutineResult result)
+            private IEnumerator ScoreTurnCoroutine(CoroutineStatus status)
             {
                 if (this.scoring)
                 {
                     UnityEngine.Debug.Log($"AIPlayerController: Player {this.playerNumber} is already scoring!");
-                    result.Finish();
+                    status.Finish();
                 }
                 else
                 {
                     this.scoring = true;
-                    result.Start();
+                    status.Start();
                     yield return new WaitUntil(() => !System.Instance.GetTileAnimationController().IsAnimating());
                     yield return new WaitUntil(() => !System.Instance.GetPlayerBoardController().IsPlacingTiles());
                     UnityEngine.Debug.Log($"AIPlayerController {this.playerNumber}: Evaluating Scoring Goals");
@@ -114,7 +114,7 @@ namespace Azul
                     this.acquireStrategy.GetGoals().ForEach(goal => goal.EndScoring());
                     PlayerController playerController = System.Instance.GetPlayerController();
                     playerController.EndPlayerScoringTurn();
-                    result.Finish();
+                    status.Finish();
                     this.scoring = false;
                 }
             }

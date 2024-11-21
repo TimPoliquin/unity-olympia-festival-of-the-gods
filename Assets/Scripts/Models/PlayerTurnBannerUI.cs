@@ -37,7 +37,7 @@ namespace Azul
                 });
             }
 
-            public CoroutineResult Show(string playerName, Phase phase, bool showInstructions = true)
+            public CoroutineStatus Show(string playerName, Phase phase, bool showInstructions = true)
             {
                 bool show;
                 this.titleText.text = string.Format(titleTemplate, playerName);
@@ -80,7 +80,7 @@ namespace Azul
                 }
             }
 
-            public CoroutineResult Hide()
+            public CoroutineStatus Hide()
             {
                 if (!this.hidden)
                 {
