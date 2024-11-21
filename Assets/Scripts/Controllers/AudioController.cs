@@ -118,6 +118,11 @@ namespace Azul
                     this.SetBGMVolume(result.GetValue().BGMVolume);
                     this.SetSFXVolume(result.GetValue().SFXVolume);
                 }
+                else
+                {
+                    this.SetBGMVolume(1f);
+                    this.SetSFXVolume(1f);
+                }
                 this.isReady = true;
             }
 
