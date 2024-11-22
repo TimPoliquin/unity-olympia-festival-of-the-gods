@@ -29,7 +29,7 @@ namespace Azul
                 }
             }
 
-            public void ShowOptions()
+            public void ShowOptions(bool hideQuitButton = false)
             {
                 System.Instance.Pause();
                 GraphicsSettingsController graphicsSettingsController = System.Instance.GetGraphicsSettingsController();
@@ -48,6 +48,10 @@ namespace Azul
                 this.optionsPanelUI.SetRenderScale(graphicsSettingsController.GetRenderScale());
                 this.optionsPanelUI.SetBGMVolume(System.Instance.GetAudioController().GetBGMVolume());
                 this.optionsPanelUI.SetSFXVolume(System.Instance.GetAudioController().GetSFXVolume());
+                if (hideQuitButton)
+                {
+                    this.optionsPanelUI.HideQuitButton();
+                }
             }
 
             private void OnVsyncChange(OnGraphicsVSyncChangePayload payload)

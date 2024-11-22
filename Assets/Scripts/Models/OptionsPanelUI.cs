@@ -56,8 +56,8 @@ namespace Azul
             [SerializeField] private TextMeshProUGUI currentBGMVolume;
             [SerializeField] private Slider soundVolumeSlider;
             [SerializeField] private TextMeshProUGUI currentSFXVolume;
-            [SerializeField] private Button okButton;
-            [SerializeField] private Button quitButton;
+            [SerializeField] private ButtonUI okButton;
+            [SerializeField] private ButtonUI quitButton;
             private UnityEvent<OnGraphicsOptionChangePayload> onGraphicsOptionChange = new();
             private UnityEvent<OnGraphicsAntiAliasingChangePayload> onGraphicsAntiAliasingChange = new();
             private UnityEvent<OnGraphicsRenderScaleChangePayload> onGraphicsRenderScaleChange = new();
@@ -75,8 +75,8 @@ namespace Azul
                 this.renderScaleSlider.onValueChanged.AddListener(this.OnRenderScaleChange);
                 this.musicVolumeSlider.onValueChanged.AddListener(this.OnMusicVolumeChange);
                 this.soundVolumeSlider.onValueChanged.AddListener(this.OnSoundVolumeChange);
-                this.okButton.onClick.AddListener(this.OnOk);
-                this.quitButton.onClick.AddListener(this.OnQuit);
+                this.okButton.AddOnClickListener(this.OnOk);
+                this.quitButton.AddOnClickListener(this.OnQuit);
             }
 
             void Awake_GraphicsOptions()
@@ -128,6 +128,11 @@ namespace Azul
                 this.soundVolumeSlider.value = volume;
                 this.currentSFXVolume.text = $"{(int)(this.soundVolumeSlider.value * 100)}%";
 
+            }
+
+            public void HideQuitButton()
+            {
+                this.quitButton.gameObject.SetActive(false);
             }
 
             private void OnGraphicsOptionClick(GraphicsLevel level)

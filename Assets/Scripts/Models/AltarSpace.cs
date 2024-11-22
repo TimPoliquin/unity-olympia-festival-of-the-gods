@@ -38,6 +38,7 @@ namespace Azul
             [SerializeField][Range(1, 6)] private int value;
             [SerializeField] private bool isFilled = false;
             [SerializeField] private Fire fire;
+            private StarSpaceUI starSpaceUI;
 
             private Outline outline;
             private CursorChange changeCursor;
@@ -49,7 +50,7 @@ namespace Azul
             {
                 this.outline = this.GetComponent<Outline>();
                 this.changeCursor = this.GetComponent<CursorChange>();
-                System.Instance.GetUIController().GetStarUIController().CreateStarSpaceUI(this);
+                this.starSpaceUI = System.Instance.GetUIController().GetStarUIController().CreateStarSpaceUI(this);
                 this.GetPointerEventController().AddOnPointerSelectListener(payload =>
                 {
                     this.Select();
@@ -99,6 +100,7 @@ namespace Azul
                 this.outline.enabled = true;
                 this.changeCursor.enabled = true;
                 this.GetPointerEventController().SetInteractable(true);
+                this.starSpaceUI.ActivateHighlight();
             }
 
             public void DisableHighlight()
@@ -106,6 +108,7 @@ namespace Azul
                 this.changeCursor.enabled = false;
                 this.outline.enabled = false;
                 this.GetPointerEventController().SetInteractable(false);
+                this.starSpaceUI.DeactivateHighlight();
             }
 
             public TileColor GetOriginColor()

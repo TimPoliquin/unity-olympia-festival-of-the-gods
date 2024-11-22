@@ -13,6 +13,7 @@ using Azul.TileAnimation;
 using Azul.MilestoneEvents;
 using Azul.Util;
 using Azul.Event;
+using Azul.PlayerEvents;
 
 namespace Azul
 {
@@ -329,7 +330,11 @@ namespace Azul
 
             private void OnRoundAcquire(OnRoundPhaseAcquirePayload payload)
             {
-                this.playerBoards.ForEach(playerBoard => playerBoard.ResizeForDrawing());
+                this.playerBoards.ForEach(playerBoard =>
+                {
+                    playerBoard.ResizeForDrawing();
+                    playerBoard.DisableAllHighlights();
+                });
             }
 
             private void OnRoundPrepare(OnRoundPhasePreparePayload payload)

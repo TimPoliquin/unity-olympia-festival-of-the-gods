@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azul.Util;
@@ -44,7 +45,16 @@ namespace Azul
                     string json = null != lines ? string.Join('\n', lines).Trim() : null;
                     if (null != json && json.Length > 0)
                     {
-                        return JsonUtility.FromJson<T>(json);
+                        try
+                        {
+                            return JsonUtility.FromJson<T>(json);
+                        }
+                        catch (Exception e)
+                        {
+                            UnityEngine.Debug.LogError($"Failed to parse json from {filename}");
+                            UnityEngine.Debug.LogException(e);
+                            return null;
+                        }
                     }
                     else
                     {

@@ -236,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1920, y: -400}
-  m_SizeDelta: {x: 3840, y: 800}
+  m_AnchoredPosition: {x: 1920, y: -330.5}
+  m_SizeDelta: {x: 3840, y: 661}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5299398032945448559
 MonoBehaviour:
@@ -3954,7 +3954,7 @@ PrefabInstance:
     - target: {fileID: 7419239346391299031, guid: c50c24d2ce0af4836ad84b1a5299bae8,
         type: 3}
       propertyPath: m_text
-      value: Quit
+      value: Exit Game
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
