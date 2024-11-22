@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 1509949439
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0.34901962}
+    rgba: 1627389951
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.3764706}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -282,6 +282,8 @@ MonoBehaviour:
   tableScale: 0.25
   boardScale: 0.9
   attentionUI: {fileID: 1510128775259565574}
+  inactiveColor: {r: 1, g: 1, b: 1, a: 0.3764706}
+  activeColor: {r: 1, g: 1, b: 1, a: 0.8784314}
 --- !u!225 &-2132473576408856673
 CanvasGroup:
   m_ObjectHideFlags: 0

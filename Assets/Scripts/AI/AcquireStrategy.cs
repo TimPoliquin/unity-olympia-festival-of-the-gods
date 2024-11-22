@@ -30,7 +30,7 @@ namespace Azul
 
             public void CreateGoals(int playerNumber)
             {
-                if (System.Instance.GetPlayerController().GetPlayer(playerNumber).GetPlayerType() == PlayerType.AI_DIFFICULT)
+                if (System.Instance.GetPlayerController().GetPlayer(playerNumber).GetPlayerType() == PlayerType.AI_NORMAL)
                 {
                     this.goals.Add(GoalUtils.CreateAgressiveGoal(playerNumber));
                 }
