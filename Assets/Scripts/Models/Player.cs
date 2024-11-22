@@ -18,13 +18,13 @@ namespace Azul
         {
             HUMAN,
             AI_EASY,
-            AI_DIFFICULT
+            AI_NORMAL
         }
         public sealed class PlayerTypeUtils
         {
             public static PlayerType[] GetPlayerTypes()
             {
-                return new PlayerType[] { PlayerType.HUMAN, PlayerType.AI_EASY, PlayerType.AI_DIFFICULT };
+                return new PlayerType[] { PlayerType.HUMAN, PlayerType.AI_EASY, PlayerType.AI_NORMAL };
             }
             public static string GetPlayerTypeName(PlayerType playerType)
             {
@@ -34,8 +34,8 @@ namespace Azul
                         return "Human";
                     case PlayerType.AI_EASY:
                         return "AI - Easy";
-                    case PlayerType.AI_DIFFICULT:
-                        return "AI - Difficult";
+                    case PlayerType.AI_NORMAL:
+                        return "AI - Normal";
                     default:
                         return "";
                 }
@@ -71,7 +71,7 @@ namespace Azul
 
             public bool IsAI()
             {
-                return this.playerType == PlayerType.AI_EASY || this.playerType == PlayerType.AI_DIFFICULT;
+                return this.playerType == PlayerType.AI_EASY || this.playerType == PlayerType.AI_NORMAL;
             }
 
             public bool IsHuman()

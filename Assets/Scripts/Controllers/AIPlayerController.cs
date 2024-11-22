@@ -160,7 +160,7 @@ namespace Azul
             {
                 if (payload.Payload.PlayerNumber == this.playerNumber)
                 {
-                    this.StartCoroutine(this.EarnRewardsCoroutine(payload.Payload.PlayerNumber, payload.Done));
+                    this.StartCoroutine(this.EarnRewardsCoroutine(payload.Payload.NumberOfTiles, payload.Done));
                 }
                 else
                 {

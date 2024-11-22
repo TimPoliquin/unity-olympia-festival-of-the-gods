@@ -896,7 +896,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Place tokens at the altar of the Gods to earn points!
+  m_text: Spend tokens at the Altars of the Gods to complete Rituals!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a11fdfe473f54f469bdb8b3ea97062a, type: 2}
   m_sharedMaterial: {fileID: -875736990555881069, guid: 2a11fdfe473f54f469bdb8b3ea97062a,

@@ -18,6 +18,9 @@ namespace Azul
             [SerializeField] private float boardScale = 1.0f;
             [SerializeField] private AttentionUI attentionUI;
 
+            [SerializeField] private Color inactiveColor;
+            [SerializeField] private Color activeColor;
+
             void Awake()
             {
                 this.DeactivateHighlight();
@@ -68,10 +71,12 @@ namespace Azul
 
             public void ActivateHighlight()
             {
+                this.valueText.color = this.activeColor;
                 this.attentionUI.gameObject.SetActive(true);
             }
             public void DeactivateHighlight()
             {
+                this.valueText.color = this.inactiveColor;
                 this.attentionUI.gameObject.SetActive(false);
             }
         }
