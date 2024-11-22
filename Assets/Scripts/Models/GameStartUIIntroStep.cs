@@ -17,7 +17,7 @@ namespace Azul
 
             public void OnOptions()
             {
-                System.Instance.GetUIController().GetOptionsPanelUIController().ShowOptions();
+                System.Instance.GetUIController().GetOptionsPanelUIController().ShowOptions(hideQuitButton: true);
             }
 
             public void OnQuit()

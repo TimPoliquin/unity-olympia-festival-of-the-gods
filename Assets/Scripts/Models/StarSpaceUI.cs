@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Controller;
 using Azul.Model;
+using Azul.Animation;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,12 @@ namespace Azul
             [SerializeField] private TextMeshProUGUI valueText;
             [SerializeField] private float tableScale = .25f;
             [SerializeField] private float boardScale = 1.0f;
+            [SerializeField] private AttentionUI attentionUI;
+
+            void Awake()
+            {
+                this.DeactivateHighlight();
+            }
 
             void LateUpdate()
             {
@@ -45,6 +52,7 @@ namespace Azul
                 else
                 {
                     this.valueText.gameObject.SetActive(false);
+                    this.DeactivateHighlight();
                 }
             }
 
@@ -56,6 +64,15 @@ namespace Azul
             public void ScaleToPlayerBoardView()
             {
                 this.transform.localScale = Vector3.one * this.boardScale;
+            }
+
+            public void ActivateHighlight()
+            {
+                this.attentionUI.gameObject.SetActive(true);
+            }
+            public void DeactivateHighlight()
+            {
+                this.attentionUI.gameObject.SetActive(false);
             }
         }
     }

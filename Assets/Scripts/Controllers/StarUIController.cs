@@ -16,12 +16,13 @@ namespace Azul
 
             private List<StarSpaceUI> starSpaceUIs = new();
 
-            public void CreateStarSpaceUI(AltarSpace starSpace)
+            public StarSpaceUI CreateStarSpaceUI(AltarSpace starSpace)
             {
                 StarSpaceUI ui = Instantiate(this.spaceValueUIPrefab, this.container.transform).GetComponent<StarSpaceUI>();
                 ui.SetStarSpace(starSpace);
                 ui.ScaleToTableView();
                 this.starSpaceUIs.Add(ui);
+                return ui;
             }
 
             public void InitializeListeners()
@@ -38,6 +39,7 @@ namespace Azul
                 foreach (StarSpaceUI starSpaceUI in this.starSpaceUIs)
                 {
                     starSpaceUI.ScaleToTableView();
+                    starSpaceUI.DeactivateHighlight();
                 }
             }
 

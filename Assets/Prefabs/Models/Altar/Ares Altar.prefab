@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2637375485838627510}
     m_Modifications:
+    - target: {fileID: -9089251081239633261, guid: 714d353024cf8474ba8fd52544bb5e1c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 714d353024cf8474ba8fd52544bb5e1c,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -72,6 +77,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -825983499609961982, guid: 714d353024cf8474ba8fd52544bb5e1c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 714d353024cf8474ba8fd52544bb5e1c,
         type: 3}
