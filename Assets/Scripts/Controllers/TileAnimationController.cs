@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Azul.Model;
 using Azul.TileAnimation;
 using Azul.Util;
+using Azul.Utils;
 using UnityEngine;
 
 namespace Azul
@@ -16,6 +17,14 @@ namespace Azul
             public float Time { get; init; }
             public float Delay { get; init; }
             public Action<Tile, int> AfterEach { get; init; }
+        }
+        public class TileAnimationControllerReadyCondition : ReadyCondition
+        {
+            public static readonly TileAnimationControllerReadyCondition Instance = new TileAnimationControllerReadyCondition();
+            public bool IsReady()
+            {
+                return !System.Instance.GetTileAnimationController().IsAnimating();
+            }
         }
     }
     namespace Controller

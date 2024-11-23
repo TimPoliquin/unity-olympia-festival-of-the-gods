@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
 using Azul.Prefab;
+using PlasticPipe.PlasticProtocol.Messages;
 using Unity.Profiling;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -39,12 +40,11 @@ namespace Azul
             [SerializeField] private RitualScoreUI ritualScoreUIPrefab;
             [SerializeField] private RoundStartUI roundStartUIPrefab;
             [SerializeField] private ScoringIconUI scoringIconUIPrefab;
-            [SerializeField] private ScoreTileSelectionPanelUI scoreTileSelectionPanelUIPrefab;
             [SerializeField] private ScoreTileSelectionUI scoreTileSelectionUIPrefab;
             [SerializeField] private ScoreTilesPreviewPanelUI scoreTilesPreviewPanelUIPrefab;
+            [SerializeField] private ScoringSelectionWizardPanelUI scoringSelectionWizardPanelUIPrefab;
             [SerializeField] private PlayerTileCountUI tileCountUIPrefab;
             [SerializeField] private UnavailableTokensPanelUI unavailableTokensPanelUIPrefab;
-            [SerializeField] private WildColorSelectionUI wildColorSelectionUIPrefab;
 
             private Dictionary<TileColor, Tile> tilePrefabsByColor;
             private AltarFactory altarFactory;
@@ -225,16 +225,18 @@ namespace Azul
                 return Instantiate(this.scoreTilesPreviewPanelUIPrefab, this.canvas.transform);
             }
 
-            public ScoreTileSelectionPanelUI CreateScoreTileSelectionPanelUI()
-            {
-                return Instantiate(this.scoreTileSelectionPanelUIPrefab, this.canvas.transform);
-            }
-
             public ScoreTileSelectionUI CreateScoreTileSelectionUI(ScoreTileSelectionUIContainer panel)
             {
                 ScoreTileSelectionUI scoreTileSelectionUI = Instantiate(this.scoreTileSelectionUIPrefab, this.canvas.transform);
                 panel.AddScoreTileSelectionUI(scoreTileSelectionUI);
                 return scoreTileSelectionUI;
+            }
+
+            public ScoringSelectionWizardPanelUI CreateScoringSelectionWizardPanelUI()
+            {
+                ScoringSelectionWizardPanelUI panel = Instantiate(this.scoringSelectionWizardPanelUIPrefab, this.canvas.transform);
+                this.GetPanelManagerController().AddToDefaultLayer(panel.gameObject);
+                return panel;
             }
 
             public PlayerTileCountUI CreatePlayerTileCountUI(TileColor tileColor, Transform parent)
@@ -250,11 +252,6 @@ namespace Azul
                 UnavailableTokensPanelUI panelUI = Instantiate(this.unavailableTokensPanelUIPrefab, this.canvas.transform);
                 panelManagerController.AddToLayer(layer, panelUI.gameObject);
                 return panelUI;
-            }
-
-            public WildColorSelectionUI CreateWildColorSelectionUI(Transform parent = null)
-            {
-                return Instantiate(this.wildColorSelectionUIPrefab, parent ? parent : this.canvas.transform);
             }
 
             public PanelManagerController GetPanelManagerController()

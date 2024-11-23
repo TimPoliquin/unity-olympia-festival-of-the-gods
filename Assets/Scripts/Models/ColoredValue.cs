@@ -9,7 +9,7 @@ namespace Azul
     namespace Model
     {
         [Serializable]
-        public struct ColoredValue<T>
+        public class ColoredValue<T>
         {
             [SerializeField] private TileColor tileColor;
             [SerializeField] private T value;

@@ -28,6 +28,7 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public TileColor Color { get; init; }
+            public AltarSpace Space { get; init; }
             public int Value { get; init; }
             public PlayerBoard PlayerBoard;
             public UnityAction<OnPlayerBoardScoreTileSelectionConfirmPayload> OnConfirm { get; init; }
@@ -291,6 +292,7 @@ namespace Azul
                         {
                             PlayerBoard = playerBoard,
                             PlayerNumber = playerBoard.GetPlayerNumber(),
+                            Space = space,
                             Color = space.GetOriginColor(),
                             Value = space.GetValue(),
                             OnConfirm = (payload) => this.PlaceTiles(playerBoard.GetPlayerNumber(), space, payload.Color, payload.TilesSelected)

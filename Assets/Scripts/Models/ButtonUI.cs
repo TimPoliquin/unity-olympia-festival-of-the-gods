@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Azul.Cursor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,6 +16,14 @@ namespace Azul
             [SerializeField] private Button button;
             [SerializeField] private AudioClip buttonDown;
             [SerializeField] private AudioClip buttonUp;
+            [SerializeField] private TextMeshProUGUI labelText;
+
+            private CursorChange cursorChange;
+
+            void Awake()
+            {
+                this.cursorChange = this.GetComponentInChildren<CursorChange>();
+            }
 
             public void OnPointerDown()
             {
@@ -36,9 +46,25 @@ namespace Azul
                 this.button.onClick.AddListener(listener);
             }
 
+            public void RemoveAllListeners()
+            {
+                this.button.onClick.RemoveAllListeners();
+            }
+
             public void SetInteractable(bool interactable)
             {
+                this.cursorChange.enabled = interactable;
                 this.button.interactable = interactable;
+            }
+
+            public void SetActive(bool active)
+            {
+                this.gameObject.SetActive(active);
+            }
+
+            public void SetText(string text)
+            {
+                this.labelText.text = text;
             }
         }
     }

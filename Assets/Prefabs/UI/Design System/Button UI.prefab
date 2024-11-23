@@ -268,6 +268,7 @@ MonoBehaviour:
   button: {fileID: 2003797093437117462}
   buttonDown: {fileID: 8300000, guid: 719460130a43c401a88d0b893f598d88, type: 3}
   buttonUp: {fileID: 8300000, guid: bc0cc95c8222e4d91aef5dc6e144d294, type: 3}
+  labelText: {fileID: 7419239346391299031}
 --- !u!1 &8617708137418793822
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +281,7 @@ GameObject:
   - component: {fileID: 2143524774170413003}
   - component: {fileID: 7419239346391299031}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
