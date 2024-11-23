@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azul.Model;
@@ -27,8 +28,8 @@ namespace Azul
         {
             [SerializeField] private IconUI tokenIcon;
             [SerializeField] private Slider counter;
-            [SerializeField] private Button subtractButton;
-            [SerializeField] private Button addButton;
+            [SerializeField] private ButtonUI subtractButton;
+            [SerializeField] private ButtonUI addButton;
             [SerializeField] private TextMeshProUGUI minText;
             [SerializeField] private TextMeshProUGUI maxText;
             [SerializeField] private TextMeshProUGUI currentText;
@@ -39,8 +40,8 @@ namespace Azul
             void Awake()
             {
                 this.counter.onValueChanged.AddListener((value) => this.OnValueChange(true));
-                this.addButton.onClick.AddListener(this.OnClickAdd);
-                this.subtractButton.onClick.AddListener(this.OnClickSubtract);
+                this.addButton.AddOnClickListener(this.OnClickAdd);
+                this.subtractButton.AddOnClickListener(this.OnClickSubtract);
             }
 
             public TileColor GetColor()
@@ -80,12 +81,12 @@ namespace Azul
 
             public void DisableAddButton()
             {
-                this.addButton.interactable = false;
+                this.addButton.SetInteractable(false);
             }
 
             public void EnableAddButton()
             {
-                this.addButton.interactable = this.counter.value < this.counter.maxValue;
+                this.addButton.SetInteractable(this.counter.value < this.counter.maxValue);
             }
 
             public void AddOnSelectionCountChangeListener(UnityAction<OnSelectionCountChangePayload> listener)
@@ -112,8 +113,8 @@ namespace Azul
             private void OnValueChange(bool dispatch)
             {
                 this.currentText.text = $"{this.counter.value}";
-                this.subtractButton.interactable = this.counter.value > this.counter.minValue;
-                this.addButton.interactable = this.counter.value < this.counter.maxValue;
+                this.subtractButton.SetInteractable(this.counter.value > this.counter.minValue);
+                this.addButton.SetInteractable(this.counter.value < this.counter.maxValue);
                 if (dispatch)
                 {
                     this.onValueChange.Invoke(new OnSelectionCountChangePayload

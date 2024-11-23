@@ -81,7 +81,7 @@ namespace Azul
                 AltarSpace space = goal.ChooseSpace();
                 space.Select();
                 yield return new WaitForSeconds(1.0f);
-                TileColor selectedColor = space.IsWild() ? goal.ChooseWildColor(space) : space.GetOriginColor();
+                TileColor selectedColor = space.IsMtOlympus() ? goal.ChooseWildColor(space) : space.GetOriginColor();
                 Dictionary<TileColor, int> selectedTiles = this.ChooseTilesToFillScoreSpace(
                     System.Instance.GetPlayerBoardController().GetPlayerBoard(playerNumber),
                     selectedColor,

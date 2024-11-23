@@ -128,7 +128,7 @@ namespace Azul
                 }
             }
 
-            public bool IsWild()
+            public bool IsMtOlympus()
             {
                 return this.originalColor == TileColor.WILD;
             }

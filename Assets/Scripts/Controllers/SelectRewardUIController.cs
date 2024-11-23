@@ -9,6 +9,7 @@ using Azul.PlayerBoardRewardEvents;
 using Azul.RewardUIEvents;
 using UnityEngine;
 using UnityEngine.Events;
+using Azul.Utils;
 
 namespace Azul
 {
@@ -22,6 +23,14 @@ namespace Azul
     }
     namespace Controller
     {
+        public class SelectRewardReadyCondition : ReadyCondition
+        {
+            public static readonly SelectRewardReadyCondition Instance = new();
+            public bool IsReady()
+            {
+                return !System.Instance.GetUIController().GetSelectRewardUIController().IsRewardPanelOpen();
+            }
+        }
         public class SelectRewardUIController : MonoBehaviour
         {
             private GrantRewardTilesUI selectionUI;

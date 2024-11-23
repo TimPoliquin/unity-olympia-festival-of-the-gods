@@ -5,6 +5,7 @@ using Azul.GameEvents;
 using Azul.MilestoneEvents;
 using Azul.Model;
 using Azul.Util;
+using Azul.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,14 @@ namespace Azul
 {
     namespace Controller
     {
+        public class MilestoneCompletionReadyCondition : ReadyCondition
+        {
+            public static readonly MilestoneCompletionReadyCondition Instance = new();
+            public bool IsReady()
+            {
+                return !System.Instance.GetMilestoneCompletionController().IsShowingMilestoneCompletion();
+            }
+        }
         public class MilestoneCompletionController : MonoBehaviour
         {
             [SerializeField] private float cameraRotationSeconds = 1.0f;
@@ -48,17 +57,14 @@ namespace Azul
             void HideScoringUI(int playerNumber)
             {
                 System.Instance.GetPlayerBoardController().HideScoringUI(playerNumber);
-                System.Instance.GetUIController().GetScoreTileSelectionUIController().HideEndTurnPanel();
                 System.Instance.GetUIController().GetStarUIController().Hide();
+                System.Instance.GetUIController().GetScoreTileSelectionUIController().HideEndTurnPanel();
             }
             void RestoreScoringUI()
             {
                 System.Instance.GetPlayerController().ContinueTurn();
                 System.Instance.GetUIController().GetStarUIController().Show();
-                if (System.Instance.GetPlayerController().GetCurrentPlayer().IsHuman())
-                {
-                    System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
-                }
+                System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
             }
 
             IEnumerator PlayAltarMilestoneCompletionEvent(OnAltarMilestoneCompletedPayload payload)
@@ -191,6 +197,11 @@ namespace Azul
             public bool IsShowingMilestoneCompletion()
             {
                 return this.isShowingMilestoneCompletion;
+            }
+
+            public WaitUntil WaitUntilDoneAnimating()
+            {
+                return new WaitUntil(() => !this.IsShowingMilestoneCompletion());
             }
         }
     }

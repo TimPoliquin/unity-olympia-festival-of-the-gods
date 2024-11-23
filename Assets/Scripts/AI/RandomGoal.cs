@@ -37,7 +37,8 @@ namespace Azul
 
             public abstract AltarSpace ChooseSpace();
 
-            protected abstract float GetRandomChanceOfStupidity();
+            protected abstract float GetAcquireRandomChanceOfStupidity();
+            protected abstract float GetScoringRandomChanceOfStupidity();
 
             protected bool ShouldRandomlyDrawFromTable()
             {
@@ -45,7 +46,7 @@ namespace Azul
                 List<TileCount> tileCounts = TileCount.FromDictionary(tableController.GetTableSupplyTileCounts());
                 if (tileCounts.Count > 0)
                 {
-                    bool drawFromTable = Random.Range(0f, 1f) < this.GetRandomChanceOfStupidity();
+                    bool drawFromTable = Random.Range(0f, 1f) < this.GetAcquireRandomChanceOfStupidity();
                     if (drawFromTable)
                     {
                         UnityEngine.Debug.Log($"Player {playerNumber}: Randomly drawing from the table!");
@@ -184,13 +185,17 @@ namespace Azul
                     playerNumber = playerNumber
                 };
             }
-            protected override float GetRandomChanceOfStupidity()
+            protected override float GetAcquireRandomChanceOfStupidity()
+            {
+                return .4f;
+            }
+            protected override float GetScoringRandomChanceOfStupidity()
             {
                 return .4f;
             }
             public override AltarSpace ChooseSpace()
             {
-                if (Random.Range(0f, 1f) < this.GetRandomChanceOfStupidity())
+                if (Random.Range(0f, 1f) < this.GetScoringRandomChanceOfStupidity())
                 {
                     return this.scoringSelection.ChooseRandomSpace();
                 }
@@ -216,7 +221,7 @@ namespace Azul
                 }
                 else
                 {
-                    pickedCount = ListUtils.GetRandomElement(allCounts);
+                    pickedCount = ListUtils.GetRandomElement(allCounts.Where(count => !(count.Provider.IsTable() && count.Provider.HasHadesToken())).ToList());
                     UnityEngine.Debug.Log($"Player {this.playerNumber}: RandomGoal - picking random tile provider: {pickedCount.Provider}");
                 }
                 if (pickedCount.TileCounts.Count == 1)
@@ -247,9 +252,13 @@ namespace Azul
                     playerNumber = playerNumber
                 };
             }
-            protected override float GetRandomChanceOfStupidity()
+            protected override float GetAcquireRandomChanceOfStupidity()
             {
-                return .1f;
+                return .05f;
+            }
+            protected override float GetScoringRandomChanceOfStupidity()
+            {
+                return 0f;
             }
             public override AltarSpace ChooseSpace()
             {

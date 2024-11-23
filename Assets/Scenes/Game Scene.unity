@@ -5285,6 +5285,8 @@ MonoBehaviour:
     type: 3}
   scoreTilesPreviewPanelUIPrefab: {fileID: 626295238030696778, guid: 76dee75a9097e4646b7850ad76b504ba,
     type: 3}
+  scoringSelectionWizardPanelUIPrefab: {fileID: 4503845671090341873, guid: cbf8702dd85f04a22a48caedc6187e62,
+    type: 3}
   tileCountUIPrefab: {fileID: 4532902485550771721, guid: 8fae7a60db424443cab3ac0b793992b7,
     type: 3}
   unavailableTokensPanelUIPrefab: {fileID: 6801770107753760777, guid: e34c41bf15e8c4f54b3be41870b192a7,
