@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ namespace Azul
             [SerializeField] private AltarStatBoxUI altarStatBoxUI;
             [SerializeField] private ScoreStatBoxUI scoreStatBoxUI;
             [SerializeField] private RitualStatBoxUI ritualStatBoxUI;
+            [SerializeField] private RankingStatBoxUI rankingStatBoxUI;
 
             public void ShowAltars(List<TileColor> altarColors)
             {
@@ -52,6 +54,16 @@ namespace Azul
             public void SetWinner(bool winner)
             {
                 this.winnerIcons.SetActive(winner);
+            }
+
+            public void SetRank(int rank)
+            {
+                this.rankingStatBoxUI.SetRanking(rank);
+            }
+
+            public void SetNoRanking()
+            {
+                this.rankingStatBoxUI.SetNoRanking();
             }
         }
     }

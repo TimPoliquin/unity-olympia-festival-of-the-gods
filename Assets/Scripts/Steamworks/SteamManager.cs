@@ -13,6 +13,7 @@ using UnityEngine;
 #if !DISABLESTEAMWORKS
 using System.Collections;
 using Steamworks;
+using UnityEngine.Events;
 #endif
 
 //
@@ -23,10 +24,11 @@ using Steamworks;
 public class SteamManager : MonoBehaviour
 {
 #if !DISABLESTEAMWORKS
+    private UnityEvent onInit = new();
     protected static bool s_EverInitialized = false;
 
     protected static SteamManager s_instance;
-    protected static SteamManager Instance
+    public static SteamManager Instance
     {
         get
         {
@@ -193,6 +195,18 @@ public class SteamManager : MonoBehaviour
 
         // Run Steam client callbacks
         SteamAPI.RunCallbacks();
+    }
+
+    public void AddOnInitListener(UnityAction listener)
+    {
+        if (Initialized)
+        {
+            listener.Invoke();
+        }
+        else
+        {
+            this.onInit.AddListener(listener);
+        }
     }
 #else
 	public static bool Initialized {

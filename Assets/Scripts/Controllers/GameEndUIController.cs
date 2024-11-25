@@ -19,6 +19,7 @@ namespace Azul
         {
             public List<PlayerScore> PlayerScores { get; init; }
             public Player Winner { get; init; }
+            public int Rank;
         }
     }
     namespace Controller
@@ -33,7 +34,7 @@ namespace Azul
                     System.Instance.GetGameController().AddOnGameSetupCompleteListener((payload) =>
                     {
                         List<Player> players = System.Instance.GetPlayerController().GetPlayers();
-                        this.ShowGameEnd(new()
+                        this.ShowEndUI(new()
                         {
                             Winner = players[0],
                             PlayerScores = players.Select(player => new PlayerScore
@@ -45,21 +46,29 @@ namespace Azul
                     });
                 }
             }
-            public CoroutineStatus ShowGameEnd(OnGameEndPayload payload)
+            public CoroutineStatus ShowEndUI(OnGameEndPayload payload)
             {
                 CoroutineStatus status = CoroutineStatus.Single();
-                this.StartCoroutine(this.ShowGameEndCoroutine(payload, status));
+                this.StartCoroutine(this.ShowEndUICoroutine(payload, status));
                 return status;
             }
 
-            private IEnumerator ShowGameEndCoroutine(OnGameEndPayload payload, CoroutineStatus status)
+            private IEnumerator ShowEndUICoroutine(OnGameEndPayload payload, CoroutineStatus status)
             {
                 status.Start();
                 GameEndUI gameEndUI = System.Instance.GetPrefabFactory().CreateGameEndUI();
                 gameEndUI.SetPlayerCount(payload.PlayerScores.Count);
                 foreach (PlayerScore playerScore in payload.PlayerScores)
                 {
-                    this.CreatePlayerStatsUI(gameEndUI, playerScore, ReferenceEquals(payload.Winner, playerScore.Player));
+                    PlayerStatsUI playerStatsUI = this.CreatePlayerStatsUI(gameEndUI, playerScore, ReferenceEquals(payload.Winner, playerScore.Player));
+                    if (playerScore.Player.GetUsername() != null)
+                    {
+                        playerStatsUI.SetRank(payload.Rank);
+                    }
+                    else
+                    {
+                        playerStatsUI.SetNoRanking();
+                    }
                 }
                 yield return gameEndUI.Show().WaitUntilCompleted();
                 yield return gameEndUI.ShowPlayerStats();

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Model;
 using Azul.OnGameEndEvents;
 using Azul.Util;
+using Codice.Client.Commands;
 using UnityEngine;
 
 namespace Azul
@@ -48,13 +50,27 @@ namespace Azul
 
             private IEnumerator FinaleCoroutine(OnGameEndPayload payload)
             {
+                CoroutineResultValue<int> leaderboardRankStatus = new();
+                this.UpdateLeaderboard(
+                    payload.PlayerScores.Find(playerScore => playerScore.Player.GetUsername() == System.Instance.GetUsername()).Score,
+                    leaderboardRankStatus);
                 yield return new WaitForSeconds(.5f);
                 yield return System.Instance.GetUIController().GetBlackScreenUIController().FadeToBlack(1.0f).WaitUntilCompleted();
+                // wait until the leaderboard is updated, or timeout after 2s
+                yield return leaderboardRankStatus.WaitUntilCompleted(2f);
                 // move camera to winning player board
                 yield return this.MoveCameraToWinnerPlayerBoard(payload).WaitUntilCompleted();
                 yield return System.Instance.GetUIController().GetBlackScreenUIController().FadeIn(1.0f).WaitUntilCompleted();
                 // show UI
-                System.Instance.GetUIController().GetGameEndUIController().ShowGameEnd(payload);
+                if (leaderboardRankStatus.IsCompleted() && !leaderboardRankStatus.IsError())
+                {
+                    payload.Rank = leaderboardRankStatus.GetValue();
+                }
+                else
+                {
+                    payload.Rank = -1;
+                }
+                System.Instance.GetUIController().GetGameEndUIController().ShowEndUI(payload);
                 // spin the camera
                 while (true)
                 {
@@ -78,6 +94,19 @@ namespace Azul
                 return System.Instance.GetCameraController().RotateCameraAroundPoint(center, radius, this.rotationSpeed);
             }
 
+            private void UpdateLeaderboard(int score, CoroutineResultValue<int> status)
+            {
+                ILeaderboardController leaderboardController = System.Instance.GetLeaderboardController();
+                if (null != leaderboardController)
+                {
+                    leaderboardController.UpdateScore(score, status);
+                }
+                else
+                {
+                    UnityEngine.Debug.Log($"No leaderboard controller registered!");
+                    status.Error();
+                }
+            }
         }
     }
 }
