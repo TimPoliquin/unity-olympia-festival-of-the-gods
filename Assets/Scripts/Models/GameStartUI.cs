@@ -32,6 +32,7 @@ namespace Azul
             void Awake()
             {
                 this.ShowIntroStep();
+                this.setupStep.AddOnBackListener(() => this.ShowIntroStep());
             }
 
             void Start()
@@ -60,6 +61,7 @@ namespace Azul
                 this.introStep.gameObject.SetActive(false);
                 this.setupStep.gameObject.SetActive(true);
             }
+
         }
     }
 }
