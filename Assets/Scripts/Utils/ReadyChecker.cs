@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azul.Util;
-using Castle.Core.Internal;
 using UnityEngine;
 
 namespace Azul
@@ -24,7 +23,7 @@ namespace Azul
                 CoroutineStatus status = CoroutineStatus.Single();
                 if (!conditions.All(condition => condition.IsReady()))
                 {
-                    this.StartCoroutine(this.WaitUntilReadyCoroutine(status, conditions));
+                    this.StartCoroutine(this.WaitUntilReadyCoroutine(status, conditions.ToList()));
                 }
                 else
                 {
@@ -33,7 +32,7 @@ namespace Azul
                 return status;
             }
 
-            public IEnumerator WaitUntilReadyCoroutine(CoroutineStatus status, ReadyCondition[] conditions)
+            public IEnumerator WaitUntilReadyCoroutine(CoroutineStatus status, List<ReadyCondition> conditions)
             {
                 status.Start();
                 int done = 0;
