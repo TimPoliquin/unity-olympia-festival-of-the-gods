@@ -132,7 +132,7 @@ namespace Azul
                             this.nextIcon.gameObject.SetActive(true);
                             break;
                         case Step.TOKEN_COUNT:
-                            this.backButton.SetActive(true);
+                            this.backButton.SetActive(this.currentStep > 0);
                             this.nextButton.SetActive(true);
                             this.nextButton.SetInteractable(true);
                             this.nextButton.SetText("Confirm");
