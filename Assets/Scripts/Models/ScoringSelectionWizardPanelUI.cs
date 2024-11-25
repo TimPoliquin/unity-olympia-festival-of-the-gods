@@ -6,6 +6,7 @@ using Azul.ScoringSelectionWizardEvents;
 using Azul.Util;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Azul
 {
@@ -44,6 +45,7 @@ namespace Azul
             [SerializeField] private TokenCountSelectionStepUI tokenCountSelectionStepUI;
             [SerializeField] private ButtonUI backButton;
             [SerializeField] private ButtonUI nextButton;
+            [SerializeField] private Image nextIcon;
             [SerializeField] private ButtonUI cancelButton;
             private Fade fade;
 
@@ -118,28 +120,23 @@ namespace Azul
 
             public void InitializeButtonStates()
             {
-                if (this.IsMtOlympus())
-                {
-                    this.backButton.SetActive(true);
-                    this.backButton.SetInteractable(this.currentStep > 0);
-                }
-                else
-                {
-                    this.backButton.SetActive(false);
-                }
                 if (this.currentStep >= 0)
                 {
                     switch (this.steps[currentStep])
                     {
                         case Step.MT_OLYMPUS:
+                            this.backButton.SetActive(false);
                             this.nextButton.SetActive(true);
                             this.nextButton.SetInteractable(this.mtOlympusColorSelectionStepUI.HasSelection());
                             this.nextButton.SetText("Next");
+                            this.nextIcon.gameObject.SetActive(true);
                             break;
                         case Step.TOKEN_COUNT:
+                            this.backButton.SetActive(true);
                             this.nextButton.SetActive(true);
                             this.nextButton.SetInteractable(true);
                             this.nextButton.SetText("Confirm");
+                            this.nextIcon.gameObject.SetActive(false);
                             break;
                     }
                 }

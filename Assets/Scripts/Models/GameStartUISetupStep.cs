@@ -25,16 +25,18 @@ namespace Azul
             [SerializeField] private List<string> defaultPlayerNames = new() { "Helen", "Alexander", "Phoebe", "Metron", "Philomenes", "Eurymachos", "Demonous", "Aetios", "Halie", "Alexis", "Calliope", "Cassandra", "Daphne", "Sophia", "Zoe", "Basil", "Castor", "Georgios", "Jason", "Neo", "Odysseus", "Theodore", "Troy" };
             [SerializeField] private List<Button> playerCountButtons;
             [SerializeField] private GameObject playerConfigContainer;
+            [SerializeField] private ButtonUI backButton;
             [SerializeField] private ButtonUI startButton;
             private readonly List<PlayerConfigUI> playerConfigUIs = new();
 
-
+            private UnityEvent onBack = new();
             private UnityEvent<OnGameStartPayload> onGameStart = new();
 
             void Start()
             {
                 this.InitializePlayerConfigUIs();
                 this.InitializePlayerCountButtons();
+                this.backButton.AddOnClickListener(this.OnBack);
                 this.startButton.AddOnClickListener(this.OnClickStart);
                 this.startButton.gameObject.SetActive(false);
             }
@@ -162,7 +164,17 @@ namespace Azul
                 }
                 return names;
             }
+            private void OnBack()
+            {
+                this.onBack.Invoke();
+            }
+
+            public void AddOnBackListener(UnityAction listener)
+            {
+                this.onBack.AddListener(listener);
+            }
 
         }
+
     }
 }
