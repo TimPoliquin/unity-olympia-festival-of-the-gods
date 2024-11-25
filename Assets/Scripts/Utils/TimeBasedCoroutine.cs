@@ -96,19 +96,38 @@ namespace Azul
         public class CoroutineResultValue<T> : SingleCoroutineResult
         {
             private T value;
+            private bool error;
             public T GetValue()
             {
                 return this.value;
+            }
+            public bool IsError()
+            {
+                return this.error;
             }
 
             public void Finish(T value)
             {
                 this.value = value;
+                this.error = false;
+                base.Finish();
+            }
+            public void Error()
+            {
                 base.Finish();
             }
             public WaitUntil WaitUntilCompleted()
             {
                 return new WaitUntil(() => this.IsCompleted());
+            }
+            public WaitUntil WaitUntilCompleted(float timeout)
+            {
+                float time = 0;
+                return new WaitUntil(() =>
+                {
+                    time += Time.deltaTime;
+                    return this.IsCompleted() || time > timeout;
+                });
             }
         }
         public class TimeBasedCoroutine : MonoBehaviour

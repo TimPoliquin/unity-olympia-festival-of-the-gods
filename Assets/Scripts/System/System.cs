@@ -24,6 +24,7 @@ namespace Azul
         private FileController fileController;
         private GameController gameController;
         private GraphicsSettingsController graphicsSettingsController;
+        private ILeaderboardController leaderboardController;
         private MilestoneCompletionController milestoneCompletionController;
         private PlayerBoardController playerBoardController;
         private PlayerController playerController;
@@ -254,6 +255,16 @@ namespace Azul
                 this.uiController = this.GetComponentInChildren<UIController>();
             }
             return this.uiController;
+        }
+
+        public ILeaderboardController GetLeaderboardController()
+        {
+            return this.leaderboardController;
+        }
+
+        public void RegisterLeaderboardController(ILeaderboardController leaderboardController)
+        {
+            this.leaderboardController = leaderboardController;
         }
 
         public void Quit()
