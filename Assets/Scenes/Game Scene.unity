@@ -656,7 +656,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -5043,7 +5043,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1466273012
 Canvas:
   m_ObjectHideFlags: 0
@@ -5279,8 +5279,6 @@ MonoBehaviour:
     type: 3}
   scoringIconUIPrefab: {fileID: 3607876777870968631, guid: b0a618cefb79c4e758fb92b53a023125,
     type: 3}
-  scoreTileSelectionPanelUIPrefab: {fileID: 3741744990853243757, guid: b42097cab83b04197a396f841918ab95,
-    type: 3}
   scoreTileSelectionUIPrefab: {fileID: 8318375118132352395, guid: f4d97a516ac8d4e73b2544c8398c40ee,
     type: 3}
   scoreTilesPreviewPanelUIPrefab: {fileID: 626295238030696778, guid: 76dee75a9097e4646b7850ad76b504ba,
@@ -5290,8 +5288,6 @@ MonoBehaviour:
   tileCountUIPrefab: {fileID: 4532902485550771721, guid: 8fae7a60db424443cab3ac0b793992b7,
     type: 3}
   unavailableTokensPanelUIPrefab: {fileID: 6801770107753760777, guid: e34c41bf15e8c4f54b3be41870b192a7,
-    type: 3}
-  wildColorSelectionUIPrefab: {fileID: 8860949731101903510, guid: 2b793d7140ec443aebcd9d9cd45a38cf,
     type: 3}
 --- !u!1 &1641158616
 GameObject:
