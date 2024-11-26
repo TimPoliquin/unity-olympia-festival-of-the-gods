@@ -7,20 +7,20 @@ namespace Azul
 {
     namespace Model
     {
-        public class RankingStatBoxUI : MonoBehaviour
+        public class IntegerStatBoxUI : MonoBehaviour
         {
-            [SerializeField] private TextMeshProUGUI rankingText;
+            [SerializeField] private TextMeshProUGUI valueText;
             [SerializeField] private TextMeshProUGUI emptyText;
 
-            public void SetRanking(int ranking)
+            public void SetValue(int value)
             {
-                this.rankingText.text = $"{ranking}";
+                this.valueText.text = $"{value}";
                 this.emptyText.gameObject.SetActive(false);
             }
 
-            public void SetNoRanking()
+            public void SetNoValue()
             {
-                this.rankingText.gameObject.SetActive(false);
+                this.valueText.gameObject.SetActive(false);
                 this.emptyText.gameObject.SetActive(true);
             }
         }

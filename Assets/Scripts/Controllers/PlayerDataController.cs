@@ -76,6 +76,19 @@ namespace Azul
             {
                 return this.GetOrCreatePlayerData(System.Instance.GetUsername()).IsNewPlayer();
             }
+
+            public int GetPlayerHighScore(string username)
+            {
+                List<int> scores = this.GetOrCreatePlayerData(username).Scores;
+                if (scores.Count > 0)
+                {
+                    return scores.OrderByDescending(score => score).ToList()[0];
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
     }
 }

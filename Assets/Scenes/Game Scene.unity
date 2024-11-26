@@ -2224,7 +2224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9025db908b84962a705b1cf3248ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  registrar: {fileID: 1372239318}
   leaderboardName: High Scores
+  pushRankingOnReady: 0
 --- !u!1 &841089269
 GameObject:
   m_ObjectHideFlags: 0
@@ -7794,8 +7796,8 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1335703214}
   - {fileID: 1372239317}
+  - {fileID: 1335703214}
   - {fileID: 330585546}
   - {fileID: 1012445471}
   - {fileID: 410087041}

@@ -49,7 +49,7 @@ namespace Azul
 
             private IEnumerator FinaleCoroutine(OnGameEndPayload payload)
             {
-                CoroutineResultValue<int> leaderboardRankStatus = new();
+                CoroutineResultValue<LeaderboardRanking> leaderboardRankStatus = new();
                 this.UpdateLeaderboard(
                     payload.PlayerScores.Find(playerScore => playerScore.Player.GetUsername() == System.Instance.GetUsername()).Score,
                     leaderboardRankStatus);
@@ -61,13 +61,15 @@ namespace Azul
                 yield return this.MoveCameraToWinnerPlayerBoard(payload).WaitUntilCompleted();
                 yield return System.Instance.GetUIController().GetBlackScreenUIController().FadeIn(1.0f).WaitUntilCompleted();
                 // show UI
-                if (leaderboardRankStatus.IsCompleted() && !leaderboardRankStatus.IsError())
+                if (leaderboardRankStatus.IsCompleted() && !leaderboardRankStatus.IsError() && leaderboardRankStatus.GetValue() != null)
                 {
-                    payload.Rank = leaderboardRankStatus.GetValue();
+                    payload.Rank = leaderboardRankStatus.GetValue().Ranking;
+                    payload.HighScore = leaderboardRankStatus.GetValue().Score;
                 }
                 else
                 {
                     payload.Rank = -1;
+                    payload.HighScore = System.Instance.GetPlayerDataController().GetPlayerHighScore(System.Instance.GetUsername());
                 }
                 System.Instance.GetUIController().GetGameEndUIController().ShowEndUI(payload);
                 // spin the camera
@@ -93,7 +95,7 @@ namespace Azul
                 return System.Instance.GetCameraController().RotateCameraAroundPoint(center, radius, this.rotationSpeed);
             }
 
-            private void UpdateLeaderboard(int score, CoroutineResultValue<int> status)
+            private void UpdateLeaderboard(int score, CoroutineResultValue<LeaderboardRanking> status)
             {
                 ILeaderboardController leaderboardController = System.Instance.GetLeaderboardController();
                 if (null != leaderboardController)
