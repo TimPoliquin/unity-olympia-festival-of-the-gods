@@ -151,7 +151,7 @@ PrefabInstance:
     - target: {fileID: 8668517040328759398, guid: 970be2c5fd0f04de8999c0da70ac533d,
         type: 3}
       propertyPath: m_Name
-      value: Ranking Stat Box UI
+      value: Highest Score Stat Box UI
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4593232717253316775, guid: 970be2c5fd0f04de8999c0da70ac533d, type: 3}
@@ -257,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 4267533981769525131, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}
       propertyPath: m_fontSize
-      value: 16
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4267533981769525131, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}
@@ -267,7 +267,7 @@ PrefabInstance:
     - target: {fileID: 4267533981769525131, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 16
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4267533981769525131, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}
@@ -377,7 +377,7 @@ PrefabInstance:
     - target: {fileID: 7524888183956572697, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}
       propertyPath: m_Name
-      value: Ranking
+      value: Value
       objectReference: {fileID: 0}
     - target: {fileID: 7524888183956572697, guid: a38cc74eaefea4c92a97af252bcd042c,
         type: 3}

@@ -15,7 +15,8 @@ namespace Azul
             [SerializeField] private AltarStatBoxUI altarStatBoxUI;
             [SerializeField] private ScoreStatBoxUI scoreStatBoxUI;
             [SerializeField] private RitualStatBoxUI ritualStatBoxUI;
-            [SerializeField] private RankingStatBoxUI rankingStatBoxUI;
+            [SerializeField] private IntegerStatBoxUI rankingStatBoxUI;
+            [SerializeField] private IntegerStatBoxUI highestScoreStatBoxUI;
 
             public void ShowAltars(List<TileColor> altarColors)
             {
@@ -46,6 +47,16 @@ namespace Azul
                 this.scoreStatBoxUI.SetScore(score);
             }
 
+            public void SetHighestScore(int highestScore)
+            {
+                this.highestScoreStatBoxUI.SetValue(highestScore);
+            }
+
+            public void SetNoHighestScore()
+            {
+                this.highestScoreStatBoxUI.SetNoValue();
+            }
+
             public void SetPlayerName(string name)
             {
                 this.playerNameText.text = name;
@@ -58,12 +69,12 @@ namespace Azul
 
             public void SetRank(int rank)
             {
-                this.rankingStatBoxUI.SetRanking(rank);
+                this.rankingStatBoxUI.SetValue(rank);
             }
 
             public void SetNoRanking()
             {
-                this.rankingStatBoxUI.SetNoRanking();
+                this.rankingStatBoxUI.SetNoValue();
             }
         }
     }

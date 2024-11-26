@@ -20,6 +20,7 @@ namespace Azul
             public List<PlayerScore> PlayerScores { get; init; }
             public Player Winner { get; init; }
             public int Rank;
+            public int HighScore;
         }
     }
     namespace Controller
@@ -64,9 +65,11 @@ namespace Azul
                     if (playerScore.Player.GetUsername() != null)
                     {
                         playerStatsUI.SetRank(payload.Rank);
+                        playerStatsUI.SetHighestScore(payload.HighScore);
                     }
                     else
                     {
+                        playerStatsUI.SetNoHighestScore();
                         playerStatsUI.SetNoRanking();
                     }
                 }
