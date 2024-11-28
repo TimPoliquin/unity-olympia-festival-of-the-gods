@@ -399,7 +399,7 @@ namespace Azul
                 }).WaitUntilCompleted();
                 space.PlaceTile(effectiveColor);
                 System.Instance.GetBagController().Discard(tiles);
-                yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard, playerBoard.GetAltar(space.GetOriginColor()), space).WaitUntilCompleted();
+                yield return playerBoard.GetMilestoneController().OnStarTilePlaced(playerBoard.GetAltar(space.GetOriginColor()), space).WaitUntilCompleted();
                 yield return this.onPlaceStarTile.Invoke(new OnPlayerBoardPlaceStarTilePayload
                 {
                     PlayerNumber = playerBoard.GetPlayerNumber(),
@@ -445,14 +445,14 @@ namespace Azul
                 this.onTilesCollected.AddListener(listener);
             }
 
-            public void AddOnAltarMilestoneCompleteListener(UnityAction<OnAltarMilestoneCompletedPayload> listener)
+            public void AddOnAltarMilestoneCompleteListener(UnityAction<EventTracker<OnAltarMilestoneCompletedPayload>> listener)
             {
                 foreach (PlayerBoard playerBoard in this.playerBoards)
                 {
                     playerBoard.GetMilestoneController().AddOnAltarMilestoneCompleteListener(listener);
                 }
             }
-            public void AddOnNumberMilestoneCompleteListener(UnityAction<OnNumberMilestoneCompletedPayload> listener)
+            public void AddOnNumberMilestoneCompleteListener(UnityAction<EventTracker<OnNumberMilestoneCompletedPayload>> listener)
             {
                 foreach (PlayerBoard playerBoard in this.playerBoards)
                 {

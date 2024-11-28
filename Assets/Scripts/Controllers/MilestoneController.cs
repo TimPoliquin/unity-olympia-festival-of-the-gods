@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Azul.GameEvents;
+using Azul.Event;
 using Azul.MilestoneEvents;
 using Azul.Model;
-using Azul.PlayerBoardEvents;
 using Azul.Util;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,13 +15,11 @@ namespace Azul
         {
             public int PlayerNumber { get; init; }
             public Altar CompletedMilestone { get; init; }
-            public Action Done { get; init; }
         }
         public struct OnNumberMilestoneCompletedPayload
         {
             public int PlayerNumber { get; init; }
             public int Value { get; init; }
-            public Action Done { get; init; }
         }
     }
     namespace Controller
@@ -33,8 +28,8 @@ namespace Azul
         public class MilestoneController : MonoBehaviour
         {
             private PlayerBoard playerBoard;
-            private UnityEvent<OnAltarMilestoneCompletedPayload> onAltarMilestoneComplete = new();
-            private UnityEvent<OnNumberMilestoneCompletedPayload> onNumberMilestoneCompleted = new();
+            private readonly AzulEvent<OnAltarMilestoneCompletedPayload> onAltarMilestoneComplete = new();
+            private readonly AzulEvent<OnNumberMilestoneCompletedPayload> onNumberMilestoneCompleted = new();
 
             void Start()
             {
@@ -42,42 +37,42 @@ namespace Azul
             }
 
 
-            public CoroutineStatus OnStarTilePlaced(PlayerBoard playerBoard, Altar altar, AltarSpace space)
+            public CoroutineStatus OnStarTilePlaced(Altar altar, AltarSpace space)
             {
-                CoroutineStatus status = CoroutineStatus.Single();
-                status.Start();
-                if (altar.GetFilledSpaces().Count == altar.GetNumberOfSpaces())
-                {
-                    this.onAltarMilestoneComplete.Invoke(new OnAltarMilestoneCompletedPayload
-                    {
-                        PlayerNumber = this.playerBoard.GetPlayerNumber(),
-                        CompletedMilestone = altar,
-                        Done = () => status.Finish(),
-                    }
-                    );
-                }
-                else if (playerBoard.GetAltars().All(altar => altar.IsSpaceFilled(space.GetValue())))
-                {
-                    this.onNumberMilestoneCompleted.Invoke(new OnNumberMilestoneCompletedPayload
-                    {
-                        PlayerNumber = this.playerBoard.GetPlayerNumber(),
-                        Value = space.GetValue(),
-                        Done = () => status.Finish(),
-                    }
-                    );
-                }
-                else
-                {
-                    status.Finish();
-                }
+                var status = CoroutineStatus.Single();
+                this.StartCoroutine(this.ExecuteMilestonesCompleted(this.playerBoard, altar, space, status));
                 return status;
             }
 
-            public void AddOnAltarMilestoneCompleteListener(UnityAction<OnAltarMilestoneCompletedPayload> listener)
+            private IEnumerator ExecuteMilestonesCompleted(PlayerBoard playerBoard1, Altar altar, AltarSpace space, CoroutineStatus status)
+            {
+                status.Start();
+                if (altar.GetFilledSpaces().Count == altar.GetNumberOfSpaces())
+                {
+                    yield return this.onAltarMilestoneComplete.Invoke(new OnAltarMilestoneCompletedPayload
+                        {
+                            PlayerNumber = this.playerBoard.GetPlayerNumber(),
+                            CompletedMilestone = altar,
+                        }
+                    ).WaitUntilCompleted();
+                }
+                if (this.playerBoard.GetAltars().All(checkAltar => checkAltar.IsSpaceFilled(space.GetValue())))
+                {
+                    yield return this.onNumberMilestoneCompleted.Invoke(new OnNumberMilestoneCompletedPayload
+                    {
+                        PlayerNumber = this.playerBoard.GetPlayerNumber(),
+                        Value = space.GetValue(),
+                    }).WaitUntilCompleted();                
+                }
+                status.Finish();
+            }
+
+
+            public void AddOnAltarMilestoneCompleteListener(UnityAction<EventTracker<OnAltarMilestoneCompletedPayload>> listener)
             {
                 this.onAltarMilestoneComplete.AddListener(listener);
             }
-            public void AddOnNumberMilestoneCompleteListener(UnityAction<OnNumberMilestoneCompletedPayload> listener)
+            public void AddOnNumberMilestoneCompleteListener(UnityAction<EventTracker<OnNumberMilestoneCompletedPayload>> listener)
             {
                 this.onNumberMilestoneCompleted.AddListener(listener);
             }

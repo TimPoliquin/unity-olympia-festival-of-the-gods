@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azul.Event;
 using Azul.GameEvents;
 using Azul.MilestoneEvents;
 using Azul.Model;
@@ -44,12 +45,12 @@ namespace Azul
                 System.Instance.GetPlayerBoardController().AddOnNumberMilestoneCompleteListener(this.OnNumberMilestoneComplete);
             }
 
-            void OnAltarMilestoneComplete(OnAltarMilestoneCompletedPayload payload)
+            private void OnAltarMilestoneComplete(EventTracker<OnAltarMilestoneCompletedPayload> payload)
             {
                 this.StartCoroutine(this.PlayAltarMilestoneCompletionEvent(payload));
             }
 
-            void OnNumberMilestoneComplete(OnNumberMilestoneCompletedPayload payload)
+            private void OnNumberMilestoneComplete(EventTracker<OnNumberMilestoneCompletedPayload> payload)
             {
                 this.StartCoroutine(this.PlayNumberMilestoneCompletionEvent(payload));
             }
@@ -67,8 +68,9 @@ namespace Azul
                 System.Instance.GetUIController().GetScoreTileSelectionUIController().ShowEndTurnPanel();
             }
 
-            IEnumerator PlayAltarMilestoneCompletionEvent(OnAltarMilestoneCompletedPayload payload)
+            IEnumerator PlayAltarMilestoneCompletionEvent(EventTracker<OnAltarMilestoneCompletedPayload> eventTracker)
             {
+                OnAltarMilestoneCompletedPayload payload = eventTracker.Payload;
                 this.isShowingMilestoneCompletion = true;
                 this.HideScoringUI(payload.PlayerNumber);
                 yield return CoroutineStatus.Multi(
@@ -85,11 +87,12 @@ namespace Azul
                 ).WaitUntilCompleted();
                 this.RestoreScoringUI();
                 this.isShowingMilestoneCompletion = false;
-                payload.Done();
+                eventTracker.Done();
             }
 
-            IEnumerator PlayNumberMilestoneCompletionEvent(OnNumberMilestoneCompletedPayload payload)
+            IEnumerator PlayNumberMilestoneCompletionEvent(EventTracker<OnNumberMilestoneCompletedPayload> eventTracker)
             {
+                OnNumberMilestoneCompletedPayload payload = eventTracker.Payload;
                 this.isShowingMilestoneCompletion = true;
                 yield return null;
                 this.HideScoringUI(payload.PlayerNumber);
@@ -97,7 +100,7 @@ namespace Azul
                 yield return this.ShowNumberCompletionUI(payload.PlayerNumber, payload.Value).WaitUntilCompleted();
                 this.RestoreScoringUI();
                 this.isShowingMilestoneCompletion = false;
-                payload.Done();
+                eventTracker.Done();
             }
 
             CoroutineStatus MoveCameraToAltar(Altar completedAltar)
