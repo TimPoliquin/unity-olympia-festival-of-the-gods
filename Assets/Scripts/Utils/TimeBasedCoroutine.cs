@@ -32,15 +32,15 @@ namespace Azul
 
             public static CoroutineStatus Multi(List<CoroutineStatus> results)
             {
-                return new MultiCoroutineResult(results.Where(status => status != null).ToList());
+                return new MultiCoroutineResult(results);
             }
             public static CoroutineStatus Multi(params CoroutineStatus[] results)
             {
-                return new MultiCoroutineResult(results.Where(status => status != null).ToList());
+                return new MultiCoroutineResult(results.ToList());
             }
             public WaitUntil WaitUntilCompleted()
             {
-                return new WaitUntil(this.IsCompleted);
+                return new WaitUntil(() => this.IsCompleted());
             }
         }
 
